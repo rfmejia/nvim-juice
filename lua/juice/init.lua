@@ -61,7 +61,7 @@ local function setup()
   vim.diagnostic.config({ float = { border = "rounded" } })
 
   -- Setup individual LSP servers
-  require("juice.clang").setup()
+  require("juice.clangd").setup()
   require("juice.metals").setup()
   require("juice.sumneko").setup()
 end
