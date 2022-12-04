@@ -63,6 +63,7 @@ local function setup()
   -- Setup individual LSP servers
   require("juice.clang").setup()
   require("juice.metals").setup()
+  require("juice.sumneko").setup()
 end
 
 return {
