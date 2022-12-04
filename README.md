@@ -2,7 +2,28 @@
 primarily for setting up LSP support. These files are called from my vimrc
 which detects if it's called within neovim.
 
+## Configured LSPs
+
+- C/C++ via `clangd`
+- Lua via `lua-language-server`
+- Scala via `metals`
+
+To be added in the future: `bashls`, `jsonls`, `marksman`
+
+## Dependencies
+
 The plugin depends on the following:
+
+### Binaries
+
+Install the following from a package manager or from source:
+
+- `clang`
+- `lua-language-server`
+
+### Neovim plugins
+
+Install the following using a neovim package manager, e.g. `vim-plug`:
 
 ```vimscript
 Plug 'neovim/nvim-lspconfig'          " quickstart configs for nvim lsp
