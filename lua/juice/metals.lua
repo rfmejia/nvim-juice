@@ -6,7 +6,6 @@ local set = vim.opt
 local setg = vim.opt_global
 
 local NS = { noremap = true, silent = true }
-local NSW = { noremap = true, silent = true, nowait = true }
 
 local function setupMetalsStatusLine()
   local function metalsStatus()

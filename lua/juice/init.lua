@@ -1,3 +1,4 @@
+local autocmd = vim.api.nvim_create_autocmd
 local lua = function(str) return string.format("<cmd>lua %s<cr>", str) end
 local map = vim.api.nvim_set_keymap
 local set = vim.opt
@@ -23,21 +24,34 @@ local function setupBufferOpts(client, bufnr)
   map("n", "<leader>cf", lua("vim.lsp.buf.format({async = true})"), NS)
 end
 
-local function setupLsp()
-  setg.laststatus = 2    -- Always have a statusline
-  set.signcolumn='yes:1'  -- Display line column
+local function setup()
+  setg.laststatus = 2 -- Always have a statusline
+  set.signcolumn = 'yes:1' -- Display line column
 
+  -- Highlight yanked text
+  autocmd("TextYankPost", {
+    pattern = "*",
+    callback = function()
+      vim.highlight.on_yank({
+        timeout = 200,
+        on_visual = false
+      })
+    end,
+  })
+
+  -- Properly italicize comments and LSP virtual text
+  vim.cmd "hi Comment cterm=standout"
+  vim.cmd "hi Conceal cterm=standout"
+
+  -- Setup default LSP key mappings
   map("n", "<f6>", lua("vim.diagnostic.setqflist({severity = vim.diagnostic.severity.ERROR})"), NS)
   map("n", "<f7>", lua("vim.diagnostic.setloclist()"), NS)
   map("n", "<c-k>", lua("vim.diagnostic.goto_prev({wrap = false})"), NS)
   map("n", "<c-j>", lua("vim.diagnostic.goto_next({wrap = false})"), NS)
-  map("n", "<leader>cl", lua("vim.lsp.codelens.run()"), NS)
 
-  --  use black background for popups
+  -- LSP popup styling
   vim.cmd "hi NormalFloat ctermbg=black"
   vim.cmd "hi WinSeparator ctermbg=none ctermfg=69"
-
-  --  use round borders for lsp popups
   vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
     vim.lsp.handlers.hover, { border = "rounded" }
   )
@@ -46,11 +60,12 @@ local function setupLsp()
   )
   vim.diagnostic.config({ float = { border = "rounded" } })
 
+  -- Setup individual LSP servers
   require("juice.clang").setup()
   require("juice.metals").setup()
 end
 
 return {
   setupBufferOpts = setupBufferOpts,
-  setup = setupLsp,
+  setup = setup,
 }
