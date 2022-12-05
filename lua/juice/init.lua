@@ -39,10 +39,6 @@ local function setup()
     end,
   })
 
-  -- Properly italicize comments and LSP virtual text
-  vim.cmd "hi Comment cterm=standout"
-  vim.cmd "hi Conceal cterm=standout"
-
   -- Setup default LSP key mappings
   map("n", "<f6>", lua("vim.diagnostic.setqflist({severity = vim.diagnostic.severity.ERROR})"), NS)
   map("n", "<f7>", lua("vim.diagnostic.setloclist()"), NS)
