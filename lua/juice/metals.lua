@@ -66,7 +66,6 @@ local function initializeMetals()
     showImplicitArguments = true,
     showInferredType = true,
     decorationColor = "Conceal",
-    bloopSbtAlreadyInstalled = true,
     scalafixRulesDependencies = { "com.nequissimus::sort-imports:0.6.1" }
   }
   metals_config.init_options.statusBarProvider = "on"

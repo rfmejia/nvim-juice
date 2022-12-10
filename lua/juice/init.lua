@@ -45,6 +45,9 @@ local function setup()
   map("n", "<c-k>", lua("vim.diagnostic.goto_prev({wrap = false})"), NS)
   map("n", "<c-j>", lua("vim.diagnostic.goto_next({wrap = false})"), NS)
 
+  -- LSP virtual text styling
+  vim.cmd "hi Conceal cterm=italic ctermbg=none ctermfg=59"
+
   -- LSP popup styling
   vim.cmd "hi NormalFloat ctermbg=black"
   vim.cmd "hi WinSeparator ctermbg=none ctermfg=69"
