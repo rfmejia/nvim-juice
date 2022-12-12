@@ -19,9 +19,9 @@ local function setupBufferOpts(client, bufnr)
   map("n", "gs", lua("vim.lsp.buf.document_symbol()"), NS)
   map("n", "gS", lua("vim.lsp.buf.workspace_symbol()"), NS)
   map("n", "K", lua("vim.lsp.buf.hover()"), NS)
-  map("n", "<leader>ca", lua("vim.lsp.buf.code_action()"), NS)
-  map("n", "<leader>cr", lua("vim.lsp.buf.rename()"), NS)
-  map("n", "<leader>cf", lua("vim.lsp.buf.format({async = true})"), NS)
+  map("n", "<localleader>ca", lua("vim.lsp.buf.code_action()"), NS)
+  map("n", "<localleader>cr", lua("vim.lsp.buf.rename()"), NS)
+  map("n", "<localleader>cf", lua("vim.lsp.buf.format({async = true})"), NS)
 end
 
 local function setup()
@@ -48,7 +48,7 @@ local function setup()
   -- LSP virtual text styling
   vim.cmd "hi Conceal cterm=italic ctermbg=none ctermfg=59"
 
-  -- LSP popup styling
+  -- LSP popup styling (colors and borders)
   vim.cmd "hi NormalFloat ctermbg=black"
   vim.cmd "hi WinSeparator ctermbg=none ctermfg=69"
   vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
