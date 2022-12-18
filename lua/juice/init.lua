@@ -8,6 +8,7 @@ local setb = vim.api.nvim_buf_set_option
 local NS = { noremap = true, silent = true }
 local NSW = { noremap = true, silent = true, nowait = true }
 
+-- Buffer-specific LSP options
 local function setupBufferOpts(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
   setb(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -24,9 +25,31 @@ local function setupBufferOpts(client, bufnr)
   map("n", "<localleader>cf", lua("vim.lsp.buf.format({async = true})"), NS)
 end
 
+-- Format the number of error and warning diagnostics and format for statusline
+local function countDiagnostics()
+  local str = ""
+  local errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
+  local warns = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
+  if errors ~= 0 then str = str .. "%#DiagnosticError#!" .. errors .. "%#Normal# " end
+  if warns ~= 0 then str = str .. "%#DiagnosticWarn#!" .. warns .. "%#Normal# " end
+  return str
+end
+
+local function getStatusLine()
+  return table.concat({
+    "%f", -- filename
+    "%#ErrorMsg#%m%#Normal#", -- buffer modified flag
+    "%q%h%r ", -- buffer type flags
+    "%=", -- divider
+    countDiagnostics(), -- error and warning counts
+    "%l,%c", -- ruler
+  })
+end
+
 local function setup()
   setg.laststatus = 2 -- Always have a statusline
   set.signcolumn = 'yes:1' -- Display line column
+  set.statusline = [[%!luaeval('require("juice").statusline()')]]
 
   -- Highlight yanked text
   autocmd("TextYankPost", {
@@ -45,7 +68,7 @@ local function setup()
   map("n", "<c-k>", lua("vim.diagnostic.goto_prev({wrap = false})"), NS)
   map("n", "<c-j>", lua("vim.diagnostic.goto_next({wrap = false})"), NS)
 
-  -- LSP virtual text styling
+  -- LSP virtual text, error and warning styling
   vim.cmd "hi Conceal cterm=italic ctermbg=none ctermfg=59"
 
   -- LSP popup styling (colors and borders)
@@ -66,6 +89,8 @@ local function setup()
 end
 
 return {
+  statusline = getStatusLine,
+  countDiagnostics = countDiagnostics,
   setupBufferOpts = setupBufferOpts,
   setup = setup,
 }

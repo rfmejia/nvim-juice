@@ -7,20 +7,22 @@ local setg = vim.opt_global
 
 local NS = { noremap = true, silent = true }
 
-local function setupMetalsStatusLine()
+local function getStatusline()
   local function metalsStatus()
     local status = vim.g["metals_status"]
-    if not status or status == "" then return "%l,%c"
-    else return status
+    if not status or status == "" then return ""
+    else return status .. " "
     end
   end
 
   return table.concat({
-    "%f",                                        -- filename
-    "%#ErrorMsg#%m%#Normal#",                    -- buffer modified flag
-    "%q%h%r ",                                   -- buffer type flags
-    "%=",                                        -- divider
-    metalsStatus(),                              -- messages from nvim-metals
+    "%f", -- filename
+    "%#ErrorMsg#%m%#Normal#", -- buffer modified flag
+    "%q%h%r ", -- buffer type flags
+    "%=", -- divider
+    metalsStatus(), -- messages from nvim-metals
+    require("juice").countDiagnostics(), -- error and warning counts
+    " %l,%c", -- ruler
   })
 end
 
@@ -59,7 +61,9 @@ end
 local function initializeMetals()
   local metals = require("metals")
   setg.shortmess:append("c")
-  set.statusline = [[%!luaeval('require("juice.metals").setupStatusLine()')]]
+  set.statusline = [[%!luaeval('require("juice.metals").statusline()')]]
+
+  map("n", "<localleader>cw", lua("require('metals').hover_worksheet()"), NS)
 
   local metals_config = metals.bare_config()
   metals_config.settings = {
@@ -80,6 +84,7 @@ local function initializeMetals()
 end
 
 local function setupMetalsLsp()
+  -- TODO Consider making this into a commmand instead, and manually invoking Metals per session
   local lsp_group = augroup("metals_lsp", { clear = true })
   autocmd("FileType", {
     pattern = { "java", "scala", "sbt", "sc" },
@@ -89,6 +94,6 @@ local function setupMetalsLsp()
 end
 
 return {
-  setupStatusLine = setupMetalsStatusLine,
+  statusline = getStatusline,
   setup = setupMetalsLsp,
 }
