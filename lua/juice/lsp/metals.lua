@@ -11,11 +11,11 @@ local function getStatusline()
 
   return table.concat({
     "%f", -- filename
-    "%#ErrorMsg#%m%#Normal#", -- buffer modified flag
+    "%#Todo#%m%{GitFileStatus()}%#StatusLine#", -- buffer modified flag
     "%q%h%r ", -- buffer type flags
     "%=", -- divider
-    metalsStatus(), -- messages from nvim-metals
-    require("juice.lsp").countDiagnostics(), -- error and warning counts
+    "%#DiagnosticInfo#" .. metalsStatus(), -- messages from nvim-metals
+    require("juice.lsp").countDiagnostics() .. "%#StatusLine#", -- error and warning counts
     " %l,%c", -- ruler
   })
 end

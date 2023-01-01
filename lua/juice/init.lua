@@ -1,7 +1,7 @@
 local function getStatusLine()
   return table.concat({
     "%f", -- filename
-    "%#ErrorMsg#%m%#Normal#", -- buffer modified flag
+    "%#Todo#%m%{GitFileStatus()}%#StatusLine#", -- buffer modified flag
     "%q%h%r ", -- buffer type flags
     "%=", -- divider
     require("juice.lsp").countDiagnostics(), -- error and warning counts
