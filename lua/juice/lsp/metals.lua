@@ -1,6 +1,7 @@
 local lua = function(str) return string.format("<cmd>lua %s<cr>", str) end
 local NS = { noremap = true, silent = true }
 
+-- Cusomize status line with additional messages from metals
 local function getStatusline()
   local function metalsStatus()
     local status = vim.g["metals_status"]
@@ -20,6 +21,7 @@ local function getStatusline()
   })
 end
 
+-- Configure and initialize DAP
 local function setupDebugAdapterProtocol()
   require("dap").configurations.scala = {
     {
@@ -52,11 +54,12 @@ local function setupDebugAdapterProtocol()
   vim.api.nvim_set_keymap("n", "<localleader>dl", lua("require('dap').run_last()"), NS)
 end
 
+-- Configure and initialize metals
 local function initializeMetals()
   local metals = require("metals")
-  -- vim.go.shortmess:append("c")
   vim.go.shortmess = vim.go.shortmess .. "c"
   vim.o.statusline = [[%!luaeval('require("juice.lsp.metals").getStatusline()')]]
+  vim.g["metals_status"] = "Initializing Metals..."
 
   vim.api.nvim_set_keymap("n", "<localleader>cw", lua("require('metals').hover_worksheet()"), NS)
 
@@ -78,8 +81,8 @@ local function initializeMetals()
   metals.initialize_or_attach(metals_config)
 end
 
-local function setupLsp()
-  -- TODO Consider making this into a commmand instead, and manually invoking Metals per session (based on a parameter)
+-- Add an autocmd to initialize Metals upon entering a Scala/Java file
+local function defineAutocmd()
   local lsp_group = vim.api.nvim_create_augroup("metals_lsp", { clear = true })
   vim.api.nvim_create_autocmd("FileType", {
     pattern = { "java", "scala", "sbt", "sc" },
@@ -88,7 +91,20 @@ local function setupLsp()
   })
 end
 
+local function defineUserCommand()
+  vim.api.nvim_create_user_command(
+    "MetalsInit",
+    function(opts)
+      initializeMetals()
+      vim.api.nvim_del_user_command("MetalsInit")
+    end,
+    {
+      desc = "Start and connect to a Metals server"
+    })
+end
+
 return {
+  defineAutocmd = defineAutocmd,
   getStatusline = getStatusline,
-  setup = setupLsp,
+  setup = defineUserCommand,
 }
