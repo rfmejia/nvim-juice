@@ -9,6 +9,15 @@ local function getStatusLine()
   })
 end
 
+local function setupTreeSitter()
+  require("nvim-treesitter.configs").setup({
+    ensure_installed = {"bash", "c", "help", "lua", "markdown", "scala", "vim"},
+    highlight = {
+      enable = true,
+    }
+  })
+end
+
 local function setup()
   vim.go.laststatus = 2 -- Always have a statusline
   vim.o.signcolumn = 'yes:1' -- Display line column
@@ -29,8 +38,7 @@ local function setup()
     end,
   })
 
-  -- Setup treesitter
-  require("juice.treesitter").setup()
+  setupTreeSitter()
 
   -- Setup LSP
   require("juice.lsp").setup()
