@@ -54,8 +54,11 @@ local function setup()
 
   -- Setup individual LSP servers
   require("juice.lsp.clangd").setup()
+  require("juice.lsp.lua_ls").setup()
   require("juice.lsp.metals").setup()
-  require("juice.lsp.sumneko").setup()
+  require("juice.lsp.rust_analyzer").setup()
+  require("juice.lsp.svelte").setup()
+  require("juice.lsp.tsserver").setup()
 end
 
 return {

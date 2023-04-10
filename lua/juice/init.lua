@@ -9,18 +9,32 @@ local function getStatusLine()
   })
 end
 
-local function setupTreeSitter()
-  require("nvim-treesitter.configs").setup({
-    ensure_installed = {"bash", "c", "help", "lua", "markdown", "scala", "vim"},
-    highlight = {
-      enable = true,
-    }
-  })
-end
+-- local function setupTreeSitter()
+--   require("nvim-treesitter.configs").setup({
+--     ensure_installed = {
+--       "bash",
+--       "c",
+--       "help",
+--       "javascript",
+--       "json",
+--       "html",
+--       "lua",
+--       "markdown",
+--       "rust",
+--       "scala",
+--       "svelte",
+--       "typescript",
+--       "vim",
+--       "yaml"
+--     },
+--     highlight = {
+--       enable = true,
+--     }
+--   })
+-- end
 
 local function setup()
   vim.go.laststatus = 2 -- Always have a statusline
-  vim.o.signcolumn = 'yes:1' -- Display line column
   vim.o.statusline = [[%!luaeval('require("juice").getStatusline()')]]
 
   -- Reset viminfofile
@@ -38,7 +52,7 @@ local function setup()
     end,
   })
 
-  setupTreeSitter()
+  -- setupTreeSitter()
 
   -- Setup LSP
   require("juice.lsp").setup()

@@ -21,7 +21,7 @@ local function setupLsp()
   end
 
   -- See docs for more configs https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#sumneko_lua
-  require("lspconfig").sumneko_lua.setup({
+  require("lspconfig").lua_ls.setup({
     on_attach = require("juice.lsp").setBufferOpts,
     settings = {
       Lua = {

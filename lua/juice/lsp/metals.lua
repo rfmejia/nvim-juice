@@ -45,7 +45,7 @@ local function setupDebugAdapterProtocol()
   })
 
   vim.api.nvim_set_keymap("n", "<localleader>dc", lua("require('dap').continue()"), NS)
-  vim.api.nvim_set_keymap("n", "<localleader>db", lua("require('dap').repl.toggle()"), NS)
+  vim.api.nvim_set_keymap("n", "<localleader>dr", lua("require('dap').repl.toggle()"), NS)
   vim.api.nvim_set_keymap("n", "<localleader>ds", lua("require('lsp').show_scope()"), NS)
   vim.api.nvim_set_keymap("n", "<localleader>dK", lua("require('dap').dap_ui_widgets.hover()"), NS)
   vim.api.nvim_set_keymap("n", "<localleader>db", lua("require('dap').toggle_breakpoint()"), NS)
