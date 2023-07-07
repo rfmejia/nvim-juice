@@ -1,34 +1,20 @@
-**nvim-juice** is a neovim plugin containing my personal configuration in Lua,
-primarily for setting up LSP support. These files are called from my vimrc
-which detects if it's called within neovim.
+**nvim-juice** is my personal neovim configuration written in [Fennel][1].
 
-## Configured LSPs
+- Simple bootstrapping of dependencies inside `init.lua`
+- Clearly and concisely configures neovim using a LISP and [Aniseed][2]
+- Efficiently manages packages via [lazy.nvim][3]
 
-- C/C++ via `clangd`
-- Lua via `lua-language-server`
-- Scala via `metals`
+## Quick start
 
-To be added in the future: `bashls`, `jsonls`, `marksman`
+To install, simply
 
-## Dependencies
+1. Clone this repository, and
+2. Create a symlink of `init.lua` and `fnl/` into your `${XDG_CONFIG_HOME}`
 
-The plugin depends on the following:
+That's it. Upon starting neovim the script will download the bare minimum
+packages, add them to your runtime path, transpile Fennel config files into Lua,
+and rest of the packages will be configured automatically.
 
-### Binaries
-
-Install the following from a package manager or from source:
-
-- `clang`
-- `lua-language-server`
-
-### Neovim plugins
-
-Install the following using a neovim package manager, e.g. `vim-plug`:
-
-```vimscript
-Plug 'neovim/nvim-lspconfig'          " quickstart configs for nvim lsp
-Plug 'p00f/clangd_extensions.nvim'    " lsp support for clangd's off-spec features
-Plug 'scalameta/nvim-metals'          " lsp support for scala
-Plug 'nvim-lua/plenary.nvim'          " lua convenience methods (nvim-metals requirement)
-Plug 'mfussenegger/nvim-dap'          " debug adapter protocol support
-```
+[1]: https://fennel-lang.org
+[2]: https://github.com/olical/aniseed/
+[3]: https://github.com/folke/lazy.nvim
