@@ -6,7 +6,7 @@
 (defn git-file-status []
   "Returns the git flag(s) of the current file"
   (let [path (vim.fn.expand "%:p")
-        git-cmd (.. "git file-status " path " | tr -d '\n'")]
+        git-cmd (.. "git file-status " path " | tr -d '\\n'")]
     (match (vim.fn.system git-cmd)
       status (if (not (s.blank? status))
                (.. " " status " ")
