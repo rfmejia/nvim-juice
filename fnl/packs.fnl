@@ -118,11 +118,3 @@
                                "mfussenegger/nvim-dap"]}
                ]]
   (lazy.setup plugins))
-
-; (let [theme (require "github-theme")
-;       palette (theme.load :github_dark_high_contrast)]
-;   (print (vim.inspect palette.bg0))
-;   (print (vim.inspect palette.bg1)) 
-;   (print (vim.inspect palette.bg2)) 
-;   (print (vim.inspect palette.bg3)) 
-;   (print (vim.inspect palette.bg4)))

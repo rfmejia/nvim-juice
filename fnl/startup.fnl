@@ -120,7 +120,6 @@
              {:pattern "*"
               :callback (lambda []
                           (when (= vim.o.background "dark")
-                            (print "setting to dark")
                             (vim.api.nvim_set_hl 0 "Normal" {:bg "black"})
                             (vim.api.nvim_set_hl 0 "VertSplit" {:fg "black"})
                             (vim.api.nvim_set_hl 0 "Todo" {:fg "yellow"}))

@@ -42,5 +42,4 @@
                   warn-color warnings
                   default-color ruler]
         statusline (s.join template)]
-    ; (print statusline)
     statusline))
