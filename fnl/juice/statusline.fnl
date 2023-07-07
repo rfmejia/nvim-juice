@@ -1,15 +1,17 @@
 (module statusline
   {autoload {a aniseed.core
-             s aniseed.string}})
+             s aniseed.string
+             u util}})
 
 (defn git-file-status []
   "Returns the git flag(s) of the current file"
   (let [path (vim.fn.expand "%:p")
-        git-cmd (.. "git file-status " path " | tr -d '\n'")
-        status (s.trim (vim.fn.system git-cmd))]
-    (if (not (s.blank? status))
-      (.. " " status " ")
-      "")
+        git-cmd (.. "git file-status " path " | tr -d '\n'")]
+    (match (vim.fn.system git-cmd)
+      status (if (not (s.blank? status))
+               (.. " " status " ")
+               "")
+      (nil err-msg) (print "Could not get `git file-status`: " err-msg))
     ))
 
 (defn count-diagnostic [severity]
@@ -25,9 +27,8 @@
         buffer-modified-flags "%m"
         buffer-type-flags "%q%h%r"
         align-right "%="
-        lua-eval (lambda [command] (string.format "%%{luaeval(\"%s\")}" command))
-        errors (lua-eval "require('juice.statusline')['count-diagnostic'](vim.diagnostic.severity.ERROR)")
-        warnings (lua-eval "require('juice.statusline')['count-diagnostic'](vim.diagnostic.severity.WARN)")
+        errors (u.lua-statusline "require('juice.statusline')['count-diagnostic'](vim.diagnostic.severity.ERROR)")
+        warnings (u.lua-statusline "require('juice.statusline')['count-diagnostic'](vim.diagnostic.severity.WARN)")
         ruler "%l:%c"
         default-color "%#StatusLine#"
         error-color "%#StatusLineError#"

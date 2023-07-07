@@ -14,7 +14,7 @@ local function ensure(options)
   vim.opt.rtp:prepend(install_path)
   if not vim.loop.fs_stat(install_path) then
     print(string.format("Cloning %s/%s:%s to %s...", options.user, options.repo, options.branch, install_path))
-    local exit = vim.fn.system({
+    vim.fn.system({
       "git",
       "clone",
       "--filter=blob:none",

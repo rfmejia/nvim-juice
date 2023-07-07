@@ -90,7 +90,7 @@
             ; highlight yanked text
             [:TextYankPost {:pattern "*"
                             :callback (fn [] (vim.highlight.on_yank {:timeout 200
-                                                                         :on_visual false}))}]
+                                                                     :on_visual false}))}]
 
             ; highlight TODO and FIXME keywords
             [[:WinEnter :VimEnter] {:pattern "*"
@@ -116,28 +116,25 @@
 
 ; Note: make sure this is defined before the colorscheme is first set
 (ac.augroup :colorscheme-group
-            [:ColorScheme
-             {:pattern "*"
-              :callback (fn []
-                          (when (= vim.o.background "dark")
-                            (vim.api.nvim_set_hl 0 "Normal" {:bg "black"})
-                            (vim.api.nvim_set_hl 0 "VertSplit" {:fg "black"})
-                            (vim.api.nvim_set_hl 0 "Todo" {:fg "yellow"}))
-                          )}
+            [:ColorScheme {:pattern "*"
+                           :callback (fn []
+                                       (when (= vim.o.background "dark")
+                                         (vim.api.nvim_set_hl 0 "Normal" {:bg "black"})
+                                         (vim.api.nvim_set_hl 0 "VertSplit" {:fg "black"})
+                                         (vim.api.nvim_set_hl 0 "Todo" {:fg "yellow"}))
+                                       )}
 
              ; Add special highlight groups for diagnostic counts on the statusline
-             :ColorScheme
-             {:pattern "*"
-              :callback (fn []
-                          (fn get-color-attribute [hi-group attr]
-                            (. (vim.api.nvim_get_hl 0 {:name hi-group}) attr))
-
-                          (let [error-fg (get-color-attribute "DiagnosticError" "fg")
-                                warn-fg (get-color-attribute "DiagnosticWarn" "fg")
-                                statusline-bg (get-color-attribute "StatusLine" "bg")]
-                            (vim.api.nvim_set_hl 0 "StatusLineError" {:fg error-fg :bg statusline-bg})
-                            (vim.api.nvim_set_hl 0 "StatusLineWarn" {:fg warn-fg :bg statusline-bg})))
-              }])
+             :ColorScheme {:pattern "*"
+                           :callback (fn []
+                                       (let [color-attr (lambda [hl-group attr]
+                                                          (. (vim.api.nvim_get_hl 0 {:name hl-group}) attr))
+                                             error-fg (color-attr "DiagnosticError" "fg")
+                                             warn-fg (color-attr "DiagnosticWarn" "fg")
+                                             statusline-bg (color-attr "StatusLine" "bg")]
+                                         (vim.api.nvim_set_hl 0 "StatusLineError" {:fg error-fg :bg statusline-bg})
+                                         (vim.api.nvim_set_hl 0 "StatusLineWarn" {:fg warn-fg :bg statusline-bg})))
+                           }])
 
 (require :mappings)
 (require :packs)

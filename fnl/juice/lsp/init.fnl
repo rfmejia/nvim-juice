@@ -23,17 +23,16 @@
   ; lsp popup colors and borders
   (vim.cmd "hi NormalFloat ctermbg=black guibg=black")
   (vim.cmd "hi WinSeparator ctermbg=black ctermfg=69 guibg=black guifg=69")
-  (tset vim.lsp.handlers "textDocument/hover" (vim.lsp.with vim.lsp.handlers.hover {:border "rounded"}))
-  (tset vim.lsp.handlers "textDocument/signatureHelp" (vim.lsp.with vim.lsp.handlers.signature_help {:border "rounded"}))
+  (set vim.lsp.handlers.textDocument/hover (vim.lsp.with vim.lsp.handlers.hover {:border "rounded"}))
+  (set vim.lsp.handlers.textDocument/signatureHelp (vim.lsp.with vim.lsp.handlers.signature_help {:border "rounded"}))
   (vim.diagnostic.config {:float {:border "rounded"}})
   (scalametals.register-init-command))
-
 
 (defn set-buffer-opts [client bufnr]
   "Buffer-specific lsp options"
 
   ; Enable completion triggered by <c-x><c-o>
-  (tset vim.bo bufnr "omnifunc" "v:lua.vim.lsp.omnifunc")
+  (tset vim.bo bufnr :omnifunc "v:lua.vim.lsp.omnifunc")
 
   (nmap "gd" (lua-cmd "vim.lsp.buf.definition()") [noremap silent nowait])
   (nmap "gt" (lua-cmd "vim.lsp.buf.type_definition()") [noremap silent nowait])

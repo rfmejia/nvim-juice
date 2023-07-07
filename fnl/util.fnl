@@ -32,3 +32,7 @@
 (defn lua-cmd [str]
   "Wraps a Lua command string in a viml command string"
   (string.format "<cmd>lua %s<cr>" str))
+
+(defn lua-statusline [command]
+  "Wraps a Lua command string in vim statusline string"
+  (string.format "%%{luaeval(\"%s\")}" command))
