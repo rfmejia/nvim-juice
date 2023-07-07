@@ -122,10 +122,10 @@
                                          (vim.api.nvim_set_hl 0 "Normal" {:bg "black"})
                                          (vim.api.nvim_set_hl 0 "VertSplit" {:fg "black"})
                                          (vim.api.nvim_set_hl 0 "Todo" {:fg "yellow"}))
-                                       )}
+                                       )}]
 
-             ; Add special highlight groups for diagnostic counts on the statusline
-             :ColorScheme {:pattern "*"
+            ; Add special highlight groups for diagnostic counts on the statusline
+            [:ColorScheme {:pattern "*"
                            :callback (fn []
                                        (let [color-attr (lambda [hl-group attr]
                                                           (. (vim.api.nvim_get_hl 0 {:name hl-group}) attr))
