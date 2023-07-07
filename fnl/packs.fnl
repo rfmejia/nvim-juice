@@ -49,7 +49,7 @@
                 :ft ["clojure" "fennel"]}
 
                {1 "mbbill/undotree"
-                :config (lambda []
+                :config (fn []
                           (set vim.g.undotree_WindowLayout 4)
                           (set vim.g.undotree_SetFocusWhenToggle 1)
                           (nmap "<leader>u" ":UndotreeToggle<CR>" [noremap silent]))}
@@ -60,7 +60,7 @@
                 :dir "~/.fzf"
                 :build "./install --all"}
                {1 "junegunn/fzf.vim"
-                :config (lambda []
+                :config (fn []
                           (set vim.g.fzf_layout {:window {:width 0.9 :height 0.9}})
                           (set vim.g.fzf_preview_window ["up:50%" "ctrl-/"])
                           (nmap "<leader>f" ":Files<CR>" [noremap silent])
@@ -83,7 +83,7 @@
 
                {1 "nvim-treesitter/nvim-treesitter"
                 :build ":TSUpdate"
-                :config (lambda []
+                :config (fn []
                           (let [ts (require "nvim-treesitter.configs")
                                 languages ["bash"
                                            "dockerfile"
@@ -109,7 +109,7 @@
                             ))}
 
                {1 "neovim/nvim-lspconfig"
-                :config (lambda [] (lsp.setup))}
+                :config (fn [] (lsp.setup))}
 
                {1 "scalameta/nvim-metals"
                 :cmd "MetalsInit"

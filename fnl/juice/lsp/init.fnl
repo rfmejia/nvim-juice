@@ -28,23 +28,10 @@
   (vim.diagnostic.config {:float {:border "rounded"}})
   (scalametals.register-init-command))
 
-(defn get-statusline []
-  (fn get-metals-status []
-    (local status vim.g.metals_status)
-    (if (not (s.blank? status))
-      (.. status " ")
-      ""))
 
-  (table.concat ["%f"                                       ; filename
-                 ; "%#Todo#%m%{GitFileStatus()}%#StatusLine#" ; buffer modified flag
-                 "%q%h%r "                                  ; buffer type flags
-                 "%="                                       ; divider
-                 (.. (count-diagnostics) "%#StatusLine#")   ; error and warning counts
-                 " %l%c"                                    ; ruler
-                 ]))
-
-; buffer-specific lsp options
 (defn set-buffer-opts [client bufnr]
+  "Buffer-specific lsp options"
+
   ; Enable completion triggered by <c-x><c-o>
   (tset vim.bo bufnr "omnifunc" "v:lua.vim.lsp.omnifunc")
 

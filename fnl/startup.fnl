@@ -42,7 +42,7 @@
 (set vim.opt.wrap false)                      ; Do not wrap text
 (set vim.opt.linebreak true)                  ; When wrapping is turned on, wrap on a line break
 (set vim.opt.showcmd true)                    ; Show queued up command keystrokes
-(set vim.opt.laststatus 2)                   ; Always show the status line
+(set vim.opt.laststatus 2)                    ; Always show the status line
 (set vim.opt.switchbuf "uselast")             ; Jump to the previously used window when jumping to errors with |quickfix| commands
 
 ; search options
@@ -81,15 +81,15 @@
             [[:BufNewFile :BufRead] {:pattern ["*.sbt" "*.sc"]
                                      :command "setf scala"}])
 
-; highlight trailing whitespaces
 (defn- highlight-extra-whitespaces []
+  "Highlight trailing whitespaces"
   (vim.cmd "hi link ExtraWhitespace Error")
   (vim.cmd "match ExtraWhitespace /\\s\\+$/"))
 
 (ac.augroup :highlight-group
             ; highlight yanked text
             [:TextYankPost {:pattern "*"
-                            :callback (lambda [] (vim.highlight.on_yank {:timeout 200
+                            :callback (fn [] (vim.highlight.on_yank {:timeout 200
                                                                          :on_visual false}))}]
 
             ; highlight TODO and FIXME keywords
@@ -98,7 +98,7 @@
 
             [[:BufWinEnter :InsertLeave]
              {:pattern "*"
-              :callback (lambda []
+              :callback (fn []
                           (vim.cmd "hi link ExtraWhitespace Error")
                           (vim.cmd "match ExtraWhitespace /\\s\\+$/"))}]
 
@@ -118,7 +118,7 @@
 (ac.augroup :colorscheme-group
             [:ColorScheme
              {:pattern "*"
-              :callback (lambda []
+              :callback (fn []
                           (when (= vim.o.background "dark")
                             (vim.api.nvim_set_hl 0 "Normal" {:bg "black"})
                             (vim.api.nvim_set_hl 0 "VertSplit" {:fg "black"})
@@ -128,7 +128,7 @@
              ; Add special highlight groups for diagnostic counts on the statusline
              :ColorScheme
              {:pattern "*"
-              :callback (lambda []
+              :callback (fn []
                           (fn get-color-attribute [hi-group attr]
                             (. (vim.api.nvim_get_hl 0 {:name hi-group}) attr))
 
