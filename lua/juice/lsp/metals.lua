@@ -15,7 +15,7 @@ local function getStatusline()
     "%#Todo#%m%{GitFileStatus()}%#StatusLine#", -- buffer modified flag
     "%q%h%r ", -- buffer type flags
     "%=", -- divider
-    "%#DiagnosticInfo#" .. metalsStatus(), -- messages from nvim-metals
+    metalsStatus(), -- messages from nvim-metals
     require("juice.lsp").countDiagnostics() .. "%#StatusLine#", -- error and warning counts
     " %l,%c", -- ruler
   })

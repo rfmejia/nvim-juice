@@ -1,7 +1,7 @@
 local function getStatusLine()
   return table.concat({
     "%f", -- filename
-    "%#Todo#%m%{GitFileStatus()}%#StatusLine#", -- buffer modified flag
+    "%m%{GitFileStatus()}", -- buffer modified flag
     "%q%h%r ", -- buffer type flags
     "%=", -- divider
     require("juice.lsp").countDiagnostics(), -- error and warning counts
@@ -9,29 +9,30 @@ local function getStatusLine()
   })
 end
 
--- local function setupTreeSitter()
---   require("nvim-treesitter.configs").setup({
---     ensure_installed = {
---       "bash",
---       "c",
---       "help",
---       "javascript",
---       "json",
---       "html",
---       "lua",
---       "markdown",
---       "rust",
---       "scala",
---       "svelte",
---       "typescript",
---       "vim",
---       "yaml"
---     },
---     highlight = {
---       enable = true,
---     }
---   })
--- end
+local function setupTreeSitter()
+  require("nvim-treesitter.configs").setup({
+    ensure_installed = {
+      "bash",
+      "c",
+      "fennel",
+      "help",
+      "javascript",
+      "json",
+      "html",
+      "lua",
+      "markdown",
+      "rust",
+      "scala",
+      "svelte",
+      "typescript",
+      "vim",
+      "yaml"
+    },
+    highlight = {
+      enable = true,
+    }
+  })
+end
 
 local function setup()
   vim.go.laststatus = 2 -- Always have a statusline
@@ -52,7 +53,7 @@ local function setup()
     end,
   })
 
-  -- setupTreeSitter()
+  setupTreeSitter()
 
   -- Setup LSP
   require("juice.lsp").setup()
