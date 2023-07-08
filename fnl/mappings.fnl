@@ -6,6 +6,7 @@
 (local vmap u.vmap)
 (local noremap u.noremap)
 (local silent u.silent)
+(local executable? u.executable?)
 
 (set vim.g.mapleader " ")
 (set vim.g.maplocalleader ",")
@@ -47,12 +48,11 @@
 (nmap "<leader>dT" ":.!date '+\\%a, \\%d \\%b \\%Y' --date=" [])
 
 ; open external apps in a new tmux window
-(let [executable? (lambda [cmd] (= (vim.fn.executable cmd) 1))]
-  (when (executable? "tmux")
-    (when (executable? "lazygit")
-      (nmap "<leader>lg" ":!tmux neww lazygit<cr><cr>" [noremap silent]))
-    (when (executable? "sbtn")
-      (nmap "<leader>ls" ":!tmux neww sbtn<cr><cr>" [noremap silent]))))
+(when (executable? "tmux")
+  (when (executable? "lazygit")
+    (nmap "<leader>lg" ":!tmux neww lazygit<cr><cr>" [noremap silent]))
+  (when (executable? "sbtn")
+    (nmap "<leader>ls" ":!tmux neww sbtn<cr><cr>" [noremap silent])))
 
 ; easier moving of blocks in visual mode
 (vmap "<" "<gv" [noremap])

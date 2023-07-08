@@ -12,22 +12,17 @@
     {}
     ts))
 
-(defn map-key [mode key map opts]
-  "Merge mapping options and call Lua keymap API"
-  (let [merged (merge-tables opts)]
-    (vim.api.nvim_set_keymap mode key map merged)))
-
 (defn nmap [key map opts]
   "Defines a keymap in normal mode"
-  (map-key :n key map opts))
+  (vim.api.nvim_set_keymap :n key map (merge-tables opts)))
 
 (defn imap [key map opts]
   "Defines a keymap in insert mode"
-  (map-key :i key map opts))
+  (vim.api.nvim_set_keymap :i key map (merge-tables opts)))
 
 (defn vmap [key map opts]
   "Defines a keymap in visual mode"
-  (map-key :v key map opts))
+  (vim.api.nvim_set_keymap :v key map (merge-tables opts)))
 
 (defn lua-cmd [str]
   "Wraps a Lua command string in a viml command string"
@@ -36,3 +31,7 @@
 (defn lua-statusline [command]
   "Wraps a Lua command string in vim statusline string"
   (string.format "%%{luaeval(\"%s\")}" command))
+
+(defn executable? [cmd]
+  (= (vim.fn.executable cmd) 1))
+

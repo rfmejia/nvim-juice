@@ -26,6 +26,7 @@
   (set vim.lsp.handlers.textDocument/hover (vim.lsp.with vim.lsp.handlers.hover {:border "rounded"}))
   (set vim.lsp.handlers.textDocument/signatureHelp (vim.lsp.with vim.lsp.handlers.signature_help {:border "rounded"}))
   (vim.diagnostic.config {:float {:border "rounded"}})
+
   (scalametals.register-init-command))
 
 (defn set-buffer-opts [client bufnr]
