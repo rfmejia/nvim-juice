@@ -1,7 +1,6 @@
 (module packs
   {autoload {u util
-             lsp juice.lsp}
-   require-macros [aniseed.macros.autocmds]})
+             lsp juice.lsp}})
 
 (local nmap u.nmap)
 
@@ -31,8 +30,8 @@
      "\\(^\\|\\s\\s\\)\\zs\\.\\S\\+") ; hide dotfiles by adding to g:netrw_list_hide
 
 ; show key mappings inside netrw window
-(vim.api.nvim_create_autocmd :FileType 
-                             {:pattern "netrw" 
+(vim.api.nvim_create_autocmd :FileType
+                             {:pattern "netrw"
                               :command "nnoremap <buffer> ? :h netrw-quickmap<CR>"})
 
 ;; -----------------------------------------------------------------------------
@@ -46,7 +45,7 @@
                {1 "Olical/aniseed"
                 :priority 10000}
                {1 "Olical/conjure"
-                :ft ["clojure" "fennel"]}
+                :ft ["clojure" "fennel" "scheme"]}
 
                {1 "mbbill/undotree"
                 :config (fn []
@@ -114,7 +113,8 @@
                {1 "scalameta/nvim-metals"
                 :cmd "MetalsInit"
                 :dependencies ["nvim-lua/plenary.nvim"
-                               "nvim-lua/popup.nvim" 
+                               "nvim-lua/popup.nvim"
                                "mfussenegger/nvim-dap"]}
                ]]
-  (lazy.setup plugins))
+  (lazy.setup plugins)
+  (nmap "<leader>ll" ":Lazy<CR>" [noremap silent]))
