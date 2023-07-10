@@ -77,6 +77,11 @@
 
 ; -----------------------------------------------------------------------------
 ; USER COMMANDS & AUTOCOMMANDS
+
+; Remember the cursor position of the last editing
+(ac.autocmd :BufReadPost {:pattern "*"
+                          :command "if line(\"'\\\"\") | exe \"'\\\"\" | endif"})
+
 (vim.api.nvim_create_user_command :TrimTrailingWhitespaces ":%s/\\s\\+$" {})
 
 (ac.augroup :special-filetypes 
