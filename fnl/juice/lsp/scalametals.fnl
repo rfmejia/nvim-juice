@@ -39,7 +39,7 @@
 
 (defn initialize-metals []
   (set vim.go.shortmess (.. vim.go.shortmess "c"))
-  (set vim.opt.statusline (sl.build-statusline ["%{g:metals_status}" " "]))
+  (set vim.opt.statusline (sl.build-statusline ["%{g:metals_status}"]))
   (tset vim.g :metals_status "Initializing Metals...")
 
   ; TODO delete this if the following works

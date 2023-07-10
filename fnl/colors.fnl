@@ -13,8 +13,10 @@
                            :callback (fn []
                                        (when (= vim.o.background "dark")
                                          (vim.api.nvim_set_hl 0 "Normal" {:bg "black"})
+                                         (vim.api.nvim_set_hl 0 "MsgArea" {:fg "#909090"})
                                          (vim.api.nvim_set_hl 0 "CursorLine" {:bg "#0c0c0f"})
-                                         (vim.api.nvim_set_hl 0 "StatusLine" {:bg "black"})
+                                         (vim.api.nvim_set_hl 0 "MatchParen" {:fg "black" :bg "yellow"})
+                                         (vim.api.nvim_set_hl 0 "StatusLine" {:fg "#909090" :bg "black"})
                                          (vim.api.nvim_set_hl 0 "VertSplit" {:fg "black"})
                                          (vim.api.nvim_set_hl 0 "Todo" {:fg "yellow"}))
                                        )}]

@@ -30,6 +30,7 @@
         errors (u.lua-statusline "require('juice.statusline')['count-diagnostic'](vim.diagnostic.severity.ERROR)")
         warnings (u.lua-statusline "require('juice.statusline')['count-diagnostic'](vim.diagnostic.severity.WARN)")
         ruler "%l:%c"
+        widget-str (.. " " (s.join widgets) " ")
         default-color "%#StatusLine#"
         error-color "%#StatusLineError#"
         warn-color "%#StatusLineWarn#"
@@ -38,7 +39,7 @@
                   (git-file-status)
                   buffer-type-flags
                   align-right
-                  (s.join widgets)
+                  widget-str
                   error-color errors
                   warn-color warnings
                   default-color ruler]
