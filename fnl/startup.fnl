@@ -109,6 +109,11 @@
             [[:BufWinLeave :InsertEnter] {:pattern "*"
                                           :command "hi ExtraWhitespace ctermbg=NONE guibg=NONE"}])
 
+(ac.augroup :terminal-group
+            ; remove signcolumn in terminal mode
+            [:TermOpen {:pattern "*"
+                        :command "set signcolumn=no"}])
+
 (require :colors)
 (require :mappings)
 (require :packs)

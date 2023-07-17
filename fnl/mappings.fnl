@@ -44,6 +44,15 @@
 (nmap "<leader>J" ":blast<cr>" [noremap silent])
 (nmap "<leader>x" ":bp|bdelete #<cr>" [noremap silent])
 
+; terminal management
+(tmap "<C-o>" "<C-\\><C-n>" [noremap silent])
+(tmap "<C-h>" "<C-\\><C-n><C-w>h" [noremap silent])
+(tmap "<C-j>" "<C-\\><C-n><C-w>j" [noremap silent])
+(tmap "<C-k>" "<C-\\><C-n><C-w>k" [noremap silent])
+(tmap "<C-l>" "<C-\\><C-n><C-w>l" [noremap silent])
+(nmap "<leader>ls" ":split term://$SHELL<cr>A" [noremap silent])
+(nmap "<leader>lv" ":vsplit term://$SHELL<cr>A" [noremap silent])
+
 ; search/replace shortcuts
 (nmap "<leader>/s" ":s//g<left><left>" [noremap])
 (nmap "<leader>/s" ":%s//g<left><left>" [noremap])
