@@ -14,8 +14,8 @@
   ; setup default lsp key mappings
   (nmap "<f6>" (lua-cmd "vim.diagnostic.setqflist({severity = vim.diagnostic.severity.ERROR})") [noremap silent])
   (nmap "<f7>" (lua-cmd "vim.diagnostic.setloclist()") [noremap silent])
-  (nmap "<c-k>" (lua-cmd "vim.diagnostic.goto_prev({wrap = false})") [noremap silent])
-  (nmap "<c-j>" (lua-cmd "vim.diagnostic.goto_next({wrap = false})") [noremap silent])
+  (nmap "<localleader>k" (lua-cmd "vim.diagnostic.goto_prev({wrap = false})") [noremap silent])
+  (nmap "<localleader>j" (lua-cmd "vim.diagnostic.goto_next({wrap = false})") [noremap silent])
 
   ; lsp virtual text, error and warning styling
   (vim.cmd "hi Conceal cterm=italic ctermbg=none ctermfg=59 gui=italic guibg=none guifg=59")

@@ -45,8 +45,9 @@
 (set vim.opt.wrap false)                      ; Do not wrap text
 (set vim.opt.linebreak true)                  ; When wrapping is turned on, wrap on a line break
 (set vim.opt.showcmd true)                    ; Show queued up command keystrokes
-(set vim.opt.laststatus 2)                    ; Always show the status line
+(set vim.opt.laststatus 3)                    ; Show a single status line only
 (set vim.opt.switchbuf "uselast")             ; Jump to the previously used window when jumping to errors with |quickfix| commands
+(set vim.opt.statusline (sl.build-statusline []))
 
 ; search options
 (set vim.opt.hlsearch true)                   ; -
@@ -72,8 +73,6 @@
 (when (executable? "rg")
   (set vim.opt.grepprg "rg\\ --vimgrep\\ --no-heading")
   (set vim.opt.grepformat "%f:%l:%c:%m,%f:%l:%m"))
-
-(set vim.opt.statusline (sl.build-statusline []))
 
 ; -----------------------------------------------------------------------------
 ; USER COMMANDS & AUTOCOMMANDS

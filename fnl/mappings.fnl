@@ -4,6 +4,7 @@
 (local nmap u.nmap)
 (local imap u.imap)
 (local vmap u.vmap)
+(local tmap u.tmap)
 (local noremap u.noremap)
 (local silent u.silent)
 (local executable? u.executable?)
@@ -14,7 +15,7 @@
 (nmap "Y" "y$" [])
 (nmap "<F5>" ":make<cr>" [noremap])
 (nmap "<leader>w" ":w<cr>" [noremap silent])
-(nmap "<C-l>" ":nohl<cr>" [noremap silent])
+(nmap "<leader>n" ":nohl<cr>" [noremap silent])
 (nmap "<leader>e" ":Explore<cr><cr>" [noremap silent])
 
 ; mark management
@@ -28,6 +29,13 @@
 (nmap "<leader>ms" "mS:echo 'Marked register S'<cr>" [noremap])
 (nmap "<leader>mt" "mT:echo 'Marked register T'<cr>" [noremap])
 
+; window management
+(nmap "<C-h>" "<C-w>h" [noremap silent])
+(nmap "<C-j>" "<C-w>j" [noremap silent])
+(nmap "<C-k>" "<C-w>k" [noremap silent])
+(nmap "<C-l>" "<C-w>l" [noremap silent])
+(nmap "<C-p>" "<C-w>p" [noremap silent])
+
 ; buffer management
 (nmap "<leader>b" ":buffers<cr>:buffer<Space>" [noremap])
 (nmap "<leader>K" ":bfirst<cr>" [noremap silent])
@@ -37,11 +45,11 @@
 (nmap "<leader>x" ":bp|bdelete #<cr>" [noremap silent])
 
 ; search/replace shortcuts
-(nmap "<leader>/s" ":s//g<LEFT><LEFT>" [noremap])
-(nmap "<leader>/S" ":%s//g<LEFT><LEFT>" [noremap])
-(nmap "<leader>/l" ":.,+s//g<LEFT><LEFT><LEFT><LEFT>" [noremap])
-(nmap "<leader>/w" ":s/\\<<C-r><c-w>\\>//g<LEFT><LEFT>" [noremap])
-(nmap "<leader>/W" ":%s/\\<<C-r><C-w>\\>//g<LEFT><LEFT>" [noremap])
+(nmap "<leader>/s" ":s//g<left><left>" [noremap])
+(nmap "<leader>/s" ":%s//g<left><left>" [noremap])
+(nmap "<leader>/l" ":.,+s//g<left><left><left><left>" [noremap])
+(nmap "<leader>/w" ":s/\\<<c-r><c-w>\\>//g<left><left>" [noremap])
+(nmap "<leader>/w" ":%s/\\<<c-r><c-w>\\>//g<left><left>" [noremap])
 
 ; date shortcuts
 (nmap "<leader>dt" ":.!date '+\\%a, \\%d \\%b \\%Y'<cr>" [noremap])
@@ -50,9 +58,10 @@
 ; open external apps in a new tmux window
 (when (executable? "tmux")
   (when (executable? "lazygit")
-    (nmap "<leader>lg" ":!tmux neww lazygit<cr><cr>" [noremap silent]))
+    (nmap "<leader>lg" ":!tmux neww lazygit<cr>" [noremap silent]))
   (when (executable? "sbtn")
-    (nmap "<leader>ls" ":!tmux neww sbtn<cr><cr>" [noremap silent])))
+    (nmap "<leader>lS" ":vsplit term://sbtn<cr>" [noremap silent]))
+  )
 
 ; easier moving of blocks in visual mode
 (vmap "<" "<gv" [noremap])
