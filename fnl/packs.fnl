@@ -37,15 +37,17 @@
 ;; -----------------------------------------------------------------------------
 ; USER PLUGINS
 (let [lazy (require "lazy")
+      lisp-languages ["clojure" "fennel" "lisp" "scheme"]
       plugins [["tpope/vim-commentary"]
                ["tpope/vim-fugitive"]
                ["tpope/vim-surround"]
+               ["tpope/vim-repeat"]
 
                ; fennel plugins
                {1 "Olical/aniseed"
                 :priority 10000}
                {1 "Olical/conjure"
-                :ft ["clojure" "fennel" "scheme"]}
+                :ft lisp-languages}
 
                {1 "mbbill/undotree"
                 :config (fn []
@@ -69,7 +71,7 @@
                ; colorscheme
                {1 "projekt0n/github-nvim-theme"
                 :priority 1000
-                :config (lambda [] 
+                :config (fn []
                           (let [theme (require "github-theme")
                                 dark-palette {:github_dark_high_contrast {:bg0 "#0000FF" 
                                                                           :bg1 "#0000FF"
