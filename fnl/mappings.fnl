@@ -53,6 +53,9 @@
 (nmap "<leader>ls" ":split term://$SHELL<cr>A" [noremap silent])
 (nmap "<leader>lv" ":vsplit term://$SHELL<cr>A" [noremap silent])
 
+; quickfix
+(nmap "<leader>q" (u.lua-cmd "require('juice.quickfix')['toggle-window']()") [noremap])
+
 ; search/replace shortcuts
 (nmap "<leader>/s" ":s//g<left><left>" [noremap])
 (nmap "<leader>/s" ":%s//g<left><left>" [noremap])
@@ -67,9 +70,9 @@
 ; open external apps in a new tmux window
 (when (executable? "tmux")
   (when (executable? "lazygit")
-    (nmap "<leader>lg" ":!tmux neww lazygit<cr>" [noremap silent]))
+    (nmap "<leader>lg" ":!tmux neww lazygit<cr><cr>" [noremap silent]))
   (when (executable? "sbtn")
-    (nmap "<leader>lS" ":vsplit term://sbtn<cr>" [noremap silent]))
+    (nmap "<leader>lS" ":vsplit term://sbtn<cr><cr>" [noremap silent]))
   )
 
 ; easier moving of blocks in visual mode
