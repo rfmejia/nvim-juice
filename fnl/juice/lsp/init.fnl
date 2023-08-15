@@ -5,6 +5,7 @@
              scalametals juice.lsp.scalametals}})
 
 (local nmap u.nmap)
+(local imap u.imap)
 (local noremap u.noremap)
 (local silent u.silent)
 (local nowait u.nowait)
@@ -14,8 +15,9 @@
   ; setup default lsp key mappings
   (nmap "<f6>" (lua-cmd "vim.diagnostic.setqflist({severity = vim.diagnostic.severity.ERROR})") [noremap silent])
   (nmap "<f7>" (lua-cmd "vim.diagnostic.setloclist()") [noremap silent])
-  (nmap "<localleader>k" (lua-cmd "vim.diagnostic.goto_prev({wrap = false})") [noremap silent])
-  (nmap "<localleader>j" (lua-cmd "vim.diagnostic.goto_next({wrap = false})") [noremap silent])
+  (nmap "[d" (lua-cmd "vim.diagnostic.goto_prev({wrap = false})") [noremap silent])
+  (nmap "]d" (lua-cmd "vim.diagnostic.goto_next({wrap = false})") [noremap silent])
+  (imap "<C-space>" "<C-x><C-o>" [noremap silent])
 
   ; lsp virtual text, error and warning styling
   (vim.cmd "hi Conceal cterm=italic ctermbg=none ctermfg=59 gui=italic guibg=none guifg=59")

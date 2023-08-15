@@ -15,7 +15,8 @@
 (nmap "Y" "y$" [])
 (nmap "<F5>" ":make<cr>" [noremap])
 (nmap "<leader>w" ":w<cr>" [noremap silent])
-(nmap "<leader>n" ":nohl<cr>" [noremap silent])
+(nmap "<leader>n" "<C-6>" [noremap silent])
+(nmap "<leader>o" ":nohl<cr>" [noremap silent])
 (nmap "<leader>e" ":Explore<cr><cr>" [noremap silent])
 
 ; mark management
@@ -38,10 +39,10 @@
 
 ; buffer management
 (nmap "<leader>b" ":buffers<cr>:buffer<Space>" [noremap])
-(nmap "<leader>K" ":bfirst<cr>" [noremap silent])
-(nmap "<leader>k" ":bprevious<cr>" [noremap silent])
-(nmap "<leader>j" ":bnext<cr>" [noremap silent])
-(nmap "<leader>J" ":blast<cr>" [noremap silent])
+(nmap "[B" ":bfirst<cr>" [noremap silent])
+(nmap "]B" ":blast<cr>" [noremap silent])
+(nmap "[b" ":bprevious<cr>" [noremap silent])
+(nmap "]b" ":bnext<cr>" [noremap silent])
 (nmap "<leader>x" ":bp|bdelete #<cr>" [noremap silent])
 
 ; terminal management
@@ -54,7 +55,16 @@
 (nmap "<leader>lv" ":vsplit term://$SHELL<cr>A" [noremap silent])
 
 ; quickfix
-(nmap "<leader>q" (u.lua-cmd "require('juice.quickfix')['toggle-window']()") [noremap])
+(nmap "<leader>q" (u.lua-cmd "require('juice.quickfix')['toggle-qf-window']()") [noremap])
+(nmap "<leader>Q" (u.lua-cmd "require('juice.quickfix')['toggle-loclist-window']()") [noremap])
+(nmap "[q" ":cprevious" [noremap])
+(nmap "]q" ":cnext" [noremap])
+(nmap "[Q" ":cfirst" [noremap])
+(nmap "]Q" ":clast" [noremap])
+(nmap "[l" ":lprevious" [noremap])
+(nmap "]l" ":lnext" [noremap])
+(nmap "[L" ":lfirst" [noremap])
+(nmap "]L" ":llast" [noremap])
 
 ; search/replace shortcuts
 (nmap "<leader>/s" ":s//g<left><left>" [noremap])
