@@ -118,8 +118,7 @@
                {1 "scalameta/nvim-metals"
                 :cmd "MetalsInit"
                 :dependencies ["nvim-lua/plenary.nvim"
-                               "nvim-lua/popup.nvim"
-                               "mfussenegger/nvim-dap"]}
+                               "nvim-lua/popup.nvim"]}
                ]]
   (lazy.setup plugins)
   (nmap "<leader>ll" ":Lazy<CR>" [noremap silent]))
