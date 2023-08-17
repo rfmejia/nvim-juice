@@ -91,6 +91,7 @@
                                            "c"
                                            "dockerfile"
                                            "fennel"
+                                           "hocon"
                                            "javascript"
                                            "json"
                                            "git_config"
