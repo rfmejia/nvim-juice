@@ -71,7 +71,7 @@
 (nmap "<leader>/s" ":%s//g<left><left>" [noremap])
 (nmap "<leader>/l" ":.,+s//g<left><left><left><left>" [noremap])
 (nmap "<leader>/w" ":s/\\<<c-r><c-w>\\>//g<left><left>" [noremap])
-(nmap "<leader>/w" ":%s/\\<<c-r><c-w>\\>//g<left><left>" [noremap])
+(nmap "<leader>/W" ":%s/\\<<c-r><c-w>\\>//g<left><left>" [noremap])
 
 ; date shortcuts
 (nmap "<leader>dt" ":.!date '+\\%a, \\%d \\%b \\%Y'<cr>" [noremap])
