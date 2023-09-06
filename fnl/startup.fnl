@@ -9,7 +9,6 @@
 ; GENERAL OPTIONS
 (when (= (vim.fn.has "syntax") 1)
   (vim.cmd "syntax enable"))
-(vim.cmd "filetype plugin on")
 
 ; behavior
 (set vim.opt.hidden true)                     ; Allow switching off unwritten buffers
@@ -71,8 +70,19 @@
 
 ; use ripgrep
 (when (executable? "rg")
-  (set vim.opt.grepprg "rg\\ --vimgrep\\ --no-heading")
+  (set vim.opt.grepprg "rg\\ --vimgrep\\ --smart-case\\ --hidden\\ --follow\\ --no-heading\\ --vimgrep")
   (set vim.opt.grepformat "%f:%l:%c:%m,%f:%l:%m"))
+
+; -----------------------------------------------------------------------------
+; FILETYPE AUTOCOMMANDS
+
+(vim.cmd "filetype plugin on")
+(ac.augroup :ftplugins-group
+            [:FileType {:pattern "markdown"
+                        :callback (fn [] (require "juice.filetypes.markdown"))}]
+            [:FileType {:pattern "scala"
+                        :callback (fn [] (require "juice.filetypes.scala"))}]
+            )
 
 ; -----------------------------------------------------------------------------
 ; USER COMMANDS & AUTOCOMMANDS
