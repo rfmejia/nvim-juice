@@ -3,6 +3,8 @@
              s aniseed.string
              u util}})
 
+; TODO Consider tying this to an autocmd for every BufEnter and writing it to a
+; global variable the statusline can read instead
 (defn git-file-status []
   "Returns the git flag(s) of the current file"
   (let [path (vim.fn.expand "%:p")
@@ -36,7 +38,7 @@
         warn-color "%#StatusLineWarn#"
         template [filename
                   buffer-modified-flags
-                  (git-file-status)
+                  (git-file-status) ; FIXME Only updated once; might need to update every BufEnter
                   buffer-type-flags
                   align-right
                   widget-str
