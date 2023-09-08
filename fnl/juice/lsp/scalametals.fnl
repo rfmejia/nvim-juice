@@ -7,6 +7,7 @@
    import-macros [[ac :aniseed.macros.autocmds]]})
 
 (defn initialize-metals []
+  (set vim.opt.signcolumn "yes:1")
   (set vim.go.shortmess (.. vim.go.shortmess "c"))
   (set vim.opt.statusline (sl.build-statusline ["%{g:metals_status}"]))
   (tset vim.g :metals_status "Initializing Metals...")
