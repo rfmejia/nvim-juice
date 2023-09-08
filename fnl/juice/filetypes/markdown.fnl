@@ -1,11 +1,6 @@
 (module markdown
   {autoload {a aniseed.core
-             u util}
-   import-macros [[ac :aniseed.macros.autocmds]]})
-
-(local nmap u.nmap)
-(local noremap u.noremap)
-(local silent u.silent)
+             u util}})
 
 (set vim.opt.shiftwidth 2)
 (set vim.opt.tabstop 2)
@@ -31,12 +26,11 @@
     ))
 
 (defn load-journal-tools []
-  (nmap "<localleader>m" (u.lua-cmd "require('juice.filetypes.markdown')['insert-yaml-metadata']()") [noremap silent])
-  (nmap "<localleader>v" (u.lua-cmd "require('juice.filetypes.markdown')['render-markdown-to-html']()") [noremap silent])
-  (nmap "<localleader>d" ":r!date '+\\%a, \\%d \\%b \\%Y' | xargs -0 printf '----\\n\\n\\%s\\n\\n'<cr>O" [noremap silent])
+  (u.nmap "<localleader>m" (u.lua-cmd "require('juice.filetypes.markdown')['insert-yaml-metadata']()") [u.noremap u.silent])
+  (u.nmap "<localleader>v" (u.lua-cmd "require('juice.filetypes.markdown')['render-markdown-to-html']()") [u.noremap u.silent])
+  (u.nmap "<localleader>d" ":r!date '+\\%a, \\%d \\%b \\%Y' | xargs -0 printf '----\\n\\n\\%s\\n\\n'<cr>O" [u.noremap u.silent])
   (vim.api.nvim_del_user_command :LoadJournalTools)
   (a.println "Loaded journal tools")
   )
 
-; (vim.api.nvim_create_user_command :LoadJournalTools "lua require('juice.filetypes.markdown')['load-journal-tools']()" {})
 (vim.api.nvim_create_user_command :LoadJournalTools load-journal-tools {:bang true})

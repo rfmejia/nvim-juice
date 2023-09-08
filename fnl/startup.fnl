@@ -74,17 +74,6 @@
   (set vim.opt.grepformat "%f:%l:%c:%m,%f:%l:%m"))
 
 ; -----------------------------------------------------------------------------
-; FILETYPE AUTOCOMMANDS
-
-(vim.cmd "filetype plugin on")
-(ac.augroup :ftplugins-group
-            [:FileType {:pattern "markdown"
-                        :callback (fn [] (require "juice.filetypes.markdown"))}]
-            [:FileType {:pattern "scala"
-                        :callback (fn [] (require "juice.filetypes.scala"))}]
-            )
-
-; -----------------------------------------------------------------------------
 ; USER COMMANDS & AUTOCOMMANDS
 
 ; Remember the cursor position of the last editing
@@ -96,10 +85,12 @@
 (ac.augroup :special-filetypes 
             [[:BufNewFile :BufRead] {:pattern ["*.txt" "*.text"] 
                                      :command "setf text"}]
+            [[:BufNewFile :BufRead] {:pattern ["*bash_profile" "*.bash"] 
+                                     :command "setf bash"}]
             [[:BufNewFile :BufRead] {:pattern "tmux.conf"
                                      :command "setf tmux"}]
             [[:BufNewFile :BufRead] {:pattern ["*.sbt" "*.sc"]
-                                     :command "setf scala"}])
+                                     :command "set ft=scala"}])
 
 (ac.augroup :highlight-group
             ; highlight yanked text
@@ -125,5 +116,6 @@
                         :command "set signcolumn=no"}])
 
 (require :colors)
+(require :juice.filetypes)
 (require :mappings)
 (require :packs)

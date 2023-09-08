@@ -38,7 +38,6 @@
 ;; -----------------------------------------------------------------------------
 ; USER PLUGINS
 (let [lazy (require "lazy")
-      lisp-languages ["clojure" "fennel" "lisp" "scheme"]
       plugins [["tpope/vim-commentary"]
                ["tpope/vim-fugitive"]
                ["tpope/vim-surround"]
@@ -48,7 +47,7 @@
                {1 "Olical/aniseed"
                 :priority 10000}
                {1 "Olical/conjure"
-                :ft lisp-languages}
+                :ft ["clojure" "fennel" "lisp" "scheme"]}
 
                {1 "mbbill/undotree"
                 :config (fn []

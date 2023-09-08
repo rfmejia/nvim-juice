@@ -6,18 +6,13 @@
              metals metals}
    import-macros [[ac :aniseed.macros.autocmds]]})
 
-(local nmap u.nmap)
-(local noremap u.noremap)
-(local silent u.silent)
-(local lua-cmd u.lua-cmd)
-
 (defn initialize-metals []
   (set vim.go.shortmess (.. vim.go.shortmess "c"))
   (set vim.opt.statusline (sl.build-statusline ["%{g:metals_status}"]))
   (tset vim.g :metals_status "Initializing Metals...")
 
   ; TODO delete this if the following works
-  (nmap "<localleader>cw" (lua-cmd "require('metals').hover_worksheet()") [noremap silent])
+  (u.nmap "<localleader>cw" (u.lua-cmd "require('metals').hover_worksheet()") [u.noremap u.silent])
 
   (local config (metals.bare_config))
   (set config.settings {:showImplicitArguments true
@@ -35,5 +30,5 @@
 
 (defn register-init-command []
   (vim.api.nvim_create_user_command :MetalsInit
-                                    (lambda [opts] (initialize-metals))
+                                    (fn [] (initialize-metals))
                                     {:desc "Start and connect to a Metals server"}))
