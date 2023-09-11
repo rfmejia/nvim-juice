@@ -3,11 +3,9 @@
              u util}
    import-macros [[ac :aniseed.macros.autocmds]]})
 
-(local executable? u.executable?)
-
 ; -----------------------------------------------------------------------------
 ; GENERAL OPTIONS
-(when (= (vim.fn.has "syntax") 1)
+(when (u.has? "syntax")
   (vim.cmd "syntax enable"))
 
 ; behavior
@@ -26,11 +24,12 @@
 (set vim.opt.ttyfast true)                    ; -
 (set vim.opt.ttimeoutlen 50)                  ; -
 (set vim.opt.mouse "")                        ; Disable mouse
+(set vim.opt.shortmess "f")                   ; 
 
-(when (= (vim.fn.has "clipboard") 1)
+(when (u.has? "clipboard")
   (set vim.opt.clipboard "unnamedplus"))      ; Use Linux system clipboard
 
-(when (= (vim.fn.has "persistent_undo") 1)
+(when (u.has? "persistent_undo")
   (set vim.opt.undolevels 5000)               ; Increase the number of undos
   (set vim.opt.undofile true))                ; Persist undo logs per file inside `undodir`
 
@@ -69,7 +68,7 @@
 (set vim.opt.wildoptions "pum")               ; use popup to show results
 
 ; use ripgrep
-(when (executable? "rg")
+(when (u.executable? "rg")
   (set vim.opt.grepprg "rg\\ --vimgrep\\ --smart-case\\ --hidden\\ --follow\\ --no-heading\\ --vimgrep")
   (set vim.opt.grepformat "%f:%l:%c:%m,%f:%l:%m"))
 

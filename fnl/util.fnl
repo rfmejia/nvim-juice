@@ -39,3 +39,6 @@
 (defn executable? [cmd]
   (= (vim.fn.executable cmd) 1))
 
+(defn has? [cmd]
+  (= (vim.fn.has cmd) 1))
+

@@ -2,8 +2,6 @@
   {autoload {u util
              lsp juice.lsp}})
 
-(local nmap u.nmap)
-
 ;; -----------------------------------------------------------------------------
 ; BUILTIN PLUGINS
 
@@ -53,7 +51,7 @@
                 :config (fn []
                           (set vim.g.undotree_WindowLayout 4)
                           (set vim.g.undotree_SetFocusWhenToggle 1)
-                          (nmap "<leader>u" ":UndotreeToggle<CR>" [noremap silent]))}
+                          (u.nmap "<leader>u" ":UndotreeToggle<CR>" [noremap silent]))}
 
                ; fuzzy finder
                {1 "junegunn/fzf"
@@ -64,9 +62,9 @@
                 :config (fn []
                           (set vim.g.fzf_layout {:window {:width 0.9 :height 0.9}})
                           (set vim.g.fzf_preview_window ["up:50%" "ctrl-/"])
-                          (nmap "<leader>f" ":Files<CR>" [noremap silent])
-                          (nmap "<leader>g" ":GFiles<CR>" [noremap silent])
-                          (nmap "<leader>p" ":History<CR>" [noremap silent]))}
+                          (u.nmap "<leader>f" ":Files<CR>" [noremap silent])
+                          (u.nmap "<leader>g" ":GFiles<CR>" [noremap silent])
+                          (u.nmap "<leader>p" ":History<CR>" [noremap silent]))}
 
                ; colorscheme
                {1 "projekt0n/github-nvim-theme"
@@ -121,4 +119,4 @@
                                "nvim-lua/popup.nvim"]}
                ]]
   (lazy.setup plugins)
-  (nmap "<leader>ll" ":Lazy<CR>" [noremap silent]))
+  (u.nmap "<leader>ll" ":Lazy<CR>" [noremap silent]))

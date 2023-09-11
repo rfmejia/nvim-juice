@@ -28,7 +28,6 @@
 (defn load-journal-tools []
   (u.nmap "<localleader>m" (u.lua-cmd "require('juice.filetypes.markdown')['insert-yaml-metadata']()") [u.noremap u.silent])
   (u.nmap "<localleader>v" (u.lua-cmd "require('juice.filetypes.markdown')['render-markdown-to-html']()") [u.noremap u.silent])
-  (u.nmap "<localleader>d" ":r!date '+\\%a, \\%d \\%b \\%Y' | xargs -0 printf '----\\n\\n\\%s\\n\\n'<cr>O" [u.noremap u.silent])
   (vim.api.nvim_del_user_command :LoadJournalTools)
   (a.println "Loaded journal tools")
   )
