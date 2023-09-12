@@ -22,4 +22,4 @@
                                                                (->> (vim.fn.expand "%:p")
                                                                     (run-scalafmt)))})
 
-(vim.api.nvim_set_keymap "n" "<localleader>cs" ":'<,'>sort<cr>" {})
+(vim.api.nvim_set_keymap "n" "<localleader>cs" "vip:sort<cr>" {})
