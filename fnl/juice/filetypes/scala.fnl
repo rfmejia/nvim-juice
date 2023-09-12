@@ -7,6 +7,8 @@
 (set vim.opt.tabstop 2)
 (set vim.opt.expandtab true)
 (set vim.opt.textwidth 100)
+(set vim.opt.signcolumn "yes:1")
+
 
 (defn run-scalafmt [path]
   (let [filename (if (s.blank? path) (vim.fn.expand "%:p")
