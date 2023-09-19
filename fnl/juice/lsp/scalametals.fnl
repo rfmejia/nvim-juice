@@ -4,7 +4,7 @@
              lsp juice.lsp
              sl juice.statusline
              metals metals}
-   import-macros [[ac :aniseed.macros.autocmds]]})
+   })
 
 (defn initialize-metals []
   (set vim.opt.signcolumn "yes:1")
