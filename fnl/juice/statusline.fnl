@@ -38,7 +38,7 @@
         warn-color "%#StatusLineWarn#"
         template [filename
                   buffer-modified-flags
-                  (git-file-status) ; FIXME Only updated once; might need to update every BufEnter
+                  ; (git-file-status) ; FIXME Only updated once; might need to update every BufEnter
                   buffer-type-flags
                   align-right
                   widget-str

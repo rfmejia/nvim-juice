@@ -9,7 +9,6 @@
 (set vim.g.loaded_2html_plugin 1)
 (set vim.g.loaded_getscript 1)
 (set vim.g.loaded_getscriptPlugin 1)
-(set vim.g.loaded_gzip 1)
 (set vim.g.loaded_logiPat 1)
 (set vim.g.loaded_rrhelper 1)
 (set vim.g.loaded_tar 1)
@@ -111,6 +110,7 @@
 
                ; language servers
                {1 "neovim/nvim-lspconfig"
+                :ft [:scala]
                 :config (fn [] (lsp.setup))}
 
                {1 "scalameta/nvim-metals"
