@@ -13,10 +13,11 @@
 
 (defn setup []
   ; setup default lsp key mappings
-  (nmap "<f6>" (lua-cmd "vim.diagnostic.setqflist({severity = vim.diagnostic.severity.ERROR})") [noremap silent])
-  (nmap "<f7>" (lua-cmd "vim.diagnostic.setloclist()") [noremap silent])
-  (nmap "[d" (lua-cmd "vim.diagnostic.goto_prev({wrap = false})") [noremap silent])
-  (nmap "]d" (lua-cmd "vim.diagnostic.goto_next({wrap = false})") [noremap silent])
+  (nmap "<localleader>dd" vim.diagnostic.setqflist [noremap silent])
+  (nmap "<localleader>de" (fn [] (vim.diagnostic.setqflist {:severity vim.diagnostic.severity.ERROR})) [noremap silent])
+  (nmap "<localleader>dl" vim.diagnostic.setloclist [noremap silent])
+  (nmap "[d" (fn [] (vim.diagnostic.goto_prev {:wrap false})) [noremap silent])
+  (nmap "]d" (fn [] (vim.diagnostic.goto_next {:wrap false})) [noremap silent])
   (imap "<C-space>" "<C-x><C-o>" [noremap silent])
 
   ; lsp virtual text, error and warning styling
@@ -35,15 +36,16 @@
   "Buffer-specific lsp options"
 
   ; Enable completion triggered by <c-x><c-o>
-  (tset vim.bo bufnr :omnifunc "v:lua.vim.lsp.omnifunc")
+  (vim.api.nvim_buf_set_option bufnr "omnifunc" "v:lua.vim.lsp.omnifunc")
 
-  (nmap "gd" (lua-cmd "vim.lsp.buf.definition()") [noremap silent nowait])
-  (nmap "gt" (lua-cmd "vim.lsp.buf.type_definition()") [noremap silent nowait])
-  (nmap "gi" (lua-cmd "vim.lsp.buf.implementation()") [noremap silent])
-  (nmap "gr" (lua-cmd "vim.lsp.buf.references()") [noremap silent])
-  (nmap "gs" (lua-cmd "vim.lsp.buf.document_symbol()") [noremap silent])
-  (nmap "gS" (lua-cmd "vim.lsp.buf.workspace_symbol()") [noremap silent])
-  (nmap "K" (lua-cmd "vim.lsp.buf.hover()") [noremap silent])
-  (nmap "<localleader>ca" (lua-cmd "vim.lsp.buf.code_action()") [noremap silent])
-  (nmap "<localleader>cr" (lua-cmd "vim.lsp.buf.rename()") [noremap silent])
-  (nmap "<localleader>cf" (lua-cmd "vim.lsp.buf.format({async = true})") [noremap silent]))
+  (nmap "gd" vim.lsp.buf.definition [noremap silent nowait])
+  (nmap "gt" vim.lsp.buf.type_definition [noremap silent nowait])
+  (nmap "gi" vim.lsp.buf.implementation [noremap silent])
+  (nmap "gr" vim.lsp.buf.references [noremap silent])
+  (nmap "gs" vim.lsp.buf.document_symbol [noremap silent])
+  (nmap "gS" vim.lsp.buf.workspace_symbol [noremap silent])
+  (nmap "K" vim.lsp.buf.hover [noremap silent])
+  (nmap "<localleader>ca" vim.lsp.buf.code_action [noremap silent])
+  (nmap "<localleader>cs" vim.lsp.buf.signature_help [noremap silent])
+  (nmap "<localleader>cr" vim.lsp.buf.rename [noremap silent])
+  (nmap "<localleader>cf" (fn [] (vim.lsp.buf.format {:async true})) [noremap silent]))

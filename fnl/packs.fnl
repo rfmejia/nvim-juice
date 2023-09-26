@@ -21,11 +21,11 @@
 
 ; netrw
 (set vim.g.netrw_altfile 1)        ; C-^ skips netrw (return to last edited file)
-(set vim.g.netrw_banner 0)         ; hide banner
+; (set vim.g.netrw_banner 0)         ; hide banner
 (set vim.g.netrw_sort_by "exten")  ; sort by extension
 (set vim.g.netrw_sort_options "i") ; add sort options (i = ignore case)
-(set vim.g.netrw_list_hide
-     "\\(^\\|\\s\\s\\)\\zs\\.\\S\\+") ; hide dotfiles by adding to g:netrw_list_hide
+; (set vim.g.netrw_list_hide
+;      "\\(^\\|\\s\\s\\)\\zs\\.\\S\\+") ; hide dotfiles by adding to g:netrw_list_hide
 
 ; show key mappings inside netrw window
 (vim.api.nvim_create_autocmd :FileType

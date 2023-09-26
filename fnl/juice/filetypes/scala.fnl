@@ -23,5 +23,4 @@
 (vim.api.nvim_set_keymap "n" "<localleader>cf" "" {:callback (fn [] 
                                                                (->> (vim.fn.expand "%:p")
                                                                     (run-scalafmt)))})
-
-(vim.api.nvim_set_keymap "n" "<localleader>cs" "vip:sort<cr>" {})
+(u.nmap "<localleader>s" "vip:sort<cr>" [u.nowait u.silent])

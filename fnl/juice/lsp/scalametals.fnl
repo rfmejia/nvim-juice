@@ -12,20 +12,32 @@
   (set vim.opt.statusline (sl.build-statusline ["%{g:metals_status}"]))
   (tset vim.g :metals_status "Initializing Metals...")
 
-  ; TODO delete this if the following works
-  (u.nmap "<localleader>cw" (u.lua-cmd "require('metals').hover_worksheet()") [u.noremap u.silent])
-
   (local config (metals.bare_config))
   (set config.settings {:showImplicitArguments true
+                        :showImplicitConversionsAndClasses true
                         :showInferredType true
                         :decorationColor "Conceal"
+                        :serverVersion "latest.snapshot"
                         :scalafixRulesDependencies ["com.nequissimus::sort-imports:0.6.1"]
                         })
   (set config.init_options.statusBarProvider "on")
   (set config.capabilities (vim.lsp.protocol.make_client_capabilities))
+  (tset config :tvp {:panel_alignment "right"
+                     :toggle_node_mapping "<CR>"
+                     :node_command_mapping "r"
+                     })
 
-  (set config.on_attach (lambda [client bufnr]
-                          (lsp.set-buffer-opts client bufnr)))
+
+  (fn on-attach [client bufnr]
+    (lsp.set-buffer-opts client bufnr)
+    (u.vmap "K" (. (require :metals) :type_of_range) [u.noremap u.silent])
+    (u.nmap "<localleader>cw" (fn [] ((. (require :metals) :hover_worksheet) {:border "rounded"})) [u.noremap u.silent])
+    (u.nmap "<localleader>mm" (. (require :metals) :commands) [u.noremap u.silent])
+    (u.nmap "<localleader>tt" (. (require :metals.tvp) :toggle_tree_view) [u.noremap u.silent])
+    (u.nmap "<localleader>tr" (. (require :metals.tvp) :reveal_in_tree) [u.noremap u.silent])
+    )
+
+  (set config.on_attach on-attach)
 
   (metals.initialize_or_attach config))
 

@@ -14,19 +14,19 @@
 
 (defn nmap [key map opts]
   "Defines a keymap in normal mode"
-  (vim.api.nvim_set_keymap :n key map (merge-tables opts)))
+  (vim.keymap.set :n key map (merge-tables opts)))
 
 (defn imap [key map opts]
   "Defines a keymap in insert mode"
-  (vim.api.nvim_set_keymap :i key map (merge-tables opts)))
+  (vim.keymap.set :i key map (merge-tables opts)))
 
 (defn vmap [key map opts]
   "Defines a keymap in visual mode"
-  (vim.api.nvim_set_keymap :v key map (merge-tables opts)))
+  (vim.keymap.set :v key map (merge-tables opts)))
 
 (defn tmap [key map opts]
   "Defines a keymap in terminal mode"
-  (vim.api.nvim_set_keymap :t key map (merge-tables opts)))
+  (vim.keymap.set :t key map (merge-tables opts)))
 
 (defn lua-cmd [str]
   "Wraps a Lua command string in a viml command string"
