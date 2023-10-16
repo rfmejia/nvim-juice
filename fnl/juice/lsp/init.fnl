@@ -11,6 +11,14 @@
 (local nowait u.nowait)
 (local lua-cmd u.lua-cmd)
 
+(defn setup-go []
+  (let [lspconfig (require :lspconfig)
+        settings {:gopls {:analyses {:unusedparams true}
+                          :staticcheck true}}]
+    (lspconfig.gopls.setup {: settings })
+    (set vim.opt.signcolumn "yes:1")
+    ))
+
 (defn setup []
   ; setup default lsp key mappings
   (nmap "<localleader>dd" vim.diagnostic.setqflist [noremap silent])
@@ -24,19 +32,19 @@
   (vim.cmd "hi Conceal cterm=italic ctermbg=none ctermfg=59 gui=italic guibg=none guifg=59")
 
   ; lsp popup colors and borders
-  (vim.cmd "hi NormalFloat ctermbg=black guibg=black")
   (vim.cmd "hi WinSeparator ctermbg=black ctermfg=69 guibg=black guifg=69")
   (set vim.lsp.handlers.textDocument/hover (vim.lsp.with vim.lsp.handlers.hover {:border "rounded"}))
   (set vim.lsp.handlers.textDocument/signatureHelp (vim.lsp.with vim.lsp.handlers.signature_help {:border "rounded"}))
   (vim.diagnostic.config {:float {:border "rounded"}})
 
-  (scalametals.register-init-command))
+  (scalametals.register-init-command)
+  (setup-go))
 
 (defn set-buffer-opts [client bufnr]
   "Buffer-specific lsp options"
 
   ; Enable completion triggered by <c-x><c-o>
-  (vim.api.nvim_buf_set_option bufnr "omnifunc" "v:lua.vim.lsp.omnifunc")
+  ; (vim.api.nvim_buf_set_option bufnr "omnifunc" "v:lua.vim.lsp.omnifunc")
 
   (nmap "gd" vim.lsp.buf.definition [noremap silent nowait])
   (nmap "gt" vim.lsp.buf.type_definition [noremap silent nowait])

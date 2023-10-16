@@ -93,6 +93,7 @@
                                            "git_config"
                                            "gitcommit"
                                            "gitignore"
+                                           "go"
                                            "html"
                                            "lua"
                                            "markdown"
@@ -110,13 +111,15 @@
 
                ; language servers
                {1 "neovim/nvim-lspconfig"
-                :ft [:scala]
+                :ft [:go :scala]
                 :config (fn [] (lsp.setup))}
 
                {1 "scalameta/nvim-metals"
                 :cmd "MetalsInit"
                 :dependencies ["nvim-lua/plenary.nvim"
                                "nvim-lua/popup.nvim"]}
+
                ]]
+
   (lazy.setup plugins)
   (u.nmap "<leader>ll" ":Lazy<CR>" [noremap silent]))
