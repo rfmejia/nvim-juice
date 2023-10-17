@@ -9,6 +9,7 @@
                     :linenr-bg "#000000"
                     :cursor-fg "#606060"
                     :cursor-bg "#0c0c0f"
+                    :spell-bad "#bb4466"
                     })
 
 ; (vim.cmd "hi CursorLine cterm=NONE ctermbg=234 guibg=#1c1c1c")
@@ -32,6 +33,8 @@
                                            (vim.api.nvim_set_hl 0 "LineNr" {:fg c.linenr-fg :bg c.cursor-bg})
                                            (vim.api.nvim_set_hl 0 "LineNrAbove" {:fg c.linenr-fg :bg c.linenr-bg})
                                            (vim.api.nvim_set_hl 0 "LineNrBelow" {:fg c.linenr-fg :bg c.linenr-bg})
+
+                                           (vim.api.nvim_set_hl 0 "SpellBad" {:fg c.spell-bad :undercurl true})
                                            )
                                        )}]
 
