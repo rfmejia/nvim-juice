@@ -10,6 +10,7 @@
 (set vim.opt.spelllang "en_us")
 (set vim.opt.signcolumn "no")
 
+; TODO fix and verify this works
 (defn render-markdown-to-html []
   (let [tmp-file (vim.fn.system ["mktemp" "--suffix=.html"])
         current-file (vim.fn.expand "%:p")]
@@ -29,8 +30,6 @@
   (u.nmap "<localleader>m" (u.lua-cmd "require('juice.filetypes.markdown')['insert-yaml-metadata']()") [u.noremap u.silent])
   (u.nmap "<localleader>v" (u.lua-cmd "require('juice.filetypes.markdown')['render-markdown-to-html']()") [u.noremap u.silent])
   (u.nmap "<localleader>d" ":r!date '+\\%a, \\%d \\%b \\%Y' | xargs -0 printf '----\\n\\n\\%s\\n\\n'<cr>O" [u.noremap u.silent])
-  (vim.api.nvim_del_user_command :LoadJournalTools)
-  (a.println "Loaded journal tools")
-  )
+  (vim.api.nvim_del_user_command :LoadJournalTools))
 
 (vim.api.nvim_create_user_command :LoadJournalTools load-journal-tools {:bang true})
