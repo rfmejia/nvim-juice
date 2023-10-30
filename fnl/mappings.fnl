@@ -19,6 +19,9 @@
 (nmap "<leader>o" ":nohl<cr>" [noremap silent])
 (nmap "<leader>e" ":Explore<cr><cr>" [noremap silent])
 
+; Map omnifunc 
+(imap "<C-i>" "<C-x><C-o>" [noremap silent])
+
 ; mark management
 (nmap "<leader>mm" ":marks ARST<cr>" [noremap])
 (nmap "<leader>a" "`A" [noremap])

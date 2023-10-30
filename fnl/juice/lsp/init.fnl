@@ -43,9 +43,6 @@
 (defn set-buffer-opts [client bufnr]
   "Buffer-specific lsp options"
 
-  ; Enable completion triggered by <c-x><c-o>
-  ; (vim.api.nvim_buf_set_option bufnr "omnifunc" "v:lua.vim.lsp.omnifunc")
-
   (nmap "gd" vim.lsp.buf.definition [noremap silent nowait])
   (nmap "gt" vim.lsp.buf.type_definition [noremap silent nowait])
   (nmap "gi" vim.lsp.buf.implementation [noremap silent])
@@ -55,5 +52,5 @@
   (nmap "K" vim.lsp.buf.hover [noremap silent])
   (nmap "<localleader>ca" vim.lsp.buf.code_action [noremap silent])
   (nmap "<localleader>cs" vim.lsp.buf.signature_help [noremap silent])
-  (nmap "<localleader>cr" vim.lsp.buf.rename [noremap silent])
+  (nmap "<localleader>cr" vim.lsp.buf.rename [noremap])
   (nmap "<localleader>cf" (fn [] (vim.lsp.buf.format {:async true})) [noremap silent]))
