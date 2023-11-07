@@ -18,6 +18,13 @@
 (nmap "<leader>n" "<C-6>" [noremap silent])
 (nmap "<leader>o" ":nohl<cr>" [noremap silent])
 (nmap "<leader>e" ":Explore<cr><cr>" [noremap silent])
+(nmap "<C-d>" "<C-d>zz" [noremap silent])
+(nmap "<C-u>" "<C-u>zz" [noremap silent])
+
+; Disable default mappings to train optimal alternatives
+(nmap "{" (fn [] (print "Use C-u or relative jumps instead")) [noremap silent])
+(nmap "}" (fn [] (print "Use C-d or relative jumps instead")) [noremap silent])
+(nmap "0" (fn [] (print "Use _ instead")) [noremap silent])
 
 ; Map omnifunc 
 (imap "<C-i>" "<C-x><C-o>" [noremap silent])

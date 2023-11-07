@@ -5,7 +5,7 @@
 (set vim.opt.background "dark")
 
 (def custom-colors {:default-bg :black
-                    :linenr-fg "#2d2d2d"
+                    :linenr-fg "#3d3d3d"
                     :linenr-bg "#000000"
                     :cursor-fg "#606060"
                     :cursor-bg "#0c0c0f"
