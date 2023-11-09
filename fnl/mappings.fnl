@@ -27,7 +27,7 @@
 (nmap "0" (fn [] (print "Use _ instead")) [noremap silent])
 
 ; Map omnifunc 
-(imap "<C-i>" "<C-x><C-o>" [noremap silent])
+(imap "<C-t>" "<C-x><C-o>" [noremap silent])
 
 ; mark management
 (nmap "<leader>mm" ":marks ARST<cr>" [noremap])
