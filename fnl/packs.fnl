@@ -125,6 +125,17 @@
                 :dependencies ["nvim-lua/plenary.nvim"
                                "nvim-lua/popup.nvim"]}
 
+               {1 "tpope/vim-dadbod"
+                :cmd [:DB :DBUI]}
+               {1 "kristijanhusak/vim-dadbod-ui"
+                :cmd [:DB :DBUI]
+                :config (fn []
+                          (u.nmap "<localleader>d" ":DBUIToggle<CR>" [noremap silent])
+                          (set vim.g.db_ui_use_nvim_notify 1)
+                          (vim.cmd "setlocal omnifunc=vim_dadbod_completion#omni")
+                          )}
+               {1 "kristijanhusak/vim-dadbod-completion"
+                :cmd [:DB :DBUI]}
                ]]
 
   (lazy.setup plugins)
