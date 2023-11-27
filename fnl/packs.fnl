@@ -108,7 +108,14 @@
                                        })
                             ))}
 
-               ; language servers
+               {1 "j-hui/fidget.nvim"
+                :config (fn []
+                          (let [fidget (require "fidget")]
+                            (fidget.setup {})
+                            (set vim.notify fidget.notify)
+                            ))}
+
+               ; language-specific
                {1 "neovim/nvim-lspconfig"
                 :ft [:go :scala]
                 :config (fn [] (lsp.setup))}
