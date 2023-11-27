@@ -32,9 +32,11 @@
 ; USER PLUGINS
 (let [lazy (require "lazy")
       plugins [["tpope/vim-commentary"]
-               ["tpope/vim-fugitive"]
                ["tpope/vim-surround"]
                ["tpope/vim-repeat"]
+
+               {1 "tpope/vim-fugitive"
+                :cmd "Git"}
 
                ; fennel plugins
                {1 "Olical/aniseed"
