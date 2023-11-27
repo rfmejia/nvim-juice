@@ -16,7 +16,7 @@
 (nmap "<F5>" ":make<cr>" [noremap])
 (nmap "<leader>w" ":w<cr>" [noremap silent])
 (nmap "<leader>n" "<C-6>" [noremap silent])
-(nmap "<leader>o" ":nohl<cr>" [noremap silent])
+(nmap "<leader>o" ":nohl<cr>" [noremap])
 (nmap "<leader>e" ":Explore<cr><cr>" [noremap silent])
 (nmap "<C-d>" "<C-d>zz" [noremap silent])
 (nmap "<C-u>" "<C-u>zz" [noremap silent])
@@ -31,10 +31,10 @@
 
 ; mark management
 (nmap "<leader>mm" ":marks ARST<cr>" [noremap])
-(nmap "<leader>a" "`A" [noremap])
-(nmap "<leader>r" "`R" [noremap])
-(nmap "<leader>s" "`S" [noremap])
-(nmap "<leader>t" "`T" [noremap])
+(nmap "<leader>a" "`Azz" [noremap])
+(nmap "<leader>r" "`Rzz" [noremap])
+(nmap "<leader>s" "`Szz" [noremap])
+(nmap "<leader>t" "`Tzz" [noremap])
 (nmap "<leader>ma" "mA:echo 'Marked register A'<cr>" [noremap])
 (nmap "<leader>mr" "mR:echo 'Marked register R'<cr>" [noremap])
 (nmap "<leader>ms" "mS:echo 'Marked register S'<cr>" [noremap])
