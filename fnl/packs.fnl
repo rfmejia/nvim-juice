@@ -40,7 +40,7 @@
 
                ; fennel plugins
                {1 "Olical/aniseed"
-                :priority 10000}
+                :ft "fennel"}
                {1 "Olical/conjure"
                 :ft ["clojure" "fennel" "lisp" "scheme"]}
 
@@ -65,6 +65,7 @@
 
                ; colorscheme
                {1 "projekt0n/github-nvim-theme"
+                :lazy false
                 :priority 1000
                 :config (fn []
                           (let [theme (require "github-theme")
