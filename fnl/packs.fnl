@@ -125,17 +125,24 @@
                 :dependencies ["nvim-lua/plenary.nvim"
                                "nvim-lua/popup.nvim"]}
 
-               {1 "tpope/vim-dadbod"
-                :cmd [:DB :DBUI]}
                {1 "kristijanhusak/vim-dadbod-ui"
-                :cmd [:DB :DBUI]
-                :config (fn []
-                          (u.nmap "<localleader>d" ":DBUIToggle<CR>" [noremap silent])
-                          (set vim.g.db_ui_use_nvim_notify 1)
-                          (vim.cmd "setlocal omnifunc=vim_dadbod_completion#omni")
-                          )}
-               {1 "kristijanhusak/vim-dadbod-completion"
-                :cmd [:DB :DBUI]}
+                :cmd [:DBUI :DBUIToggle]
+                :dependencies [
+                               {1 "tpope/vim-dadbod"
+                                :config (fn []
+                                          (set vim.g.db_ui_use_nvim_notify 1)
+                                          (set vim.g.db_ui_table_helpers {:mysql {:Count "select count(*) from {table}"}
+                                                                          })
+                                          (u.nmap "<localleader>dt" ":DBUIToggle<CR>" [noremap silent])
+                                          (u.nmap "<localleader>dd" ":.DB<CR>" [noremap silent])
+                                          (u.nmap "<localleader>db" ":%DB<CR>" [noremap silent])
+                                          (u.nmap "<localleader>dp" "vip:DB<CR>" [noremap silent])
+                                          (vim.cmd "setlocal omnifunc=vim_dadbod_completion#omni")
+                                          )}
+                               {1 "kristijanhusak/vim-dadbod-completion"
+                                :ft [:sql :mysql :plsql]}
+                               ]}
+
                ]]
 
   (lazy.setup plugins)
