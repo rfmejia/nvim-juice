@@ -41,10 +41,10 @@
 (nmap "<leader>mt" "mT:echo 'Marked register T'<cr>" [noremap])
 
 ; window management
-(nmap "<C-h>" "<C-w>h" [noremap silent])
-(nmap "<C-j>" "<C-w>j" [noremap silent])
-(nmap "<C-k>" "<C-w>k" [noremap silent])
-(nmap "<C-l>" "<C-w>l" [noremap silent])
+(nmap "<M-h>" "<C-w>h" [noremap silent])
+(nmap "<M-j>" "<C-w>j" [noremap silent])
+(nmap "<M-k>" "<C-w>k" [noremap silent])
+(nmap "<M-l>" "<C-w>l" [noremap silent])
 (nmap "<C-p>" "<C-w>p" [noremap silent])
 
 ; buffer management

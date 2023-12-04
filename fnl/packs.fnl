@@ -44,12 +44,10 @@
                 :config (fn []
                           (let [nav (require "nvim-tmux-navigation")]
                             (nav.setup {:disabled_when_zoomed true
-                                        :keybindings {:left "<C-h>"
-                                                      :down  "<C-j>"
-                                                      :up  "<C-k>"
-                                                      :right  "<C-l>"
-                                                      :last_active "<C-\\>"
-                                                      :next "<C-Space>"}
+                                        :keybindings {:left  "<M-h>"
+                                                      :down  "<M-j>"
+                                                      :up    "<M-k>"
+                                                      :right "<M-l>"}
                                         })
                             )
                           )
@@ -100,7 +98,6 @@
                 :config (fn []
                           (let [ts (require "nvim-treesitter.configs")
                                 languages ["bash"
-                                           "c"
                                            "dockerfile"
                                            "fennel"
                                            "hocon"
@@ -111,6 +108,7 @@
                                            "gitignore"
                                            "go"
                                            "html"
+                                           "java"
                                            "lua"
                                            "markdown"
                                            "scala"
