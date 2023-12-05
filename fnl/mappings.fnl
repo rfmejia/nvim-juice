@@ -13,13 +13,15 @@
 (set vim.g.maplocalleader ",")
 
 (nmap "Y" "y$" [])
-(nmap "<F5>" ":make<cr>" [noremap])
+(nmap "<C-m>" ":make<cr>" [noremap])
 (nmap "<leader>w" ":w<cr>" [noremap silent])
 (nmap "<leader>n" "<C-6>" [noremap silent])
 (nmap "<leader>o" ":nohl<cr>" [noremap])
 (nmap "<leader>e" ":Explore<cr><cr>" [noremap silent])
 (nmap "<C-d>" "<C-d>zz" [noremap silent])
 (nmap "<C-u>" "<C-u>zz" [noremap silent])
+(nmap "<C-o>" "<C-o>zz" [noremap silent])
+(nmap "<C-i>" "<C-i>zz" [noremap silent])
 
 ; Disable default mappings to train optimal alternatives
 (nmap "{" (fn [] (print "Use C-u or relative jumps instead")) [noremap silent])
