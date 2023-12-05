@@ -5,16 +5,6 @@
 ;; -----------------------------------------------------------------------------
 ; BUILTIN PLUGINS
 
-; disable unused builtin plugins
-(set vim.g.loaded_2html_plugin 1)
-(set vim.g.loaded_getscript 1)
-(set vim.g.loaded_getscriptPlugin 1)
-(set vim.g.loaded_logiPat 1)
-(set vim.g.loaded_rrhelper 1)
-(set vim.g.loaded_tutor_mode_plugin 1)
-(set vim.g.loaded_vimball 1)
-(set vim.g.loaded_vimballPlugin 1)
-
 ; netrw
 (set vim.g.netrw_altfile 1)        ; C-^ skips netrw (return to last edited file)
 ; (set vim.g.netrw_banner 0)         ; hide banner
@@ -31,6 +21,14 @@
 ;; -----------------------------------------------------------------------------
 ; USER PLUGINS
 (let [lazy (require "lazy")
+      opts {:ui {:border "rounded"}
+            :performance {:rtp {:disabled_plugins [:rplugin
+                                                   :tutor
+                                                   :tohtml
+                                                   :vimball
+                                                   ]}
+                          }
+            }
       plugins [["tpope/vim-commentary"]
                ["tpope/vim-surround"]
                ["tpope/vim-repeat"]
@@ -152,5 +150,5 @@
 
                ]]
 
-  (lazy.setup plugins)
+  (lazy.setup plugins opts)
   (u.nmap "<leader>ll" ":Lazy<CR>" [noremap silent]))
