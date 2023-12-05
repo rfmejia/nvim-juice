@@ -15,9 +15,7 @@
   (let [lspconfig (require :lspconfig)
         settings {:gopls {:analyses {:unusedparams true}
                           :staticcheck true}}]
-    (lspconfig.gopls.setup {: settings })
-    (set vim.opt.signcolumn "yes:1")
-    ))
+    (lspconfig.gopls.setup {: settings })))
 
 (defn setup []
   ; setup default lsp key mappings

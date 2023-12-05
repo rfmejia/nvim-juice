@@ -9,6 +9,8 @@
                         :callback (fn [] (require "juice.filetypes.markdown"))}]
             [:FileType {:pattern "scala"
                         :callback (fn [] (require "juice.filetypes.scala"))}]
+            [:FileType {:pattern "go"
+                        :callback (fn [] (require "juice.filetypes.go"))}]
             )
 
 ;; TODO Investigate if you can generalize the autogroups by listing files in

@@ -135,8 +135,7 @@
 
                {1 "kristijanhusak/vim-dadbod-ui"
                 :cmd [:DBUI :DBUIToggle]
-                :dependencies [
-                               {1 "tpope/vim-dadbod"
+                :dependencies [{1 "tpope/vim-dadbod"
                                 :config (fn []
                                           (set vim.g.db_ui_use_nvim_notify 1)
                                           (set vim.g.db_ui_table_helpers {:mysql {:Count "select count(*) from {table}"}

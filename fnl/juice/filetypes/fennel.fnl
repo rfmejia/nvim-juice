@@ -7,7 +7,7 @@
 
 (defn format-fennel [path]
   (let [filename (if (s.blank? path)
-                     (vim.fn.expand "%:p")
+                       (vim.fn.expand "%:p")
                      path)]
     (vim.fn.system [:fnlfmt :--fix filename])))
 
