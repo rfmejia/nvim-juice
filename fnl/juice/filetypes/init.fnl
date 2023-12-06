@@ -11,6 +11,8 @@
                         :callback (fn [] (require "juice.filetypes.scala"))}]
             [:FileType {:pattern "go"
                         :callback (fn [] (require "juice.filetypes.go"))}]
+            [:FileType {:pattern ["sh" "bash"]
+                        :callback (fn [] (require "juice.filetypes.bash"))}]
             )
 
 ;; TODO Investigate if you can generalize the autogroups by listing files in

@@ -1,4 +1,4 @@
-(module scala {autoload {a aniseed.core s aniseed.string u util}})
+(module fennel {autoload {a aniseed.core s aniseed.string u util}})
 
 (set vim.opt.shiftwidth 2)
 (set vim.opt.tabstop 2)
