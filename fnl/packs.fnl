@@ -2,27 +2,16 @@
   {autoload {u util
              lsp juice.lsp}})
 
-;; -----------------------------------------------------------------------------
-; BUILTIN PLUGINS
-
-; netrw
-(set vim.g.netrw_altfile 1)        ; C-^ skips netrw (return to last edited file)
-; (set vim.g.netrw_banner 0)         ; hide banner
-(set vim.g.netrw_sort_by "exten")  ; sort by extension
-(set vim.g.netrw_sort_options "i") ; add sort options (i = ignore case)
-; (set vim.g.netrw_list_hide
-;      "\\(^\\|\\s\\s\\)\\zs\\.\\S\\+") ; hide dotfiles by adding to g:netrw_list_hide
-
-; show key mappings inside netrw window
-(vim.api.nvim_create_autocmd :FileType
-                             {:pattern "netrw"
-                              :command "nnoremap <buffer> ? :h netrw-quickmap<CR>"})
+; unload netrw
+(set vim.g.loaded_netrw 1)         ;
+(set vim.g.loaded_netrwPlugin 1)   ;
 
 ;; -----------------------------------------------------------------------------
 ; USER PLUGINS
 (let [lazy (require "lazy")
       opts {:ui {:border "rounded"}
-            :performance {:rtp {:disabled_plugins [:rplugin
+            :performance {:rtp {:disabled_plugins [:netrwPlugin
+                                                   :rplugin
                                                    :tutor
                                                    :tohtml
                                                    :vimball
@@ -33,6 +22,7 @@
                ["tpope/vim-surround"]
                ["tpope/vim-repeat"]
                ["tpope/vim-dotenv"]
+               ["justinmk/vim-dirvish"]
 
                {1 "tpope/vim-fugitive"
                 :cmd "Git"}
