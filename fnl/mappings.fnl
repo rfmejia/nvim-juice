@@ -16,9 +16,11 @@
 (nmap "<C-m>" ":make<cr>" [noremap])
 (nmap "<leader>w" ":w<cr>" [noremap silent])
 (nmap "<leader>n" "<C-6>" [noremap silent])
-(nmap "<leader>o" ":nohl<cr>" [noremap])
+(nmap "<C-l>" ":nohl<cr>" [noremap])
 ; (nmap "<leader>e" ":Explore<cr><cr>" [noremap silent])
 (nmap "<leader>e" ":Dirvish<cr>" [noremap silent])
+(nmap "gx" ":!xdg-open <C-r><C-a><cr>" [noremap])
+
 (nmap "<C-d>" "<C-d>zz" [noremap silent])
 (nmap "<C-u>" "<C-u>zz" [noremap silent])
 (nmap "<C-o>" "<C-o>zz" [noremap silent])
@@ -58,15 +60,6 @@
 (nmap "]b" ":bnext<cr>" [noremap silent])
 (nmap "<leader>x" ":bp|bdelete #<cr>" [noremap silent])
 
-; terminal management
-(tmap "<C-o>" "<C-\\><C-n>" [noremap silent])
-(tmap "<C-h>" "<C-\\><C-n><C-w>h" [noremap silent])
-(tmap "<C-j>" "<C-\\><C-n><C-w>j" [noremap silent])
-(tmap "<C-k>" "<C-\\><C-n><C-w>k" [noremap silent])
-(tmap "<C-l>" "<C-\\><C-n><C-w>l" [noremap silent])
-(nmap "<leader>ls" ":split term://$SHELL<cr>A" [noremap silent])
-(nmap "<leader>lv" ":vsplit term://$SHELL<cr>A" [noremap silent])
-
 ; quickfix
 (nmap "<leader>q" (u.lua-cmd "require('juice.quickfix')['toggle-qf-window']()") [noremap])
 (nmap "<leader>Q" (u.lua-cmd "require('juice.quickfix')['toggle-loclist-window']()") [noremap])
@@ -92,10 +85,12 @@
 
 ; open external apps in a new tmux window
 (when (executable? "tmux")
+  (when (executable? "lazydocker")
+    (nmap "<leader>ld" ":!tmux neww lazydocker<cr><cr>" [noremap silent]))
   (when (executable? "lazygit")
     (nmap "<leader>lg" ":!tmux neww lazygit<cr><cr>" [noremap silent]))
   (when (executable? "sbtn")
-    (nmap "<leader>lS" ":vsplit term://sbtn<cr><cr>" [noremap silent]))
+    (nmap "<leader>ls" ":vsplit term://sbtn<cr><cr>" [noremap silent]))
   )
 
 ; easier moving of blocks in visual mode
