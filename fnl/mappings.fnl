@@ -17,7 +17,6 @@
 (nmap "<leader>w" ":w<cr>" [noremap silent])
 (nmap "<leader>n" "<C-6>" [noremap silent])
 (nmap "<C-l>" ":nohl<cr>" [noremap])
-; (nmap "<leader>e" ":Explore<cr><cr>" [noremap silent])
 (nmap "<leader>e" ":Dirvish<cr>" [noremap silent])
 (nmap "gx" ":!xdg-open <C-r><C-a><cr>" [noremap])
 

@@ -13,6 +13,11 @@
                         :callback (fn [] (require "juice.filetypes.go"))}]
             [:FileType {:pattern ["sh" "bash"]
                         :callback (fn [] (require "juice.filetypes.bash"))}]
+            [:FileType {:pattern "dirvish"
+                        :callback (fn []
+                                    ; Hide hidden files by default
+                                    ; `u` undos this effect, `R` reloads the buffer
+                                    (vim.cmd "keeppatterns g@\\v/\\.[^\\/]+/?$@d _"))}]
             )
 
 ;; TODO Investigate if you can generalize the autogroups by listing files in

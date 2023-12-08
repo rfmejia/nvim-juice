@@ -14,15 +14,18 @@
                                                    :rplugin
                                                    :tutor
                                                    :tohtml
-                                                   :vimball
-                                                   ]}
-                          }
+                                                   :vimball]}}
             }
+
       plugins [["tpope/vim-commentary"]
                ["tpope/vim-surround"]
                ["tpope/vim-repeat"]
                ["tpope/vim-dotenv"]
-               ["justinmk/vim-dirvish"]
+
+               {1 "justinmk/vim-dirvish"
+                :config (fn [] 
+                          ; Sort by file/dir type, and then hidden files/dirs
+                          (vim.cmd "let g:dirvish_mode = ':sort | sort ,^.*[^/]$, r'"))}
 
                {1 "tpope/vim-fugitive"
                 :cmd "Git"}
