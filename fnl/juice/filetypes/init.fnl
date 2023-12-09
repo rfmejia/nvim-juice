@@ -17,6 +17,7 @@
                         :callback (fn []
                                     ; Hide hidden files by default
                                     ; `u` undos this effect, `R` reloads the buffer
+                                    (set vim.opt_local.spell false)
                                     (vim.cmd "keeppatterns g@\\v/\\.[^\\/]+/?$@d _"))}]
             )
 
