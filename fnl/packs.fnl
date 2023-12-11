@@ -124,26 +124,18 @@
                 :dependencies ["nvim-lua/plenary.nvim"
                                "nvim-lua/popup.nvim"]}
 
-               {1 "kristijanhusak/vim-dadbod-ui"
-                :cmd [:DBUI :DBUIToggle]
+               {1 "tpope/vim-dadbod"
+                :ft ["sql" "mysql"]
                 :config (fn []
-                          (u.nmap "<localleader>dt" ":DBUIToggle<CR>" [noremap silent])
-                          (u.nmap "<localleader>dd" ":.DB<CR>" [noremap silent])
-                          (u.nmap "<localleader>db" ":%DB<CR>" [noremap silent])
-                          (u.nmap "<localleader>dp" "vip:DB<CR>" [noremap silent]))
-                :dependencies [{1 "tpope/vim-dadbod"
-                                :config (fn []
-                                          (set vim.g.db_ui_use_nvim_notify 1)
-                                          (set vim.g.db_ui_table_helpers {:mysql {:Count "select count(*) from {table}"}})
-                                          )}
-                               {1 "kristijanhusak/vim-dadbod-completion"
-                                :config (fn []
-                                          (ac.autocmd :FileType {:pattern ["sql" "mysql" "plsql"]
-                                                                 :callback (fn []
-                                                                             (set vim.opt.omnifunc "vim_dadbod_completion#omni"))}
-                                          ))
-                               }]}
-
+                          (u.nmap "<localleader>dc" ":DB g:active " [noremap silent])
+                          (u.nmap "<localleader>dd" ":.DB g:active<CR>" [noremap silent])
+                          (u.nmap "<localleader>db" ":%DB g:active<CR>" [noremap silent])
+                          (u.nmap "<localleader>dp" "vip:DB g:active<CR>" [noremap silent])
+                          (ac.autocmd :FileType {:pattern ["sql" "mysql"]
+                                                 :callback (fn []
+                                                             (set vim.opt.omnifunc "vim_dadbod_completion#omni"))})
+                          )
+                :dependencies [{1 "kristijanhusak/vim-dadbod-completion"}]}
                ]]
 
   (lazy.setup plugins opts)
