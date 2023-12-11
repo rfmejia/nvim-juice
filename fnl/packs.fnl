@@ -26,7 +26,7 @@
                 :cmd "Git"}
 
                {1 "justinmk/vim-dirvish"
-                :config (fn [] 
+                :config (fn []
                           ; Sort by file/dir type, and then hidden files/dirs
                           (vim.cmd "let g:dirvish_mode = ':sort | sort ,^.*[^/]$, r'"))}
 
@@ -75,7 +75,7 @@
                 :priority 1000
                 :config (fn []
                           (let [theme (require "github-theme")
-                                dark-palette {:github_dark_high_contrast {:bg0 "#0000FF" 
+                                dark-palette {:github_dark_high_contrast {:bg0 "#0000FF"
                                                                           :bg1 "#0000FF"
                                                                           :bg2 "#0000FF"
                                                                           :bg3 "#0000FF"

@@ -24,7 +24,7 @@
 (set vim.opt.ttyfast true)                    ; -
 (set vim.opt.ttimeoutlen 50)                  ; -
 (set vim.opt.mouse "")                        ; Disable mouse
-(set vim.opt.shortmess "f")                   ; 
+(set vim.opt.shortmess "f")                   ;
 
 (when (u.has? "clipboard")
   (set vim.opt.clipboard "unnamedplus"))      ; Use Linux system clipboard
@@ -34,8 +34,8 @@
   (set vim.opt.undofile true))                ; Persist undo logs per file inside `undodir`
 
 ; visual
-(set vim.opt.number true)                    ; Hide line numbers
-(set vim.opt.relativenumber true)            ; Hide numbers relative to current line
+(set vim.opt.number true)                     ; Hide line numbers
+(set vim.opt.relativenumber true)             ; Hide numbers relative to current line
 (set vim.opt.signcolumn "auto")               ; Display line column
 (set vim.opt.cursorline true)                 ; Highlight cursor position row
 (set vim.opt.splitbelow true)                 ; Prefer adding horizontal split below
@@ -69,7 +69,7 @@
 
 ; use ripgrep
 (when (u.executable? "rg")
-  (set vim.opt.grepprg "rg\\ --vimgrep\\ --smart-case\\ --hidden\\ --follow\\ --no-heading\\ --vimgrep")
+  (set vim.opt.grepprg "rg\\ --smart-case\\ --hidden\\ --follow\\ --no-heading\\ --vimgrep")
   (set vim.opt.grepformat "%f:%l:%c:%m,%f:%l:%m"))
 
 ; -----------------------------------------------------------------------------
@@ -80,16 +80,6 @@
                           :command "if line(\"'\\\"\") | exe \"'\\\"\" | endif"})
 
 (vim.api.nvim_create_user_command :TrimTrailingWhitespaces ":%s/\\s\\+$" {})
-
-(ac.augroup :special-filetypes 
-            [[:BufNewFile :BufRead] {:pattern ["*.txt" "*.text"] 
-                                     :command "setf text"}]
-            [[:BufNewFile :BufRead] {:pattern ["*bash_profile" "*.bash"] 
-                                     :command "setf bash"}]
-            [[:BufNewFile :BufRead] {:pattern "tmux.conf"
-                                     :command "setf tmux"}]
-            [[:BufNewFile :BufRead] {:pattern ["*.sbt" "*.sc"]
-                                     :command "set ft=scala"}])
 
 (ac.augroup :highlight-group
             ; highlight yanked text
