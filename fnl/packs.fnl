@@ -1,6 +1,7 @@
 (module packs
   {autoload {u util
-             lsp juice.lsp}})
+             lsp juice.lsp}
+   import-macros [[ac :aniseed.macros.autocmds]]})
 
 ; unload netrw
 (set vim.g.loaded_netrw 1)         ;
@@ -12,8 +13,8 @@
       opts {:ui {:border "rounded"}
             :performance {:rtp {:disabled_plugins [:netrwPlugin
                                                    :rplugin
-                                                   :tutor
                                                    :tohtml
+                                                   :tutor
                                                    :vimball]}}
             }
 
@@ -21,14 +22,13 @@
                ["tpope/vim-surround"]
                ["tpope/vim-repeat"]
                ["tpope/vim-dotenv"]
+               {1 "tpope/vim-fugitive"
+                :cmd "Git"}
 
                {1 "justinmk/vim-dirvish"
                 :config (fn [] 
                           ; Sort by file/dir type, and then hidden files/dirs
                           (vim.cmd "let g:dirvish_mode = ':sort | sort ,^.*[^/]$, r'"))}
-
-               {1 "tpope/vim-fugitive"
-                :cmd "Git"}
 
                ; Navigate between nvim splits and tmux panes
                {1 "alexghergh/nvim-tmux-navigation"
@@ -126,20 +126,23 @@
 
                {1 "kristijanhusak/vim-dadbod-ui"
                 :cmd [:DBUI :DBUIToggle]
+                :config (fn []
+                          (u.nmap "<localleader>dt" ":DBUIToggle<CR>" [noremap silent])
+                          (u.nmap "<localleader>dd" ":.DB<CR>" [noremap silent])
+                          (u.nmap "<localleader>db" ":%DB<CR>" [noremap silent])
+                          (u.nmap "<localleader>dp" "vip:DB<CR>" [noremap silent]))
                 :dependencies [{1 "tpope/vim-dadbod"
                                 :config (fn []
                                           (set vim.g.db_ui_use_nvim_notify 1)
-                                          (set vim.g.db_ui_table_helpers {:mysql {:Count "select count(*) from {table}"}
-                                                                          })
-                                          (u.nmap "<localleader>dt" ":DBUIToggle<CR>" [noremap silent])
-                                          (u.nmap "<localleader>dd" ":.DB<CR>" [noremap silent])
-                                          (u.nmap "<localleader>db" ":%DB<CR>" [noremap silent])
-                                          (u.nmap "<localleader>dp" "vip:DB<CR>" [noremap silent])
-                                          (vim.cmd "setlocal omnifunc=vim_dadbod_completion#omni")
+                                          (set vim.g.db_ui_table_helpers {:mysql {:Count "select count(*) from {table}"}})
                                           )}
                                {1 "kristijanhusak/vim-dadbod-completion"
-                                :ft [:sql :mysql :plsql]}
-                               ]}
+                                :config (fn []
+                                          (ac.autocmd :FileType {:pattern ["sql" "mysql" "plsql"]
+                                                                 :callback (fn []
+                                                                             (set vim.opt.omnifunc "vim_dadbod_completion#omni"))}
+                                          ))
+                               }]}
 
                ]]
 
