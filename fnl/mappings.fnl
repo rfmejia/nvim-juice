@@ -8,13 +8,16 @@
 (set vim.g.maplocalleader ",")
 
 (u.nmap "Y" "y$" [])
-(u.nmap "<C-m>" ":make<cr>" [noremap])
 (u.nmap "<leader>w" ":w<cr>" [noremap silent])
-(u.nmap "<leader>n" "<C-6>" [noremap silent])
 (u.nmap "<C-l>" ":nohl<cr>" [noremap])
 (u.nmap "<leader>e" ":Dirvish<cr>" [noremap silent])
 (u.nmap "gx" ":!xdg-open <C-r><C-a><cr>" [noremap])
 
+(u.nmap "<C-m>" ":make<cr>" [noremap])
+(u.nmap "<leader>n" ":registers<cr>" [noremap silent])
+(u.nmap "<leader>o" ":<C-r>\"" [noremap])
+
+; Vertically center screen when page scrolling up/down
 (u.nmap "<C-d>" "<C-d>zz" [noremap silent])
 (u.nmap "<C-u>" "<C-u>zz" [noremap silent])
 (u.nmap "<C-o>" "<C-o>zz" [noremap silent])
@@ -30,14 +33,15 @@
 
 ; mark management
 (u.nmap "<leader>mm" ":marks ARST<cr>" [noremap])
+(u.nmap "<leader>mc" ":delmarks ARST<cr>:echo 'Cleared file marks'<cr>" [noremap])
 (u.nmap "<leader>a" "`Azz" [noremap])
 (u.nmap "<leader>r" "`Rzz" [noremap])
 (u.nmap "<leader>s" "`Szz" [noremap])
 (u.nmap "<leader>t" "`Tzz" [noremap])
-(u.nmap "<leader>ma" "mA:echo 'Marked register A'<cr>" [noremap])
-(u.nmap "<leader>mr" "mR:echo 'Marked register R'<cr>" [noremap])
-(u.nmap "<leader>ms" "mS:echo 'Marked register S'<cr>" [noremap])
-(u.nmap "<leader>mt" "mT:echo 'Marked register T'<cr>" [noremap])
+(u.nmap "<leader>ma" "mA:echo 'Marked file A'<cr>" [noremap])
+(u.nmap "<leader>mr" "mR:echo 'Marked file R'<cr>" [noremap])
+(u.nmap "<leader>ms" "mS:echo 'Marked file S'<cr>" [noremap])
+(u.nmap "<leader>mt" "mT:echo 'Marked file T'<cr>" [noremap])
 
 ; window management
 (u.nmap "<M-h>" "<C-w>h" [noremap silent])
