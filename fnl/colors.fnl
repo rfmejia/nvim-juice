@@ -12,9 +12,6 @@
                     :spell-bad "#bb4466"
                     })
 
-; (vim.cmd "hi CursorLine cterm=NONE ctermbg=234 guibg=#1c1c1c")
-; (vim.cmd "hi StatusLine ctermbg=NONE ctermfg=white guibg=NONE guifg=white")
-
 ; Note: make sure this is defined before the colorscheme is first set
 (ac.augroup :colorscheme-group
             [:ColorScheme {:pattern "*"

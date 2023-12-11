@@ -60,16 +60,16 @@
 (nmap "<leader>x" ":bp|bdelete #<cr>" [noremap silent])
 
 ; quickfix
-(nmap "<leader>q" (u.lua-cmd "require('juice.quickfix')['toggle-qf-window']()") [noremap])
-(nmap "<leader>Q" (u.lua-cmd "require('juice.quickfix')['toggle-loclist-window']()") [noremap])
-(nmap "[q" ":cprevious" [noremap])
-(nmap "]q" ":cnext" [noremap])
-(nmap "[Q" ":cfirst" [noremap])
-(nmap "]Q" ":clast" [noremap])
-(nmap "[l" ":lprevious" [noremap])
-(nmap "]l" ":lnext" [noremap])
-(nmap "[L" ":lfirst" [noremap])
-(nmap "]L" ":llast" [noremap])
+(nmap "<leader>c" (u.lua-cmd "require('juice.quickfix')['toggle-qf-window']()") [noremap])
+(nmap "<leader>l" (u.lua-cmd "require('juice.quickfix')['toggle-loclist-window']()") [noremap])
+(nmap "[c" ":cprevious<cr>" [noremap])
+(nmap "]c" ":cnext<cr>" [noremap])
+(nmap "[C" ":cfirst<cr>" [noremap])
+(nmap "]C" ":clast<cr>" [noremap])
+(nmap "[l" ":lprevious<cr>" [noremap])
+(nmap "]l" ":lnext<cr>" [noremap])
+(nmap "[L" ":lfirst<cr>" [noremap])
+(nmap "]L" ":llast<cr>" [noremap])
 
 ; search/replace shortcuts
 (nmap "<leader>/s" ":s//g<left><left>" [noremap])
