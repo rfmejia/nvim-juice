@@ -1,32 +1,28 @@
 (module util
   {autoload {a aniseed.core}})
 
-(def noremap {:noremap true})
-(def silent {:silent true})
-(def nowait {:nowait true})
-
-(defn- merge-tables [ts]
-  "Flattens a list of tables"
+(defn- make-opts [keys]
+  "Produce a table with every `key = true`"
   (a.reduce
-    (fn [acc t] (a.merge acc t))
+    (fn [acc key] (a.merge acc {key true}))
     {}
-    ts))
+    keys))
 
 (defn nmap [key map opts]
   "Defines a keymap in normal mode"
-  (vim.keymap.set :n key map (merge-tables opts)))
+  (vim.keymap.set :n key map (make-opts opts)))
 
 (defn imap [key map opts]
   "Defines a keymap in insert mode"
-  (vim.keymap.set :i key map (merge-tables opts)))
+  (vim.keymap.set :i key map (make-opts opts)))
 
 (defn vmap [key map opts]
   "Defines a keymap in visual mode"
-  (vim.keymap.set :v key map (merge-tables opts)))
+  (vim.keymap.set :v key map (make-opts opts)))
 
 (defn tmap [key map opts]
   "Defines a keymap in terminal mode"
-  (vim.keymap.set :t key map (merge-tables opts)))
+  (vim.keymap.set :t key map (make-opts opts)))
 
 (defn lua-cmd [str]
   "Wraps a Lua command string in a viml command string"

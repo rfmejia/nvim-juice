@@ -26,7 +26,7 @@
     ; call append(line('0'), meta)
     ))
 
-(u.nmap "<localleader>m" (u.lua-cmd "require('juice.filetypes.markdown')['insert-yaml-metadata']()") [u.noremap u.silent])
-(u.nmap "<localleader>v" (u.lua-cmd "require('juice.filetypes.markdown')['render-markdown-to-html']()") [u.noremap u.silent])
-(u.nmap "<localleader>d" ":r!date '+\\%a, \\%d \\%b \\%Y' | xargs -0 printf '----\\n\\n\\%s\\n'<cr>" [u.noremap u.silent])
-(u.nmap "<localleader>t" ":r!date '+\\%H:\\%M' | xargs -0 printf '> \\%s '<cr>kA " [u.noremap u.silent])
+(u.nmap "<localleader>m" (u.lua-cmd "require('juice.filetypes.markdown')['insert-yaml-metadata']()") [:noremap :silent])
+(u.nmap "<localleader>v" (u.lua-cmd "require('juice.filetypes.markdown')['render-markdown-to-html']()") [:noremap :silent])
+(u.nmap "<localleader>d" ":r!date '+\\%a, \\%d \\%b \\%Y' | xargs -0 printf '----\\n\\n\\%s\\n'<cr>" [:noremap :silent])
+(u.nmap "<localleader>t" ":r!date '+\\%H:\\%M' | xargs -0 printf '> \\%s '<cr>kA " [:noremap :silent])

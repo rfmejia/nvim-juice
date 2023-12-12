@@ -16,5 +16,5 @@
   )
 
 (vim.api.nvim_create_user_command :ScalafmtApply (fn [] (run-scalafmt)) {:bang true})
-(u.nmap "<localleader>cf" (fn [] (run-scalafmt (vim.fn.expand "%:p"))) [u.nowait u.silent])
-(u.nmap "<localleader>s" "vip:sort<cr>" [u.nowait u.silent])
+(u.nmap "<localleader>cf" (fn [] (run-scalafmt (vim.fn.expand "%:p"))) [:noremap :nowait :silent])
+(u.nmap "<localleader>s" "vip:sort<cr>" [:noremap :nowait :silent])
