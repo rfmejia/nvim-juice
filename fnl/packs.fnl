@@ -50,8 +50,7 @@
 
                ; Navigate between nvim splits and tmux panes
                {1 "alexghergh/nvim-tmux-navigation"
-                :event (fn [] (if (= (vim.fn.exists "$TMUX") 1)
-                                "VeryLazy"))
+                :event (fn [] (if (u.exists? "$TMUX") "VeryLazy"))
                 :config (fn []
                           (let [nav (require "nvim-tmux-navigation")]
                             (nav.setup {:disabled_when_zoomed true

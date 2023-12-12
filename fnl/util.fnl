@@ -38,3 +38,5 @@
 (defn has? [cmd]
   (= (vim.fn.has cmd) 1))
 
+(defn exists? [env]
+  (= (vim.fn.exists env) 1))
