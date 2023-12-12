@@ -122,3 +122,8 @@
 (u.nmap "<localleader>db" ":%DB g:active<cr>" [:noremap :silent])
 (u.nmap "<localleader>dp" "vip:DB g:active<cr>" [:noremap :silent])
 
+(u.nmap "]g" ":Gitsigns next_hunk<cr>" [:noremap :silent])
+(u.nmap "[g" ":Gitsigns prev_hunk<cr>" [:noremap :silent])
+(u.nmap "<localleader>gp" ":Gitsigns preview_hunk<cr>" [:noremap :silent])
+(u.nmap "<localleader>gs" ":Gitsigns stage_hunk<cr>" [:noremap :silent])
+(u.nmap "<localleader>gu" ":Gitsigns undo_stage_hunk<cr>" [:noremap :silent])

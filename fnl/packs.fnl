@@ -33,6 +33,13 @@
                             (theme.setup {:palettes dark-palette})
                             (vim.cmd "colorscheme github_dark_high_contrast")))}
 
+               {1 "lewis6991/gitsigns.nvim"
+                :event ["BufReadPre" "BufNewFile"]
+                :config (fn []
+                          (let [gitsigns (require :gitsigns)]
+                            (gitsigns.setup))
+                          )}
+
                {1 "tpope/vim-commentary"
                 :keys "gc"}
                {1 "tpope/vim-surround"

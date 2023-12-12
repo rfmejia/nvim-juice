@@ -36,7 +36,7 @@
 ; visual
 (set vim.opt.number true)                     ; Hide line numbers
 (set vim.opt.relativenumber true)             ; Hide numbers relative to current line
-(set vim.opt.signcolumn "auto")               ; Display line column
+(set vim.opt.signcolumn "yes:1")              ; Display line column
 (set vim.opt.cursorline true)                 ; Highlight cursor position row
 (set vim.opt.splitbelow true)                 ; Prefer adding horizontal split below
 (set vim.opt.splitright true)                 ; Prefer adding a vertical split on the right
