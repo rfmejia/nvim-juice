@@ -55,6 +55,15 @@
 (u.nmap "]b" ":bnext<cr>" [:noremap :silent])
 (u.nmap "<leader>x" ":bp|bdelete #<cr>" [:noremap :silent])
 
+; tab management
+(u.nmap "tn" ":tabnew<cr>" [:noremap :silent])
+(u.nmap "tc" ":tabclose<cr>" [:noremap :silent])
+(u.nmap "ts" ":tab split<cr>" [:noremap :silent])
+(u.nmap "[t" ":tabprevious<cr>" [:noremap :silent])
+(u.nmap "]t" ":tabnext<cr>" [:noremap :silent])
+(u.nmap "[T" ":tabfirst<cr>" [:noremap :silent])
+(u.nmap "]T" ":tablast<cr>" [:noremap :silent])
+
 ; quickfix list
 (u.nmap "<leader>c" (u.lua-cmd "require('juice.quickfix')['toggle-qf-window']()") [:noremap])
 (u.nmap "[c" ":cprevious<cr>" [:noremap])
