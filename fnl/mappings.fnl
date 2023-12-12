@@ -8,14 +8,13 @@
 (set vim.g.maplocalleader ",")
 
 (u.nmap "Y" "y$" [])
-(u.nmap "<leader>w" ":w<cr>" [noremap silent])
 (u.nmap "<C-l>" ":nohl<cr>" [noremap])
-(u.nmap "<leader>e" ":Dirvish<cr>" [noremap silent])
 (u.nmap "gx" ":!xdg-open <C-r><C-a><cr>" [noremap])
-
 (u.nmap "<C-m>" ":make<cr>" [noremap])
-(u.nmap "<leader>n" ":registers<cr>" [noremap silent])
 (u.nmap "<leader>o" ":<C-r>\"" [noremap])
+
+(u.nmap "<leader>w" ":w<cr>" [noremap silent])
+(u.nmap "<leader>n" ":registers<cr>" [noremap silent])
 
 ; Vertically center screen when page scrolling up/down
 (u.nmap "<C-d>" "<C-d>zz" [noremap silent])
@@ -109,3 +108,16 @@
 
 ; completion bindings
 (vim.cmd "inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")  ; select item
+
+; plugin mappings
+(u.nmap "<leader>e" ":Dirvish<cr>" [noremap silent])
+(u.nmap "<leader>u" ":UndotreeToggle<CR>" [noremap silent])
+
+(u.nmap "<leader>f" ":Files<CR>" [noremap silent])
+(u.nmap "<leader>g" ":GFiles<CR>" [noremap silent])
+(u.nmap "<leader>p" ":History<CR>" [noremap silent])
+
+(u.nmap "<localleader>dc" ":DB g:active " [noremap silent])
+(u.nmap "<localleader>dd" ":.DB g:active<CR>" [noremap silent])
+(u.nmap "<localleader>db" ":%DB g:active<CR>" [noremap silent])
+(u.nmap "<localleader>dp" "vip:DB g:active<CR>" [noremap silent])

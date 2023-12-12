@@ -18,20 +18,40 @@
                                                    :vimball]}}
             }
 
-      plugins [["tpope/vim-commentary"]
-               ["tpope/vim-surround"]
-               ["tpope/vim-repeat"]
-               ["tpope/vim-dotenv"]
+      plugins [; colorscheme (always loaded)
+               {1 "projekt0n/github-nvim-theme"
+                :lazy false
+                :priority 1000
+                :config (fn []
+                          (let [theme (require "github-theme")
+                                dark-palette {:github_dark_high_contrast {:bg0 "#0000FF"
+                                                                          :bg1 "#0000FF"
+                                                                          :bg2 "#0000FF"
+                                                                          :bg3 "#0000FF"
+                                                                          :bg4 "#0000FF"
+                                                                          }}]
+                            (theme.setup {:palettes dark-palette})
+                            (vim.cmd "colorscheme github_dark_high_contrast")))}
+
+               {1 "tpope/vim-commentary"
+                :keys "gc"}
+               {1 "tpope/vim-surround"
+                :keys ["cs" "ds" "ys"]}
+               {1 "tpope/vim-repeat"
+                :keys "."}
                {1 "tpope/vim-fugitive"
                 :cmd "Git"}
 
                {1 "justinmk/vim-dirvish"
+                :cmd :Dirvish
                 :config (fn []
                           ; Sort by file/dir type, and then hidden files/dirs
                           (vim.cmd "let g:dirvish_mode = ':sort | sort ,^.*[^/]$, r'"))}
 
                ; Navigate between nvim splits and tmux panes
                {1 "alexghergh/nvim-tmux-navigation"
+                :event (fn [] (if (= (vim.fn.exists "$TMUX") 1)
+                                "VeryLazy"))
                 :config (fn []
                           (let [nav (require "nvim-tmux-navigation")]
                             (nav.setup {:disabled_when_zoomed true
@@ -51,40 +71,25 @@
                 :ft ["clojure" "fennel" "lisp" "scheme"]}
 
                {1 "mbbill/undotree"
+                :keys "<leader>u"
                 :config (fn []
                           (set vim.g.undotree_WindowLayout 4)
-                          (set vim.g.undotree_SetFocusWhenToggle 1)
-                          (u.nmap "<leader>u" ":UndotreeToggle<CR>" [noremap silent]))}
+                          (set vim.g.undotree_SetFocusWhenToggle 1))}
 
                ; fuzzy finder
-               {1 "junegunn/fzf"
-                :name "fzf"
-                :dir "~/.fzf"
-                :build "./install --all"}
                {1 "junegunn/fzf.vim"
+                :cmd ["Files" "GFiles" "History"]
                 :config (fn []
                           (set vim.g.fzf_layout {:window {:width 0.9 :height 0.9}})
-                          (set vim.g.fzf_preview_window ["up:50%" "ctrl-/"])
-                          (u.nmap "<leader>f" ":Files<CR>" [noremap silent])
-                          (u.nmap "<leader>g" ":GFiles<CR>" [noremap silent])
-                          (u.nmap "<leader>p" ":History<CR>" [noremap silent]))}
-
-               ; colorscheme
-               {1 "projekt0n/github-nvim-theme"
-                :lazy false
-                :priority 1000
-                :config (fn []
-                          (let [theme (require "github-theme")
-                                dark-palette {:github_dark_high_contrast {:bg0 "#0000FF"
-                                                                          :bg1 "#0000FF"
-                                                                          :bg2 "#0000FF"
-                                                                          :bg3 "#0000FF"
-                                                                          :bg4 "#0000FF"
-                                                                          }}]
-                            (theme.setup {:palettes dark-palette})
-                            (vim.cmd "colorscheme github_dark_high_contrast")))}
+                          (set vim.g.fzf_preview_window ["up:50%" "ctrl-/"]))
+                :dependencies [{1 "junegunn/fzf"
+                                :name "fzf"
+                                :dir "~/.fzf"
+                                :build "./install --all"}]
+                }
 
                {1 "nvim-treesitter/nvim-treesitter"
+                :event ["BufReadPre" "BufNewFile"]
                 :build ":TSUpdate"
                 :config (fn []
                           (let [ts (require "nvim-treesitter.configs")
@@ -125,12 +130,8 @@
                                "nvim-lua/popup.nvim"]}
 
                {1 "tpope/vim-dadbod"
-                :ft ["sql" "mysql"]
+                :cmd "DB"
                 :config (fn []
-                          (u.nmap "<localleader>dc" ":DB g:active " [noremap silent])
-                          (u.nmap "<localleader>dd" ":.DB g:active<CR>" [noremap silent])
-                          (u.nmap "<localleader>db" ":%DB g:active<CR>" [noremap silent])
-                          (u.nmap "<localleader>dp" "vip:DB g:active<CR>" [noremap silent])
                           (ac.autocmd :FileType {:pattern ["sql" "mysql"]
                                                  :callback (fn []
                                                              (set vim.opt.omnifunc "vim_dadbod_completion#omni"))})
