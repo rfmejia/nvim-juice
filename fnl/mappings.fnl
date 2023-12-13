@@ -90,13 +90,13 @@
 (u.nmap "<leader>dT" ":.!date '+\\%a, \\%d \\%b \\%Y' --date=" [])
 
 ; open external apps in a new tmux window
-(when (u.executable? "tmux")
+(when (u.exists? "$TMUX")
   (when (u.executable? "lazydocker")
     (u.nmap "<leader>ld" ":!tmux neww lazydocker<cr><cr>" [:noremap :silent]))
   (when (u.executable? "lazygit")
     (u.nmap "<leader>lg" ":!tmux neww lazygit<cr><cr>" [:noremap :silent]))
   (when (u.executable? "sbtn")
-    (u.nmap "<leader>ls" ":vsplit term://sbtn<cr><cr>" [:noremap :silent]))
+    (u.nmap "<leader>ls" ":!tmux split-window -v sbtn<cr><cr>" [:noremap :silent]))
   )
 
 ; easier moving of blocks in visual mode
