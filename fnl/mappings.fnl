@@ -91,12 +91,10 @@
 
 ; open external apps in a new tmux window
 (when (u.exists? "$TMUX")
-  (when (u.executable? "lazydocker")
-    (u.nmap "<leader>ld" ":!tmux neww lazydocker<cr><cr>" [:noremap :silent]))
   (when (u.executable? "lazygit")
     (u.nmap "<leader>lg" ":!tmux neww lazygit<cr><cr>" [:noremap :silent]))
   (when (u.executable? "sbtn")
-    (u.nmap "<leader>ls" ":!tmux split-window -v sbtn<cr><cr>" [:noremap :silent]))
+    (u.nmap "<leader>ls" ":!tmux split-window -v -l 30\\% sbtn<cr><cr>" [:noremap :silent]))
   )
 
 ; easier moving of blocks in visual mode
