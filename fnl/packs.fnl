@@ -146,4 +146,4 @@
                ]]
 
   (lazy.setup plugins opts)
-  (u.nmap "<leader>ll" ":Lazy<CR>" [:noremap :silent]))
+  (u.nmap "<leader>L" ":Lazy<CR>" [:noremap :silent]))

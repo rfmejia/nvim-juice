@@ -7,7 +7,7 @@
 (u.nmap "Y" "y$" [])
 (u.nmap "<C-l>" ":nohl<cr>" [:noremap])
 (u.nmap "gx" ":!xdg-open <C-r><C-a><cr>" [:noremap])
-(u.nmap "<leader>o" ":<C-r>\"" [:noremap])
+(u.nmap "<leader>;" ":<C-r>\"" [:noremap])
 
 (u.nmap "<leader>w" ":w<cr>" [:noremap :silent])
 (u.nmap "<leader>n" ":registers<cr>" [:noremap :silent])
@@ -92,9 +92,9 @@
 ; open external apps in a new tmux window
 (when (u.exists? "$TMUX")
   (when (u.executable? "lazygit")
-    (u.nmap "<leader>lg" ":!tmux neww lazygit<cr><cr>" [:noremap :silent]))
+    (u.nmap "<leader>og" ":!tmux neww lazygit<cr><cr>" [:noremap :silent]))
   (when (u.executable? "sbtn")
-    (u.nmap "<leader>ls" ":!tmux split-window -v -l 30\\% sbtn<cr><cr>" [:noremap :silent]))
+    (u.nmap "<leader>os" ":!tmux split-window -v -l 30\\% sbtn<cr><cr>" [:noremap :silent]))
   )
 
 ; easier moving of blocks in visual mode
