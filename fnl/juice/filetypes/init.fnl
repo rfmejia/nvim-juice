@@ -3,7 +3,7 @@
 
 (vim.cmd "filetype plugin on")
 
-(ac.augroup :special-filetypes
+(ac.augroup :ftplugins-group
             [[:BufNewFile :BufRead] {:pattern ["*.txt" "*.text"]
                                      :command "setf text"}]
             [[:BufNewFile :BufRead] {:pattern ["*bash_profile" "*.bash"]
@@ -11,9 +11,8 @@
             [[:BufNewFile :BufRead] {:pattern "tmux.conf"
                                      :command "setf tmux"}]
             [[:BufNewFile :BufRead] {:pattern ["*.sbt" "*.sc"]
-                                     :command "set ft=scala"}])
+                                     :command "set ft=scala"}]
 
-(ac.augroup :ftplugins-group
             [:FileType {:pattern ["sh" "bash"]
                         :callback (fn [] (require "juice.filetypes.bash"))}]
             [:FileType {:pattern "fennel"

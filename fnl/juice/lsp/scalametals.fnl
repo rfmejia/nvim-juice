@@ -32,10 +32,10 @@
   (fn on-attach [client bufnr]
     (lsp.set-buffer-opts client bufnr)
     (u.vmap "K" (fn [] (metals.type_of_range)) [:noremap :silent])
-    (u.nmap "<localleader>cw" (fn [] (metals.hover_worksheet {:border "rounded"})) [:noremap :silent])
+    (u.nmap "<localleader>mw" (fn [] (metals.hover_worksheet {:border "rounded"})) [:noremap :silent])
     (u.nmap "<localleader>mm" (fn [] (metals.commands)) [:noremap :silent])
-    (u.nmap "<localleader>tt" (. (require :metals.tvp) :toggle_tree_view) [:noremap :silent])
-    (u.nmap "<localleader>tr" (. (require :metals.tvp) :reveal_in_tree) [:noremap :silent]))
+    (u.nmap "<localleader>mt" (. (require :metals.tvp) :toggle_tree_view) [:noremap :silent])
+    (u.nmap "<localleader>mr" (. (require :metals.tvp) :reveal_in_tree) [:noremap :silent]))
 
   (set config.on_attach on-attach)
 

@@ -10,7 +10,6 @@
       (vim.cmd close-cmd))
     ))
 
-
 (defn toggle-qf-window []
   (toggle-window true))
 

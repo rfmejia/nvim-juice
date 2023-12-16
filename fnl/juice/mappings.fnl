@@ -117,6 +117,7 @@
 (vim.cmd "inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")  ; select item
 
 ; plugin mappings
+(u.nmap "<leader>L" ":Lazy<CR>" [:noremap :silent])
 (u.nmap "<leader>e" ":Dirvish<cr>" [:noremap :silent])
 (u.nmap "<leader>u" ":UndotreeToggle<cr>" [:noremap :silent])
 

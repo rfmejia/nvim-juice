@@ -72,39 +72,23 @@
   (set vim.opt.grepprg "rg\\ --smart-case\\ --hidden\\ --follow\\ --no-heading\\ --vimgrep")
   (set vim.opt.grepformat "%f:%l:%c:%m,%f:%l:%m"))
 
-; -----------------------------------------------------------------------------
-; USER COMMANDS & AUTOCOMMANDS
-
-; Remember the cursor position of the last editing
-(ac.autocmd :BufReadPost {:pattern "*"
-                          :command "if line(\"'\\\"\") | exe \"'\\\"\" | endif"})
-
-(vim.api.nvim_create_user_command :TrimTrailingWhitespaces ":%s/\\s\\+$" {})
-
-(ac.augroup :highlight-group
-            ; highlight yanked text
-            [:TextYankPost {:pattern "*"
-                            :callback (fn [] (vim.highlight.on_yank {:timeout 200
-                                                                     :on_visual false}))}]
-
-            ; highlight TODO and FIXME keywords
-            [[:WinEnter :VimEnter] {:pattern "*"
-                                    :command ":silent! call matchadd('Todo','TODO\\|FIXME', -1)"}]
-
-            [[:BufWinEnter :InsertLeave] {:pattern "*"
-                                          :callback (fn []
-                                                      (vim.cmd "hi link ExtraWhitespace Error")
-                                                      (vim.cmd "match ExtraWhitespace /\\s\\+$/"))}]
-
-            [[:BufWinLeave :InsertEnter] {:pattern "*"
-                                          :command "hi ExtraWhitespace ctermbg=NONE guibg=NONE"}])
-
-(ac.augroup :terminal-group
-            ; remove signcolumn in terminal mode
-            [:TermOpen {:pattern "*"
-                        :command "set signcolumn=no"}])
-
-(require :colors)
+(require :juice.commands)
 (require :juice.filetypes)
-(require :mappings)
-(require :packs)
+(require :juice.colors)
+(require :juice.mappings)
+
+;; -----------------------------------------------------------------------------
+; PLUGINS
+(let [lazy (require "lazy")
+      opts {:ui {:border "rounded"}
+            :performance {:rtp {:disabled_plugins [:netrwPlugin
+                                                   :rplugin
+                                                   :tohtml
+                                                   :tutor
+                                                   :vimball]}}}]
+  ; unload netrw
+  (set vim.g.loaded_netrw 1)
+  (set vim.g.loaded_netrwPlugin 1)
+
+  ; Load all plugins defined in the 'juice.plugins' directory
+  (lazy.setup :juice.plugins opts))
