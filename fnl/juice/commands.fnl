@@ -9,6 +9,10 @@
 (ac.autocmd :BufReadPost {:pattern "*"
                           :command "if line(\"'\\\"\") | exe \"'\\\"\" | endif"})
 
+(ac.autocmd [:BufEnter :BufWritePost] {:pattern "*"
+                                       :callback (. (require :juice.statusline) :git-file-status)
+                                       })
+
 (ac.augroup :highlight-group
             ; highlight yanked text
             [:TextYankPost {:pattern "*"

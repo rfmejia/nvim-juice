@@ -3,16 +3,13 @@
              s aniseed.string
              u util}})
 
-; TODO Consider tying this to an autocmd for every BufEnter and writing it to a
-; global variable the statusline can read instead
 (defn git-file-status []
-  "Returns the git flag(s) of the current file"
+  "Updates the git flag(s) of the current file inside g:gitfile"
   (let [path (vim.fn.expand "%:p")
-        git-cmd (.. "git file-status " path " | tr -d '\\n'")]
+        git-cmd (.. "git file-status " path " | tr -d ' \\n'")]
+    ; TODO Check: if directory then set to blank
     (match (vim.fn.system git-cmd)
-      status (if (not (s.blank? status))
-               (.. " " status " ")
-               "")
+      status (set vim.g.git_file_status status)
       (nil err-msg) (print "Could not get `git file-status`: " err-msg))
     ))
 
@@ -28,6 +25,7 @@
   (let [filename "%f"
         buffer-modified-flags "%m"
         buffer-type-flags "%q%h%r"
+        git-status " %{g:git_file_status}"
         align-right "%="
         errors (u.lua-statusline "require('juice.statusline')['count-diagnostic'](vim.diagnostic.severity.ERROR)")
         warnings (u.lua-statusline "require('juice.statusline')['count-diagnostic'](vim.diagnostic.severity.WARN)")
@@ -38,7 +36,7 @@
         warn-color "%#StatusLineWarn#"
         template [filename
                   buffer-modified-flags
-                  ; (git-file-status) ; FIXME Only updated once; might need to update every BufEnter
+                  git-status
                   buffer-type-flags
                   align-right
                   widget-str
