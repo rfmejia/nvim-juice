@@ -72,23 +72,8 @@
   (set vim.opt.grepprg "rg\\ --smart-case\\ --hidden\\ --follow\\ --no-heading\\ --vimgrep")
   (set vim.opt.grepformat "%f:%l:%c:%m,%f:%l:%m"))
 
+(require :juice.mappings)
 (require :juice.commands)
 (require :juice.filetypes)
 (require :juice.colors)
-(require :juice.mappings)
-
-;; -----------------------------------------------------------------------------
-; PLUGINS
-(let [lazy (require "lazy")
-      opts {:ui {:border "rounded"}
-            :performance {:rtp {:disabled_plugins [:netrwPlugin
-                                                   :rplugin
-                                                   :tohtml
-                                                   :tutor
-                                                   :vimball]}}}]
-  ; unload netrw
-  (set vim.g.loaded_netrw 1)
-  (set vim.g.loaded_netrwPlugin 1)
-
-  ; Load all plugins defined in the 'juice.plugins' directory
-  (lazy.setup :juice.plugins opts))
+(require :juice.plugins)
