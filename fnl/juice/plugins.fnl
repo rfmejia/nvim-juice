@@ -15,15 +15,40 @@
                 :lazy false
                 :priority 1000
                 :config (fn []
-                          (let [theme (require "github-theme")
-                                dark-palette {:github_dark_high_contrast {:bg0 "#0000FF"
-                                                                          :bg1 "#0000FF"
-                                                                          :bg2 "#0000FF"
-                                                                          :bg3 "#0000FF"
-                                                                          :bg4 "#0000FF"
-                                                                          }}]
-                            (theme.setup {:palettes dark-palette})
-                            (vim.cmd "colorscheme github_dark_high_contrast")))}
+                          (let [theme (require :github-theme)
+                                c {:default-bg :none
+                                   :linenr-fg :#3d3d3d
+                                   :linenr-bg :none
+                                   :cursor-fg :#ffffff
+                                   :cursor-bg :none
+                                   :spell-bad :#bb4466
+                                   :comment-fg :#707070
+                                   :winsep-fg :#009000
+                                   :winsep-bg :none
+                                   :statusline-fg :#909090
+                                   ; :statusline-bg (color-attr :StatusLine :bg)
+                                   ; :statusline-error-fg (color-attr :DiagnosticError :fg)
+                                   ; :statusline-warn-fg (color-attr :DiagnosticWarn :fg)
+                                   }
+                                options {:transparent true}
+                                groups {:all {
+                                              :Comment {:fg c.comment-fg :style :italic}
+                                              :Conceal {:link :Comment}
+                                              :CursorLine {:bg :none}
+                                              :CursorLineNr {:fg c.cursor-fg :bg c.cursor-bg}
+                                              :LineNr {:fg c.linenr-fg :bg c.cursor-bg}
+                                              :LineNrAbove {:fg c.linenr-fg :bg c.linenr-bg}
+                                              :LineNrBelow {:fg c.linenr-fg :bg c.linenr-bg}
+                                              :MsgArea {:fg :#909090}
+                                              :SpellBad {:fg c.spell-bad :undercurl true}
+                                              :StatusLine {:fg :#909090 :bg :none}
+                                              :Todo {:fg :#eeee00}
+                                              :WinSeparator {:fg c.winsep-fg :bg c.winsep-bg}
+                                              }
+                                        }]
+                            (theme.setup {: options : groups})
+                            (vim.cmd "colorscheme github_dark")
+                            ))}
 
                {1 "Olical/aniseed" :ft "fennel"}
                {1 "Olical/conjure" :ft ["clojure" "fennel" "lisp" "scheme"]}

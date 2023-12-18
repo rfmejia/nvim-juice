@@ -8,19 +8,20 @@
   "Extract an attribute from an existing highlight group"
   (. (vim.api.nvim_get_hl 0 {:name hl-group}) attribute))
 
-(def custom-colors {:default-bg :black
+(def custom-colors {:default-bg :none
                     :linenr-fg :#3d3d3d
-                    :linenr-bg :#000000
+                    :linenr-bg :none
                     :cursor-fg :#ffffff
-                    :cursor-bg :#000000
+                    :cursor-bg :none
                     :spell-bad :#bb4466
                     :conceal-fg :#707070
                     :conceal-bg :none
                     :winsep-fg :#009000
                     :winsep-bg :none
+                    :statusline-fg :#909090
+                    :statusline-bg (color-attr :StatusLine :bg)
                     :statusline-error-fg (color-attr :DiagnosticError :fg)
                     :statusline-warn-fg (color-attr :DiagnosticWarn :fg)
-                    :statusline-bg (color-attr :StatusLine :bg)
                     })
 
 ; Note: make sure this is defined before the colorscheme is first set
@@ -30,10 +31,12 @@
                                        (when (= vim.o.background "dark")
                                          (local c custom-colors)
                                          (vim.api.nvim_set_hl 0 :Normal {:bg c.default-bg})
+                                         (vim.api.nvim_set_hl 0 :NormalNC {:bg c.default-bg})
+                                         (vim.api.nvim_set_hl 0 :NonText {:bg c.default-bg})
                                          (vim.api.nvim_set_hl 0 :MsgArea {:fg :#909090})
                                          (vim.api.nvim_set_hl 0 :CursorLine {:bg c.cursor-bg})
                                          (vim.api.nvim_set_hl 0 :MatchParen {:bg :blue})
-                                         (vim.api.nvim_set_hl 0 :StatusLine {:fg :#909090 :bg c.default-bg})
+                                         (vim.api.nvim_set_hl 0 :StatusLine {:fg c.statusline-fg :bg c.default-bg})
                                          (vim.api.nvim_set_hl 0 :VertSplit {:fg c.default-bg})
                                          (vim.api.nvim_set_hl 0 :Todo {:fg :yellow})
 

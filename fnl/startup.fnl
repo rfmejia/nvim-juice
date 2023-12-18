@@ -75,5 +75,4 @@
 (require :juice.mappings)
 (require :juice.commands)
 (require :juice.filetypes)
-(require :juice.colors)
 (require :juice.plugins)
