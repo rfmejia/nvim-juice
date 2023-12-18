@@ -19,11 +19,7 @@
   (u.nmap "]d" (fn [] (vim.diagnostic.goto_next {:wrap false})) [:noremap :silent])
   (u.imap "<C-space>" "<C-x><C-o>" [:noremap :silent])
 
-  ; lsp virtual text, error and warning styling
-  (vim.cmd "hi Conceal cterm=italic ctermbg=none ctermfg=59 gui=italic guibg=none guifg=59")
-
   ; lsp popup colors and borders
-  (vim.cmd "hi WinSeparator ctermbg=black ctermfg=69 guibg=black guifg=69")
   (set vim.lsp.handlers.textDocument/hover (vim.lsp.with vim.lsp.handlers.hover {:border "rounded"}))
   (set vim.lsp.handlers.textDocument/signatureHelp (vim.lsp.with vim.lsp.handlers.signature_help {:border "rounded"}))
   (vim.diagnostic.config {:float {:border "rounded"}})
