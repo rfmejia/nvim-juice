@@ -1,4 +1,3 @@
 **/.luarc.json
 lua/
-lazy-lock.json
 *.add.spl
