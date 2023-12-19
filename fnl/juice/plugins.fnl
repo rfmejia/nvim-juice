@@ -134,7 +134,11 @@
                                            "yaml"]]
                             (ts.setup {:ensure_installed languages
                                        :highlight {:enable true}
-                                       :incremental_selection {:enable true}
+                                       :incremental_selection {:enable true
+                                                               :keymaps {:init_selection :<C-o>
+                                                                         :node_incremental :<C-o>
+                                                                         :scope_incremental false
+                                                                         :node_decremental :<bs>}}
                                        :indent {:enable true}
                                        })
                             ))}
