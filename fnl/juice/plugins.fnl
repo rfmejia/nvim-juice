@@ -136,10 +136,19 @@
                           (set vim.g.undotree_WindowLayout 4)
                           (set vim.g.undotree_SetFocusWhenToggle 1))}
 
-               {1 "tpope/vim-commentary" :keys "gc"}
                {1 "tpope/vim-fugitive" :cmd "Git"}
-               {1 "tpope/vim-repeat" :keys "."}
-               {1 "tpope/vim-surround" :keys ["cs" "ds" "ys"]}
+
+               {1 "numToStr/Comment.nvim"
+                :keys "gc"
+                :config (fn []
+                          (let [c (require :Comment)]
+                            (c.setup)))}
+
+               {1 "kylechui/nvim-surround"
+                :keys ["cs" "ds" "ys"]
+                :config (fn []
+                          (let [surround (require :nvim-surround)]
+                            (surround.setup)))}
 
                {1 "tpope/vim-dadbod"
                 :cmd "DB"
