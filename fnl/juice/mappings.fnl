@@ -6,7 +6,6 @@
 
 (u.nmap "Y" "y$" [])
 (u.nmap "<C-l>" ":nohl<cr>" [:noremap])
-(u.nmap "gx" ":!xdg-open <C-r><C-a><cr>" [:noremap])
 (u.nmap "<leader>;" ":<C-r>\"" [:noremap])
 
 (u.nmap "<leader>w" ":w<cr>" [:noremap :silent])
@@ -118,7 +117,7 @@
 
 ; plugin mappings
 (u.nmap "<leader>L" ":Lazy<CR>" [:noremap :silent])
-(u.nmap "<leader>e" ":Dirvish<cr>" [:noremap :silent])
+(u.nmap "<leader>e" ":Explore<cr><cr>" [:noremap :silent])
 (u.nmap "<leader>u" ":UndotreeToggle<cr>" [:noremap :silent])
 
 (u.nmap "<leader>f" ":Files<cr>" [:noremap :silent])

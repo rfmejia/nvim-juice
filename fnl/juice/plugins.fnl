@@ -1,13 +1,13 @@
 (module packs
-  {autoload {lsp juice.lsp}
+  {autoload {lsp juice.lsp
+             u util}
    import-macros [[ac :aniseed.macros.autocmds]]})
 
 ;; -----------------------------------------------------------------------------
 ; PLUGINS
 (let [lazy (require "lazy")
       opts {:ui {:border "rounded"}
-            :performance {:rtp {:disabled_plugins [:netrwPlugin
-                                                   :rplugin
+            :performance {:rtp {:disabled_plugins [:rplugin
                                                    :tohtml
                                                    :tutor
                                                    :vimball]}}}
@@ -55,19 +55,11 @@
                             (theme.setup {: options : groups})
                             (set vim.opt.termguicolors true)
                             (set vim.opt.background "dark")
-                            (vim.cmd "colorscheme github_dark")
-                            ))}
+                            (vim.cmd "colorscheme github_dark"))
+                          )}
 
                {1 "Olical/aniseed" :ft "fennel"}
                {1 "Olical/conjure" :ft ["clojure" "fennel" "lisp" "scheme"]}
-
-               {1 "justinmk/vim-dirvish"
-                :cmd :Dirvish
-                :config (fn []
-                          (set vim.g.loaded_netrw 1)
-                          (set vim.g.loaded_netrwPlugin 1)
-                          ; Sort by file/dir type, and then hidden files/dirs
-                          (vim.cmd "let g:dirvish_mode = ':sort | sort ,^.*[^/]$, r'"))}
 
                {1 "junegunn/fzf.vim"
                 :cmd ["Files" "GFiles" "History"]
@@ -158,9 +150,18 @@
                 :dependencies [{1 "kristijanhusak/vim-dadbod-completion"}]}
                ]]
 
-  ; unload netrw
-  (set vim.g.loaded_netrw 1)
-  (set vim.g.loaded_netrwPlugin 1)
+
+  ; Set up netrw
+  (vim.api.nvim_create_autocmd :FileType
+                               {:pattern "netrw"
+                                :callback (fn []
+                                            ; Note: some options were removed due to a bug
+                                            ; https://github.com/neovim/neovim/issues/23650#issuecomment-1863894217
+                                            (set vim.g.netrw_altfile 1)        ; C-^ skips netrw (return to last edited file)
+                                            (set vim.g.netrw_sort_by "exten")  ; sort by extension
+                                            (set vim.g.netrw_sort_options "i") ; add sort options (i = ignore case)
+                                            (u.nmap "?" ":h netrw-quickmap<CR>" [:noremap]))
+                                })
 
   ; Load all plugins defined in the 'juice.plugins' directory
   (lazy.setup plugins opts))
