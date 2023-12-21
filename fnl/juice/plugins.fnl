@@ -28,15 +28,13 @@
                 :dependencies [{1 "junegunn/fzf"
                                 :name "fzf"
                                 :dir "~/.fzf"
-                                :build "./install --all"}]
-                }
+                                :build "./install --all"}]}
 
                {1 "lewis6991/gitsigns.nvim"
                 :event ["BufReadPre" "BufNewFile"]
                 :config (fn []
                           (let [gitsigns (require :gitsigns)]
-                            (gitsigns.setup))
-                          )}
+                            (gitsigns.setup)))}
 
                {1 "neovim/nvim-lspconfig"
                 :ft [:go :scala]
@@ -118,7 +116,7 @@
                                                              (set vim.opt.omnifunc "vim_dadbod_completion#omni"))}))
                 :dependencies [{1 "kristijanhusak/vim-dadbod-completion"}]
                 }
-]]
+              ]]
 
   ; Load all plugins defined in the 'juice.plugins' directory
   (lazy.setup plugins opts))

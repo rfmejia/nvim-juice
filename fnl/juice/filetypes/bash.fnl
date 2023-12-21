@@ -1,7 +1,7 @@
 (module bash
   {autoload {a aniseed.core
              s aniseed.string
-             u util}} )
+             u util}})
 
 (set vim.opt.makeprg "sh %")
 (set vim.opt.signcolumn "no")
