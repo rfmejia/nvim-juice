@@ -1,5 +1,6 @@
 (module packs
-  {autoload {lsp juice.lsp
+  {autoload {c juice.colors
+             lsp juice.lsp
              u util}
    import-macros [[ac :aniseed.macros.autocmds]]})
 
@@ -14,47 +15,7 @@
       plugins [{1 "projekt0n/github-nvim-theme"
                 :lazy false
                 :priority 1000
-                :config (fn []
-                          ; TODO point this to a central colors.fnl
-                          (let [theme (require :github-theme)
-                                color-attr (lambda [hl-group attribute]
-                                             (. (vim.api.nvim_get_hl 0 {:name hl-group}) attribute))
-                                c {:default-bg :none
-                                   :linenr-fg :#3d3d3d
-                                   :linenr-bg :none
-                                   :cursor-fg :#ffffff
-                                   :cursor-bg :none
-                                   :spell-bad :#bb4466
-                                   :comment-fg :#707070
-                                   :winsep-fg :#009000
-                                   :winsep-bg :none
-                                   :statusline-fg :#909090
-                                   :statusline-bg (color-attr :StatusLine :bg)
-                                   :diagnostic-error-fg (color-attr :DiagnosticError :fg)
-                                   :diagnostic-warn-fg (color-attr :DiagnosticWarn :fg)}
-                                options {:transparent true}
-                                groups {:all {:Comment {:fg c.comment-fg :style :italic}
-                                              :Conceal {:link :Comment}
-                                              :CursorLine {:bg :none}
-                                              :CursorLineNr {:fg c.cursor-fg :bg c.cursor-bg}
-                                              :DiagnosticVirtualTextError {:fg c.diagnostic-error-fg :style :italic}
-                                              :DiagnosticVirtualTextWarn {:fg c.diagnostic-warn-fg :style :italic}
-                                              :LineNr {:fg c.linenr-fg :bg c.cursor-bg}
-                                              :LineNrAbove {:fg c.linenr-fg :bg c.linenr-bg}
-                                              :LineNrBelow {:fg c.linenr-fg :bg c.linenr-bg}
-                                              :MsgArea {:fg :#909090}
-                                              :SpellBad {:fg c.spell-bad :undercurl true}
-                                              :StatusLine {:fg :#909090 :bg :none}
-                                              :StatusLineError {:fg c.diagnostic-error-fg :bg c.statusline-bg}
-                                              :StatusLineWarn {:fg c.diagnostic-warn-fg :bg c.statusline-bg}
-                                              :Todo {:fg :#eeee00}
-                                              :WinSeparator {:fg c.winsep-fg :bg c.winsep-bg}}
-                                        }]
-                            (theme.setup {: options : groups})
-                            (set vim.opt.termguicolors true)
-                            (set vim.opt.background "dark")
-                            (vim.cmd "colorscheme github_dark"))
-                          )}
+                :config (fn [] (c.setup))}
 
                {1 "Olical/aniseed" :ft "fennel"}
                {1 "Olical/conjure" :ft ["clojure" "fennel" "lisp" "scheme"]}

@@ -1,5 +1,6 @@
 (module commands
-  {import-macros [[ac :aniseed.macros.autocmds]]})
+  {autoload {c juice.colors}
+   import-macros [[ac :aniseed.macros.autocmds]]})
 
 ; -----------------------------------------------------------------------------
 ; USER COMMANDS & AUTOCOMMANDS
@@ -26,13 +27,10 @@
             [[:BufWinEnter :InsertLeave] {:pattern "*"
                                           :callback (fn []
                                                       (vim.cmd "match ExtraWhitespace /\\s\\+$/")
-                                                      ; TODO point this to a central colors.fnl
-                                                      (vim.cmd  "hi ExtraWhitespace gui=undercurl guifg=#dd1111")
-                                                      )}]
+                                                      (c.show-extra-whitespace))}]
 
             [[:BufWinLeave :InsertEnter] {:pattern "*"
-                                          ; TODO point this to a central colors.fnl
-                                          :command "hi ExtraWhitespace ctermbg=NONE gui=NONE"}])
+                                          :command "hi clear ExtraWhitespace"}])
 
 (ac.augroup :terminal-group
             ; remove signcolumn in terminal mode
