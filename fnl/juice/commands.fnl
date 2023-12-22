@@ -26,11 +26,13 @@
             [[:BufWinEnter :InsertLeave] {:pattern "*"
                                           :callback (fn []
                                                       (vim.cmd "match ExtraWhitespace /\\s\\+$/")
-                                                      (vim.cmd  "hi ExtraWhitespace guibg=#dd1111")
+                                                      ; TODO point this to a central colors.fnl
+                                                      (vim.cmd  "hi ExtraWhitespace gui=undercurl guifg=#dd1111")
                                                       )}]
 
             [[:BufWinLeave :InsertEnter] {:pattern "*"
-                                          :command "hi ExtraWhitespace ctermbg=NONE guibg=NONE"}])
+                                          ; TODO point this to a central colors.fnl
+                                          :command "hi ExtraWhitespace ctermbg=NONE gui=NONE"}])
 
 (ac.augroup :terminal-group
             ; remove signcolumn in terminal mode

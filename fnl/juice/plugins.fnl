@@ -15,6 +15,7 @@
                 :lazy false
                 :priority 1000
                 :config (fn []
+                          ; TODO point this to a central colors.fnl
                           (let [theme (require :github-theme)
                                 color-attr (lambda [hl-group attribute]
                                              (. (vim.api.nvim_get_hl 0 {:name hl-group}) attribute))
@@ -30,11 +31,9 @@
                                    :statusline-fg :#909090
                                    :statusline-bg (color-attr :StatusLine :bg)
                                    :diagnostic-error-fg (color-attr :DiagnosticError :fg)
-                                   :diagnostic-warn-fg (color-attr :DiagnosticWarn :fg)
-                                   }
+                                   :diagnostic-warn-fg (color-attr :DiagnosticWarn :fg)}
                                 options {:transparent true}
-                                groups {:all {
-                                              :Comment {:fg c.comment-fg :style :italic}
+                                groups {:all {:Comment {:fg c.comment-fg :style :italic}
                                               :Conceal {:link :Comment}
                                               :CursorLine {:bg :none}
                                               :CursorLineNr {:fg c.cursor-fg :bg c.cursor-bg}
@@ -49,8 +48,7 @@
                                               :StatusLineError {:fg c.diagnostic-error-fg :bg c.statusline-bg}
                                               :StatusLineWarn {:fg c.diagnostic-warn-fg :bg c.statusline-bg}
                                               :Todo {:fg :#eeee00}
-                                              :WinSeparator {:fg c.winsep-fg :bg c.winsep-bg}
-                                              }
+                                              :WinSeparator {:fg c.winsep-fg :bg c.winsep-bg}}
                                         }]
                             (theme.setup {: options : groups})
                             (set vim.opt.termguicolors true)
