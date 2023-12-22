@@ -157,18 +157,5 @@
                 :dependencies [{1 "kristijanhusak/vim-dadbod-completion"}]}
                ]]
 
-
-  ; Set up netrw
-  (vim.api.nvim_create_autocmd :FileType
-                               {:pattern "netrw"
-                                :callback (fn []
-                                            ; Note: some options were removed due to a bug
-                                            ; https://github.com/neovim/neovim/issues/23650#issuecomment-1863894217
-                                            (set vim.g.netrw_altfile 1)        ; C-^ skips netrw (return to last edited file)
-                                            (set vim.g.netrw_sort_by "exten")  ; sort by extension
-                                            (set vim.g.netrw_sort_options "i") ; add sort options (i = ignore case)
-                                            (u.nmap "?" ":h netrw-quickmap<CR>" [:noremap]))
-                                })
-
   ; Load all plugins defined in the 'juice.plugins' directory
   (lazy.setup plugins opts))
