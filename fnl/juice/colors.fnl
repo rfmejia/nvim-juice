@@ -28,6 +28,7 @@
               :LineNrAbove {:fg c.dark-gray :bg c.normal-bg}
               :LineNrBelow {:fg c.dark-gray :bg c.normal-bg}
               :MsgArea {:fg c.light-gray}
+              :NormalFloat {:bg c.normal-bg}
               :SpellBad {:fg c.warn-fg :style :undercurl}
               :StatusLine {:fg c.light-gray :bg c.normal-bg}
               :StatusLineError {:fg c.error-fg :bg c.statusline-bg}

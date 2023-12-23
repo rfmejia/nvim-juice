@@ -110,13 +110,15 @@
                             (surround.setup)))}
 
                {1 "tpope/vim-dadbod"
-                :cmd "DB"
+                :ft ["sql" "mysql"]
                 :config (fn []
                           (ac.autocmd :FileType {:pattern ["sql" "mysql"]
                                                  :callback (fn []
+                                                             (set vim.opt.commentstring "--%s")
                                                              (set vim.opt.omnifunc "vim_dadbod_completion#omni"))}))
-                :dependencies [{1 "kristijanhusak/vim-dadbod-completion"}]}
-               ]]
+                :dependencies [{1 "kristijanhusak/vim-dadbod-completion"}]
+                }
+]]
 
   ; Load all plugins defined in the 'juice.plugins' directory
   (lazy.setup plugins opts))

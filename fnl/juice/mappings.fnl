@@ -131,10 +131,10 @@
 (u.nmap "<leader>g" ":GFiles<cr>" [:noremap :silent])
 (u.nmap "<leader>p" ":History<cr>" [:noremap :silent])
 
-(u.nmap "<localleader>dc" ":DB g:active " [:noremap :silent])
-(u.nmap "<localleader>dd" ":.DB g:active<cr>" [:noremap :silent])
-(u.nmap "<localleader>db" ":%DB g:active<cr>" [:noremap :silent])
-(u.nmap "<localleader>dp" "vip:DB g:active<cr>" [:noremap :silent])
+(u.nmap "<localleader>d;" ":DB g:db " [:noremap :silent])
+(u.nmap "<localleader>dd" ":.DB g:db<cr>" [:noremap :silent])
+(u.nmap "<localleader>db" ":%DB g:db<cr>" [:noremap :silent])
+(u.nmap "<localleader>dp" "vip:DB g:db<cr>" [:noremap :silent])
 
 (u.nmap "]g" ":Gitsigns next_hunk<cr>" [:noremap :silent])
 (u.nmap "[g" ":Gitsigns prev_hunk<cr>" [:noremap :silent])
