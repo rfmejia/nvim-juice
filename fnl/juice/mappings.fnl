@@ -115,6 +115,13 @@
 ; completion bindings
 (vim.cmd "inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")  ; select item
 
+; open vim notes in a new tab
+(u.nmap "<leader>v"
+        (fn []
+          (when (u.exists? "$JOURNAL")
+            (vim.cmd (.. ":$tabnew"  "$JOURNAL/devnotes/vim.md"))))
+        [:noremap :silent])
+
 ; plugin mappings
 (u.nmap "<leader>L" ":Lazy<CR>" [:noremap :silent])
 (u.nmap "<leader>e" ":Explore<cr><cr>" [:noremap :silent])
