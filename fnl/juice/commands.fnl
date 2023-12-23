@@ -26,8 +26,8 @@
 
             [[:BufWinEnter :InsertLeave] {:pattern "*"
                                           :callback (fn []
-                                                      (vim.cmd "match ExtraWhitespace /\\s\\+$/")
-                                                      (c.show-extra-whitespace))}]
+                                                      (c.show-extra-whitespace)
+                                                      (vim.cmd "match ExtraWhitespace /\\s\\+$/"))}]
 
             [[:BufWinLeave :InsertEnter] {:pattern "*"
                                           :command "hi clear ExtraWhitespace"}])
