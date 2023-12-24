@@ -25,6 +25,7 @@
               :DiagnosticVirtualTextError {:fg c.error-fg :style :italic}
               :DiagnosticVirtualTextWarn {:fg c.warn-fg :style :italic}
               :ExtraWhitespace {:fg c.error-fg :undercurl true}
+              :FloatBorder {:fg c.light-gray}
               :LineNr {:fg c.dark-gray :bg c.cursor-bg}
               :LineNrAbove {:fg c.dark-gray :bg c.normal-bg}
               :LineNrBelow {:fg c.dark-gray :bg c.normal-bg}
