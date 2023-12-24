@@ -7,6 +7,7 @@
 
 (def- custom-colors {:normal-bg (color-attr :Normal :bg)
                      :normal-fg (color-attr :Normal :fg)
+                     :info-fg (color-attr :DiagnosticInfo :fg)
                      :error-fg (color-attr :DiagnosticError :fg)
                      :warn-fg (color-attr :DiagnosticWarn :fg)
                      :statusline-bg (color-attr :StatusLine :bg)
@@ -31,6 +32,7 @@
               :NormalFloat {:bg c.normal-bg}
               :SpellBad {:fg c.warn-fg :style :undercurl}
               :StatusLine {:fg c.light-gray :bg c.normal-bg}
+              :StatusLineInfo {:fg c.info-fg :bg c.statusline-bg}
               :StatusLineError {:fg c.error-fg :bg c.statusline-bg}
               :StatusLineWarn {:fg c.warn-fg :bg c.statusline-bg}
               :Todo {:fg c.bright-yellow}

@@ -8,7 +8,6 @@
 (set vim.opt.wrap true)
 (set vim.opt.spell true)
 (set vim.opt.spelllang "en_us")
-(set vim.opt.signcolumn "no")
 
 ; TODO fix and verify this works
 (defn render-markdown-to-html []

@@ -24,14 +24,7 @@
 (set vim.opt.ttyfast true)                    ; -
 (set vim.opt.ttimeoutlen 50)                  ; -
 (set vim.opt.mouse "")                        ; Disable mouse
-(set vim.opt.shortmess "f")                   ;
-
-(when (u.has? "clipboard")
-  (set vim.opt.clipboard "unnamedplus"))      ; Use Linux system clipboard
-
-(when (u.has? "persistent_undo")
-  (set vim.opt.undolevels 5000)               ; Increase the number of undos
-  (set vim.opt.undofile true))                ; Persist undo logs per file inside `undodir`
+(set vim.opt.shortmess "filnxtToOF")          ;
 
 ; visual
 (set vim.opt.number true)                     ; Hide line numbers
@@ -59,13 +52,22 @@
 (set vim.opt.completeopt                      ; -
      "menu,menuone,noselect,noinsert")
 (set vim.opt.path ".,,")                      ; search in current file's directory or pwd (do not use **)
-(set vim.opt.wildmenu true)                   ; -
-(set vim.opt.wildmode                         ; Set order of completion matches
-     "lastused,longest,full")
-(set vim.opt.wildignore                       ; -
-     "*/.git/*,*/.ammonite/*,*/.bloop/*,*/.metals/*,*/node_modules/*,*/build/*,*/target/*,*.class")
-(set vim.opt.wildignorecase true)             ; ignore case when filtering results
-(set vim.opt.wildoptions "pum")               ; use popup to show results
+
+(when (u.has? :clipboard)
+  (set vim.opt.clipboard "unnamedplus"))      ; Use Linux system clipboard
+
+(when (u.has? :persistent_undo)
+  (set vim.opt.undolevels 5000)               ; Increase the number of undos
+  (set vim.opt.undofile true))                ; Persist undo logs per file inside `undodir`
+
+(when (u.has? :wildmenu)
+  (set vim.opt.wildmenu true)                   ; -
+  (set vim.opt.wildmode                         ; Set order of completion matches
+       "lastused,longest,full")
+  (set vim.opt.wildignore                       ; -
+       "*/.git/*,*/.ammonite/*,*/.bloop/*,*/.metals/*,*/node_modules/*,*/build/*,*/target/*,*.class")
+  (set vim.opt.wildignorecase true)             ; ignore case when filtering results
+  (set vim.opt.wildoptions "pum"))               ; use popup to show results
 
 ; use ripgrep
 (when (u.executable? "rg")

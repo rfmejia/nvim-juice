@@ -32,12 +32,13 @@
         ruler "%l:%c"
         widget-str (.. " " (s.join widgets) " ")
         default-color "%#StatusLine#"
+        info-color "%#StatusLineInfo#"
         error-color "%#StatusLineError#"
         warn-color "%#StatusLineWarn#"
         template [filename
                   buffer-modified-flags
-                  git-status
-                  buffer-type-flags
+                  info-color git-status
+                  default-color buffer-type-flags
                   align-right
                   widget-str
                   error-color errors
