@@ -5,8 +5,6 @@
 
 ; -----------------------------------------------------------------------------
 ; GENERAL OPTIONS
-(when (u.has? "syntax")
-  (vim.cmd "syntax enable"))
 
 ; behavior
 (set vim.opt.hidden true)                     ; Allow switching off unwritten buffers
@@ -41,17 +39,20 @@
 (set vim.opt.statusline (sl.build-statusline []))
 
 ; search options
-(set vim.opt.hlsearch true)                   ; -
-(set vim.opt.incsearch true)                  ; -
+(set vim.opt.hlsearch false)                  ; Turn off highlight search
+(set vim.opt.incsearch true)                  ; Search as the query is typed
 (set vim.opt.wrapscan false)                  ; Do not wrap search scans
 (set vim.opt.ignorecase true)                 ; Ignore case when using lowercase in search
 (set vim.opt.smartcase true)                  ; But don't ignore it when using upper case
 
-;; completion
+; completion
 (set vim.opt.complete ".,w,b,u,t,kspell")     ; remove imports, add spellchecker to completion sources
 (set vim.opt.completeopt                      ; -
      "menu,menuone,noselect,noinsert")
 (set vim.opt.path ".,,")                      ; search in current file's directory or pwd (do not use **)
+
+(when (u.has? :syntax)
+  (vim.cmd "syntax enable"))
 
 (when (u.has? :clipboard)
   (set vim.opt.clipboard "unnamedplus"))      ; Use Linux system clipboard
@@ -70,7 +71,7 @@
   (set vim.opt.wildoptions "pum"))               ; use popup to show results
 
 ; use ripgrep
-(when (u.executable? "rg")
+(when (u.executable? :rg)
   (set vim.opt.grepprg "rg\\ --smart-case\\ --hidden\\ --follow\\ --no-heading\\ --vimgrep")
   (set vim.opt.grepformat "%f:%l:%c:%m,%f:%l:%m"))
 

@@ -48,5 +48,5 @@
         options {:transparent true}]
     (theme.setup {: options :groups {:all groups}})
     (set vim.opt.termguicolors true)
-    (set vim.opt.background "dark")
-    (vim.cmd "colorscheme github_dark")))
+    (set vim.opt.background :dark)
+    (vim.cmd.colorscheme :github_dark)))

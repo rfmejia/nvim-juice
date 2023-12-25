@@ -22,7 +22,6 @@
 ; Disable default mappings to train optimal alternatives
 (u.nmap "{" (fn [] (print "Use C-u or relative jumps instead")) [:noremap :silent])
 (u.nmap "}" (fn [] (print "Use C-d or relative jumps instead")) [:noremap :silent])
-(u.nmap "0" (fn [] (print "Use _ instead")) [:noremap :silent])
 
 ; Map omnifunc
 (u.imap "<C-t>" "<C-x><C-o>" [:noremap :silent])
@@ -119,7 +118,7 @@
 (u.nmap "<leader>v"
         (fn []
           (when (u.exists? "$JOURNAL")
-            (vim.cmd (.. ":$tabnew"  "$JOURNAL/devnotes/vim.md"))))
+            (vim.cmd (.. ":$tabnew"  "$JOURNAL/vim/vim.md"))))
         [:noremap :silent])
 
 ; plugin mappings
