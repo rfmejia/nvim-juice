@@ -115,11 +115,9 @@
 (vim.cmd "inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")  ; select item
 
 ; open vim notes in a new tab
-(u.nmap "<leader>v"
-        (fn []
-          (when (u.exists? "$JOURNAL")
-            (vim.cmd (.. ":$tabnew"  "$JOURNAL/vim/vim.md"))))
-        [:noremap :silent])
+(when (u.exists? "$JOURNAL")
+  (u.nmap "<leader>oj" (fn [] (vim.cmd (.. ":$tabnew" "$JOURNAL/journal.md"))) [:noremap :silent])
+  (u.nmap "<leader>ov" (fn [] (vim.cmd (.. ":$tabnew" "$JOURNAL/vim/vim.md"))) [:noremap :silent]))
 
 ; plugin mappings
 (u.nmap "<leader>L" ":Lazy<CR>" [:noremap :silent])
