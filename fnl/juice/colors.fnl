@@ -1,5 +1,6 @@
 (module colors
-  {import-macros [[ac :aniseed.macros.autocmds]]})
+  {autoload {u util}
+   import-macros [[ac :aniseed.macros.autocmds]]})
 
 (defn- color-attr [hl-group attribute]
   "Extract an attribute from an existing highlight group"
@@ -40,9 +41,16 @@
 (defn show-extra-whitespace []
   (vim.api.nvim_set_hl 0 :ExtraWhitespace groups.ExtraWhitespace))
 
+(defn- get-system-colorscheme []
+  "If in Gnome check the current system theme and set nvim theme"
+  (local gsettings-cmd [:gsettings :get :org.gnome.desktop.interface :color-scheme])
+  (if (and (u.executable? :gsettings)
+           (string.find (vim.fn.system gsettings-cmd) :default))
+    "github_light"
+    "github_dark"))
+
 (defn setup []
   (let [theme (require :github-theme)
         options {:transparent true}]
     (theme.setup {: options :groups {:all groups}})
-    (set vim.opt.termguicolors true)
-    (vim.cmd.colorscheme :github_dark)))
+    (vim.cmd.colorscheme (get-system-colorscheme))))
