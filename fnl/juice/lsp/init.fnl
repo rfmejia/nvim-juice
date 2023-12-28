@@ -12,8 +12,8 @@
 
 (defn setup []
   ; setup default lsp key mappings
-  (u.nmap "<localleader>dc" vim.diagnostic.setqflist [:noremap :silent])
-  (u.nmap "<localleader>de" (fn [] (vim.diagnostic.setqflist {:severity vim.diagnostic.severity.ERROR})) [:noremap :silent])
+  (u.nmap "<localleader>dc" (fn [] (vim.diagnostic.setqflist {:severity vim.diagnostic.severity.ERROR})) [:noremap :silent])
+  (u.nmap "<localleader>dC" vim.diagnostic.setqflist [:noremap :silent])
   (u.nmap "<localleader>dl" vim.diagnostic.setloclist [:noremap :silent])
   (u.nmap "[d" (fn [] (vim.diagnostic.goto_prev {:wrap false})) [:noremap :silent])
   (u.nmap "]d" (fn [] (vim.diagnostic.goto_next {:wrap false})) [:noremap :silent])

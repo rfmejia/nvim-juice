@@ -1,5 +1,6 @@
 (module mappings
-  {autoload {u util}})
+  {autoload {q juice.quickfix
+             u util}})
 
 (set vim.g.mapleader " ")
 (set vim.g.maplocalleader ",")
@@ -63,14 +64,14 @@
 (u.nmap "]T" ":tablast<cr>" [:noremap :silent])
 
 ; quickfix list
-(u.nmap "<leader>c" (u.lua-cmd "require('juice.quickfix')['toggle-qf-window']()") [:noremap])
+(u.nmap "<leader>c" q.toggle-qf-window [:noremap])
 (u.nmap "[c" ":cprevious<cr>" [:noremap])
 (u.nmap "]c" ":cnext<cr>" [:noremap])
 (u.nmap "[C" ":cfirst<cr>" [:noremap])
 (u.nmap "]C" ":clast<cr>" [:noremap])
 
 ; location list
-(u.nmap "<leader>l" (u.lua-cmd "require('juice.quickfix')['toggle-loclist-window']()") [:noremap])
+(u.nmap "<leader>l" q.toggle-loclist-window [:noremap])
 (u.nmap "[l" ":lprevious<cr>" [:noremap])
 (u.nmap "]l" ":lnext<cr>" [:noremap])
 (u.nmap "[L" ":lfirst<cr>" [:noremap])

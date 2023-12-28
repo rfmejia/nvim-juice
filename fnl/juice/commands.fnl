@@ -1,5 +1,6 @@
 (module commands
-  {autoload {c juice.colors}
+  {autoload {c juice.colors
+             st juice.statusline}
    import-macros [[ac :aniseed.macros.autocmds]]})
 
 ; -----------------------------------------------------------------------------
@@ -11,8 +12,7 @@
                           :command "if line(\"'\\\"\") | exe \"'\\\"\" | endif"})
 
 (ac.autocmd [:BufEnter :BufWritePost] {:pattern "*"
-                                       :callback (. (require :juice.statusline) :git-file-status)
-                                       })
+                                       :callback st.git-file-status})
 
 (ac.augroup :highlight-group
             ; highlight yanked text
