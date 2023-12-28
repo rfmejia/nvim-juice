@@ -20,9 +20,9 @@
                             :callback (fn [] (vim.highlight.on_yank {:timeout 200
                                                                      :on_visual false}))}]
 
-            ; highlight TODO and FIXME keywords
+            ; highlight TODO, FIXME and Note: keywords
             [[:WinEnter :VimEnter] {:pattern "*"
-                                    :command ":silent! call matchadd('Todo','TODO\\|FIXME', -1)"}]
+                                    :command ":silent! call matchadd('Todo','TODO\\|FIXME\\|Note:', -1)"}]
 
             [[:BufWinEnter :InsertLeave] {:pattern "*"
                                           :callback (fn []
