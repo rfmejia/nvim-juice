@@ -94,6 +94,8 @@
     (u.nmap "<leader>og" ":!tmux neww lazygit<cr><cr>" [:noremap :silent]))
   (when (u.executable? "sbtn")
     (u.nmap "<leader>os" ":!tmux split-window -v -l 30\\% sbtn<cr><cr>" [:noremap :silent]))
+  (when (u.executable? "scala-cli")
+    (u.nmap "<leader>oc" ":!tmux split-window -v -l 30\\% scala-cli console %<cr><cr>" [:noremap :silent]))
   )
 
 ; easier moving of blocks in visual mode

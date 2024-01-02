@@ -31,6 +31,7 @@
 
   (fn on-attach [client bufnr]
     (lsp.set-buffer-opts client bufnr)
+    (set vim.opt.omnifunc "v:lua.vim.lsp.omnifunc")
     (u.vmap "K" (fn [] (metals.type_of_range)) [:noremap :silent])
     (u.nmap "<localleader>mw" (fn [] (metals.hover_worksheet {:border "rounded"})) [:noremap :silent])
     (u.nmap "<localleader>mm" (fn [] (metals.commands)) [:noremap :silent])
