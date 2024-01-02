@@ -41,16 +41,21 @@
 (defn show-extra-whitespace []
   (vim.api.nvim_set_hl 0 :ExtraWhitespace groups.ExtraWhitespace))
 
-(defn- get-system-colorscheme []
+(defn- get-gnome-colorscheme [dark-scheme light-scheme]
   "If in Gnome check the current system theme and set nvim theme"
-  (local gsettings-cmd [:gsettings :get :org.gnome.desktop.interface :color-scheme])
-  (if (and (u.executable? :gsettings)
-           (string.find (vim.fn.system gsettings-cmd) :default))
-    "github_light"
-    "github_dark"))
+  (let [gsettings-cmd [:gsettings :get :org.gnome.desktop.interface :color-scheme]]
+    (if (u.executable? :gsettings)
+      (do
+        (local system-theme (vim.fn.system gsettings-cmd))
+        (if (or (string.find system-theme :default)
+                (string.find system-theme :prefer-light))
+          light-scheme
+          dark-scheme))
+      dark-scheme)
+    ))
 
 (defn setup []
   (let [theme (require :github-theme)
         options {:transparent true}]
     (theme.setup {: options :groups {:all groups}})
-    (vim.cmd.colorscheme (get-system-colorscheme))))
+    (vim.cmd.colorscheme (get-gnome-colorscheme :github_dark :github_light))))
