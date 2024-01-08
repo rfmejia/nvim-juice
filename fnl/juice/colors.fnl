@@ -58,4 +58,6 @@
   (let [theme (require :github-theme)
         options {:transparent true}]
     (theme.setup {: options :groups {:all groups}})
-    (vim.cmd.colorscheme (get-gnome-colorscheme :github_dark :github_light))))
+    (comment vim.cmd.colorscheme (get-gnome-colorscheme :github_dark :github_light))
+    (vim.cmd.colorscheme :github_dark)
+    ))
