@@ -39,7 +39,7 @@
 (set vim.opt.statusline (sl.build-statusline []))
 
 ; search options
-(set vim.opt.hlsearch false)                  ; Turn off highlight search
+(set vim.opt.hlsearch true)                   ; Turn on highlight search
 (set vim.opt.incsearch true)                  ; Search as the query is typed
 (set vim.opt.wrapscan false)                  ; Do not wrap search scans
 (set vim.opt.ignorecase true)                 ; Ignore case when using lowercase in search
