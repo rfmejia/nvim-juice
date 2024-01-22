@@ -20,6 +20,12 @@
                {1 "Olical/aniseed" :ft "fennel"}
                {1 "Olical/conjure" :ft ["clojure" "fennel" "lisp" "scheme"]}
 
+               {1 "stevearc/oil.nvim"
+                :cmd "Oil"
+                :config (fn []
+                          (let [oil (require :oil)]
+                            (oil.setup)))}
+
                {1 "junegunn/fzf.vim"
                 :cmd ["Files" "GFiles" "History"]
                 :config (fn []

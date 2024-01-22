@@ -123,8 +123,9 @@
   (u.nmap "<leader>ov" (fn [] (vim.cmd (.. ":$tabnew" "$JOURNAL/vim/vim.md"))) [:noremap :silent]))
 
 ; plugin mappings
-(u.nmap "<leader>L" ":Lazy<CR>" [:noremap :silent])
-(u.nmap "<leader>e" ":Explore<cr><cr>" [:noremap :silent])
+(u.nmap "<leader>L" ":Lazy<cr>" [:noremap :silent])
+(u.nmap "<leader>e" ":Oil<cr>" [:noremap :silent])
+(comment u.nmap "<leader>e" ":Explore<cr><cr>" [:noremap :silent])
 (u.nmap "<leader>u" ":UndotreeToggle<cr>" [:noremap :silent])
 
 (u.nmap "<leader>f" ":Files<cr>" [:noremap :silent])
