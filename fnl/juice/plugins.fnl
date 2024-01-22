@@ -64,6 +64,7 @@
                             ))}
 
                {1 "nvim-treesitter/nvim-treesitter"
+                :version "0.9.2" ; FIXME pinned due to https://github.com/nvim-treesitter/nvim-treesitter/issues/2293
                 :event ["BufReadPre" "BufNewFile"]
                 :build ":TSUpdate"
                 :config (fn []
