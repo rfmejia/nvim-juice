@@ -85,6 +85,7 @@
                                            "markdown"
                                            "scala"
                                            "sql"
+                                           "todotxt"
                                            "vim"
                                            "vimdoc"
                                            "yaml"]]
