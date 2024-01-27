@@ -12,7 +12,9 @@
                           :command "if line(\"'\\\"\") | exe \"'\\\"\" | endif"})
 
 (ac.autocmd [:BufEnter :BufWritePost] {:pattern "*"
-                                       :callback st.git-file-status})
+                                       :callback (fn []
+                                                   (st.git-file-status)
+                                                   (st.git-branch))})
 
 (ac.augroup :highlight-group
             ; highlight yanked text

@@ -13,6 +13,14 @@
       (nil err-msg) (print "Could not get `git file-status`: " err-msg))
     ))
 
+(defn git-branch []
+  (let [path (vim.fn.expand "%:h")
+        git-cmd (.. "git -C " path " branch --show-current --no-color 2> /dev/null | tr -d ' \\n'")]
+    (match (vim.fn.system git-cmd)
+      branch (set vim.g.git_branch branch)
+      (nil err-msg) (print "Could not get `git branch`: " err-msg))
+    ))
+
 (defn count-diagnostic [severity]
   "Returns 'n! ' where n is the number of diagnostic messages, otherwise an empty string"
   (let [count (a.count (vim.diagnostic.get 0 {:severity severity}))]
@@ -26,6 +34,7 @@
         buffer-modified-flags "%m"
         buffer-type-flags "%q%h%r"
         git-status " %{g:git_file_status}"
+        git-branch " %{g:git_branch}"
         align-right "%="
         errors (u.lua-statusline "require('juice.statusline')['count-diagnostic'](vim.diagnostic.severity.ERROR)")
         warnings (u.lua-statusline "require('juice.statusline')['count-diagnostic'](vim.diagnostic.severity.WARN)")
@@ -43,6 +52,7 @@
                   widget-str
                   error-color errors
                   warn-color warnings
+                  info-color git-branch " "
                   default-color ruler]
         statusline (s.join template)]
     statusline))
