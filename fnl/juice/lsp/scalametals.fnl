@@ -42,7 +42,7 @@
 
   ; Automatically attach Metals to all Scala filetypes (only triggered upon BufEnter)
   (ac.augroup :metals-group
-              [:FileType {:pattern "scala"
+              [:FileType {:pattern ["scala" "sbt" "java"]
                           :callback (fn [] (metals.initialize_or_attach config))}])
 
   ; Initialize Metals for the first time
