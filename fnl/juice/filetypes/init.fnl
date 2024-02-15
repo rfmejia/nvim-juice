@@ -20,6 +20,8 @@
                         :callback (fn [] (require "juice.filetypes.fennel"))}]
             [:FileType {:pattern :go
                         :callback (fn [] (require "juice.filetypes.go"))}]
+            [:FileType {:pattern :mail
+                        :callback (fn [] (require "juice.filetypes.mail"))}]
             [:FileType {:pattern :markdown
                         :callback (fn [] (require "juice.filetypes.markdown"))}]
             [:FileType {:pattern :scala
