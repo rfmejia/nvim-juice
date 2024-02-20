@@ -64,7 +64,7 @@
                             ))}
 
                {1 "nvim-treesitter/nvim-treesitter"
-                :version "0.9.2" ; FIXME pinned due to https://github.com/nvim-treesitter/nvim-treesitter/issues/2293
+                ; :version "0.9.2" ; FIXME pinned due to https://github.com/nvim-treesitter/nvim-treesitter/issues/2293
                 :event ["BufReadPre" "BufNewFile"]
                 :build ":TSUpdate"
                 :config (fn []
@@ -126,5 +126,4 @@
                 }
               ]]
 
-  ; Load all plugins defined in the 'juice.plugins' directory
   (lazy.setup plugins opts))
