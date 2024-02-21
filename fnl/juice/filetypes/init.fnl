@@ -13,6 +13,8 @@
                                      :command "setf tmux"}]
             [[:BufNewFile :BufRead] {:pattern [:*.sbt :*.sc]
                                      :command "set ft=scala"}]
+            [[:BufNewFile :BufRead] {:pattern :Jenkinsfile
+                                     :command "set ft=groovy"}]
 
             [:FileType {:pattern [:sh :bash]
                         :callback (fn [] (require "juice.filetypes.bash"))}]
