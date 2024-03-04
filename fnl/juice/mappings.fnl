@@ -9,8 +9,8 @@
 (u.nmap "<C-l>" ":nohl<cr>" [:noremap])
 (u.nmap "<leader>;" ":<C-r>\"" [:noremap])
 
-(u.nmap "<leader>w" ":w<cr>" [:noremap :silent])
-(u.nmap "<leader>n" ":registers<cr>" [:noremap :silent])
+(u.nmap "<leader>w" ":w<cr>" [:noremap])
+(u.nmap "<leader>n" ":registers<cr>" [:noremap])
 
 (u.nmap "<F5>" ":make<cr>" [:noremap])
 
