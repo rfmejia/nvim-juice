@@ -48,8 +48,7 @@
 
                {1 "scalameta/nvim-metals"
                 :cmd "MetalsInit"
-                :dependencies ["nvim-lua/plenary.nvim"
-                               "nvim-lua/popup.nvim"]}
+                :dependencies ["nvim-lua/plenary.nvim"]}
 
                {1 "alexghergh/nvim-tmux-navigation"
                 :event (fn [] (if (vim.fn.exists "$TMUX") "VeryLazy"))
@@ -100,8 +99,6 @@
                 :config (fn []
                           (set vim.g.undotree_WindowLayout 4)
                           (set vim.g.undotree_SetFocusWhenToggle 1))}
-
-               {1 "tpope/vim-fugitive" :cmd "Git"}
 
                {1 "numToStr/Comment.nvim"
                 :keys "gc"
