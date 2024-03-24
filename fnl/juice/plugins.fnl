@@ -112,6 +112,11 @@
                           (let [surround (require :nvim-surround)]
                             (surround.setup)))}
 
+               {1 "github/copilot.vim"
+                :cmd "Copilot"
+                :config (fn []
+                          (nvim_set_var "copilot_workspace_folders" ["$WORKSPACE/myshake-backends"]))}
+
                {1 "tpope/vim-dadbod"
                 :ft ["sql" "mysql"]
                 :config (fn []
