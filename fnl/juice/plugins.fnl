@@ -115,7 +115,8 @@
                {1 "github/copilot.vim"
                 :cmd "Copilot"
                 :config (fn []
-                          (nvim_set_var "copilot_workspace_folders" ["$WORKSPACE/myshake-backends"]))}
+                          (set vim.g.copilot_workspace_folders ["$WORKSPACE/myshake-backends"
+                                                                "$WORKSPACE/myshake-bc"]))}
 
                {1 "tpope/vim-dadbod"
                 :ft ["sql" "mysql"]
