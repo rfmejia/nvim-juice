@@ -132,6 +132,7 @@
 (u.nmap "<leader>g" ":GFiles<cr>" [:noremap :silent])
 (u.nmap "<leader>p" ":History<cr>" [:noremap :silent])
 
+(u.nmap "<localleader>du" ":DBUIToggle<cr>" [:noremap])
 (u.nmap "<localleader>d;" ":DB g:db " [:noremap])
 (u.nmap "<localleader>dd" ":.DB g:db<cr>" [:noremap])
 (u.nmap "<localleader>db" ":%DB g:db<cr>" [:noremap])

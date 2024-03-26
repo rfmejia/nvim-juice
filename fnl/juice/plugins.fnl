@@ -118,14 +118,18 @@
                           (set vim.g.copilot_workspace_folders ["$WORKSPACE/myshake-backends"
                                                                 "$WORKSPACE/myshake-bc"]))}
 
-               {1 "tpope/vim-dadbod"
-                :ft ["sql" "mysql"]
+              {1 "kristijanhusak/vim-dadbod-ui"
+                :cmd ["DBUI" "DBUIToggle"]
                 :config (fn []
                           (ac.autocmd :FileType {:pattern ["sql" "mysql"]
                                                  :callback (fn []
                                                              (set vim.opt.commentstring "--%s")
                                                              (set vim.opt.omnifunc "vim_dadbod_completion#omni"))}))
-                :dependencies [{1 "kristijanhusak/vim-dadbod-completion"}]
+                :dependencies [{1 "tpope/vim-dadbod"
+                                :lazy true}
+                               {1 "kristijanhusak/vim-dadbod-completion"
+                                :lazy true
+                                :ft ["sql" "mysql"]}]
                 }
               ]]
 
