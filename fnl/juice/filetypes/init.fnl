@@ -24,6 +24,8 @@
                         :callback (fn [] (require "juice.filetypes.go"))}]
             [:FileType {:pattern :mail
                         :callback (fn [] (require "juice.filetypes.mail"))}]
+            [:FileType {:pattern :asciidoc
+                        :callback (fn [] (require "juice.filetypes.asciidoc"))}]
             [:FileType {:pattern :markdown
                         :callback (fn [] (require "juice.filetypes.markdown"))}]
             [:FileType {:pattern :scala
