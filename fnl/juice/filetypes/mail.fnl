@@ -1,5 +1,3 @@
-(module mail)
-
 (set vim.opt.shiftwidth 2)
 (set vim.opt.tabstop 2)
 (set vim.opt.textwidth 80)

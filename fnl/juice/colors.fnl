@@ -1,12 +1,8 @@
-(module colors
-  {autoload {u util}
-   import-macros [[ac :aniseed.macros.autocmds]]})
-
-(defn- color-attr [hl-group attribute]
+(fn color-attr [hl-group attribute]
   "Extract an attribute from an existing highlight group"
   (. (vim.api.nvim_get_hl 0 {:name hl-group}) attribute))
 
-(def- custom-colors {:normal-bg (color-attr :Normal :bg)
+(local custom-colors {:normal-bg (color-attr :Normal :bg)
                      :info-fg (color-attr :DiagnosticInfo :fg)
                      :error-fg (color-attr :DiagnosticError :fg)
                      :warn-fg (color-attr :DiagnosticWarn :fg)
@@ -16,7 +12,7 @@
                      :light-gray :#707070})
 
 (local c custom-colors)
-(def- groups {:Comment {:fg c.light-gray :style :italic}
+(local groups {:Comment {:fg c.light-gray :style :italic}
               :Conceal {:link :Comment}
               :CursorLine {:bg c.normal-bg}
               :CursorLineNr {:link :Normal}
@@ -38,11 +34,13 @@
               :WinSeparator {:fg c.dark-green :bg c.normal-bg}
               })
 
-(defn show-extra-whitespace []
+(fn show-extra-whitespace []
   (vim.api.nvim_set_hl 0 :ExtraWhitespace groups.ExtraWhitespace))
 
-(defn- get-gnome-colorscheme [dark-scheme light-scheme]
+(fn get-gnome-colorscheme [dark-scheme light-scheme]
   "If in Gnome check the current system theme and set nvim theme"
+  (local u (require :util))
+
   (let [gsettings-cmd [:gsettings :get :org.gnome.desktop.interface :color-scheme]]
     (if (u.executable? :gsettings)
       (do
@@ -54,10 +52,13 @@
       dark-scheme)
     ))
 
-(defn setup []
+(fn setup []
   (let [theme (require :github-theme)
         options {:transparent true}]
     (theme.setup {: options :groups {:all groups}})
     (comment vim.cmd.colorscheme (get-gnome-colorscheme :github_dark :github_light))
     (vim.cmd.colorscheme :github_dark)
     ))
+
+{: show-extra-whitespace
+ : setup}

@@ -1,13 +1,9 @@
-(module scalametals
-  {autoload {s aniseed.string
-             u util
-             lsp juice.lsp
-             sl juice.statusline
-             metals metals}
-   import-macros [[ac :aniseed.macros.autocmds]]
-   })
+(fn initialize-metals []
+  (local u (require :util))
+  (local sl (require :juice.statusline))
+  (local metals (require :metals))
+  (local lsp (require :juice.lsp))
 
-(defn initialize-metals []
   (set vim.opt.signcolumn "yes:1")
   (set vim.go.shortmess (.. vim.go.shortmess "c"))
   (set vim.opt.statusline (sl.build-statusline ["%{g:metals_status}"]))
@@ -41,14 +37,17 @@
   (set config.on_attach on-attach)
 
   ; Automatically attach Metals to all Scala filetypes (only triggered upon BufEnter)
-  (ac.augroup :metals-group
-              [:FileType {:pattern ["scala" "sbt" "java"]
-                          :callback (fn [] (metals.initialize_or_attach config))}])
+  (vim.api.nvim_create_augroup :metals-group [])
+  (vim.api.nvim_create_autocmd :FileType {:group :metals-group
+                                          :pattern ["scala" "sbt" "java"]
+                                          :callback (fn [] (metals.initialize_or_attach config))})
 
   ; Initialize Metals for the first time
   (metals.initialize_or_attach config))
 
-(defn register-init-command []
+(fn register-init-command []
   (vim.api.nvim_create_user_command :MetalsInit
                                     (fn [] (initialize-metals))
                                     {:desc "Start and connect to a Metals server"}))
+
+{: register-init-command}

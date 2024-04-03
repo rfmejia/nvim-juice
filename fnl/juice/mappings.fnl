@@ -1,6 +1,5 @@
-(module mappings
-  {autoload {q juice.quickfix
-             u util}})
+(local q (require :juice.quickfix))
+(local u (require :util))
 
 (set vim.g.mapleader " ")
 (set vim.g.maplocalleader ",")
@@ -125,7 +124,7 @@
 ; plugin mappings
 (u.nmap "<leader>L" ":Lazy<cr>" [:noremap :silent])
 (u.nmap "<leader>e" ":Oil<cr>" [:noremap :silent])
-(comment u.nmap "<leader>e" ":Explore<cr><cr>" [:noremap :silent])
+(u.nmap "<leader>E" ":Oil .<cr>" [:noremap :silent])
 (u.nmap "<leader>u" ":UndotreeToggle<cr>" [:noremap :silent])
 
 (u.nmap "<leader>f" ":Files<cr>" [:noremap :silent])
@@ -143,3 +142,6 @@
 (u.nmap "<localleader>gp" ":Gitsigns preview_hunk<cr>" [:noremap])
 (u.nmap "<localleader>gs" ":Gitsigns stage_hunk<cr>" [:noremap])
 (u.nmap "<localleader>gu" ":Gitsigns undo_stage_hunk<cr>" [:noremap])
+
+(u.imap "]a" "<Plug>(copilot-next)")
+(u.imap "[a" "<Plug>(copilot-prev)")

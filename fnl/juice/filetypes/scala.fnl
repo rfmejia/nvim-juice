@@ -1,7 +1,4 @@
-(module scala
-  {autoload {a aniseed.core
-             s aniseed.string
-             u util}})
+(local u (require :util))
 
 (set vim.opt.shiftwidth 2)
 (set vim.opt.tabstop 2)
@@ -10,8 +7,9 @@
 (set vim.opt.signcolumn "yes:1")
 (vim.opt.indentkeys:remove :<>>) ; FIXME This doesn't seem to be reflected
 
-(defn run-scalafmt [path]
-  (let [filename (if (s.blank? path) (vim.fn.expand "%:p")
+(fn run-scalafmt [path]
+  (let [s (require :nfnl.string)
+        filename (if (s.blank? path) (vim.fn.expand "%:p")
                    path)]
     (vim.fn.system ["scalafmt" "--mode" "changed" "--config" ".scalafmt.conf" filename filename]))
   )

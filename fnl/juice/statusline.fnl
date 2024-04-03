@@ -1,9 +1,4 @@
-(module statusline
-  {autoload {a aniseed.core
-             s aniseed.string
-             u util}})
-
-(defn git-file-status []
+(fn git-file-status []
   "Updates the git flag(s) of the current file inside g:gitfile"
   (let [path (vim.fn.expand "%:p")
         git-cmd (.. "git file-status " path " | tr -d ' \\n'")]
@@ -13,7 +8,7 @@
       (nil err-msg) (print "Could not get `git file-status`: " err-msg))
     ))
 
-(defn git-branch []
+(fn git-branch []
   (let [path (vim.fn.expand "%:h")
         git-cmd (.. "git -C " path " branch --show-current --no-color 2> /dev/null | tr -d ' \\n'")]
     (match (vim.fn.system git-cmd)
@@ -21,16 +16,19 @@
       (nil err-msg) (print "Could not get `git branch`: " err-msg))
     ))
 
-(defn count-diagnostic [severity]
+(fn count-diagnostic [severity]
   "Returns 'n! ' where n is the number of diagnostic messages, otherwise an empty string"
-  (let [count (a.count (vim.diagnostic.get 0 {:severity severity}))]
+  (let [a (require :nfnl.core)
+        count (a.count (vim.diagnostic.get 0 {:severity severity}))]
     (if (> count 0)
       (.. count "! ")
       "")))
 
-(defn build-statusline [widgets]
+(fn build-statusline [widgets]
   "Creates a vim statusline string, inserting optional widgets defined as a list of strings"
-  (let [filename "%f"
+  (let [s (require :nfnl.string)
+        u (require :util)
+        filename "%f"
         buffer-modified-flags "%m"
         buffer-type-flags "%q%h%r"
         git-status " %{g:git_file_status}"
@@ -56,3 +54,8 @@
                   default-color ruler]
         statusline (s.join template)]
     statusline))
+
+{: git-file-status
+ : git-branch
+ : count-diagnostic
+ : build-statusline}

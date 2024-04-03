@@ -1,7 +1,5 @@
-(module startup
-  {autoload {sl juice.statusline
-             u util}
-   import-macros [[ac :aniseed.macros.autocmds]]})
+(local sl (require :juice.statusline))
+(local u (require :util))
 
 ; -----------------------------------------------------------------------------
 ; GENERAL OPTIONS

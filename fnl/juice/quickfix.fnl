@@ -1,6 +1,4 @@
-(module quickfix)
-
-(defn- toggle-window [toggle-qf?]
+(fn toggle-window [toggle-qf?]
   (let [count-win (fn [] (vim.fn.winnr "$"))
         current (count-win)
         open-cmd (if toggle-qf? "copen" "lopen")
@@ -10,8 +8,12 @@
       (vim.cmd close-cmd))
     ))
 
-(defn toggle-qf-window []
+(fn toggle-qf-window []
   (toggle-window true))
 
-(defn toggle-loclist-window []
+(fn toggle-loclist-window []
   (toggle-window false))
+
+{: toggle-window
+ : toggle-qf-window
+ : toggle-loclist-window}

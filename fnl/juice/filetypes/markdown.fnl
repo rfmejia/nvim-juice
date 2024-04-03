@@ -1,6 +1,4 @@
-(module markdown
-  {autoload {a aniseed.core
-             u util}})
+(local u (require :util))
 
 (set vim.opt.shiftwidth 2)
 (set vim.opt.tabstop 2)
@@ -10,13 +8,13 @@
 (set vim.opt.spelllang "en_us")
 
 ; TODO fix and verify this works
-(defn render-markdown-to-html []
+(fn render-markdown-to-html []
   (let [tmp-file (vim.fn.system ["mktemp" "--suffix=.html"])
         current-file (vim.fn.expand "%:p")]
     (vim.fn.system "$DOTFILES/pandoc/md-to-html" current-file tmp-file "&& ${BROWSER}" tmp-file)
     ))
 
-(defn insert-yaml-metadata []
+(fn insert-yaml-metadata []
   (let [filename (vim.fn.expand "%:t:r")
         now (vim.fn.strftime "%FT%T%z" (vim.fn.localtime))
         meta ["---" "title: " filename "created: "  now "tags: []" "---"]]

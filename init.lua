@@ -25,12 +25,8 @@ local function ensure(options)
   end
 end
 
-ensure({user = "Olical", repo = "aniseed", branch = "v3.33.0"})
+ensure({user = "Olical", repo = "nfnl", branch = "main"})
 ensure({user = "folke", repo = "lazy.nvim", branch = "stable" })
 
--- vim.loader.enable() -- Enables the experimental Lua module loader
-
-vim.g["aniseed#env"] = {
-  module = "startup",
-  compile = true
-}
+require("nfnl").setup()
+require("startup")

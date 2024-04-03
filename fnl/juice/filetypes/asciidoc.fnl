@@ -1,6 +1,5 @@
-(module asciidoc
-  {autoload {a aniseed.core
-             u util}})
+(local a (require :nfnl.core))
+(local u (require :util))
 
 (set vim.opt.shiftwidth 2)
 (set vim.opt.tabstop 2)

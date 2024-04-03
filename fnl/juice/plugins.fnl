@@ -1,9 +1,3 @@
-(module packs
-  {autoload {c juice.colors
-             lsp juice.lsp
-             u util}
-   import-macros [[ac :aniseed.macros.autocmds]]})
-
 ;; -----------------------------------------------------------------------------
 ; PLUGINS
 (let [lazy (require "lazy")
@@ -15,9 +9,11 @@
       plugins [{1 "projekt0n/github-nvim-theme"
                 :lazy false
                 :priority 1000
-                :config (fn [] (c.setup))}
+                :config (fn []
+                          (let [c (require :juice.colors)]
+                            (c.setup)))}
 
-               {1 "Olical/aniseed" :ft "fennel"}
+               {1 "Olical/nfnl" :ft "fennel"}
                {1 "Olical/conjure" :ft ["clojure" "fennel" "lisp" "scheme"]}
 
                {1 "stevearc/oil.nvim"
@@ -44,7 +40,9 @@
 
                {1 "neovim/nvim-lspconfig"
                 :ft [:go :scala]
-                :config (fn [] (lsp.setup))}
+                :config (fn []
+                          (let [lsp (require :juice.lsp)]
+                            (lsp.setup)))}
 
                {1 "scalameta/nvim-metals"
                 :cmd "MetalsInit"
@@ -121,7 +119,7 @@
               {1 "kristijanhusak/vim-dadbod-ui"
                 :cmd ["DBUI" "DBUIToggle"]
                 :config (fn []
-                          (ac.autocmd :FileType {:pattern ["sql" "mysql"]
+                          (vim.api.nvim_create_autocmd :FileType {:pattern ["sql" "mysql"]
                                                  :callback (fn []
                                                              (set vim.opt.commentstring "--%s")
                                                              (set vim.opt.omnifunc "vim_dadbod_completion#omni"))}))

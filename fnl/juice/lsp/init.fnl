@@ -1,16 +1,13 @@
-(module lsp
-  {autoload {a aniseed.core
-             s aniseed.string
-             u util
-             scalametals juice.lsp.scalametals}})
+(local u (require :util))
+(local scalametals (require :juice.lsp.scalametals))
 
-(defn setup-go []
+(fn setup-go []
   (let [lspconfig (require :lspconfig)
         settings {:gopls {:analyses {:unusedparams true}
                           :staticcheck true}}]
     (lspconfig.gopls.setup {: settings })))
 
-(defn setup []
+(fn setup []
   ; lsp popup colors and borders
   (set vim.lsp.handlers.textDocument/hover (vim.lsp.with vim.lsp.handlers.hover {:border "rounded"}))
   (set vim.lsp.handlers.textDocument/signatureHelp (vim.lsp.with vim.lsp.handlers.signature_help {:border "rounded"}))
@@ -19,7 +16,7 @@
   (scalametals.register-init-command)
   (setup-go))
 
-(defn set-buffer-opts [client bufnr]
+(fn set-buffer-opts [client bufnr]
   "Buffer-specific lsp options"
 
   (u.imap "<C-space>" "<C-x><C-o>" [:noremap :silent])
@@ -43,3 +40,6 @@
   (u.nmap "<localleader>cs" vim.lsp.buf.signature_help [:noremap :silent])
   (u.nmap "<localleader>cr" vim.lsp.buf.rename [:noremap])
   (u.nmap "<localleader>cf" (fn [] (vim.lsp.buf.format {:async true})) [:noremap :silent]))
+
+{: set-buffer-opts
+ : setup}

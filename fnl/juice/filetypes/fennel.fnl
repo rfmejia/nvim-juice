@@ -1,11 +1,11 @@
-(module fennel {autoload {a aniseed.core s aniseed.string u util}})
+(local s (require :nfnl.string))
 
 (set vim.opt.shiftwidth 2)
 (set vim.opt.tabstop 2)
 (set vim.opt.expandtab true)
 (set vim.opt.textwidth 100)
 
-(defn format-fennel [path]
+(fn format-fennel [path]
   (let [filename (if (s.blank? path)
                        (vim.fn.expand "%:p")
                      path)]
