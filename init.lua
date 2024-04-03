@@ -28,5 +28,4 @@ end
 ensure({user = "Olical", repo = "nfnl", branch = "main"})
 ensure({user = "folke", repo = "lazy.nvim", branch = "stable" })
 
-require("nfnl").setup()
 require("startup")
