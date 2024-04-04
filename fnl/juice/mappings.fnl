@@ -127,9 +127,10 @@
 (u.nmap "<leader>E" ":Oil .<cr>" [:noremap :silent])
 (u.nmap "<leader>u" ":UndotreeToggle<cr>" [:noremap :silent])
 
-(u.nmap "<leader>f" ":Files<cr>" [:noremap :silent])
-(u.nmap "<leader>g" ":GFiles<cr>" [:noremap :silent])
-(u.nmap "<leader>p" ":History<cr>" [:noremap :silent])
+(let [telescope (require "telescope.builtin")]
+  (u.nmap "<leader>f" telescope.find_files [:noremap :silent])
+  (u.nmap "<leader>g" telescope.git_files [:noremap :silent])
+  (u.nmap "<leader>p" telescope.oldfiles [:noremap :silent]))
 
 (u.nmap "<localleader>du" ":DBUIToggle<cr>" [:noremap])
 (u.nmap "<localleader>d;" ":DB g:db " [:noremap])

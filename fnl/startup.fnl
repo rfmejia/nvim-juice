@@ -73,7 +73,7 @@
   (set vim.opt.grepprg "rg\\ --smart-case\\ --hidden\\ --follow\\ --no-heading\\ --vimgrep")
   (set vim.opt.grepformat "%f:%l:%c:%m,%f:%l:%m"))
 
-(require :juice.mappings)
+(require :juice.plugins)
 (require :juice.commands)
 (require :juice.filetypes)
-(require :juice.plugins)
+(require :juice.mappings)

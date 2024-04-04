@@ -22,15 +22,15 @@
                           (let [oil (require :oil)]
                             (oil.setup)))}
 
-               {1 "junegunn/fzf.vim"
-                :cmd ["Files" "GFiles" "History"]
+               {1 "nvim-telescope/telescope.nvim"
+                :tag "0.1.6"
+                :dependencies [{1 "nvim-lua/plenary.nvim"}]
                 :config (fn []
-                          (set vim.g.fzf_layout {:window {:width 0.9 :height 0.9}})
-                          (set vim.g.fzf_preview_window ["up:50%" "ctrl-/"]))
-                :dependencies [{1 "junegunn/fzf"
-                                :name "fzf"
-                                :dir "~/.fzf"
-                                :build "./install --all"}]}
+                          (let [telescope (require :telescope)
+                                actions (require :telescope.actions)
+                                config {:defaults {:mappings {:i {:<esc> actions.close}}}}]
+                            (telescope.setup config)
+                          ))}
 
                {1 "lewis6991/gitsigns.nvim"
                 :event ["BufReadPre" "BufNewFile"]

@@ -63,7 +63,7 @@ if u["executable?"]("rg") then
   vim.opt.grepformat = "%f:%l:%c:%m,%f:%l:%m"
 else
 end
-require("juice.mappings")
+require("juice.plugins")
 require("juice.commands")
 require("juice.filetypes")
-return require("juice.plugins")
+return require("juice.mappings")

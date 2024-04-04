@@ -11,9 +11,10 @@ local function _2_()
   return oil.setup()
 end
 local function _3_()
-  vim.g.fzf_layout = {window = {width = 0.9, height = 0.9}}
-  vim.g.fzf_preview_window = {"up:50%", "ctrl-/"}
-  return nil
+  local telescope = require("telescope")
+  local actions = require("telescope.actions")
+  local config = {defaults = {mappings = {i = {["<esc>"] = actions.close}}}}
+  return telescope.setup(config)
 end
 local function _4_()
   local gitsigns = require("gitsigns")
@@ -64,5 +65,5 @@ local function _14_()
   end
   return vim.api.nvim_create_autocmd("FileType", {pattern = {"sql", "mysql"}, callback = _15_})
 end
-plugins = {{"projekt0n/github-nvim-theme", priority = 1000, config = _1_, lazy = false}, {"Olical/nfnl", ft = "fennel"}, {"Olical/conjure", ft = {"clojure", "fennel", "lisp", "scheme"}}, {"stevearc/oil.nvim", cmd = "Oil", config = _2_}, {"junegunn/fzf.vim", cmd = {"Files", "GFiles", "History"}, config = _3_, dependencies = {{"junegunn/fzf", name = "fzf", dir = "~/.fzf", build = "./install --all"}}}, {"lewis6991/gitsigns.nvim", event = {"BufReadPre", "BufNewFile"}, config = _4_}, {"neovim/nvim-lspconfig", ft = {"go", "scala"}, config = _5_}, {"scalameta/nvim-metals", cmd = "MetalsInit", dependencies = {"nvim-lua/plenary.nvim"}}, {"alexghergh/nvim-tmux-navigation", event = _6_, config = _8_}, {"nvim-treesitter/nvim-treesitter", event = {"BufReadPre", "BufNewFile"}, build = ":TSUpdate", config = _9_}, {"mbbill/undotree", cmd = "UndotreeToggle", config = _10_}, {"numToStr/Comment.nvim", keys = "gc", config = _11_}, {"kylechui/nvim-surround", keys = {"cs", "ds", "ys"}, config = _12_}, {"github/copilot.vim", cmd = "Copilot", config = _13_}, {"kristijanhusak/vim-dadbod-ui", cmd = {"DBUI", "DBUIToggle"}, config = _14_, dependencies = {{"tpope/vim-dadbod", lazy = true}, {"kristijanhusak/vim-dadbod-completion", lazy = true, ft = {"sql", "mysql"}}}}}
+plugins = {{"projekt0n/github-nvim-theme", priority = 1000, config = _1_, lazy = false}, {"Olical/nfnl", ft = "fennel"}, {"Olical/conjure", ft = {"clojure", "fennel", "lisp", "scheme"}}, {"stevearc/oil.nvim", cmd = "Oil", config = _2_}, {"nvim-telescope/telescope.nvim", tag = "0.1.6", dependencies = {{"nvim-lua/plenary.nvim"}}, config = _3_}, {"lewis6991/gitsigns.nvim", event = {"BufReadPre", "BufNewFile"}, config = _4_}, {"neovim/nvim-lspconfig", ft = {"go", "scala"}, config = _5_}, {"scalameta/nvim-metals", cmd = "MetalsInit", dependencies = {"nvim-lua/plenary.nvim"}}, {"alexghergh/nvim-tmux-navigation", event = _6_, config = _8_}, {"nvim-treesitter/nvim-treesitter", event = {"BufReadPre", "BufNewFile"}, build = ":TSUpdate", config = _9_}, {"mbbill/undotree", cmd = "UndotreeToggle", config = _10_}, {"numToStr/Comment.nvim", keys = "gc", config = _11_}, {"kylechui/nvim-surround", keys = {"cs", "ds", "ys"}, config = _12_}, {"github/copilot.vim", cmd = "Copilot", config = _13_}, {"kristijanhusak/vim-dadbod-ui", cmd = {"DBUI", "DBUIToggle"}, config = _14_, dependencies = {{"tpope/vim-dadbod", lazy = true}, {"kristijanhusak/vim-dadbod-completion", lazy = true, ft = {"sql", "mysql"}}}}}
 return lazy.setup(plugins, opts)
