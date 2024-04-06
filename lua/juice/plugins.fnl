@@ -28,7 +28,14 @@
                 :config (fn []
                           (let [telescope (require :telescope)
                                 actions (require :telescope.actions)
-                                config {:defaults {:mappings {:i {:<esc> actions.close}}}}]
+                                config {:defaults {:border false
+                                                   :layout_config {:prompt_position :bottom :height 0.7}
+                                                   :layout_strategy :bottom_pane
+                                                   :mappings {:i {:<esc> actions.close}}
+                                                   :path_display {1 :truncate}
+                                                   :preview false
+                                                   :prompt_prefix "? "
+                                                   }}]
                             (telescope.setup config)
                           ))}
 

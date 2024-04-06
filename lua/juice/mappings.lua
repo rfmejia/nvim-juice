@@ -1,6 +1,6 @@
 -- [nfnl] Compiled from lua/juice/mappings.fnl by https://github.com/Olical/nfnl, do not edit.
 local q = require("juice.quickfix")
-local u = require("util")
+local u = require("juice.util")
 u.nmap("Y", "y$", {})
 u.nmap("<C-l>", ":nohl<cr>", {"noremap"})
 u.nmap("<leader>;", ":<C-r>\"", {"noremap"})
@@ -109,10 +109,11 @@ u.nmap("<leader>e", ":Oil<cr>", {"noremap", "silent"})
 u.nmap("<leader>E", ":Oil .<cr>", {"noremap", "silent"})
 u.nmap("<leader>u", ":UndotreeToggle<cr>", {"noremap", "silent"})
 do
-  local telescope = require("telescope.builtin")
-  u.nmap("<leader>f", telescope.find_files, {"noremap", "silent"})
-  u.nmap("<leader>g", telescope.git_files, {"noremap", "silent"})
-  u.nmap("<leader>p", telescope.oldfiles, {"noremap", "silent"})
+  local builtin = require("telescope.builtin")
+  u.nmap("<leader>f", builtin.find_files, {"noremap", "silent"})
+  u.nmap("<leader>g", builtin.git_files, {"noremap", "silent"})
+  u.nmap("<leader>p", builtin.oldfiles, {"noremap", "silent"})
+  u.nmap("<leader>k", builtin.keymaps, {"noremap", "silent"})
 end
 u.nmap("<localleader>du", ":DBUIToggle<cr>", {"noremap"})
 u.nmap("<localleader>d;", ":DB g:db ", {"noremap"})
