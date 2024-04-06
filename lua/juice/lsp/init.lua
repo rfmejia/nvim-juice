@@ -1,12 +1,11 @@
 -- [nfnl] Compiled from lua/juice/lsp/init.fnl by https://github.com/Olical/nfnl, do not edit.
-local u = require("util")
-local scalametals = require("juice.lsp.scalametals")
 local function setup_go()
   local lspconfig = require("lspconfig")
   local settings = {gopls = {analyses = {unusedparams = true}, staticcheck = true}}
   return lspconfig.gopls.setup({settings = settings})
 end
 local function setup()
+  local scalametals = require("juice.lsp.scalametals")
   vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {border = "rounded"})
   vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {border = "rounded"})
   vim.diagnostic.config({float = {border = "rounded"}})
@@ -14,6 +13,7 @@ local function setup()
   return setup_go()
 end
 local function set_buffer_opts(client, bufnr)
+  local u = require("juice.util")
   u.imap("<C-space>", "<C-x><C-o>", {"noremap", "silent"})
   u.nmap("gd", vim.lsp.buf.definition, {"noremap", "silent", "nowait"})
   u.nmap("gt", vim.lsp.buf.type_definition, {"noremap", "silent", "nowait"})

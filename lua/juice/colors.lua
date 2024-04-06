@@ -9,7 +9,7 @@ local function show_extra_whitespace()
   return vim.api.nvim_set_hl(0, "ExtraWhitespace", groups.ExtraWhitespace)
 end
 local function get_gnome_colorscheme(dark_scheme, light_scheme)
-  local u = require("util")
+  local u = require("juice.util")
   local gsettings_cmd = {"gsettings", "get", "org.gnome.desktop.interface", "color-scheme"}
   if u["executable?"]("gsettings") then
     local system_theme = vim.fn.system(gsettings_cmd)

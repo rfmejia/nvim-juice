@@ -41,7 +41,7 @@ require("juice.mappings")
 require("juice.autocmds")
 require("juice.filetypes")
 do
-  local u = require("util")
+  local u = require("juice.util")
   if u["has?"]("syntax") then
     vim.cmd("syntax enable")
   else

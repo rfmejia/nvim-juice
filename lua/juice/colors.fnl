@@ -39,9 +39,8 @@
 
 (fn get-gnome-colorscheme [dark-scheme light-scheme]
   "If in Gnome check the current system theme and set nvim theme"
-  (local u (require :util))
-
-  (let [gsettings-cmd [:gsettings :get :org.gnome.desktop.interface :color-scheme]]
+  (let [u (require :juice.util)
+        gsettings-cmd [:gsettings :get :org.gnome.desktop.interface :color-scheme]]
     (if (u.executable? :gsettings)
       (do
         (local system-theme (vim.fn.system gsettings-cmd))

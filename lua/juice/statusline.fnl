@@ -27,7 +27,7 @@
 (fn build-statusline [widgets]
   "Creates a vim statusline string, inserting optional widgets defined as a list of strings"
   (let [s (require :nfnl.string)
-        u (require :util)
+        u (require :juice.util)
         filename "%f"
         buffer-modified-flags "%m"
         buffer-type-flags "%q%h%r"

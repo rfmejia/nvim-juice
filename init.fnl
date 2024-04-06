@@ -54,7 +54,7 @@
 (require :juice.autocmds)
 (require :juice.filetypes)
 
-(let [u (require :util)]
+(let [u (require :juice.util)]
   (when (u.has? :syntax)
     (vim.cmd "syntax enable"))
 

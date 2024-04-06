@@ -1,5 +1,5 @@
 -- [nfnl] Compiled from after/ftplugin/markdown.fnl by https://github.com/Olical/nfnl, do not edit.
-local u = require("util")
+local u = require("juice.util")
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.textwidth = 80

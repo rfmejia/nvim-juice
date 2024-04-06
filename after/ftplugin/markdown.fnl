@@ -1,4 +1,4 @@
-(local u (require :util))
+(local u (require :juice.util))
 
 (set vim.opt.shiftwidth 2)
 (set vim.opt.tabstop 2)

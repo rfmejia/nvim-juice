@@ -40,7 +40,7 @@ local function count_diagnostic(severity)
 end
 local function build_statusline(widgets)
   local s = require("nfnl.string")
-  local u = require("util")
+  local u = require("juice.util")
   local filename = "%f"
   local buffer_modified_flags = "%m"
   local buffer_type_flags = "%q%h%r"

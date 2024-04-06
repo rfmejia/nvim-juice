@@ -1,9 +1,10 @@
 -- [nfnl] Compiled from lua/juice/lsp/scalametals.fnl by https://github.com/Olical/nfnl, do not edit.
 local function initialize_metals()
-  local u = require("util")
+  local u = require("juice.util")
   local sl = require("juice.statusline")
-  local metals = require("metals")
   local lsp = require("juice.lsp")
+  local metals = require("metals")
+  local telescope = require("telescope")
   vim.opt.signcolumn = "yes:1"
   vim.go.shortmess = (vim.go.shortmess .. "c")
   vim.opt.statusline = sl["build-statusline"]({"%{g:metals_status}"})
@@ -25,7 +26,7 @@ local function initialize_metals()
     end
     u.nmap("<localleader>mw", _2_, {"noremap", "silent"})
     local function _3_()
-      return metals.commands()
+      return telescope.extensions.metals.commands()
     end
     u.nmap("<localleader>mm", _3_, {"noremap", "silent"})
     u.nmap("<localleader>mt", (require("metals.tvp")).toggle_tree_view, {"noremap", "silent"})
