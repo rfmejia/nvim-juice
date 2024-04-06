@@ -1,4 +1,4 @@
--- [nfnl] Compiled from fnl/util.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] Compiled from lua/util.fnl by https://github.com/Olical/nfnl, do not edit.
 local function make_opts(keys)
   local a = require("nfnl.core")
   local function _1_(acc, key)

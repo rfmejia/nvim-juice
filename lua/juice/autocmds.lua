@@ -1,4 +1,4 @@
--- [nfnl] Compiled from fnl/juice/commands.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] Compiled from lua/juice/autocmds.fnl by https://github.com/Olical/nfnl, do not edit.
 vim.api.nvim_create_user_command("TrimTrailingWhitespaces", ":%s/\\s\\+$", {})
 vim.api.nvim_create_autocmd("BufReadPost", {pattern = "*", command = "if line(\"'\\\"\") | exe \"'\\\"\" | endif"})
 local function _1_()

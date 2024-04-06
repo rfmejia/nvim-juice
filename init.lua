@@ -1,31 +1,74 @@
--- Clone bootstrap plugins if not installed and add to `runtimepath`
-local function ensure(options)
-  local base_path = vim.fn.stdpath("data") .. "/lazy"
-
-  if type(options.user) ~= "string" then
-    error("required `user`")
-  elseif type(options.repo) ~= "string" then
-    error("required `repo`")
-  elseif type(options.branch) ~= "string" then
-    error("required `branch`")
+-- [nfnl] Compiled from init.fnl by https://github.com/Olical/nfnl, do not edit.
+vim.opt.hidden = true
+vim.opt.autoread = true
+vim.opt.autoindent = true
+vim.opt.smartindent = true
+vim.opt.shiftwidth = 2
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.expandtab = true
+vim.opt.smarttab = true
+vim.opt.foldenable = false
+vim.opt.backspace = "indent,eol,start"
+vim.opt.history = 10000
+vim.opt.ttyfast = true
+vim.opt.ttimeoutlen = 50
+vim.opt.mouse = ""
+vim.opt.shortmess = "filnxtToOF"
+vim.g.mapleader = " "
+vim.g.maplocalleader = ","
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.signcolumn = "yes:1"
+vim.opt.cursorline = true
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+vim.opt.wrap = false
+vim.opt.linebreak = true
+vim.opt.showcmd = true
+vim.opt.laststatus = 3
+vim.opt.switchbuf = "uselast"
+vim.opt.hlsearch = true
+vim.opt.incsearch = true
+vim.opt.wrapscan = false
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.complete = ".,w,b,u,t,kspell"
+vim.opt.completeopt = "menu,menuone,noselect,noinsert"
+vim.opt.path = ".,,"
+require("juice.plugins")
+require("juice.mappings")
+require("juice.autocmds")
+require("juice.filetypes")
+do
+  local u = require("util")
+  if u["has?"]("syntax") then
+    vim.cmd("syntax enable")
+  else
   end
-
-  local install_path = string.format("%s/%s", base_path, options.repo)
-  vim.opt.rtp:prepend(install_path)
-  if not vim.loop.fs_stat(install_path) then
-    print(string.format("Cloning %s/%s:%s to %s...", options.user, options.repo, options.branch, install_path))
-    vim.fn.system({
-      "git",
-      "clone",
-      "--filter=blob:none",
-      string.format("https://github.com/%s/%s.git", options.user, options.repo),
-      string.format("--branch=%s", options.branch),
-      install_path,
-    })
+  if u["has?"]("clipboard") then
+    vim.opt.clipboard = "unnamedplus"
+  else
+  end
+  if u["has?"]("persistent_undo") then
+    vim.opt.undolevels = 5000
+    vim.opt.undofile = true
+  else
+  end
+  if u["has?"]("wildmenu") then
+    vim.opt.wildmenu = true
+    vim.opt.wildmode = "lastused,longest,full"
+    vim.opt.wildignore = "*/.git/*,*/.ammonite/*,*/.bloop/*,*/.metals/*,*/node_modules/*,*/build/*,*/target/*,*.class"
+    vim.opt.wildignorecase = true
+    vim.opt.wildoptions = "pum"
+  else
+  end
+  if u["executable?"]("rg") then
+    vim.opt.grepprg = "rg\\ --smart-case\\ --hidden\\ --follow\\ --no-heading\\ --vimgrep"
+    vim.opt.grepformat = "%f:%l:%c:%m,%f:%l:%m"
+  else
   end
 end
-
-ensure({user = "Olical", repo = "nfnl", branch = "main"})
-ensure({user = "folke", repo = "lazy.nvim", branch = "stable" })
-
-require("startup")
+local sl = require("juice.statusline")
+vim.opt.statusline = sl["build-statusline"]({})
+return nil

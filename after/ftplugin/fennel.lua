@@ -1,4 +1,4 @@
--- [nfnl] Compiled from fnl/juice/filetypes/fennel.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] Compiled from after/ftplugin/fennel.fnl by https://github.com/Olical/nfnl, do not edit.
 local s = require("nfnl.string")
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2

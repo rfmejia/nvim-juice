@@ -1,12 +1,17 @@
 *nvim-juice* is my personal neovim configuration written in
 https://fennel-lang.org[Fennel].
 
-* Bootstraps core dependencies from `init.lua`
-* Concisely configures neovim using a LISP
-(via https://github.com/olical/nfnl/[nfnl])
+* Concisely configures Neovim using Fennel via
+https://github.com/Olical/nfnl[nfnl]
 * Manages packages via https://github.com/folke/lazy.nvim[lazy.nvim]
 
 == Quick start
 
-To install, simply clone this repository into your `${XDG_CONFIG_HOME}`
-directory.
+To install, simply clone the following repositories and run nvim:
+
+```
+git clone https://github.com/rfmejia/nvim-juice ${XDG_CONFIG_HOME}/nvim
+git clone https://github.com/folke/lazy.nvim into ${XDG_DATA_HOME}/nvim/site/pack/juice/start
+git clone https://github.com/Olical/nfnl into ${XDG_DATA_HOME}/nvim/site/pack/juice/start
+nvim
+```

@@ -13,25 +13,25 @@
 
 (local c custom-colors)
 (local groups {:Comment {:fg c.light-gray :style :italic}
-              :Conceal {:link :Comment}
-              :CursorLine {:bg c.normal-bg}
-              :CursorLineNr {:link :Normal}
-              :DiagnosticVirtualTextError {:fg c.error-fg :style :italic}
-              :DiagnosticVirtualTextWarn {:fg c.warn-fg :style :italic}
-              :ExtraWhitespace {:fg c.error-fg :undercurl true}
-              :FloatBorder {:fg c.light-gray}
-              :LineNr {:fg c.dark-gray :bg c.cursor-bg}
-              :LineNrAbove {:fg c.dark-gray :bg c.normal-bg}
-              :LineNrBelow {:fg c.dark-gray :bg c.normal-bg}
-              :MsgArea {:fg c.light-gray}
-              :NormalFloat {:bg c.normal-bg}
-              :SpellBad {:fg c.warn-fg :style :undercurl}
-              :StatusLine {:fg c.light-gray :bg c.normal-bg}
-              :StatusLineInfo {:fg c.info-fg :bg c.statusline-bg}
-              :StatusLineError {:fg c.error-fg :bg c.statusline-bg}
-              :StatusLineWarn {:fg c.warn-fg :bg c.statusline-bg}
-              :Todo {:link :ModeMsg}
-              :WinSeparator {:fg c.dark-green :bg c.normal-bg}
+               :Conceal {:link :Comment}
+               :CursorLine {:bg c.normal-bg}
+               :CursorLineNr {:link :Normal}
+               :DiagnosticVirtualTextError {:fg c.error-fg :style :italic}
+               :DiagnosticVirtualTextWarn {:fg c.warn-fg :style :italic}
+               :ExtraWhitespace {:fg c.error-fg :undercurl true}
+               :FloatBorder {:fg c.light-gray}
+               :LineNr {:fg c.dark-gray :bg c.cursor-bg}
+               :LineNrAbove {:fg c.dark-gray :bg c.normal-bg}
+               :LineNrBelow {:fg c.dark-gray :bg c.normal-bg}
+               :MsgArea {:fg c.light-gray}
+               :NormalFloat {:bg c.normal-bg}
+               :SpellBad {:fg c.warn-fg :style :undercurl}
+               :StatusLine {:fg c.light-gray :bg c.normal-bg}
+               :StatusLineInfo {:fg c.info-fg :bg c.statusline-bg}
+               :StatusLineError {:fg c.error-fg :bg c.statusline-bg}
+               :StatusLineWarn {:fg c.warn-fg :bg c.statusline-bg}
+               :Todo {:link :ModeMsg}
+               :WinSeparator {:fg c.dark-green :bg c.normal-bg}
               })
 
 (fn show-extra-whitespace []
@@ -57,8 +57,7 @@
         options {:transparent true}]
     (theme.setup {: options :groups {:all groups}})
     (comment vim.cmd.colorscheme (get-gnome-colorscheme :github_dark :github_light))
-    (vim.cmd.colorscheme :github_dark)
-    ))
+    (vim.cmd.colorscheme :github_dark)))
 
 {: show-extra-whitespace
  : setup}

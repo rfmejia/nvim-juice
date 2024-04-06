@@ -1,4 +1,4 @@
--- [nfnl] Compiled from fnl/juice/filetypes/asciidoc.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] Compiled from after/ftplugin/asciidoc.fnl by https://github.com/Olical/nfnl, do not edit.
 local a = require("nfnl.core")
 local u = require("util")
 vim.opt.shiftwidth = 2

@@ -1,4 +1,4 @@
--- [nfnl] Compiled from fnl/juice/statusline.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] Compiled from lua/juice/statusline.fnl by https://github.com/Olical/nfnl, do not edit.
 local function git_file_status()
   local path = vim.fn.expand("%:p")
   local git_cmd = ("git file-status " .. path .. " | tr -d ' \\n'")

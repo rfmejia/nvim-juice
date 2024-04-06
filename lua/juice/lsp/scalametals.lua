@@ -1,4 +1,4 @@
--- [nfnl] Compiled from fnl/juice/lsp/scalametals.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] Compiled from lua/juice/lsp/scalametals.fnl by https://github.com/Olical/nfnl, do not edit.
 local function initialize_metals()
   local u = require("util")
   local sl = require("juice.statusline")

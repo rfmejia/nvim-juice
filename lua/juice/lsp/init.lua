@@ -1,4 +1,4 @@
--- [nfnl] Compiled from fnl/juice/lsp/init.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] Compiled from lua/juice/lsp/init.fnl by https://github.com/Olical/nfnl, do not edit.
 local u = require("util")
 local scalametals = require("juice.lsp.scalametals")
 local function setup_go()

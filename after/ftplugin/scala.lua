@@ -1,4 +1,4 @@
--- [nfnl] Compiled from fnl/juice/filetypes/scala.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] Compiled from after/ftplugin/scala.fnl by https://github.com/Olical/nfnl, do not edit.
 local u = require("util")
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2

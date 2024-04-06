@@ -1,4 +1,4 @@
--- [nfnl] Compiled from fnl/juice/filetypes/mail.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] Compiled from after/ftplugin/mail.fnl by https://github.com/Olical/nfnl, do not edit.
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.textwidth = 80

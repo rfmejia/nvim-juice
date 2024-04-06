@@ -1,9 +1,6 @@
 (local q (require :juice.quickfix))
 (local u (require :util))
 
-(set vim.g.mapleader " ")
-(set vim.g.maplocalleader ",")
-
 (u.nmap "Y" "y$" [])
 (u.nmap "<C-l>" ":nohl<cr>" [:noremap])
 (u.nmap "<leader>;" ":<C-r>\"" [:noremap])

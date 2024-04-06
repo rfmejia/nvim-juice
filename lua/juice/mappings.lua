@@ -1,8 +1,6 @@
--- [nfnl] Compiled from fnl/juice/mappings.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] Compiled from lua/juice/mappings.fnl by https://github.com/Olical/nfnl, do not edit.
 local q = require("juice.quickfix")
 local u = require("util")
-vim.g.mapleader = " "
-vim.g.maplocalleader = ","
 u.nmap("Y", "y$", {})
 u.nmap("<C-l>", ":nohl<cr>", {"noremap"})
 u.nmap("<leader>;", ":<C-r>\"", {"noremap"})
