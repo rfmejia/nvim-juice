@@ -49,10 +49,16 @@
      "menu,menuone,noselect,noinsert")
 (set vim.opt.path ".,,")                      ; search in current file's directory or pwd (do not use **)
 
+; filetypes
+(vim.cmd "filetype plugin on")
+(vim.filetype.add {:extension {[:sbt :sc] :scala
+                               [:text :txt] :text}
+                   :filename {:Jenkinsfile :groovy
+                              :tmux.conf :tmux}})
+
 (require :juice.plugins)
 (require :juice.mappings)
 (require :juice.autocmds)
-(require :juice.filetypes)
 
 (let [u (require :juice.util)]
   (when (u.has? :syntax)

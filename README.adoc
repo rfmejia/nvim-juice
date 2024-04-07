@@ -1,4 +1,4 @@
-*nvim-juice* is my personal neovim configuration written in
+*nvim-juice* is my personal Neovim configuration written in
 https://fennel-lang.org[Fennel].
 
 * Concisely configures Neovim using Fennel via
@@ -15,3 +15,10 @@ git clone https://github.com/folke/lazy.nvim into ${XDG_DATA_HOME}/nvim/site/pac
 git clone https://github.com/Olical/nfnl into ${XDG_DATA_HOME}/nvim/site/pack/juice/start
 nvim
 ```
+
+== Modifying Fennel configuration
+
+All configuration is located in `fnl/`. `nfnl` automatically compiles Fennel
+files upon saving into `lua/`. Note that special handling is performed for
+`init.fnl` and `after/` to conform to the Neovim directory structure; see
+`.nfnl.fnl` for the mapping function.

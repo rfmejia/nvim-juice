@@ -36,10 +36,11 @@ vim.opt.smartcase = true
 vim.opt.complete = ".,w,b,u,t,kspell"
 vim.opt.completeopt = "menu,menuone,noselect,noinsert"
 vim.opt.path = ".,,"
+vim.cmd("filetype plugin on")
+vim.filetype.add({extension = {[{"sbt", "sc"}] = "scala", [{"text", "txt"}] = "text"}, filename = {Jenkinsfile = "groovy", ["tmux.conf"] = "tmux"}})
 require("juice.plugins")
 require("juice.mappings")
 require("juice.autocmds")
-require("juice.filetypes")
 do
   local u = require("juice.util")
   if u["has?"]("syntax") then
