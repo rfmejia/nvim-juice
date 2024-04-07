@@ -1,4 +1,4 @@
--- [nfnl] Compiled from lua/juice/quickfix.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] Compiled from fnl/juice/quickfix.fnl by https://github.com/Olical/nfnl, do not edit.
 local function toggle_window(toggle_qf_3f)
   local count_win
   local function _1_()

@@ -1,4 +1,4 @@
--- [nfnl] Compiled from lua/juice/lsp/init.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] Compiled from fnl/juice/lsp/init.fnl by https://github.com/Olical/nfnl, do not edit.
 local function setup_go()
   local lspconfig = require("lspconfig")
   local settings = {gopls = {analyses = {unusedparams = true}, staticcheck = true}}

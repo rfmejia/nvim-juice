@@ -19,8 +19,10 @@
                {1 :stevearc/oil.nvim
                 :cmd :Oil
                 :config (fn []
-                          (let [oil (require :oil)]
-                            (oil.setup)))}
+                          (let [oil (require :oil)
+                                config {:default_file_explorer true
+                                        :delete_to_trash true}]
+                            (oil.setup config)))}
 
                {1 :nvim-telescope/telescope.nvim
                 :tag :0.1.6
@@ -34,8 +36,7 @@
                                                    :mappings {:i {:<esc> actions.close}}
                                                    :path_display {1 :truncate}
                                                    :preview false
-                                                   :prompt_prefix "? "
-                                                   }}]
+                                                   :prompt_prefix "? "}}]
                             (telescope.setup config)
                           ))}
 
@@ -63,12 +64,10 @@
                                         :keybindings {:left  :<M-h>
                                                       :down  :<M-j>
                                                       :up    :<M-k>
-                                                      :right :<M-l>}
-                                        })
+                                                      :right :<M-l>}})
                             ))}
 
                {1 :nvim-treesitter/nvim-treesitter
-                ; :version 0.9.2 ; FIXME pinned due to https://github.com/nvim-treesitter/nvim-treesitter/issues/2293
                 :event [:BufReadPre :BufNewFile]
                 :build ":TSUpdate"
                 :config (fn []
@@ -134,8 +133,7 @@
                                 :lazy true}
                                {1 :kristijanhusak/vim-dadbod-completion
                                 :lazy true
-                                :ft [:sql :mysql]}]
-                }
+                                :ft [:sql :mysql]}]}
               ]]
 
   (lazy.setup plugins opts))

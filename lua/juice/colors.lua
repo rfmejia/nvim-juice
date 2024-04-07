@@ -1,4 +1,4 @@
--- [nfnl] Compiled from lua/juice/colors.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] Compiled from fnl/juice/colors.fnl by https://github.com/Olical/nfnl, do not edit.
 local function color_attr(hl_group, attribute)
   return (vim.api.nvim_get_hl(0, {name = hl_group}))[attribute]
 end

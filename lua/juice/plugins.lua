@@ -1,4 +1,4 @@
--- [nfnl] Compiled from lua/juice/plugins.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] Compiled from fnl/juice/plugins.fnl by https://github.com/Olical/nfnl, do not edit.
 local lazy = require("lazy")
 local opts = {ui = {border = "rounded"}, performance = {rtp = {disabled_plugins = {"rplugin", "tohtml", "tutor", "vimball"}}}}
 local plugins
@@ -8,7 +8,8 @@ local function _1_()
 end
 local function _2_()
   local oil = require("oil")
-  return oil.setup()
+  local config = {default_file_explorer = true, delete_to_trash = true}
+  return oil.setup(config)
 end
 local function _3_()
   local telescope = require("telescope")

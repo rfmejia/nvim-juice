@@ -3,8 +3,7 @@
         sl (require :juice.statusline)
         lsp (require :juice.lsp)
         metals (require :metals)
-        telescope (require :telescope)
-        ]
+        telescope (require :telescope)]
 
     (set vim.opt.signcolumn "yes:1")
     (set vim.go.shortmess (.. vim.go.shortmess "c"))

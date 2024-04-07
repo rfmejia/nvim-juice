@@ -8,11 +8,9 @@
       (vim.cmd close-cmd))
     ))
 
-(fn toggle-qf-window []
-  (toggle-window true))
+(fn toggle-qf-window [] (toggle-window true))
 
-(fn toggle-loclist-window []
-  (toggle-window false))
+(fn toggle-loclist-window [] (toggle-window false))
 
 {: toggle-window
  : toggle-qf-window

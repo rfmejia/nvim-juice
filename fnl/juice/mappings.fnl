@@ -124,7 +124,7 @@
   (u.nmap "<leader>E" ":Oil .<cr>" [:noremap :silent])
   (u.nmap "<leader>u" ":UndotreeToggle<cr>" [:noremap :silent])
 
-  (let [builtin (require "telescope.builtin")]
+  (let [builtin (require :telescope.builtin)]
     (u.nmap "<leader>f" builtin.find_files [:noremap :silent])
     (u.nmap "<leader>g" builtin.git_files [:noremap :silent])
     (u.nmap "<leader>p" builtin.oldfiles [:noremap :silent])
@@ -136,11 +136,13 @@
   (u.nmap "<localleader>db" ":%DB g:db<cr>" [:noremap])
   (u.nmap "<localleader>dp" "vip:DB g:db<cr>" [:noremap])
 
-  (u.nmap "]g" ":Gitsigns next_hunk<cr>" [:noremap])
-  (u.nmap "[g" ":Gitsigns prev_hunk<cr>" [:noremap])
-  (u.nmap "<localleader>gp" ":Gitsigns preview_hunk<cr>" [:noremap])
-  (u.nmap "<localleader>gs" ":Gitsigns stage_hunk<cr>" [:noremap])
-  (u.nmap "<localleader>gu" ":Gitsigns undo_stage_hunk<cr>" [:noremap])
+  (let [gitsigns (require :gitsigns)]
+    (u.nmap "]h" (fn [] (gitsigns.nav_hunk :next)) [:noremap])
+    (u.nmap "[h" (fn [] (gitsigns.nav_hunk :prev)) [:noremap])
+    (u.nmap "<localleader>hS" (fn [] (gitsigns.blame_line {:full true})) [:noremap])
+    (u.nmap "<localleader>hp" gitsigns.preview_hunk [:noremap])
+    (u.nmap "<localleader>hs" gitsigns.stage_hunk [:noremap])
+    (u.nmap "<localleader>hS" gitsigns.undo_stage_hunk [:noremap]))
 
   (u.imap "]a" "<Plug>(copilot-next)")
   (u.imap "[a" "<Plug>(copilot-prev)"))

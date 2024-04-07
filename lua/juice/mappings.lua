@@ -1,4 +1,4 @@
--- [nfnl] Compiled from lua/juice/mappings.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] Compiled from fnl/juice/mappings.fnl by https://github.com/Olical/nfnl, do not edit.
 local q = require("juice.quickfix")
 local u = require("juice.util")
 u.nmap("Y", "y$", {})
@@ -120,10 +120,23 @@ u.nmap("<localleader>d;", ":DB g:db ", {"noremap"})
 u.nmap("<localleader>dd", ":.DB g:db<cr>", {"noremap"})
 u.nmap("<localleader>db", ":%DB g:db<cr>", {"noremap"})
 u.nmap("<localleader>dp", "vip:DB g:db<cr>", {"noremap"})
-u.nmap("]g", ":Gitsigns next_hunk<cr>", {"noremap"})
-u.nmap("[g", ":Gitsigns prev_hunk<cr>", {"noremap"})
-u.nmap("<localleader>gp", ":Gitsigns preview_hunk<cr>", {"noremap"})
-u.nmap("<localleader>gs", ":Gitsigns stage_hunk<cr>", {"noremap"})
-u.nmap("<localleader>gu", ":Gitsigns undo_stage_hunk<cr>", {"noremap"})
+do
+  local gitsigns = require("gitsigns")
+  local function _10_()
+    return gitsigns.nav_hunk("next")
+  end
+  u.nmap("]h", _10_, {"noremap"})
+  local function _11_()
+    return gitsigns.nav_hunk("prev")
+  end
+  u.nmap("[h", _11_, {"noremap"})
+  local function _12_()
+    return gitsigns.blame_line({full = true})
+  end
+  u.nmap("<localleader>hS", _12_, {"noremap"})
+  u.nmap("<localleader>hp", gitsigns.preview_hunk, {"noremap"})
+  u.nmap("<localleader>hs", gitsigns.stage_hunk, {"noremap"})
+  u.nmap("<localleader>hS", gitsigns.undo_stage_hunk, {"noremap"})
+end
 u.imap("]a", "<Plug>(copilot-next)")
 return u.imap("[a", "<Plug>(copilot-prev)")
