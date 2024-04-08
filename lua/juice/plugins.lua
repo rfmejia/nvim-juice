@@ -14,7 +14,7 @@ end
 local function _3_()
   local telescope = require("telescope")
   local actions = require("telescope.actions")
-  local config = {defaults = {layout_config = {prompt_position = "bottom", height = 0.7}, layout_strategy = "bottom_pane", mappings = {i = {["<esc>"] = actions.close}}, path_display = {"truncate"}, prompt_prefix = "? ", border = false, preview = false}}
+  local config = {defaults = {layout_config = {prompt_position = "bottom", height = 0.6}, layout_strategy = "bottom_pane", mappings = {i = {["<esc>"] = actions.close, ["<C-u>"] = false}}, path_display = {"truncate"}, prompt_prefix = "? ", preview = false, border = false}}
   return telescope.setup(config)
 end
 local function _4_()

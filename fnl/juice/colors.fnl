@@ -8,6 +8,7 @@
                      :warn-fg (color-attr :DiagnosticWarn :fg)
                      :statusline-bg (color-attr :StatusLine :bg)
                      :dark-gray :#3d3d3d
+                     :darker-gray :#1d1d1d
                      :dark-green :#009000
                      :light-gray :#707070})
 
@@ -30,6 +31,7 @@
                :StatusLineInfo {:fg c.info-fg :bg c.statusline-bg}
                :StatusLineError {:fg c.error-fg :bg c.statusline-bg}
                :StatusLineWarn {:fg c.warn-fg :bg c.statusline-bg}
+               :TelescopeSelection {:bg c.darker-gray}
                :Todo {:link :ModeMsg}
                :WinSeparator {:fg c.dark-green :bg c.normal-bg}
               })
