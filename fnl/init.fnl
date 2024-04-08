@@ -1,60 +1,89 @@
-; -----------------------------------------------------------------------------
-; GENERAL OPTIONS
+(comment "---- BEHAVIOR ----")
+(comment "Allow switching off unwritten buffers")
+(set vim.opt.hidden true)
+(comment "Detect and read external file changes")
+(set vim.opt.autoread true)
+(comment "Indent new line")
+(set vim.opt.autoindent true)
+(comment "Indent new line in special cases")
+(set vim.opt.smartindent true)
+(comment "Number of spaces for *existing* tabs")
+(set vim.opt.shiftwidth 2)
+(comment "Number of spaces for *inserting* tabs")
+(set vim.opt.tabstop 2)
+(comment "Number of spaces for (auto)indenting, e.g. >> & <<")
+(set vim.opt.softtabstop 2)
+(comment "Convert tabs to spaces")
+(set vim.opt.expandtab true)
+(comment "-")
+(set vim.opt.smarttab true)
+(comment "Disable block folding")
+(set vim.opt.foldenable false)
+(comment "-")
+(set vim.opt.backspace "indent,eol,start")
+(comment "-")
+(set vim.opt.history 10000)
+(comment "-")
+(set vim.opt.ttyfast true)
+(comment "-")
+(set vim.opt.ttimeoutlen 50)
+(comment "Disable mouse")
+(set vim.opt.mouse "")
+(comment "-")
+(set vim.opt.shortmess :filnxtToOF)
 
-; behavior
-(set vim.opt.hidden true)                     ; Allow switching off unwritten buffers
-(set vim.opt.autoread true)                   ; Detect and read external file changes
-(set vim.opt.autoindent true)                 ; Indent new line
-(set vim.opt.smartindent true)                ; Indent new line in special cases
-(set vim.opt.shiftwidth 2)                    ; Number of spaces for *existing* tabs
-(set vim.opt.tabstop 2)                       ; Number of spaces for *inserting* tabs
-(set vim.opt.softtabstop 2)                   ; Number of spaces for (auto)indenting, e.g. >> & <<
-(set vim.opt.expandtab true)                  ; Convert tabs to spaces
-(set vim.opt.smarttab true)                   ; -
-(set vim.opt.foldenable false)                ; Disable block folding
-(set vim.opt.backspace "indent,eol,start")    ; -
-(set vim.opt.history 10000)                   ; -
-(set vim.opt.ttyfast true)                    ; -
-(set vim.opt.ttimeoutlen 50)                  ; -
-(set vim.opt.mouse "")                        ; Disable mouse
-(set vim.opt.shortmess "filnxtToOF")          ;
-
-; leader keys
+(comment "---- LEADER KEYS ----")
 (set vim.g.mapleader " ")
 (set vim.g.maplocalleader ",")
 
-; visual
-(set vim.opt.number true)                     ; Show line numbers
-(set vim.opt.relativenumber true)             ; Show numbers relative to current line
-(set vim.opt.signcolumn "yes:1")              ; Display line column
-(set vim.opt.cursorline true)                 ; Highlight cursor position row
-(set vim.opt.splitbelow true)                 ; Prefer adding horizontal split below
-(set vim.opt.splitright true)                 ; Prefer adding a vertical split on the right
-(set vim.opt.wrap false)                      ; Do not wrap text
-(set vim.opt.linebreak true)                  ; When wrapping is turned on, wrap on a line break
-(set vim.opt.showcmd true)                    ; Show queued up command keystrokes
-(set vim.opt.laststatus 3)                    ; Show a single status line only
-(set vim.opt.switchbuf "uselast")             ; Jump to the previously used window when jumping to errors with |quickfix| commands
+(comment "---- VISUAL ----")
+(comment "Show line numbers")
+(set vim.opt.number true)
+(comment "Show numbers relative to current line")
+(set vim.opt.relativenumber true)
+(comment "Display line column")
+(set vim.opt.signcolumn "yes:1")
+(comment "Highlight cursor position row")
+(set vim.opt.cursorline true)
+(comment "Prefer adding horizontal split below")
+(set vim.opt.splitbelow true)
+(comment "Prefer adding a vertical split on the right")
+(set vim.opt.splitright true)
+(comment "Do not wrap text")
+(set vim.opt.wrap false)
+(comment "When wrapping is turned on, wrap on a line break")
+(set vim.opt.linebreak true)
+(comment "Show queued up command keystrokes")
+(set vim.opt.showcmd true)
+(comment "Show a single status line only")
+(set vim.opt.laststatus 3)
+(comment "Jump to the previously used window when jumping to errors with |quickfix| commands")
+(set vim.opt.switchbuf :uselast)
 
-; search options
-(set vim.opt.hlsearch true)                   ; Turn on highlight search
-(set vim.opt.incsearch true)                  ; Search as the query is typed
-(set vim.opt.wrapscan false)                  ; Do not wrap search scans
-(set vim.opt.ignorecase true)                 ; Ignore case when using lowercase in search
-(set vim.opt.smartcase true)                  ; But don't ignore it when using upper case
+(comment "---- SEARCH OPTIONS ----")
+(comment "Turn on highlight search")
+(set vim.opt.hlsearch true)
+(comment "Search as the query is typed")
+(set vim.opt.incsearch true)
+(comment "Do not wrap search scans")
+(set vim.opt.wrapscan false)
+(comment "Ignore case when using lowercase in search")
+(set vim.opt.ignorecase true)
+(comment "But don't ignore it when using upper case")
+(set vim.opt.smartcase true)
 
-; completion
-(set vim.opt.complete ".,w,b,u,t,kspell")     ; remove imports, add spellchecker to completion sources
-(set vim.opt.completeopt                      ; -
-     "menu,menuone,noselect,noinsert")
-(set vim.opt.path ".,,")                      ; search in current file's directory or pwd (do not use **)
+(comment "---- COMPLETION ----")
+(comment "remove imports, add spellchecker to completion sources")
+(set vim.opt.complete ".,w,b,u,t,kspell")
+(comment "-")
+(set vim.opt.completeopt "menu,menuone,noselect,noinsert")
+(comment "search in current file's directory or pwd (do not use **)")
+(set vim.opt.path ".,,")
 
-; filetypes
+(comment "---- FILETYPES ----")
 (vim.cmd "filetype plugin on")
-(vim.filetype.add {:extension {[:sbt :sc] :scala
-                               [:text :txt] :text}
-                   :filename {:Jenkinsfile :groovy
-                              :tmux.conf :tmux}})
+(vim.filetype.add {:extension {[:sbt :sc] :scala [:text :txt] :text}
+                   :filename {:Jenkinsfile :groovy :tmux.conf :tmux}})
 
 (require :juice.plugins)
 (require :juice.mappings)
@@ -63,28 +92,31 @@
 (let [u (require :juice.util)]
   (when (u.has? :syntax)
     (vim.cmd "syntax enable"))
-
   (when (u.has? :clipboard)
-    (set vim.opt.clipboard "unnamedplus"))      ; Use Linux system clipboard
-
+    (comment "Use Linux system clipboard")
+    (set vim.opt.clipboard :unnamedplus))
   (when (u.has? :persistent_undo)
-    (set vim.opt.undolevels 5000)               ; Increase the number of undos
-    (set vim.opt.undofile true))                ; Persist undo logs per file inside `undodir`
-
+    (comment "Increase the number of undos")
+    (set vim.opt.undolevels 5000)
+    (comment "Persist undo logs per file inside `undodir`")
+    (set vim.opt.undofile true))
   (when (u.has? :wildmenu)
-    (set vim.opt.wildmenu true)                   ; -
-    (set vim.opt.wildmode                         ; Set order of completion matches
-         "lastused,longest,full")
-    (set vim.opt.wildignore                       ; -
+    (comment "-")
+    (set vim.opt.wildmenu true)
+    (comment "Set order of completion matches")
+    (set vim.opt.wildmode "lastused,longest,full")
+    (comment "-")
+    (set vim.opt.wildignore
          "*/.git/*,*/.ammonite/*,*/.bloop/*,*/.metals/*,*/node_modules/*,*/build/*,*/target/*,*.class")
-    (set vim.opt.wildignorecase true)             ; ignore case when filtering results
-    (set vim.opt.wildoptions "pum"))               ; use popup to show results
-
-  ; use ripgrep
+    (comment "ignore case when filtering results")
+    (set vim.opt.wildignorecase true)
+    (comment "use popup to show results")
+    (set vim.opt.wildoptions :pum))
+  (comment "use ripgrep")
   (when (u.executable? :rg)
-    (set vim.opt.grepprg "rg\\ --smart-case\\ --hidden\\ --follow\\ --no-heading\\ --vimgrep")
-    (set vim.opt.grepformat "%f:%l:%c:%m,%f:%l:%m"))
-  )
+    (set vim.opt.grepprg
+         "rg\\ --smart-case\\ --hidden\\ --follow\\ --no-heading\\ --vimgrep")
+    (set vim.opt.grepformat "%f:%l:%c:%m,%f:%l:%m")))
 
 (let [sl (require :juice.statusline)]
   (set vim.opt.statusline (sl.build-statusline [])))

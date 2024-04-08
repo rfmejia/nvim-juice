@@ -1,10 +1,7 @@
 (fn make-opts [keys]
   "Produce a table with every `key = true`"
   (local a (require :nfnl.core))
-  (a.reduce
-    (fn [acc key] (a.merge acc {key true}))
-    {}
-    keys))
+  (a.reduce (fn [acc key] (a.merge acc {key true})) {} keys))
 
 (fn nmap [key map opts]
   "Defines a keymap in normal mode"

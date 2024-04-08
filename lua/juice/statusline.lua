@@ -2,6 +2,7 @@
 local function git_file_status()
   local path = vim.fn.expand("%:p")
   local git_cmd = ("git file-status " .. path .. " | tr -d ' \\n'")
+  --[[ "TODO Check: if directory then set to blank" ]]
   local _1_, _2_ = vim.fn.system(git_cmd)
   if (nil ~= _1_) then
     local status = _1_

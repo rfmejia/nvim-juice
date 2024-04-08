@@ -1,16 +1,19 @@
 -- [nfnl] Compiled from fnl/juice/mappings.fnl by https://github.com/Olical/nfnl, do not edit.
 local q = require("juice.quickfix")
 local u = require("juice.util")
+--[[ "---- GENERAL MAPPINGS ----" ]]
 u.nmap("Y", "y$", {})
 u.nmap("<C-l>", ":nohl<cr>", {"noremap"})
 u.nmap("<leader>;", ":<C-r>\"", {"noremap"})
 u.nmap("<leader>w", ":w<cr>", {"noremap"})
 u.nmap("<leader>n", ":registers<cr>", {"noremap"})
 u.nmap("<F5>", ":make<cr>", {"noremap"})
+--[[ "Vertically center screen when page scrolling up/down" ]]
 u.nmap("<C-d>", "<C-d>zz", {"noremap", "silent"})
 u.nmap("<C-u>", "<C-u>zz", {"noremap", "silent"})
 u.nmap("<C-o>", "<C-o>zz", {"noremap", "silent"})
 u.nmap("<C-i>", "<C-i>zz", {"noremap", "silent"})
+--[[ "Disable default mappings to train optimal alternatives" ]]
 local function _1_()
   return print("Use C-u or relative jumps instead")
 end
@@ -19,7 +22,28 @@ local function _2_()
   return print("Use C-d or relative jumps instead")
 end
 u.nmap("}", _2_, {"noremap", "silent"})
+--[[ "Map omnifunc" ]]
 u.imap("<C-t>", "<C-x><C-o>", {"noremap", "silent"})
+--[[ "easier moving of blocks in visual mode" ]]
+u.vmap("<", "<gv", {"noremap"})
+u.vmap(">", ">gv", {"noremap"})
+--[[ "add undo step when typing sentences" ]]
+u.imap("\"", "\"<C-g>u", {"noremap", "silent"})
+u.imap(".", ".<C-g>u", {"noremap", "silent"})
+u.imap("!", "!<C-g>u", {"noremap", "silent"})
+u.imap("?", "?<C-g>u", {"noremap", "silent"})
+u.imap("(", "(<C-g>u", {"noremap", "silent"})
+u.imap(")", ")<C-g>u", {"noremap", "silent"})
+u.imap("{", "{<C-g>u", {"noremap", "silent"})
+u.imap("}", "}<C-g>u", {"noremap", "silent"})
+u.imap("[", "[<C-g>u", {"noremap", "silent"})
+u.imap("]", "]<C-g>u", {"noremap", "silent"})
+--[[ "date shortcuts" ]]
+u.nmap("<leader>dt", ":.!date '+\\%a, \\%d \\%b \\%Y'<cr>", {"noremap"})
+u.nmap("<leader>dT", ":.!date '+\\%a, \\%d \\%b \\%Y' --date=", {})
+--[[ "select completion binding item" ]]
+vim.cmd("inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")
+--[[ "---- MARK MANAGEMENT ----" ]]
 u.nmap("<leader>mm", ":marks ARST<cr>", {"noremap"})
 u.nmap("<leader>mc", ":delmarks ARST<cr>:echo 'Cleared file marks'<cr>", {"noremap"})
 u.nmap("<leader>a", "`Azz", {"noremap"})
@@ -30,17 +54,20 @@ u.nmap("<leader>ma", "mA:echo 'Marked file A'<cr>", {"noremap"})
 u.nmap("<leader>mr", "mR:echo 'Marked file R'<cr>", {"noremap"})
 u.nmap("<leader>ms", "mS:echo 'Marked file S'<cr>", {"noremap"})
 u.nmap("<leader>mt", "mT:echo 'Marked file T'<cr>", {"noremap"})
+--[[ "---- WINDOW MANAGEMENT ----" ]]
 u.nmap("<M-h>", "<C-w>h", {"noremap", "silent"})
 u.nmap("<M-j>", "<C-w>j", {"noremap", "silent"})
 u.nmap("<M-k>", "<C-w>k", {"noremap", "silent"})
 u.nmap("<M-l>", "<C-w>l", {"noremap", "silent"})
 u.nmap("<C-p>", "<C-w>p", {"noremap", "silent"})
+--[[ "---- BUFFER MANAGEMENT ----" ]]
 u.nmap("<leader>b", ":buffers<cr>:buffer<Space>", {"noremap"})
 u.nmap("[B", ":bfirst<cr>", {"noremap"})
 u.nmap("]B", ":blast<cr>", {"noremap"})
 u.nmap("[b", ":bprevious<cr>", {"noremap"})
 u.nmap("]b", ":bnext<cr>", {"noremap"})
 u.nmap("<leader>x", ":bp|bdelete #<cr>", {"noremap"})
+--[[ "---- TAB MANAGEMENT ----" ]]
 u.nmap("tn", ":tabnew<cr>", {"noremap"})
 u.nmap("tc", ":tabclose<cr>", {"noremap"})
 u.nmap("ts", ":tab split<cr>", {"noremap"})
@@ -48,23 +75,26 @@ u.nmap("[t", ":tabprevious<cr>", {"noremap"})
 u.nmap("]t", ":tabnext<cr>", {"noremap"})
 u.nmap("[T", ":tabfirst<cr>", {"noremap"})
 u.nmap("]T", ":tablast<cr>", {"noremap"})
+--[[ "---- QUICKFIX LIST ----" ]]
 u.nmap("<leader>c", q["toggle-qf-window"], {"noremap"})
 u.nmap("[c", ":cprevious<cr>", {"noremap"})
 u.nmap("]c", ":cnext<cr>", {"noremap"})
 u.nmap("[C", ":cfirst<cr>", {"noremap"})
 u.nmap("]C", ":clast<cr>", {"noremap"})
+--[[ "location list" ]]
 u.nmap("<leader>l", q["toggle-loclist-window"], {"noremap"})
 u.nmap("[l", ":lprevious<cr>", {"noremap"})
 u.nmap("]l", ":lnext<cr>", {"noremap"})
 u.nmap("[L", ":lfirst<cr>", {"noremap"})
 u.nmap("]L", ":llast<cr>", {"noremap"})
+--[[ "---- SEARCH/REPLACE ----" ]]
 u.nmap("<leader>/s", ":s//g<left><left>", {"noremap"})
 u.nmap("<leader>/S", ":%s//g<left><left>", {"noremap"})
 u.nmap("<leader>/l", ":.,+s//g<left><left><left><left>", {"noremap"})
 u.nmap("<leader>/w", ":s/\\<<c-r><c-w>\\>//g<left><left>", {"noremap"})
 u.nmap("<leader>/W", ":%s/\\<<c-r><c-w>\\>//g<left><left>", {"noremap"})
-u.nmap("<leader>dt", ":.!date '+\\%a, \\%d \\%b \\%Y'<cr>", {"noremap"})
-u.nmap("<leader>dT", ":.!date '+\\%a, \\%d \\%b \\%Y' --date=", {})
+--[[ "---- EXTERNAL APPS ----" ]]
+--[[ "utilites in tmux split" ]]
 if u["exists?"]("$TMUX") then
   if u["executable?"]("lazygit") then
     u.nmap("<leader>og", ":!tmux neww lazygit<cr><cr>", {"noremap", "silent"})
@@ -80,22 +110,10 @@ if u["exists?"]("$TMUX") then
   end
 else
 end
-u.vmap("<", "<gv", {"noremap"})
-u.vmap(">", ">gv", {"noremap"})
-u.imap("\"", "\"<C-g>u", {"noremap", "silent"})
-u.imap(".", ".<C-g>u", {"noremap", "silent"})
-u.imap("!", "!<C-g>u", {"noremap", "silent"})
-u.imap("?", "?<C-g>u", {"noremap", "silent"})
-u.imap("(", "(<C-g>u", {"noremap", "silent"})
-u.imap(")", ")<C-g>u", {"noremap", "silent"})
-u.imap("{", "{<C-g>u", {"noremap", "silent"})
-u.imap("}", "}<C-g>u", {"noremap", "silent"})
-u.imap("[", "[<C-g>u", {"noremap", "silent"})
-u.imap("]", "]<C-g>u", {"noremap", "silent"})
-vim.cmd("inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")
+--[[ "personal journal" ]]
 if u["exists?"]("$JOURNAL") then
   local function _7_()
-    return vim.cmd((":$tabnew" .. "$JOURNAL/journal.md"))
+    return vim.cmd((":$tabnew" .. "$JOURNAL/journal.adoc"))
   end
   u.nmap("<leader>oj", _7_, {"noremap", "silent"})
   local function _8_()
@@ -104,6 +122,7 @@ if u["exists?"]("$JOURNAL") then
   u.nmap("<leader>ov", _8_, {"noremap", "silent"})
 else
 end
+--[[ "---- PLUGINS ----" ]]
 u.nmap("<leader>L", ":Lazy<cr>", {"noremap", "silent"})
 u.nmap("<leader>e", ":Oil<cr>", {"noremap", "silent"})
 u.nmap("<leader>E", ":Oil .<cr>", {"noremap", "silent"})
