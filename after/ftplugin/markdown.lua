@@ -2,6 +2,7 @@
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local _local_2_ = require("juice.util")
+local lua_cmd = _local_2_["lua-cmd"]
 local nmap = _local_2_["nmap"]
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
@@ -18,9 +19,9 @@ local function insert_yaml_metadata()
   local filename = vim.fn.expand("%:t:r")
   local now = vim.fn.strftime("%FT%T%z", vim.fn.localtime())
   local meta = {"---", "title: ", filename, "created: ", now, "tags: []", "---"}
-  return print(meta)
+  return vim.print(meta)
 end
-nmap("<localleader>m", __fnl_global__lua_2dcmd("require('juice.filetypes.markdown')['insert-yaml-metadata']()"), {"noremap", "silent"})
-nmap("<localleader>v", __fnl_global__lua_2dcmd("require('juice.filetypes.markdown')['render-markdown-to-html']()"), {"noremap", "silent"})
+nmap("<localleader>m", lua_cmd("require('juice.filetypes.markdown')['insert-yaml-metadata']()"), {"noremap", "silent"})
+nmap("<localleader>v", lua_cmd("require('juice.filetypes.markdown')['render-markdown-to-html']()"), {"noremap", "silent"})
 nmap("<localleader>d", ":r!date '+\\%a, \\%d \\%b \\%Y' | xargs -0 printf '----\\n\\n\\%s\\n'<cr>", {"noremap", "silent"})
 return nmap("<localleader>t", ":r!date '+\\%H:\\%M' | xargs -0 printf '> \\%s ' | tr -d '\\n'<cr>A", {"noremap", "silent"})

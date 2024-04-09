@@ -1,5 +1,5 @@
 (local {: autoload} (require :nfnl.module))
-(local {: nmap} (require :juice.util))
+(local {: lua-cmd : nmap} (require :juice.util))
 
 (set vim.opt.shiftwidth 2)
 (set vim.opt.tabstop 2)
@@ -18,7 +18,7 @@
   (let [filename (vim.fn.expand "%:t:r")
         now (vim.fn.strftime "%FT%T%z" (vim.fn.localtime))
         meta ["---" "title: " filename "created: " now "tags: []" "---"]]
-    (print meta) ; (vim.fn.append (line "0" meta)) ; call append(line('0'), meta)
+    (vim.print meta) ; (vim.fn.append (line "0" meta)) ; call append(line('0'), meta)
     ))
 
 (nmap :<localleader>m
