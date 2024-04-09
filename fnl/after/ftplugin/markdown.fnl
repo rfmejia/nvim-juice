@@ -1,12 +1,12 @@
 (local {: autoload} (require :nfnl.module))
-(local {: lua-cmd : nmap} (autoload :juice.util))
+(local {: lua-cmd : nmap : set-opts} (autoload :juice.util))
 
-(set vim.opt.shiftwidth 2)
-(set vim.opt.tabstop 2)
-(set vim.opt.textwidth 80)
-(set vim.opt.wrap true)
-(set vim.opt.spell true)
-(set vim.opt.spelllang :en_us)
+(set-opts {:shiftwidth 2
+           :tabstop 2
+           :textwidth 80
+           :wrap true
+           :spell true
+           :spelllang :en_us})
 
 (fn render-markdown-to-html [] ; TODO fix and verify this works
   (let [tmp-file (vim.fn.system [:mktemp :--suffix=.html])

@@ -22,8 +22,7 @@ vim.filetype.add({extension = {[{"sbt", "sc"}] = "scala", [{"text", "txt"}] = "t
 set_opts({complete = ".,w,b,u,t,kspell", completeopt = "menu,menuone,noselect,noinsert", path = ".,,", wildmode = "lastused,longest,full", wildignore = "*/.git/*,*/.ammonite/*,*/.bloop/*,*/.metals/*,*/node_modules/*,*/build/*,*/target/*,*.class", wildignorecase = true, wildoptions = "pum"})
 --[[ "use ripgrep if available" ]]
 if executable_3f("rg") then
-  vim.opt.grepprg = "rg\\ --smart-case\\ --hidden\\ --follow\\ --no-heading\\ --vimgrep"
-  vim.opt.grepformat = "%f:%l:%c:%m,%f:%l:%m"
+  set_opts({grepprg = "rg --smart-case --hidden --follow --no-heading --vimgrep", grepformat = "%f:%l:%c:%m,%f:%l:%m"})
 else
 end
 auto_setup("juice.plugins")

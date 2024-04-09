@@ -5,10 +5,8 @@ local _local_2_ = autoload("nfnl.string")
 local blank_3f = _local_2_["blank?"]
 local _local_3_ = autoload("juice.util")
 local nmap = _local_3_["nmap"]
-vim.opt.shiftwidth = 2
-vim.opt.tabstop = 2
-vim.opt.expandtab = true
-vim.opt.textwidth = 100
+local set_opts = _local_3_["set-opts"]
+set_opts({shiftwidth = 2, tabstop = 2, expandtab = true, textwidth = 100})
 local function format_fennel(path)
   local filename
   if blank_3f(path) then

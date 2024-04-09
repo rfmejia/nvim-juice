@@ -1,5 +1,6 @@
 -- [nfnl] Compiled from fnl/after/ftplugin/bash.fnl by https://github.com/Olical/nfnl, do not edit.
-vim.opt.makeprg = "sh %"
-vim.opt.signcolumn = "no"
-vim.opt.textwidth = 80
-return nil
+local _local_1_ = require("nfnl.module")
+local autoload = _local_1_["autoload"]
+local _local_2_ = autoload("juice.util")
+local set_opts = _local_2_["set-opts"]
+return set_opts({makeprg = "sh %", signcolumn = "no", textwidth = 80})

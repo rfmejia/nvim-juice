@@ -84,9 +84,9 @@
 
 (comment "use ripgrep if available")
 (when (executable? :rg)
-  (set vim.opt.grepprg
-       "rg\\ --smart-case\\ --hidden\\ --follow\\ --no-heading\\ --vimgrep")
-  (set vim.opt.grepformat "%f:%l:%c:%m,%f:%l:%m"))
+  (set-opts {; use ripgrep as the grepprg
+             :grepprg "rg --smart-case --hidden --follow --no-heading --vimgrep"
+             :grepformat "%f:%l:%c:%m,%f:%l:%m"}))
 
 (auto-setup :juice.plugins)
 (auto-setup :juice.mappings)

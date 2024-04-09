@@ -1,11 +1,8 @@
 (local {: autoload} (require :nfnl.module))
 (local {: blank?} (autoload :nfnl.string))
-(local {: nmap} (autoload :juice.util))
+(local {: nmap : set-opts} (autoload :juice.util))
 
-(set vim.opt.shiftwidth 2)
-(set vim.opt.tabstop 2)
-(set vim.opt.expandtab true)
-(set vim.opt.textwidth 100)
+(set-opts {:shiftwidth 2 :tabstop 2 :expandtab true :textwidth 100})
 
 (fn format-fennel [path]
   (let [filename (if (blank? path)

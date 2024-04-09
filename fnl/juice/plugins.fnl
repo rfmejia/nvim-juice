@@ -1,6 +1,6 @@
 (local {: autoload} (require :nfnl.module))
-(local {: autocmd : auto-setup} (autoload :juice.util))
 (local {: concat} (autoload :nfnl.core))
+(local {: autocmd : auto-setup : set-opts} (autoload :juice.util))
 
 (local basic [{1 :Olical/nfnl :ft :fennel}
               {1 :projekt0n/github-nvim-theme
@@ -108,9 +108,8 @@
                    (autocmd :FileType
                             {:pattern [:sql :mysql]
                              :callback (fn []
-                                         (set vim.opt.commentstring "--%s")
-                                         (set vim.opt.omnifunc
-                                              "vim_dadbod_completion#omni"))}))
+                                         (set-opts {:commentstring "-- %s"
+                                                    :omnifunc "vim_dadbod_completion#omni"}))}))
          :dependencies [{1 :tpope/vim-dadbod :lazy true}
                         {1 :kristijanhusak/vim-dadbod-completion
                          :lazy true

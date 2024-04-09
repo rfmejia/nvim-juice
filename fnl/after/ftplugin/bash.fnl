@@ -1,3 +1,4 @@
-(set vim.opt.makeprg "sh %")
-(set vim.opt.signcolumn :no)
-(set vim.opt.textwidth 80)
+(local {: autoload} (require :nfnl.module))
+(local {: set-opts} (autoload :juice.util))
+
+(set-opts {:makeprg "sh %" :signcolumn :no :textwidth 80})

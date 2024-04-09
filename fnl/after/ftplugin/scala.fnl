@@ -1,14 +1,14 @@
 (local {: autoload} (require :nfnl.module))
 (local {: blank?} (autoload :nfnl.string))
-(local {: nmap : user-command} (autoload :juice.util))
+(local {: nmap : set-opts : user-command} (autoload :juice.util))
 
-(set vim.opt.shiftwidth 2)
-(set vim.opt.tabstop 2)
-(set vim.opt.expandtab true)
-(set vim.opt.textwidth 100)
-(set vim.opt.signcolumn "yes:1")
-(comment "FIXME This doesn't seem to be reflected"
-  (vim.opt.indentkeys:remove "<>>"))
+(set-opts {:shiftwidth 2
+           :tabstop 2
+           :expandtab true
+           :textwidth 100
+           :signcolumn "yes:1"
+           ; FIXME This doesn't seem to be reflected
+           "indentkeys:remove" ["<>>"]})
 
 (fn run-scalafmt [path]
   (let [filename (if (blank? path) (vim.fn.expand "%:p") path)]

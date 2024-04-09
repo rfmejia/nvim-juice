@@ -4,12 +4,8 @@ local autoload = _local_1_["autoload"]
 local _local_2_ = autoload("juice.util")
 local lua_cmd = _local_2_["lua-cmd"]
 local nmap = _local_2_["nmap"]
-vim.opt.shiftwidth = 2
-vim.opt.tabstop = 2
-vim.opt.textwidth = 80
-vim.opt.wrap = true
-vim.opt.spell = true
-vim.opt.spelllang = "en_us"
+local set_opts = _local_2_["set-opts"]
+set_opts({shiftwidth = 2, tabstop = 2, textwidth = 80, wrap = true, spell = true, spelllang = "en_us"})
 local function render_markdown_to_html()
   local tmp_file = vim.fn.system({"mktemp", "--suffix=.html"})
   local current_file = vim.fn.expand("%:p")

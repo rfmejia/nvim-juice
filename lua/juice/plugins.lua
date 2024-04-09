@@ -1,11 +1,12 @@
 -- [nfnl] Compiled from fnl/juice/plugins.fnl by https://github.com/Olical/nfnl, do not edit.
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
-local _local_2_ = autoload("juice.util")
-local autocmd = _local_2_["autocmd"]
-local auto_setup = _local_2_["auto-setup"]
-local _local_3_ = autoload("nfnl.core")
-local concat = _local_3_["concat"]
+local _local_2_ = autoload("nfnl.core")
+local concat = _local_2_["concat"]
+local _local_3_ = autoload("juice.util")
+local autocmd = _local_3_["autocmd"]
+local auto_setup = _local_3_["auto-setup"]
+local set_opts = _local_3_["set-opts"]
 local basic
 local function _4_()
   return auto_setup("juice.colors")
@@ -70,9 +71,7 @@ dev_tools = {{"neovim/nvim-lspconfig", ft = {"go", "scala"}, config = _15_}, {"s
 local database_tools
 local function _17_()
   local function _18_()
-    vim.opt.commentstring = "--%s"
-    vim.opt.omnifunc = "vim_dadbod_completion#omni"
-    return nil
+    return set_opts({commentstring = "-- %s", omnifunc = "vim_dadbod_completion#omni"})
   end
   return autocmd("FileType", {pattern = {"sql", "mysql"}, callback = _18_})
 end

@@ -1,6 +1,9 @@
-(set vim.opt.shiftwidth 2)
-(set vim.opt.tabstop 2)
-(set vim.opt.textwidth 80)
-(set vim.opt.wrap true)
-(set vim.opt.spell true)
-(set vim.opt.spelllang :en_us)
+(local {: autoload} (require :nfnl.module))
+(local {: set-opts} (autoload :juice.util))
+
+(set-opts {:shiftwidth 2
+           :tabstop 2
+           :textwidth 80
+           :wrap true
+           :spell true
+           :spelllang :en_us})
