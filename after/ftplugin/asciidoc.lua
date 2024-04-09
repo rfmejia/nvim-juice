@@ -1,7 +1,7 @@
 -- [nfnl] Compiled from fnl/after/ftplugin/asciidoc.fnl by https://github.com/Olical/nfnl, do not edit.
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
-local _local_2_ = require("juice.util")
+local _local_2_ = autoload("juice.util")
 local nmap = _local_2_["nmap"]
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2

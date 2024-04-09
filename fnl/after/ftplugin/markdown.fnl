@@ -1,5 +1,5 @@
 (local {: autoload} (require :nfnl.module))
-(local {: lua-cmd : nmap} (require :juice.util))
+(local {: lua-cmd : nmap} (autoload :juice.util))
 
 (set vim.opt.shiftwidth 2)
 (set vim.opt.tabstop 2)

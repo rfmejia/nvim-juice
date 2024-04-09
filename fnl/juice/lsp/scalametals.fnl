@@ -1,6 +1,6 @@
 (local {: autoload} (require :nfnl.module))
-(local {: autocmd : augroup : nmap : user-command : vmap} (require :juice.util))
-(local {: build-statusline} (require :juice.statusline))
+(local {: autocmd : augroup : nmap : user-command : vmap} (autoload :juice.util))
+(local {: build-statusline} (autoload :juice.statusline))
 
 (fn initialize-metals []
   (let [lsp (autoload :juice.lsp)

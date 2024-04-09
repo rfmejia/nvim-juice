@@ -1,5 +1,5 @@
 (local {: autoload} (require :nfnl.module))
-(local {: executable?} (require :juice.util))
+(local {: executable?} (autoload :juice.util))
 
 (fn color-attr [hl-group attribute]
   "Extract an attribute from an existing highlight group"

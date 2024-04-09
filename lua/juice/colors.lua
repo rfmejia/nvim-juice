@@ -1,7 +1,7 @@
 -- [nfnl] Compiled from fnl/juice/colors.fnl by https://github.com/Olical/nfnl, do not edit.
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
-local _local_2_ = require("juice.util")
+local _local_2_ = autoload("juice.util")
 local executable_3f = _local_2_["executable?"]
 local function color_attr(hl_group, attribute)
   return (vim.api.nvim_get_hl(0, {name = hl_group}))[attribute]

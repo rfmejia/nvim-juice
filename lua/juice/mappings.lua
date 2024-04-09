@@ -138,7 +138,7 @@ local function setup()
   nmap("<leader>E", ":Oil .<cr>", {"noremap", "silent"})
   nmap("<leader>u", ":UndotreeToggle<cr>", {"noremap", "silent"})
   do
-    local builtin = require("telescope.builtin")
+    local builtin = autoload("telescope.builtin")
     nmap("<leader>f", builtin.find_files, {"noremap", "silent"})
     nmap("<leader>g", builtin.git_files, {"noremap", "silent"})
     nmap("<leader>p", builtin.oldfiles, {"noremap", "silent"})
@@ -150,7 +150,7 @@ local function setup()
   nmap("<localleader>db", ":%DB g:db<cr>", {"noremap"})
   nmap("<localleader>dp", "vip:DB g:db<cr>", {"noremap"})
   do
-    local gitsigns = require("gitsigns")
+    local gitsigns = autoload("gitsigns")
     local function _13_()
       return gitsigns.nav_hunk("next")
     end

@@ -1,13 +1,13 @@
 -- [nfnl] Compiled from fnl/juice/lsp/scalametals.fnl by https://github.com/Olical/nfnl, do not edit.
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
-local _local_2_ = require("juice.util")
+local _local_2_ = autoload("juice.util")
 local autocmd = _local_2_["autocmd"]
 local augroup = _local_2_["augroup"]
 local nmap = _local_2_["nmap"]
 local user_command = _local_2_["user-command"]
 local vmap = _local_2_["vmap"]
-local _local_3_ = require("juice.statusline")
+local _local_3_ = autoload("juice.statusline")
 local build_statusline = _local_3_["build-statusline"]
 local function initialize_metals()
   local lsp = autoload("juice.lsp")

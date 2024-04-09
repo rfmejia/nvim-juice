@@ -1,7 +1,7 @@
 -- [nfnl] Compiled from fnl/juice/plugins.fnl by https://github.com/Olical/nfnl, do not edit.
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
-local _local_2_ = require("juice.util")
+local _local_2_ = autoload("juice.util")
 local autocmd = _local_2_["autocmd"]
 local auto_setup = _local_2_["auto-setup"]
 local _local_3_ = autoload("nfnl.core")
@@ -26,7 +26,7 @@ end
 local function _7_()
   local telescope = autoload("telescope")
   local actions = autoload("telescope.actions")
-  local config = {defaults = {layout_config = {prompt_position = "bottom", height = 0.6}, layout_strategy = "bottom_pane", mappings = {i = {["<esc>"] = actions.close, ["<C-u>"] = false}}, path_display = {"truncate"}, prompt_prefix = "? ", border = false, preview = false}}
+  local config = {defaults = {layout_config = {prompt_position = "bottom", height = 0.6}, layout_strategy = "bottom_pane", mappings = {i = {["<esc>"] = actions.close, ["<C-u>"] = false}}, path_display = {"truncate"}, prompt_prefix = "? ", preview = false, border = false}}
   return telescope.setup(config)
 end
 local function _8_()

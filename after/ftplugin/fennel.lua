@@ -1,9 +1,9 @@
 -- [nfnl] Compiled from fnl/after/ftplugin/fennel.fnl by https://github.com/Olical/nfnl, do not edit.
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
-local _local_2_ = require("nfnl.string")
+local _local_2_ = autoload("nfnl.string")
 local blank_3f = _local_2_["blank?"]
-local _local_3_ = require("juice.util")
+local _local_3_ = autoload("juice.util")
 local nmap = _local_3_["nmap"]
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2

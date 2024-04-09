@@ -1,5 +1,5 @@
 (local {: autoload} (require :nfnl.module))
-(local {: autocmd : auto-setup} (require :juice.util))
+(local {: autocmd : auto-setup} (autoload :juice.util))
 (local {: concat} (autoload :nfnl.core))
 
 (local basic [{1 :Olical/nfnl :ft :fennel}

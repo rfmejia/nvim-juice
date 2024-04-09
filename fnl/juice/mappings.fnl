@@ -115,7 +115,7 @@
   (nmap :<leader>e ":Oil<cr>" [:noremap :silent])
   (nmap :<leader>E ":Oil .<cr>" [:noremap :silent])
   (nmap :<leader>u ":UndotreeToggle<cr>" [:noremap :silent])
-  (let [builtin (require :telescope.builtin)]
+  (let [builtin (autoload :telescope.builtin)]
     (nmap :<leader>f builtin.find_files [:noremap :silent])
     (nmap :<leader>g builtin.git_files [:noremap :silent])
     (nmap :<leader>p builtin.oldfiles [:noremap :silent])
@@ -125,7 +125,7 @@
   (nmap :<localleader>dd ":.DB g:db<cr>" [:noremap])
   (nmap :<localleader>db ":%DB g:db<cr>" [:noremap])
   (nmap :<localleader>dp "vip:DB g:db<cr>" [:noremap])
-  (let [gitsigns (require :gitsigns)]
+  (let [gitsigns (autoload :gitsigns)]
     (nmap "]h" (fn [] (gitsigns.nav_hunk :next)) [:noremap])
     (nmap "[h" (fn [] (gitsigns.nav_hunk :prev)) [:noremap])
     (nmap :<localleader>hS (fn [] (gitsigns.blame_line {:full true}))
