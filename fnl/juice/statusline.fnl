@@ -1,3 +1,5 @@
+(local {: autoload} (require :nfnl.module))
+
 (fn git-file-status []
   "Updates the git flag(s) of the current file inside g:gitfile"
   (let [path (vim.fn.expand "%:p")
@@ -18,15 +20,15 @@
 
 (fn count-diagnostic [severity]
   "Returns 'n! ' where n is the number of diagnostic messages, otherwise an empty string"
-  (let [a (require :nfnl.core)
+  (let [a (autoload :nfnl.core)
         count (a.count (vim.diagnostic.get 0 {: severity}))]
     (if (> count 0)
         (.. count "! ") "")))
 
 (fn build-statusline [widgets]
   "Creates a vim statusline string, inserting optional widgets defined as a list of strings"
-  (let [s (require :nfnl.string)
-        u (require :juice.util)
+  (let [s (autoload :nfnl.string)
+        u (autoload :juice.util)
         filename "%f"
         buffer-modified-flags "%m"
         buffer-type-flags "%q%h%r"

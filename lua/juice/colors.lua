@@ -1,4 +1,6 @@
 -- [nfnl] Compiled from fnl/juice/colors.fnl by https://github.com/Olical/nfnl, do not edit.
+local _local_1_ = require("nfnl.module")
+local autoload = _local_1_["autoload"]
 local function color_attr(hl_group, attribute)
   return (vim.api.nvim_get_hl(0, {name = hl_group}))[attribute]
 end
@@ -9,7 +11,7 @@ local function show_extra_whitespace()
   return vim.api.nvim_set_hl(0, "ExtraWhitespace", groups.ExtraWhitespace)
 end
 local function get_gnome_colorscheme(dark_scheme, light_scheme)
-  local u = require("juice.util")
+  local u = autoload("juice.util")
   local gsettings_cmd = {"gsettings", "get", "org.gnome.desktop.interface", "color-scheme"}
   if u["executable?"]("gsettings") then
     local system_theme = vim.fn.system(gsettings_cmd)
@@ -23,7 +25,7 @@ local function get_gnome_colorscheme(dark_scheme, light_scheme)
   end
 end
 local function setup()
-  local theme = require("github-theme")
+  local theme = autoload("github-theme")
   local options = {transparent = true}
   theme.setup({options = options, groups = {all = groups}})
   --[[ vim.cmd.colorscheme (get-gnome-colorscheme "github_dark" "github_light") ]]

@@ -1,4 +1,6 @@
-(let [u (require :juice.util)]
+(local {: autoload} (require :nfnl.module))
+
+(let [u (autoload :juice.util)]
   (set vim.opt.shiftwidth 2)
   (set vim.opt.tabstop 2)
   (set vim.opt.textwidth 80)

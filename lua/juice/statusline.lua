@@ -1,15 +1,17 @@
 -- [nfnl] Compiled from fnl/juice/statusline.fnl by https://github.com/Olical/nfnl, do not edit.
+local _local_1_ = require("nfnl.module")
+local autoload = _local_1_["autoload"]
 local function git_file_status()
   local path = vim.fn.expand("%:p")
   local git_cmd = ("git file-status " .. path .. " | tr -d ' \\n'")
   --[[ "TODO Check: if directory then set to blank" ]]
-  local _1_, _2_ = vim.fn.system(git_cmd)
-  if (nil ~= _1_) then
-    local status = _1_
+  local _2_, _3_ = vim.fn.system(git_cmd)
+  if (nil ~= _2_) then
+    local status = _2_
     vim.g.git_file_status = status
     return nil
-  elseif ((_1_ == nil) and (nil ~= _2_)) then
-    local err_msg = _2_
+  elseif ((_2_ == nil) and (nil ~= _3_)) then
+    local err_msg = _3_
     return print("Could not get `git file-status`: ", err_msg)
   else
     return nil
@@ -18,20 +20,20 @@ end
 local function git_branch()
   local path = vim.fn.expand("%:h")
   local git_cmd = ("git -C " .. path .. " branch --show-current --no-color 2> /dev/null | tr -d ' \\n'")
-  local _4_, _5_ = vim.fn.system(git_cmd)
-  if (nil ~= _4_) then
-    local branch = _4_
+  local _5_, _6_ = vim.fn.system(git_cmd)
+  if (nil ~= _5_) then
+    local branch = _5_
     vim.g.git_branch = branch
     return nil
-  elseif ((_4_ == nil) and (nil ~= _5_)) then
-    local err_msg = _5_
+  elseif ((_5_ == nil) and (nil ~= _6_)) then
+    local err_msg = _6_
     return print("Could not get `git branch`: ", err_msg)
   else
     return nil
   end
 end
 local function count_diagnostic(severity)
-  local a = require("nfnl.core")
+  local a = autoload("nfnl.core")
   local count = a.count(vim.diagnostic.get(0, {severity = severity}))
   if (count > 0) then
     return (count .. "! ")
@@ -40,8 +42,8 @@ local function count_diagnostic(severity)
   end
 end
 local function build_statusline(widgets)
-  local s = require("nfnl.string")
-  local u = require("juice.util")
+  local s = autoload("nfnl.string")
+  local u = autoload("juice.util")
   local filename = "%f"
   local buffer_modified_flags = "%m"
   local buffer_type_flags = "%q%h%r"

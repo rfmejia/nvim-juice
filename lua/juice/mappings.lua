@@ -1,161 +1,173 @@
 -- [nfnl] Compiled from fnl/juice/mappings.fnl by https://github.com/Olical/nfnl, do not edit.
-local q = require("juice.quickfix")
-local u = require("juice.util")
---[[ "---- GENERAL MAPPINGS ----" ]]
-u.nmap("Y", "y$", {})
-u.nmap("<C-l>", ":nohl<cr>", {"noremap"})
-u.nmap("<leader>;", ":<C-r>\"", {"noremap"})
-u.nmap("<leader>w", ":w<cr>", {"noremap"})
-u.nmap("<leader>n", ":registers<cr>", {"noremap"})
-u.nmap("<F5>", ":make<cr>", {"noremap"})
---[[ "Vertically center screen when page scrolling up/down" ]]
-u.nmap("<C-d>", "<C-d>zz", {"noremap", "silent"})
-u.nmap("<C-u>", "<C-u>zz", {"noremap", "silent"})
-u.nmap("<C-o>", "<C-o>zz", {"noremap", "silent"})
-u.nmap("<C-i>", "<C-i>zz", {"noremap", "silent"})
---[[ "Disable default mappings to train optimal alternatives" ]]
-local function _1_()
-  return print("Use C-u or relative jumps instead")
-end
-u.nmap("{", _1_, {"noremap", "silent"})
-local function _2_()
-  return print("Use C-d or relative jumps instead")
-end
-u.nmap("}", _2_, {"noremap", "silent"})
---[[ "Map omnifunc" ]]
-u.imap("<C-t>", "<C-x><C-o>", {"noremap", "silent"})
---[[ "easier moving of blocks in visual mode" ]]
-u.vmap("<", "<gv", {"noremap"})
-u.vmap(">", ">gv", {"noremap"})
---[[ "add undo step when typing sentences" ]]
-u.imap("\"", "\"<C-g>u", {"noremap", "silent"})
-u.imap(".", ".<C-g>u", {"noremap", "silent"})
-u.imap("!", "!<C-g>u", {"noremap", "silent"})
-u.imap("?", "?<C-g>u", {"noremap", "silent"})
-u.imap("(", "(<C-g>u", {"noremap", "silent"})
-u.imap(")", ")<C-g>u", {"noremap", "silent"})
-u.imap("{", "{<C-g>u", {"noremap", "silent"})
-u.imap("}", "}<C-g>u", {"noremap", "silent"})
-u.imap("[", "[<C-g>u", {"noremap", "silent"})
-u.imap("]", "]<C-g>u", {"noremap", "silent"})
---[[ "date shortcuts" ]]
-u.nmap("<leader>dt", ":.!date '+\\%a, \\%d \\%b \\%Y'<cr>", {"noremap"})
-u.nmap("<leader>dT", ":.!date '+\\%a, \\%d \\%b \\%Y' --date=", {})
---[[ "select completion binding item" ]]
-vim.cmd("inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")
---[[ "---- MARK MANAGEMENT ----" ]]
-u.nmap("<leader>mm", ":marks ARST<cr>", {"noremap"})
-u.nmap("<leader>mc", ":delmarks ARST<cr>:echo 'Cleared file marks'<cr>", {"noremap"})
-u.nmap("<leader>a", "`Azz", {"noremap"})
-u.nmap("<leader>r", "`Rzz", {"noremap"})
-u.nmap("<leader>s", "`Szz", {"noremap"})
-u.nmap("<leader>t", "`Tzz", {"noremap"})
-u.nmap("<leader>ma", "mA:echo 'Marked file A'<cr>", {"noremap"})
-u.nmap("<leader>mr", "mR:echo 'Marked file R'<cr>", {"noremap"})
-u.nmap("<leader>ms", "mS:echo 'Marked file S'<cr>", {"noremap"})
-u.nmap("<leader>mt", "mT:echo 'Marked file T'<cr>", {"noremap"})
---[[ "---- WINDOW MANAGEMENT ----" ]]
-u.nmap("<M-h>", "<C-w>h", {"noremap", "silent"})
-u.nmap("<M-j>", "<C-w>j", {"noremap", "silent"})
-u.nmap("<M-k>", "<C-w>k", {"noremap", "silent"})
-u.nmap("<M-l>", "<C-w>l", {"noremap", "silent"})
-u.nmap("<C-p>", "<C-w>p", {"noremap", "silent"})
---[[ "---- BUFFER MANAGEMENT ----" ]]
-u.nmap("<leader>b", ":buffers<cr>:buffer<Space>", {"noremap"})
-u.nmap("[B", ":bfirst<cr>", {"noremap"})
-u.nmap("]B", ":blast<cr>", {"noremap"})
-u.nmap("[b", ":bprevious<cr>", {"noremap"})
-u.nmap("]b", ":bnext<cr>", {"noremap"})
-u.nmap("<leader>x", ":bp|bdelete #<cr>", {"noremap"})
---[[ "---- TAB MANAGEMENT ----" ]]
-u.nmap("tn", ":tabnew<cr>", {"noremap"})
-u.nmap("tc", ":tabclose<cr>", {"noremap"})
-u.nmap("ts", ":tab split<cr>", {"noremap"})
-u.nmap("[t", ":tabprevious<cr>", {"noremap"})
-u.nmap("]t", ":tabnext<cr>", {"noremap"})
-u.nmap("[T", ":tabfirst<cr>", {"noremap"})
-u.nmap("]T", ":tablast<cr>", {"noremap"})
---[[ "---- QUICKFIX LIST ----" ]]
-u.nmap("<leader>c", q["toggle-qf-window"], {"noremap"})
-u.nmap("[c", ":cprevious<cr>", {"noremap"})
-u.nmap("]c", ":cnext<cr>", {"noremap"})
-u.nmap("[C", ":cfirst<cr>", {"noremap"})
-u.nmap("]C", ":clast<cr>", {"noremap"})
---[[ "location list" ]]
-u.nmap("<leader>l", q["toggle-loclist-window"], {"noremap"})
-u.nmap("[l", ":lprevious<cr>", {"noremap"})
-u.nmap("]l", ":lnext<cr>", {"noremap"})
-u.nmap("[L", ":lfirst<cr>", {"noremap"})
-u.nmap("]L", ":llast<cr>", {"noremap"})
---[[ "---- SEARCH/REPLACE ----" ]]
-u.nmap("<leader>/s", ":s//g<left><left>", {"noremap"})
-u.nmap("<leader>/S", ":%s//g<left><left>", {"noremap"})
-u.nmap("<leader>/l", ":.,+s//g<left><left><left><left>", {"noremap"})
-u.nmap("<leader>/w", ":s/\\<<c-r><c-w>\\>//g<left><left>", {"noremap"})
-u.nmap("<leader>/W", ":%s/\\<<c-r><c-w>\\>//g<left><left>", {"noremap"})
---[[ "---- EXTERNAL APPS ----" ]]
---[[ "utilites in tmux split" ]]
-if u["exists?"]("$TMUX") then
-  if u["executable?"]("lazygit") then
-    u.nmap("<leader>og", ":!tmux neww lazygit<cr><cr>", {"noremap", "silent"})
+local _local_1_ = require("nfnl.module")
+local autoload = _local_1_["autoload"]
+local _local_2_ = autoload("juice.util")
+local nmap = _local_2_["nmap"]
+local imap = _local_2_["imap"]
+local vmap = _local_2_["vmap"]
+local exists_3f = _local_2_["exists?"]
+local executable_3f = _local_2_["executable?"]
+local _local_3_ = autoload("juice.quickfix")
+local toggle_qf_window = _local_3_["toggle-qf-window"]
+local toggle_loclist_window = _local_3_["toggle-loclist-window"]
+local function setup()
+  --[[ "---- GENERAL MAPPINGS ----" ]]
+  nmap("Y", "y$", {})
+  nmap("<C-l>", ":nohl<cr>", {"noremap"})
+  nmap("<leader>;", ":<C-r>\"", {"noremap"})
+  nmap("<leader>w", ":w<cr>", {"noremap"})
+  nmap("<leader>n", ":registers<cr>", {"noremap"})
+  nmap("<F5>", ":make<cr>", {"noremap"})
+  --[[ "Vertically center screen when page scrolling up/down" ]]
+  nmap("<C-d>", "<C-d>zz", {"noremap", "silent"})
+  nmap("<C-u>", "<C-u>zz", {"noremap", "silent"})
+  nmap("<C-o>", "<C-o>zz", {"noremap", "silent"})
+  nmap("<C-i>", "<C-i>zz", {"noremap", "silent"})
+  --[[ "Disable default mappings to train optimal alternatives" ]]
+  local function _4_()
+    return print("Use C-u or relative jumps instead")
+  end
+  nmap("{", _4_, {"noremap", "silent"})
+  local function _5_()
+    return print("Use C-d or relative jumps instead")
+  end
+  nmap("}", _5_, {"noremap", "silent"})
+  --[[ "Map omnifunc" ]]
+  imap("<C-t>", "<C-x><C-o>", {"noremap", "silent"})
+  --[[ "easier moving of blocks in visual mode" ]]
+  vmap("<", "<gv", {"noremap"})
+  vmap(">", ">gv", {"noremap"})
+  --[[ "add undo step when typing sentences" ]]
+  imap("\"", "\"<C-g>u", {"noremap", "silent"})
+  imap(".", ".<C-g>u", {"noremap", "silent"})
+  imap("!", "!<C-g>u", {"noremap", "silent"})
+  imap("?", "?<C-g>u", {"noremap", "silent"})
+  imap("(", "(<C-g>u", {"noremap", "silent"})
+  imap(")", ")<C-g>u", {"noremap", "silent"})
+  imap("{", "{<C-g>u", {"noremap", "silent"})
+  imap("}", "}<C-g>u", {"noremap", "silent"})
+  imap("[", "[<C-g>u", {"noremap", "silent"})
+  imap("]", "]<C-g>u", {"noremap", "silent"})
+  --[[ "date shortcuts" ]]
+  nmap("<leader>dt", ":.!date '+\\%a, \\%d \\%b \\%Y'<cr>", {"noremap"})
+  nmap("<leader>dT", ":.!date '+\\%a, \\%d \\%b \\%Y' --date=", {})
+  --[[ "select completion binding item" ]]
+  vim.cmd("inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")
+  --[[ "---- MARK MANAGEMENT ----" ]]
+  nmap("<leader>mm", ":marks ARST<cr>", {"noremap"})
+  nmap("<leader>mc", ":delmarks ARST<cr>:echo 'Cleared file marks'<cr>", {"noremap"})
+  nmap("<leader>a", "`Azz", {"noremap"})
+  nmap("<leader>r", "`Rzz", {"noremap"})
+  nmap("<leader>s", "`Szz", {"noremap"})
+  nmap("<leader>t", "`Tzz", {"noremap"})
+  nmap("<leader>ma", "mA:echo 'Marked file A'<cr>", {"noremap"})
+  nmap("<leader>mr", "mR:echo 'Marked file R'<cr>", {"noremap"})
+  nmap("<leader>ms", "mS:echo 'Marked file S'<cr>", {"noremap"})
+  nmap("<leader>mt", "mT:echo 'Marked file T'<cr>", {"noremap"})
+  --[[ "---- WINDOW MANAGEMENT ----" ]]
+  nmap("<M-h>", "<C-w>h", {"noremap", "silent"})
+  nmap("<M-j>", "<C-w>j", {"noremap", "silent"})
+  nmap("<M-k>", "<C-w>k", {"noremap", "silent"})
+  nmap("<M-l>", "<C-w>l", {"noremap", "silent"})
+  nmap("<C-p>", "<C-w>p", {"noremap", "silent"})
+  --[[ "---- BUFFER MANAGEMENT ----" ]]
+  nmap("<leader>b", ":buffers<cr>:buffer<Space>", {"noremap"})
+  nmap("[B", ":bfirst<cr>", {"noremap"})
+  nmap("]B", ":blast<cr>", {"noremap"})
+  nmap("[b", ":bprevious<cr>", {"noremap"})
+  nmap("]b", ":bnext<cr>", {"noremap"})
+  nmap("<leader>x", ":bp|bdelete #<cr>", {"noremap"})
+  --[[ "---- TAB MANAGEMENT ----" ]]
+  nmap("tn", ":tabnew<cr>", {"noremap"})
+  nmap("tc", ":tabclose<cr>", {"noremap"})
+  nmap("ts", ":tab split<cr>", {"noremap"})
+  nmap("[t", ":tabprevious<cr>", {"noremap"})
+  nmap("]t", ":tabnext<cr>", {"noremap"})
+  nmap("[T", ":tabfirst<cr>", {"noremap"})
+  nmap("]T", ":tablast<cr>", {"noremap"})
+  --[[ "---- QUICKFIX LIST ----" ]]
+  nmap("<leader>c", toggle_qf_window, {"noremap"})
+  nmap("[c", ":cprevious<cr>", {"noremap"})
+  nmap("]c", ":cnext<cr>", {"noremap"})
+  nmap("[C", ":cfirst<cr>", {"noremap"})
+  nmap("]C", ":clast<cr>", {"noremap"})
+  --[[ "location list" ]]
+  nmap("<leader>l", toggle_loclist_window, {"noremap"})
+  nmap("[l", ":lprevious<cr>", {"noremap"})
+  nmap("]l", ":lnext<cr>", {"noremap"})
+  nmap("[L", ":lfirst<cr>", {"noremap"})
+  nmap("]L", ":llast<cr>", {"noremap"})
+  --[[ "---- SEARCH/REPLACE ----" ]]
+  nmap("<leader>/s", ":s//g<left><left>", {"noremap"})
+  nmap("<leader>/S", ":%s//g<left><left>", {"noremap"})
+  nmap("<leader>/l", ":.,+s//g<left><left><left><left>", {"noremap"})
+  nmap("<leader>/w", ":s/\\<<c-r><c-w>\\>//g<left><left>", {"noremap"})
+  nmap("<leader>/W", ":%s/\\<<c-r><c-w>\\>//g<left><left>", {"noremap"})
+  --[[ "---- EXTERNAL APPS ----" ]]
+  --[[ "utilites in tmux split" ]]
+  if exists_3f("$TMUX") then
+    if executable_3f("lazygit") then
+      nmap("<leader>og", ":!tmux neww lazygit<cr><cr>", {"noremap", "silent"})
+    else
+    end
+    if executable_3f("sbtn") then
+      nmap("<leader>os", ":!tmux split-window -v -l 30\\% sbtn<cr><cr>", {"noremap", "silent"})
+    else
+    end
+    if executable_3f("scala-cli") then
+      nmap("<leader>oc", ":!tmux split-window -v -l 30\\% scala-cli console %<cr><cr>", {"noremap", "silent"})
+    else
+    end
   else
   end
-  if u["executable?"]("sbtn") then
-    u.nmap("<leader>os", ":!tmux split-window -v -l 30\\% sbtn<cr><cr>", {"noremap", "silent"})
+  --[[ "personal journal" ]]
+  if exists_3f("$JOURNAL") then
+    local function _10_()
+      return vim.cmd((":$tabnew" .. "$JOURNAL/journal.adoc"))
+    end
+    nmap("<leader>oj", _10_, {"noremap", "silent"})
+    local function _11_()
+      return vim.cmd((":$tabnew" .. "$JOURNAL/vim/vim.md"))
+    end
+    nmap("<leader>ov", _11_, {"noremap", "silent"})
   else
   end
-  if u["executable?"]("scala-cli") then
-    u.nmap("<leader>oc", ":!tmux split-window -v -l 30\\% scala-cli console %<cr><cr>", {"noremap", "silent"})
-  else
+  --[[ "---- PLUGINS ----" ]]
+  nmap("<leader>L", ":Lazy<cr>", {"noremap", "silent"})
+  nmap("<leader>e", ":Oil<cr>", {"noremap", "silent"})
+  nmap("<leader>E", ":Oil .<cr>", {"noremap", "silent"})
+  nmap("<leader>u", ":UndotreeToggle<cr>", {"noremap", "silent"})
+  do
+    local builtin = require("telescope.builtin")
+    nmap("<leader>f", builtin.find_files, {"noremap", "silent"})
+    nmap("<leader>g", builtin.git_files, {"noremap", "silent"})
+    nmap("<leader>p", builtin.oldfiles, {"noremap", "silent"})
+    nmap("<leader>k", builtin.keymaps, {"noremap", "silent"})
   end
-else
+  nmap("<localleader>du", ":DBUIToggle<cr>", {"noremap"})
+  nmap("<localleader>d;", ":DB g:db ", {"noremap"})
+  nmap("<localleader>dd", ":.DB g:db<cr>", {"noremap"})
+  nmap("<localleader>db", ":%DB g:db<cr>", {"noremap"})
+  nmap("<localleader>dp", "vip:DB g:db<cr>", {"noremap"})
+  do
+    local gitsigns = require("gitsigns")
+    local function _13_()
+      return gitsigns.nav_hunk("next")
+    end
+    nmap("]h", _13_, {"noremap"})
+    local function _14_()
+      return gitsigns.nav_hunk("prev")
+    end
+    nmap("[h", _14_, {"noremap"})
+    local function _15_()
+      return gitsigns.blame_line({full = true})
+    end
+    nmap("<localleader>hS", _15_, {"noremap"})
+    nmap("<localleader>hp", gitsigns.preview_hunk, {"noremap"})
+    nmap("<localleader>hs", gitsigns.stage_hunk, {"noremap"})
+    nmap("<localleader>hS", gitsigns.undo_stage_hunk, {"noremap"})
+  end
+  imap("<C-]>", "<Plug>(copilot-next)")
+  return imap("<C-[>", "<Plug>(copilot-prev)")
 end
---[[ "personal journal" ]]
-if u["exists?"]("$JOURNAL") then
-  local function _7_()
-    return vim.cmd((":$tabnew" .. "$JOURNAL/journal.adoc"))
-  end
-  u.nmap("<leader>oj", _7_, {"noremap", "silent"})
-  local function _8_()
-    return vim.cmd((":$tabnew" .. "$JOURNAL/vim/vim.md"))
-  end
-  u.nmap("<leader>ov", _8_, {"noremap", "silent"})
-else
-end
---[[ "---- PLUGINS ----" ]]
-u.nmap("<leader>L", ":Lazy<cr>", {"noremap", "silent"})
-u.nmap("<leader>e", ":Oil<cr>", {"noremap", "silent"})
-u.nmap("<leader>E", ":Oil .<cr>", {"noremap", "silent"})
-u.nmap("<leader>u", ":UndotreeToggle<cr>", {"noremap", "silent"})
-do
-  local builtin = require("telescope.builtin")
-  u.nmap("<leader>f", builtin.find_files, {"noremap", "silent"})
-  u.nmap("<leader>g", builtin.git_files, {"noremap", "silent"})
-  u.nmap("<leader>p", builtin.oldfiles, {"noremap", "silent"})
-  u.nmap("<leader>k", builtin.keymaps, {"noremap", "silent"})
-end
-u.nmap("<localleader>du", ":DBUIToggle<cr>", {"noremap"})
-u.nmap("<localleader>d;", ":DB g:db ", {"noremap"})
-u.nmap("<localleader>dd", ":.DB g:db<cr>", {"noremap"})
-u.nmap("<localleader>db", ":%DB g:db<cr>", {"noremap"})
-u.nmap("<localleader>dp", "vip:DB g:db<cr>", {"noremap"})
-do
-  local gitsigns = require("gitsigns")
-  local function _10_()
-    return gitsigns.nav_hunk("next")
-  end
-  u.nmap("]h", _10_, {"noremap"})
-  local function _11_()
-    return gitsigns.nav_hunk("prev")
-  end
-  u.nmap("[h", _11_, {"noremap"})
-  local function _12_()
-    return gitsigns.blame_line({full = true})
-  end
-  u.nmap("<localleader>hS", _12_, {"noremap"})
-  u.nmap("<localleader>hp", gitsigns.preview_hunk, {"noremap"})
-  u.nmap("<localleader>hs", gitsigns.stage_hunk, {"noremap"})
-  u.nmap("<localleader>hS", gitsigns.undo_stage_hunk, {"noremap"})
-end
-u.imap("]a", "<Plug>(copilot-next)")
-return u.imap("[a", "<Plug>(copilot-prev)")
+return {setup = setup}

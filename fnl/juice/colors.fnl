@@ -1,3 +1,5 @@
+(local {: autoload} (require :nfnl.module))
+
 (fn color-attr [hl-group attribute]
   "Extract an attribute from an existing highlight group"
   (. (vim.api.nvim_get_hl 0 {:name hl-group}) attribute))
@@ -40,7 +42,7 @@
 
 (fn get-gnome-colorscheme [dark-scheme light-scheme]
   "If in Gnome check the current system theme and set nvim theme"
-  (let [u (require :juice.util)
+  (let [u (autoload :juice.util)
         gsettings-cmd [:gsettings
                        :get
                        :org.gnome.desktop.interface
@@ -55,7 +57,7 @@
         dark-scheme)))
 
 (fn setup []
-  (let [theme (require :github-theme)
+  (let [theme (autoload :github-theme)
         options {:transparent true}]
     (theme.setup {: options :groups {:all groups}})
     (comment vim.cmd.colorscheme

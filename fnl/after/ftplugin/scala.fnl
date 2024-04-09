@@ -1,4 +1,6 @@
-(let [u (require :juice.util)]
+(local {: autoload} (require :nfnl.module))
+
+(let [u (autoload :juice.util)]
   (set vim.opt.shiftwidth 2)
   (set vim.opt.tabstop 2)
   (set vim.opt.expandtab true)
@@ -7,7 +9,7 @@
   (vim.opt.indentkeys:remove "<>>") ; FIXME This doesn't seem to be reflected
 
   (fn run-scalafmt [path]
-    (let [s (require :nfnl.string)
+    (let [s (autoload :nfnl.string)
           filename (if (s.blank? path) (vim.fn.expand "%:p") path)]
       (vim.fn.system [:scalafmt
                       :--mode

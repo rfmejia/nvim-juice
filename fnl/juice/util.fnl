@@ -1,6 +1,8 @@
+(local {: autoload} (require :nfnl.module))
+
 (fn make-opts [keys]
   "Produce a table with every `key = true`"
-  (local a (require :nfnl.core))
+  (local a (autoload :nfnl.core))
   (a.reduce (fn [acc key] (a.merge acc {key true})) {} keys))
 
 (fn nmap [key map opts]
@@ -36,6 +38,15 @@
 (fn exists? [env]
   (= (vim.fn.exists env) 1))
 
+(fn set-opts [options]
+  (let [core (autoload :nfnl.core)]
+    (when (core.table? options)
+      (each [k v (pairs options)]
+        (tset vim.opt k v)))))
+
+(fn auto-setup [module]
+  ((. (autoload module) :setup)))
+
 {: nmap
  : imap
  : vmap
@@ -44,4 +55,6 @@
  : lua-statusline
  : executable?
  : has?
- : exists?}
+ : exists?
+ : set-opts
+ : auto-setup}

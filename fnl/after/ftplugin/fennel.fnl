@@ -1,4 +1,6 @@
-(let [s (require :nfnl.string)]
+(local {: autoload} (require :nfnl.module))
+
+(let [s (autoload :nfnl.string)]
   (set vim.opt.shiftwidth 2)
   (set vim.opt.tabstop 2)
   (set vim.opt.expandtab true)
