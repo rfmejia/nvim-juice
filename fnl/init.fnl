@@ -1,3 +1,11 @@
+(comment "---- LEADER KEYS ----")
+(set vim.g.mapleader " ")
+(set vim.g.maplocalleader ",")
+
+(comment "---- LEADER KEYS ----")
+(require :juice.plugins)
+(require :juice.mappings)
+
 (comment "---- BEHAVIOR ----")
 (comment "Allow switching off unwritten buffers")
 (set vim.opt.hidden true)
@@ -31,10 +39,6 @@
 (set vim.opt.mouse "")
 (comment "-")
 (set vim.opt.shortmess :filnxtToOF)
-
-(comment "---- LEADER KEYS ----")
-(set vim.g.mapleader " ")
-(set vim.g.maplocalleader ",")
 
 (comment "---- VISUAL ----")
 (comment "Show line numbers")
@@ -85,10 +89,6 @@
 (vim.filetype.add {:extension {[:sbt :sc] :scala [:text :txt] :text}
                    :filename {:Jenkinsfile :groovy :tmux.conf :tmux}})
 
-(require :juice.plugins)
-(require :juice.mappings)
-(require :juice.autocmds)
-
 (let [u (require :juice.util)]
   (when (u.has? :syntax)
     (vim.cmd "syntax enable"))
@@ -120,3 +120,46 @@
 
 (let [sl (require :juice.statusline)]
   (set vim.opt.statusline (sl.build-statusline [])))
+
+(vim.api.nvim_create_user_command :TrimTrailingWhitespaces ":%s/\\s\\+$" {})
+
+(comment "---- AUTOCMDS ----")
+(let [augroup vim.api.nvim_create_augroup
+      autocmd vim.api.nvim_create_autocmd]
+  (comment "Remember the cursor position of the last editing")
+  (autocmd :BufReadPost
+           {:pattern "*" :command "if line(\"'\\\"\") | exe \"'\\\"\" | endif"})
+  (autocmd [:BufEnter :BufWritePost]
+           {:pattern "*"
+            :callback (fn []
+                        (local sl (require :juice.statusline))
+                        (sl.git-file-status)
+                        (sl.git-branch))})
+  (augroup :highlight-group [])
+  (comment "highlight yanked text")
+  (autocmd :TextYankPost
+           {:group :highlight-group
+            :pattern "*"
+            :callback (fn []
+                        (vim.highlight.on_yank {:timeout 200 :on_visual false}))})
+  (comment "highlight TODO, FIXME and Note: keywords")
+  (autocmd [:WinEnter :VimEnter]
+           {:group :highlight-group
+            :pattern "*"
+            :command ":silent! call matchadd('Todo','TODO\\|FIXME\\|Note:', -1)"})
+  (autocmd [:BufWinEnter :InsertLeave]
+           {:group :highlight-group
+            :pattern "*"
+            :callback (fn []
+                        (local c (require :juice.colors))
+                        (c.show-extra-whitespace)
+                        (vim.cmd "match ExtraWhitespace /\\s\\+$/"))})
+  (autocmd [:BufWinLeave :InsertEnter]
+           {:group :highlight-group
+            :pattern "*"
+            :command "hi clear ExtraWhitespace"})
+  (augroup :terminal-group [])
+  (comment "remove signcolumn in terminal mode")
+  (autocmd :TermOpen {:group :terminal-group
+                      :pattern "*"
+                      :command "set signcolumn=no"}))

@@ -1,4 +1,10 @@
 -- [nfnl] Compiled from fnl/init.fnl by https://github.com/Olical/nfnl, do not edit.
+--[[ "---- LEADER KEYS ----" ]]
+vim.g.mapleader = " "
+vim.g.maplocalleader = ","
+--[[ "---- LEADER KEYS ----" ]]
+require("juice.plugins")
+require("juice.mappings")
 --[[ "---- BEHAVIOR ----" ]]
 --[[ "Allow switching off unwritten buffers" ]]
 vim.opt.hidden = true
@@ -32,9 +38,6 @@ vim.opt.ttimeoutlen = 50
 vim.opt.mouse = ""
 --[[ "-" ]]
 vim.opt.shortmess = "filnxtToOF"
---[[ "---- LEADER KEYS ----" ]]
-vim.g.mapleader = " "
-vim.g.maplocalleader = ","
 --[[ "---- VISUAL ----" ]]
 --[[ "Show line numbers" ]]
 vim.opt.number = true
@@ -79,9 +82,6 @@ vim.opt.path = ".,,"
 --[[ "---- FILETYPES ----" ]]
 vim.cmd("filetype plugin on")
 vim.filetype.add({extension = {[{"sbt", "sc"}] = "scala", [{"text", "txt"}] = "text"}, filename = {Jenkinsfile = "groovy", ["tmux.conf"] = "tmux"}})
-require("juice.plugins")
-require("juice.mappings")
-require("juice.autocmds")
 do
   local u = require("juice.util")
   if u["has?"]("syntax") then
@@ -120,6 +120,37 @@ do
   else
   end
 end
-local sl = require("juice.statusline")
-vim.opt.statusline = sl["build-statusline"]({})
-return nil
+do
+  local sl = require("juice.statusline")
+  vim.opt.statusline = sl["build-statusline"]({})
+end
+vim.api.nvim_create_user_command("TrimTrailingWhitespaces", ":%s/\\s\\+$", {})
+--[[ "---- AUTOCMDS ----" ]]
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
+--[[ "Remember the cursor position of the last editing" ]]
+autocmd("BufReadPost", {pattern = "*", command = "if line(\"'\\\"\") | exe \"'\\\"\" | endif"})
+local function _6_()
+  local sl = require("juice.statusline")
+  sl["git-file-status"]()
+  return sl["git-branch"]()
+end
+autocmd({"BufEnter", "BufWritePost"}, {pattern = "*", callback = _6_})
+augroup("highlight-group", {})
+--[[ "highlight yanked text" ]]
+local function _7_()
+  return vim.highlight.on_yank({timeout = 200, on_visual = false})
+end
+autocmd("TextYankPost", {group = "highlight-group", pattern = "*", callback = _7_})
+--[[ "highlight TODO, FIXME and Note: keywords" ]]
+autocmd({"WinEnter", "VimEnter"}, {group = "highlight-group", pattern = "*", command = ":silent! call matchadd('Todo','TODO\\|FIXME\\|Note:', -1)"})
+local function _8_()
+  local c = require("juice.colors")
+  c["show-extra-whitespace"]()
+  return vim.cmd("match ExtraWhitespace /\\s\\+$/")
+end
+autocmd({"BufWinEnter", "InsertLeave"}, {group = "highlight-group", pattern = "*", callback = _8_})
+autocmd({"BufWinLeave", "InsertEnter"}, {group = "highlight-group", pattern = "*", command = "hi clear ExtraWhitespace"})
+augroup("terminal-group", {})
+--[[ "remove signcolumn in terminal mode" ]]
+return autocmd("TermOpen", {group = "terminal-group", pattern = "*", command = "set signcolumn=no"})
