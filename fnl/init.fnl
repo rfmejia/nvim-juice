@@ -1,23 +1,13 @@
 (local {: autoload} (require :nfnl.module))
-(local {: augroup
-        : auto-setup
-        : autocmd
-        : executable?
-        : set-opts
-        : user-command} (require :juice.util))
-
 (local {: build-statusline} (autoload :juice.statusline))
+(local {: auto-setup : executable? : set-opts} (autoload :juice.util))
 
 (comment "---- LEADER KEYS ----")
 (set vim.g.mapleader " ")
 (set vim.g.maplocalleader ",")
 
-(comment "---- ----")
-(auto-setup :juice.plugins)
-(auto-setup :juice.mappings)
-
 (comment "---- BEHAVIOR ----")
-(set-opts {; use Linux system clipboard
+(set-opts {; use linux system clipboard
            :clipboard :unnamedplus
            ; indent new line in special cases
            :smartindent true
@@ -58,7 +48,8 @@
            ; when wrapping is turned on, wrap on a line break
            :linebreak true
            ; show single status line only
-           :laststatus 3})
+           :laststatus 3
+           :statusline (build-statusline [])})
 
 (comment "---- SEARCH OPTIONS ----")
 (set-opts {; turn on highlight search
@@ -71,9 +62,6 @@
            :ignorecase true
            ; but don't ignore it when using upper case
            :smartcase true})
-
-(comment "---- STATUSLINE ----")
-(set vim.opt.statusline (build-statusline []))
 
 (comment "---- FILETYPES ----")
 (vim.filetype.add {:extension {[:sbt :sc] :scala [:text :txt] :text}
@@ -100,48 +88,6 @@
        "rg\\ --smart-case\\ --hidden\\ --follow\\ --no-heading\\ --vimgrep")
   (set vim.opt.grepformat "%f:%l:%c:%m,%f:%l:%m"))
 
-(comment "---- AUTOCMDS ----")
-(user-command :TrimTrailingWhitespaces ":%s/\\s\\+$" {})
-(comment "Remember the cursor position of the last editing")
-(autocmd :BufReadPost
-         {:pattern "*" :command "if line(\"'\\\"\") | exe \"'\\\"\" | endif"})
-
-(autocmd [:BufEnter :BufWritePost]
-         {:pattern "*"
-          :callback (fn []
-                      (local sl (autoload :juice.statusline))
-                      (sl.git-file-status)
-                      (sl.git-branch))})
-
-(augroup :highlight-group [])
-(comment "highlight yanked text")
-(autocmd :TextYankPost
-         {:group :highlight-group
-          :pattern "*"
-          :callback (fn []
-                      (vim.highlight.on_yank {:timeout 200 :on_visual false}))})
-
-(comment "highlight TODO, FIXME and Note: keywords")
-(autocmd [:WinEnter :VimEnter]
-         {:group :highlight-group
-          :pattern "*"
-          :command ":silent! call matchadd('Todo','TODO\\|FIXME\\|Note:', -1)"})
-
-(autocmd [:BufWinEnter :InsertLeave]
-         {:group :highlight-group
-          :pattern "*"
-          :callback (fn []
-                      (local c (autoload :juice.colors))
-                      (c.show-extra-whitespace)
-                      (vim.cmd "match ExtraWhitespace /\\s\\+$/"))})
-
-(autocmd [:BufWinLeave :InsertEnter]
-         {:group :highlight-group
-          :pattern "*"
-          :command "hi clear ExtraWhitespace"})
-
-(augroup :terminal-group [])
-(comment "remove signcolumn in terminal mode")
-(autocmd :TermOpen {:group :terminal-group
-                    :pattern "*"
-                    :command "set signcolumn=no"})
+(auto-setup :juice.plugins)
+(auto-setup :juice.mappings)
+(auto-setup :juice.autocmds)

@@ -20,5 +20,5 @@ nvim
 
 All configuration is located in `fnl/`. `nfnl` automatically compiles Fennel
 files upon saving into `lua/`. Note that special handling is performed for
-`init.fnl` and `after/` to conform to the Neovim directory structure; see
-`.nfnl.fnl` for the mapping function.
+`fnl/init.fnl` and `fnl/after/` to conform to the Neovim directory structure;
+see `.nfnl.fnl` for the mapping function.
