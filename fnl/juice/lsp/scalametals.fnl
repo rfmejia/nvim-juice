@@ -1,15 +1,15 @@
 (local {: autoload} (require :nfnl.module))
+(local {: autocmd : augroup : nmap : user-command : vmap} (require :juice.util))
+(local {: build-statusline} (require :juice.statusline))
 
 (fn initialize-metals []
-  (let [u (autoload :juice.util)
-        sl (autoload :juice.statusline)
-        lsp (autoload :juice.lsp)
+  (let [lsp (autoload :juice.lsp)
         metals (autoload :metals)
         config (metals.bare_config)
         telescope (autoload :telescope)]
     (set vim.opt.signcolumn "yes:1")
     (set vim.go.shortmess (.. vim.go.shortmess :c))
-    (set vim.opt.statusline (sl.build-statusline ["%{g:metals_status}"]))
+    (set vim.opt.statusline (build-statusline ["%{g:metals_status}"]))
     (tset vim.g :metals_status "Initializing Metals...")
     (set config.settings
          {:showImplicitArguments true
@@ -27,29 +27,28 @@
          (fn [client bufnr]
            (lsp.set-buffer-opts client bufnr)
            (set vim.opt.omnifunc "v:lua.vim.lsp.omnifunc")
-           (u.vmap :K (fn [] (metals.type_of_range)) [:noremap :silent])
-           (u.nmap :<localleader>mw
-                   (fn [] (metals.hover_worksheet {:border :rounded}))
-                   [:noremap :silent])
-           (u.nmap :<localleader>mm
-                   (fn [] (telescope.extensions.metals.commands))
-                   [:noremap :silent])
-           (u.nmap :<localleader>mt (. (autoload :metals.tvp) :toggle_tree_view)
-                   [:noremap :silent])
-           (u.nmap :<localleader>mr (. (autoload :metals.tvp) :reveal_in_tree)
-                   [:noremap :silent])))
+           (vmap :K (fn [] (metals.type_of_range)) [:noremap :silent])
+           (nmap :<localleader>mw
+                 (fn [] (metals.hover_worksheet {:border :rounded}))
+                 [:noremap :silent])
+           (nmap :<localleader>mm
+                 (fn [] (telescope.extensions.metals.commands))
+                 [:noremap :silent])
+           (nmap :<localleader>mt (. (autoload :metals.tvp) :toggle_tree_view)
+                 [:noremap :silent])
+           (nmap :<localleader>mr (. (autoload :metals.tvp) :reveal_in_tree)
+                 [:noremap :silent])))
     (comment "Automatically attach Metals to all Scala filetypes (only triggered upon BufEnter)")
-    (vim.api.nvim_create_augroup :metals-group [])
-    (vim.api.nvim_create_autocmd :FileType
-                                 {:group :metals-group
-                                  :pattern [:scala :sbt :java]
-                                  :callback (fn []
-                                              (metals.initialize_or_attach config))})
+    (augroup :metals-group [])
+    (autocmd :FileType
+             {:group :metals-group
+              :pattern [:scala :sbt :java]
+              :callback (fn [] (metals.initialize_or_attach config))})
     (comment "Initialize Metals for the first time")
     (metals.initialize_or_attach config)))
 
 (fn register-init-command []
-  (vim.api.nvim_create_user_command :MetalsInit (fn [] (initialize-metals))
-                                    {:desc "Start and connect to a Metals server"}))
+  (user-command :MetalsInit (fn [] (initialize-metals))
+                {:desc "Start and connect to a Metals server"}))
 
 {: register-init-command}

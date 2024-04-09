@@ -1,5 +1,12 @@
 (local {: autoload} (require :nfnl.module))
-(local {: set-opts : auto-setup} (require :juice.util))
+(local {: augroup
+        : auto-setup
+        : autocmd
+        : executable?
+        : set-opts
+        : user-command} (require :juice.util))
+
+(local {: build-statusline} (autoload :juice.statusline))
 
 (comment "---- LEADER KEYS ----")
 (set vim.g.mapleader " ")
@@ -10,195 +17,131 @@
 (auto-setup :juice.mappings)
 
 (comment "---- BEHAVIOR ----")
-(set-opts {:hidden true
-           :autoread true
-           :autoindent true
+(set-opts {; use Linux system clipboard
+           :clipboard :unnamedplus
+           ; indent new line in special cases
            :smartindent true
+           ; number of spaces for *existing* tabs
            :shiftwidth 2
+           ; number of spaces for *inserting* tabs
            :tabstop 2
+           ; number of spaces for (auto)indenting, e.g. >> & <<
            :softtabstop 2
+           ; convert tabs to spaces
            :expandtab true
-           :smarttab true
+           ; disable block folding
            :foldenable false
-           :backspace "indent,eol,start"
-           :history 10000
-           :ttyfast true
-           :ttimeoutlen 50
+           ; disable mouse
            :mouse ""
+           ; customize messages
            :shortmess :filnxtToOF
+           ; increase the number of undos
            :undolevels 5000
+           ; persist undo logs per file inside `undodir`
            :undofile true})
 
-; (comment "Allow switching off unwritten buffers")
-; (set vim.opt.hidden true)
-; (comment "Detect and read external file changes")
-; (set vim.opt.autoread true)
-; (comment "Indent new line")
-; (set vim.opt.autoindent true)
-; (comment "Indent new line in special cases")
-; (set vim.opt.smartindent true)
-; (comment "Number of spaces for *existing* tabs")
-; (set vim.opt.shiftwidth 2)
-; (comment "Number of spaces for *inserting* tabs")
-; (set vim.opt.tabstop 2)
-; (comment "Number of spaces for (auto)indenting, e.g. >> & <<")
-; (set vim.opt.softtabstop 2)
-; (comment "Convert tabs to spaces")
-; (set vim.opt.expandtab true)
-; (comment "-")
-; (set vim.opt.smarttab true)
-; (comment "Disable block folding")
-; (set vim.opt.foldenable false)
-; (comment "-")
-; (set vim.opt.backspace "indent,eol,start")
-; (comment "-")
-; (set vim.opt.history 10000)
-; (comment "-")
-; (set vim.opt.ttyfast true)
-; (comment "-")
-; (set vim.opt.ttimeoutlen 50)
-; (comment "Disable mouse")
-; (set vim.opt.mouse "")
-; (comment "-")
-; (set vim.opt.shortmess :filnxtToOF)
-; (comment "Increase the number of undos")
-; (set vim.opt.undolevels 5000)
-; (comment "Persist undo logs per file inside `undodir`")
-; (set vim.opt.undofile true)
-
 (comment "---- VISUAL ----")
-(set-opts {:number true
+(set-opts {; show line numbers
+           :number true
+           ; show numbers relative to current line
            :relativenumber true
+           ; display line column
            :signcolumn "yes:1"
+           ; highlight cursor position row
            :cursorline true
+           ; prefer adding horizontal split below
            :splitbelow true
+           ; prefer adding a vertical split on the right
            :splitright true
+           ; do not wrap text
            :wrap false
+           ; when wrapping is turned on, wrap on a line break
            :linebreak true
-           :showcmd true
-           :laststatus 3
-           :switchbuf :uselast})
-
-; (comment "Show line numbers")
-; (set vim.opt.number true)
-; (comment "Show numbers relative to current line")
-; (set vim.opt.relativenumber true)
-; (comment "Display line column")
-; (set vim.opt.signcolumn "yes:1")
-; (comment "Highlight cursor position row")
-; (set vim.opt.cursorline true)
-; (comment "Prefer adding horizontal split below")
-; (set vim.opt.splitbelow true)
-; (comment "Prefer adding a vertical split on the right")
-; (set vim.opt.splitright true)
-; (comment "Do not wrap text")
-; (set vim.opt.wrap false)
-; (comment "When wrapping is turned on, wrap on a line break")
-; (set vim.opt.linebreak true)
-; (comment "Show queued up command keystrokes")
-; (set vim.opt.showcmd true)
-; (comment "Show a single status line only")
-; (set vim.opt.laststatus 3)
-; (comment "Jump to the previously used window when jumping to errors with |quickfix| commands")
-; (set vim.opt.switchbuf :uselast)
+           ; show single status line only
+           :laststatus 3})
 
 (comment "---- SEARCH OPTIONS ----")
-(set-opts {:hlsearch true
+(set-opts {; turn on highlight search
+           :hlsearch true
+           ; search as the query is typed
            :incsearch true
+           ; do not wrap search scans
            :wrapscan false
+           ; ignore case when using lowercase in search
            :ignorecase true
+           ; but don't ignore it when using upper case
            :smartcase true})
 
-; (comment "Turn on highlight search")
-; (set vim.opt.hlsearch true)
-; (comment "Search as the query is typed")
-; (set vim.opt.incsearch true)
-; (comment "Do not wrap search scans")
-; (set vim.opt.wrapscan false)
-; (comment "Ignore case when using lowercase in search")
-; (set vim.opt.ignorecase true)
-; (comment "But don't ignore it when using upper case")
-; (set vim.opt.smartcase true)
-
 (comment "---- STATUSLINE ----")
-(let [sl (autoload :juice.statusline)]
-  (set vim.opt.statusline (sl.build-statusline [])))
+(set vim.opt.statusline (build-statusline []))
 
 (comment "---- FILETYPES ----")
-(vim.cmd "filetype plugin on")
 (vim.filetype.add {:extension {[:sbt :sc] :scala [:text :txt] :text}
                    :filename {:Jenkinsfile :groovy :tmux.conf :tmux}})
 
 (comment "---- COMPLETION ----")
-(comment "remove imports, add spellchecker to completion sources")
-(set vim.opt.complete ".,w,b,u,t,kspell")
-(comment "-")
-(set vim.opt.completeopt "menu,menuone,noselect,noinsert")
-(comment "search in current file's directory or pwd (do not use **)")
-(set vim.opt.path ".,,")
+(set-opts {; remove imports, add spellchecker to completion sources
+           :complete ".,w,b,u,t,kspell"
+           :completeopt "menu,menuone,noselect,noinsert"
+           ; search in current file's directory or pwd (do not use **)
+           :path ".,,"
+           ; Set order of completion matches
+           :wildmode "lastused,longest,full"
+           ; ignore these files when searching
+           :wildignore "*/.git/*,*/.ammonite/*,*/.bloop/*,*/.metals/*,*/node_modules/*,*/build/*,*/target/*,*.class"
+           ; ignore case when filtering results
+           :wildignorecase true
+           ; use popup to show results
+           :wildoptions :pum})
 
-(let [u (autoload :juice.util)]
-  (when (u.has? :syntax) (vim.cmd "syntax enable"))
-  (when (u.has? :clipboard)
-    (comment "Use Linux system clipboard")
-    (set vim.opt.clipboard :unnamedplus))
-  (when (u.has? :wildmenu)
-    (comment "-")
-    (set vim.opt.wildmenu true)
-    (comment "Set order of completion matches")
-    (set vim.opt.wildmode "lastused,longest,full")
-    (comment "-")
-    (set vim.opt.wildignore
-         "*/.git/*,*/.ammonite/*,*/.bloop/*,*/.metals/*,*/node_modules/*,*/build/*,*/target/*,*.class")
-    (comment "ignore case when filtering results")
-    (set vim.opt.wildignorecase true)
-    (comment "use popup to show results")
-    (set vim.opt.wildoptions :pum))
-  (comment "use ripgrep if available")
-  (when (u.executable? :rg)
-    (set vim.opt.grepprg
-         "rg\\ --smart-case\\ --hidden\\ --follow\\ --no-heading\\ --vimgrep")
-    (set vim.opt.grepformat "%f:%l:%c:%m,%f:%l:%m")))
-
-(vim.api.nvim_create_user_command :TrimTrailingWhitespaces ":%s/\\s\\+$" {})
+(comment "use ripgrep if available")
+(when (executable? :rg)
+  (set vim.opt.grepprg
+       "rg\\ --smart-case\\ --hidden\\ --follow\\ --no-heading\\ --vimgrep")
+  (set vim.opt.grepformat "%f:%l:%c:%m,%f:%l:%m"))
 
 (comment "---- AUTOCMDS ----")
-(let [augroup vim.api.nvim_create_augroup
-      autocmd vim.api.nvim_create_autocmd]
-  (comment "Remember the cursor position of the last editing")
-  (autocmd :BufReadPost
-           {:pattern "*" :command "if line(\"'\\\"\") | exe \"'\\\"\" | endif"})
-  (autocmd [:BufEnter :BufWritePost]
-           {:pattern "*"
-            :callback (fn []
-                        (local sl (autoload :juice.statusline))
-                        (sl.git-file-status)
-                        (sl.git-branch))})
-  (augroup :highlight-group [])
-  (comment "highlight yanked text")
-  (autocmd :TextYankPost
-           {:group :highlight-group
-            :pattern "*"
-            :callback (fn []
-                        (vim.highlight.on_yank {:timeout 200 :on_visual false}))})
-  (comment "highlight TODO, FIXME and Note: keywords")
-  (autocmd [:WinEnter :VimEnter]
-           {:group :highlight-group
-            :pattern "*"
-            :command ":silent! call matchadd('Todo','TODO\\|FIXME\\|Note:', -1)"})
-  (autocmd [:BufWinEnter :InsertLeave]
-           {:group :highlight-group
-            :pattern "*"
-            :callback (fn []
-                        (local c (autoload :juice.colors))
-                        (c.show-extra-whitespace)
-                        (vim.cmd "match ExtraWhitespace /\\s\\+$/"))})
-  (autocmd [:BufWinLeave :InsertEnter]
-           {:group :highlight-group
-            :pattern "*"
-            :command "hi clear ExtraWhitespace"})
-  (augroup :terminal-group [])
-  (comment "remove signcolumn in terminal mode")
-  (autocmd :TermOpen {:group :terminal-group
-                      :pattern "*"
-                      :command "set signcolumn=no"}))
+(user-command :TrimTrailingWhitespaces ":%s/\\s\\+$" {})
+(comment "Remember the cursor position of the last editing")
+(autocmd :BufReadPost
+         {:pattern "*" :command "if line(\"'\\\"\") | exe \"'\\\"\" | endif"})
+
+(autocmd [:BufEnter :BufWritePost]
+         {:pattern "*"
+          :callback (fn []
+                      (local sl (autoload :juice.statusline))
+                      (sl.git-file-status)
+                      (sl.git-branch))})
+
+(augroup :highlight-group [])
+(comment "highlight yanked text")
+(autocmd :TextYankPost
+         {:group :highlight-group
+          :pattern "*"
+          :callback (fn []
+                      (vim.highlight.on_yank {:timeout 200 :on_visual false}))})
+
+(comment "highlight TODO, FIXME and Note: keywords")
+(autocmd [:WinEnter :VimEnter]
+         {:group :highlight-group
+          :pattern "*"
+          :command ":silent! call matchadd('Todo','TODO\\|FIXME\\|Note:', -1)"})
+
+(autocmd [:BufWinEnter :InsertLeave]
+         {:group :highlight-group
+          :pattern "*"
+          :callback (fn []
+                      (local c (autoload :juice.colors))
+                      (c.show-extra-whitespace)
+                      (vim.cmd "match ExtraWhitespace /\\s\\+$/"))})
+
+(autocmd [:BufWinLeave :InsertEnter]
+         {:group :highlight-group
+          :pattern "*"
+          :command "hi clear ExtraWhitespace"})
+
+(augroup :terminal-group [])
+(comment "remove signcolumn in terminal mode")
+(autocmd :TermOpen {:group :terminal-group
+                    :pattern "*"
+                    :command "set signcolumn=no"})

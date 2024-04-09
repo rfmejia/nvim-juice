@@ -1,9 +1,9 @@
 (local {: autoload} (require :nfnl.module))
+(local {: merge : reduce : table?} (autoload :nfnl.core))
 
 (fn make-opts [keys]
   "Produce a table with every `key = true`"
-  (local a (autoload :nfnl.core))
-  (a.reduce (fn [acc key] (a.merge acc {key true})) {} keys))
+  (reduce (fn [acc key] (merge acc {key true})) {} keys))
 
 (fn nmap [key map opts]
   "Defines a keymap in normal mode"
@@ -39,10 +39,9 @@
   (= (vim.fn.exists env) 1))
 
 (fn set-opts [options]
-  (let [core (autoload :nfnl.core)]
-    (when (core.table? options)
-      (each [k v (pairs options)]
-        (tset vim.opt k v)))))
+  (when (table? options)
+    (each [k v (pairs options)]
+      (tset vim.opt k v))))
 
 (fn auto-setup [module]
   ((. (autoload module) :setup)))
@@ -57,4 +56,7 @@
  : has?
  : exists?
  : set-opts
- : auto-setup}
+ : auto-setup
+ :augroup vim.api.nvim_create_augroup
+ :autocmd vim.api.nvim_create_autocmd
+ :user-command vim.api.nvim_create_user_command}

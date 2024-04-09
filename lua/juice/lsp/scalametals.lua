@@ -1,53 +1,59 @@
 -- [nfnl] Compiled from fnl/juice/lsp/scalametals.fnl by https://github.com/Olical/nfnl, do not edit.
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
+local _local_2_ = require("juice.util")
+local autocmd = _local_2_["autocmd"]
+local augroup = _local_2_["augroup"]
+local nmap = _local_2_["nmap"]
+local user_command = _local_2_["user-command"]
+local vmap = _local_2_["vmap"]
+local _local_3_ = require("juice.statusline")
+local build_statusline = _local_3_["build-statusline"]
 local function initialize_metals()
-  local u = autoload("juice.util")
-  local sl = autoload("juice.statusline")
   local lsp = autoload("juice.lsp")
   local metals = autoload("metals")
   local config = metals.bare_config()
   local telescope = autoload("telescope")
   vim.opt.signcolumn = "yes:1"
   vim.go.shortmess = (vim.go.shortmess .. "c")
-  vim.opt.statusline = sl["build-statusline"]({"%{g:metals_status}"})
+  vim.opt.statusline = build_statusline({"%{g:metals_status}"})
   do end (vim.g)["metals_status"] = "Initializing Metals..."
   config.settings = {showImplicitArguments = true, showImplicitConversionsAndClasses = true, showInferredType = true, decorationColor = "Conceal", serverVersion = "latest.snapshot", scalafixRulesDependencies = {"com.nequissimus::sort-imports:0.6.1"}}
   config.init_options.statusBarProvider = "on"
   config.capabilities = vim.lsp.protocol.make_client_capabilities()
   do end (config)["tvp"] = {panel_alignment = "right", toggle_node_mapping = "<CR>", node_command_mapping = "r"}
-  local function _2_(client, bufnr)
+  local function _4_(client, bufnr)
     lsp["set-buffer-opts"](client, bufnr)
     vim.opt.omnifunc = "v:lua.vim.lsp.omnifunc"
-    local function _3_()
+    local function _5_()
       return metals.type_of_range()
     end
-    u.vmap("K", _3_, {"noremap", "silent"})
-    local function _4_()
+    vmap("K", _5_, {"noremap", "silent"})
+    local function _6_()
       return metals.hover_worksheet({border = "rounded"})
     end
-    u.nmap("<localleader>mw", _4_, {"noremap", "silent"})
-    local function _5_()
+    nmap("<localleader>mw", _6_, {"noremap", "silent"})
+    local function _7_()
       return telescope.extensions.metals.commands()
     end
-    u.nmap("<localleader>mm", _5_, {"noremap", "silent"})
-    u.nmap("<localleader>mt", (autoload("metals.tvp")).toggle_tree_view, {"noremap", "silent"})
-    return u.nmap("<localleader>mr", (autoload("metals.tvp")).reveal_in_tree, {"noremap", "silent"})
+    nmap("<localleader>mm", _7_, {"noremap", "silent"})
+    nmap("<localleader>mt", (autoload("metals.tvp")).toggle_tree_view, {"noremap", "silent"})
+    return nmap("<localleader>mr", (autoload("metals.tvp")).reveal_in_tree, {"noremap", "silent"})
   end
-  config.on_attach = _2_
+  config.on_attach = _4_
   --[[ "Automatically attach Metals to all Scala filetypes (only triggered upon BufEnter)" ]]
-  vim.api.nvim_create_augroup("metals-group", {})
-  local function _6_()
+  augroup("metals-group", {})
+  local function _8_()
     return metals.initialize_or_attach(config)
   end
-  vim.api.nvim_create_autocmd("FileType", {group = "metals-group", pattern = {"scala", "sbt", "java"}, callback = _6_})
+  autocmd("FileType", {group = "metals-group", pattern = {"scala", "sbt", "java"}, callback = _8_})
   --[[ "Initialize Metals for the first time" ]]
   return metals.initialize_or_attach(config)
 end
 local function register_init_command()
-  local function _7_()
+  local function _9_()
     return initialize_metals()
   end
-  return vim.api.nvim_create_user_command("MetalsInit", _7_, {desc = "Start and connect to a Metals server"})
+  return user_command("MetalsInit", _9_, {desc = "Start and connect to a Metals server"})
 end
 return {["register-init-command"] = register_init_command}

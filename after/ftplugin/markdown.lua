@@ -1,7 +1,8 @@
 -- [nfnl] Compiled from fnl/after/ftplugin/markdown.fnl by https://github.com/Olical/nfnl, do not edit.
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
-local u = autoload("juice.util")
+local _local_2_ = require("juice.util")
+local nmap = _local_2_["nmap"]
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.textwidth = 80
@@ -19,7 +20,7 @@ local function insert_yaml_metadata()
   local meta = {"---", "title: ", filename, "created: ", now, "tags: []", "---"}
   return print(meta)
 end
-u.nmap("<localleader>m", u["lua-cmd"]("require('juice.filetypes.markdown')['insert-yaml-metadata']()"), {"noremap", "silent"})
-u.nmap("<localleader>v", u["lua-cmd"]("require('juice.filetypes.markdown')['render-markdown-to-html']()"), {"noremap", "silent"})
-u.nmap("<localleader>d", ":r!date '+\\%a, \\%d \\%b \\%Y' | xargs -0 printf '----\\n\\n\\%s\\n'<cr>", {"noremap", "silent"})
-return u.nmap("<localleader>t", ":r!date '+\\%H:\\%M' | xargs -0 printf '> \\%s ' | tr -d '\\n'<cr>A", {"noremap", "silent"})
+nmap("<localleader>m", __fnl_global__lua_2dcmd("require('juice.filetypes.markdown')['insert-yaml-metadata']()"), {"noremap", "silent"})
+nmap("<localleader>v", __fnl_global__lua_2dcmd("require('juice.filetypes.markdown')['render-markdown-to-html']()"), {"noremap", "silent"})
+nmap("<localleader>d", ":r!date '+\\%a, \\%d \\%b \\%Y' | xargs -0 printf '----\\n\\n\\%s\\n'<cr>", {"noremap", "silent"})
+return nmap("<localleader>t", ":r!date '+\\%H:\\%M' | xargs -0 printf '> \\%s ' | tr -d '\\n'<cr>A", {"noremap", "silent"})

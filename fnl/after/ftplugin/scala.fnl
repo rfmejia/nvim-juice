@@ -1,26 +1,28 @@
 (local {: autoload} (require :nfnl.module))
+(local {: blank?} (require :nfnl.string))
+(local {: nmap : user-command} (require :juice.util))
 
-(let [u (autoload :juice.util)]
-  (set vim.opt.shiftwidth 2)
-  (set vim.opt.tabstop 2)
-  (set vim.opt.expandtab true)
-  (set vim.opt.textwidth 100)
-  (set vim.opt.signcolumn "yes:1")
-  (vim.opt.indentkeys:remove "<>>") ; FIXME This doesn't seem to be reflected
+(set vim.opt.shiftwidth 2)
+(set vim.opt.tabstop 2)
+(set vim.opt.expandtab true)
+(set vim.opt.textwidth 100)
+(set vim.opt.signcolumn "yes:1")
+(comment "FIXME This doesn't seem to be reflected"
+  (vim.opt.indentkeys:remove "<>>"))
 
-  (fn run-scalafmt [path]
-    (let [s (autoload :nfnl.string)
-          filename (if (s.blank? path) (vim.fn.expand "%:p") path)]
-      (vim.fn.system [:scalafmt
-                      :--mode
-                      :changed
-                      :--config
-                      :.scalafmt.conf
-                      filename
-                      filename])))
+(fn run-scalafmt [path]
+  (let [filename (if (blank? path) (vim.fn.expand "%:p") path)]
+    (vim.fn.system [:scalafmt
+                    :--mode
+                    :changed
+                    :--config
+                    :.scalafmt.conf
+                    filename
+                    filename])))
 
-  (vim.api.nvim_create_user_command :ScalafmtApply (fn [] (run-scalafmt))
-                                    {:bang true})
-  (u.nmap :<localleader>cf (fn [] (run-scalafmt (vim.fn.expand "%:p")))
-          [:noremap :nowait :silent])
-  (u.nmap :<localleader>s "vip:sort<cr>" [:noremap :nowait :silent]))
+(user-command :ScalafmtApply (fn [] (run-scalafmt)) {:bang true})
+
+(nmap :<localleader>cf (fn [] (run-scalafmt (vim.fn.expand "%:p")))
+      [:noremap :nowait :silent])
+
+(nmap :<localleader>s "vip:sort<cr>" [:noremap :nowait :silent])

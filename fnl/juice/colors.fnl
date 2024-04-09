@@ -1,4 +1,5 @@
 (local {: autoload} (require :nfnl.module))
+(local {: executable?} (require :juice.util))
 
 (fn color-attr [hl-group attribute]
   "Extract an attribute from an existing highlight group"
@@ -42,12 +43,11 @@
 
 (fn get-gnome-colorscheme [dark-scheme light-scheme]
   "If in Gnome check the current system theme and set nvim theme"
-  (let [u (autoload :juice.util)
-        gsettings-cmd [:gsettings
+  (let [gsettings-cmd [:gsettings
                        :get
                        :org.gnome.desktop.interface
                        :color-scheme]]
-    (if (u.executable? :gsettings)
+    (if (executable? :gsettings)
         (do
           (local system-theme (vim.fn.system gsettings-cmd))
           (if (or (string.find system-theme :default)
