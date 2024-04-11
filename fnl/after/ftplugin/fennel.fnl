@@ -12,4 +12,4 @@
 
 (nmap :<localleader>cf (fn []
                          (->> (vim.fn.expand "%:p")
-                              (format-fennel))))
+                              (format-fennel))) [:buffer])

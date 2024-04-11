@@ -19,4 +19,4 @@ end
 local function _5_()
   return format_fennel(vim.fn.expand("%:p"))
 end
-return nmap("<localleader>cf", _5_)
+return nmap("<localleader>cf", _5_, {"buffer"})

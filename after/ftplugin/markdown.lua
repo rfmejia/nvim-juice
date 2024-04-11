@@ -17,7 +17,7 @@ local function insert_yaml_metadata()
   local meta = {"---", "title: ", filename, "created: ", now, "tags: []", "---"}
   return vim.print(meta)
 end
-nmap("<localleader>m", lua_cmd("require('juice.filetypes.markdown')['insert-yaml-metadata']()"), {"noremap", "silent"})
-nmap("<localleader>v", lua_cmd("require('juice.filetypes.markdown')['render-markdown-to-html']()"), {"noremap", "silent"})
-nmap("<localleader>d", ":r!date '+\\%a, \\%d \\%b \\%Y' | xargs -0 printf '----\\n\\n\\%s\\n'<cr>", {"noremap", "silent"})
-return nmap("<localleader>t", ":r!date '+\\%H:\\%M' | xargs -0 printf '> \\%s ' | tr -d '\\n'<cr>A", {"noremap", "silent"})
+nmap("<localleader>m", lua_cmd("require('juice.filetypes.markdown')['insert-yaml-metadata']()"), {"noremap", "silent", "buffer"})
+nmap("<localleader>v", lua_cmd("require('juice.filetypes.markdown')['render-markdown-to-html']()"), {"noremap", "silent", "buffer"})
+nmap("<localleader>d", ":r!date '+\\%a, \\%d \\%b \\%Y' | xargs -0 printf '----\\n\\n\\%s\\n'<cr>", {"noremap", "silent", "buffer"})
+return nmap("<localleader>t", ":r!date '+\\%H:\\%M' | xargs -0 printf '> \\%s ' | tr -d '\\n'<cr>A", {"noremap", "silent", "buffer"})

@@ -39,6 +39,7 @@
   (= (vim.fn.exists env) 1))
 
 (fn set-opts [options]
+  "Given an `options` table, set each pair as `vim.opt.<key> = <value>`"
   (when (table? options)
     (each [k v (pairs options)]
       (tset vim.opt k v))))

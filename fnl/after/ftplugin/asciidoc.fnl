@@ -8,10 +8,10 @@
            :spell true
            :spelllang :en_us})
 
-(nmap :<localleader>D
+(nmap :<localleader>d
       ":r!date '+\\%a, \\%d \\%b \\%Y' | xargs -0 printf '\\n== \\%s\\n\\n'<cr>k"
-      [:noremap :silent])
+      [:noremap :silent :buffer])
 
 (nmap :<localleader>t
       ":r!date '+\\%H:\\%M' | xargs -0 printf '=== \\%s ' | tr -d '\\n'<cr>A"
-      [:noremap :silent])
+      [:noremap :silent :buffer])

@@ -4,6 +4,7 @@ local autoload = _local_1_["autoload"]
 local _local_2_ = autoload("nfnl.string")
 local blank_3f = _local_2_["blank?"]
 local _local_3_ = autoload("juice.util")
+local executable_3f = _local_3_["executable?"]
 local nmap = _local_3_["nmap"]
 local set_opts = _local_3_["set-opts"]
 local user_command = _local_3_["user-command"]
@@ -25,5 +26,14 @@ user_command("ScalafmtApply", _5_, {bang = true})
 local function _6_()
   return run_scalafmt(vim.fn.expand("%:p"))
 end
-nmap("<localleader>cf", _6_, {"noremap", "nowait", "silent"})
-return nmap("<localleader>s", "vip:sort<cr>", {"noremap", "nowait", "silent"})
+nmap("<localleader>cf", _6_, {"noremap", "nowait", "silent", "buffer"})
+nmap("<localleader>s", "vip:sort<cr>", {"noremap", "nowait", "silent", "buffer"})
+if executable_3f("sbtn") then
+  nmap("<leader>os", ":!tmux split-window -v -l 30\\% sbtn<cr><cr>", {"noremap", "silent", "buffer"})
+else
+end
+if executable_3f("scala-cli") then
+  return nmap("<leader>oc", ":!tmux split-window -v -l 30\\% scala-cli console %<cr><cr>", {"noremap", "silent", "buffer"})
+else
+  return nil
+end

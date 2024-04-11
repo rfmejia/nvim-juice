@@ -101,26 +101,18 @@ local function setup()
       nmap("<leader>og", ":!tmux neww lazygit<cr><cr>", {"noremap", "silent"})
     else
     end
-    if executable_3f("sbtn") then
-      nmap("<leader>os", ":!tmux split-window -v -l 30\\% sbtn<cr><cr>", {"noremap", "silent"})
-    else
-    end
-    if executable_3f("scala-cli") then
-      nmap("<leader>oc", ":!tmux split-window -v -l 30\\% scala-cli console %<cr><cr>", {"noremap", "silent"})
-    else
-    end
   else
   end
   --[[ "personal journal" ]]
   if exists_3f("$JOURNAL") then
-    local function _8_()
+    local function _6_()
       return vim.cmd((":$tabnew" .. "$JOURNAL/journal.adoc"))
     end
-    nmap("<leader>oj", _8_, {"noremap", "silent"})
-    local function _9_()
+    nmap("<leader>oj", _6_, {"noremap", "silent"})
+    local function _7_()
       return vim.cmd((":$tabnew" .. "$JOURNAL/vim/vim.md"))
     end
-    nmap("<leader>ov", _9_, {"noremap", "silent"})
+    nmap("<leader>ov", _7_, {"noremap", "silent"})
   else
   end
   --[[ "---- PLUGINS ----" ]]
@@ -135,25 +127,20 @@ local function setup()
     nmap("<leader>p", builtin.oldfiles, {"noremap", "silent"})
     nmap("<leader>k", builtin.keymaps, {"noremap", "silent"})
   end
-  nmap("<localleader>du", ":DBUIToggle<cr>", {"noremap"})
-  nmap("<localleader>d;", ":DB g:db ", {"noremap"})
-  nmap("<localleader>dd", ":.DB g:db<cr>", {"noremap"})
-  nmap("<localleader>db", ":%DB g:db<cr>", {"noremap"})
-  nmap("<localleader>dp", "vip:DB g:db<cr>", {"noremap"})
   do
     local gitsigns = autoload("gitsigns")
-    local function _11_()
+    local function _9_()
       return gitsigns.nav_hunk("next")
     end
-    nmap("]h", _11_, {"noremap"})
-    local function _12_()
+    nmap("]h", _9_, {"noremap"})
+    local function _10_()
       return gitsigns.nav_hunk("prev")
     end
-    nmap("[h", _12_, {"noremap"})
-    local function _13_()
+    nmap("[h", _10_, {"noremap"})
+    local function _11_()
       return gitsigns.blame_line({full = true})
     end
-    nmap("<localleader>hS", _13_, {"noremap"})
+    nmap("<localleader>hS", _11_, {"noremap"})
     nmap("<localleader>hp", gitsigns.preview_hunk, {"noremap"})
     nmap("<localleader>hs", gitsigns.stage_hunk, {"noremap"})
     nmap("<localleader>hS", gitsigns.undo_stage_hunk, {"noremap"})

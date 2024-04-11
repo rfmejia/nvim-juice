@@ -91,14 +91,7 @@
   (comment "utilites in tmux split")
   (when (exists? :$TMUX)
     (when (executable? :lazygit)
-      (nmap :<leader>og ":!tmux neww lazygit<cr><cr>" [:noremap :silent]))
-    (when (executable? :sbtn)
-      (nmap :<leader>os ":!tmux split-window -v -l 30\\% sbtn<cr><cr>"
-            [:noremap :silent]))
-    (when (executable? :scala-cli)
-      (nmap :<leader>oc
-            ":!tmux split-window -v -l 30\\% scala-cli console %<cr><cr>"
-            [:noremap :silent])))
+      (nmap :<leader>og ":!tmux neww lazygit<cr><cr>" [:noremap :silent])))
   (comment "personal journal")
   (when (exists? :$JOURNAL)
     (nmap :<leader>oj (fn [] (vim.cmd (.. ":$tabnew" :$JOURNAL/journal.adoc)))
@@ -115,11 +108,6 @@
     (nmap :<leader>g builtin.git_files [:noremap :silent])
     (nmap :<leader>p builtin.oldfiles [:noremap :silent])
     (nmap :<leader>k builtin.keymaps [:noremap :silent]))
-  (nmap :<localleader>du ":DBUIToggle<cr>" [:noremap])
-  (nmap "<localleader>d;" ":DB g:db " [:noremap])
-  (nmap :<localleader>dd ":.DB g:db<cr>" [:noremap])
-  (nmap :<localleader>db ":%DB g:db<cr>" [:noremap])
-  (nmap :<localleader>dp "vip:DB g:db<cr>" [:noremap])
   (let [gitsigns (autoload :gitsigns)]
     (nmap "]h" (fn [] (gitsigns.nav_hunk :next)) [:noremap])
     (nmap "[h" (fn [] (gitsigns.nav_hunk :prev)) [:noremap])

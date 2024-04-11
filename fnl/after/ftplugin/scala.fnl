@@ -1,6 +1,6 @@
 (local {: autoload} (require :nfnl.module))
 (local {: blank?} (autoload :nfnl.string))
-(local {: nmap : set-opts : user-command} (autoload :juice.util))
+(local {: executable? : nmap : set-opts : user-command} (autoload :juice.util))
 
 (set-opts {:shiftwidth 2
            :tabstop 2
@@ -23,6 +23,15 @@
 (user-command :ScalafmtApply (fn [] (run-scalafmt)) {:bang true})
 
 (nmap :<localleader>cf (fn [] (run-scalafmt (vim.fn.expand "%:p")))
-      [:noremap :nowait :silent])
+      [:noremap :nowait :silent :buffer])
 
-(nmap :<localleader>s "vip:sort<cr>" [:noremap :nowait :silent])
+(nmap :<localleader>s "vip:sort<cr>" [:noremap :nowait :silent :buffer])
+
+(when (executable? :sbtn)
+  (nmap :<leader>os ":!tmux split-window -v -l 30\\% sbtn<cr><cr>"
+        [:noremap :silent :buffer]))
+
+(when (executable? :scala-cli)
+  (nmap :<leader>oc
+        ":!tmux split-window -v -l 30\\% scala-cli console %<cr><cr>"
+        [:noremap :silent :buffer]))

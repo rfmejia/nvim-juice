@@ -23,16 +23,16 @@
 
 (nmap :<localleader>m
       (lua-cmd "require('juice.filetypes.markdown')['insert-yaml-metadata']()")
-      [:noremap :silent])
+      [:noremap :silent :buffer])
 
 (nmap :<localleader>v
       (lua-cmd "require('juice.filetypes.markdown')['render-markdown-to-html']()")
-      [:noremap :silent])
+      [:noremap :silent :buffer])
 
 (nmap :<localleader>d
       ":r!date '+\\%a, \\%d \\%b \\%Y' | xargs -0 printf '----\\n\\n\\%s\\n'<cr>"
-      [:noremap :silent])
+      [:noremap :silent :buffer])
 
 (nmap :<localleader>t
       ":r!date '+\\%H:\\%M' | xargs -0 printf '> \\%s ' | tr -d '\\n'<cr>A"
-      [:noremap :silent])
+      [:noremap :silent :buffer])
