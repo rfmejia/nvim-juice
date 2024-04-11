@@ -6,9 +6,9 @@
            :tabstop 2
            :expandtab true
            :textwidth 100
-           :signcolumn "yes:1"
-           ; FIXME This doesn't seem to be reflected
-           "indentkeys:remove" ["<>>"]})
+           :signcolumn "yes:1"})
+
+(comment "FIXME This doesn't seem to be reflected" "indentkeys:remove" ["<>>"])
 
 (fn run-scalafmt [path]
   (let [filename (if (blank? path) (vim.fn.expand "%:p") path)]
