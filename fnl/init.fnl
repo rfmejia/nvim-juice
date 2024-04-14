@@ -64,7 +64,7 @@
            :smartcase true})
 
 (comment "---- FILETYPES ----")
-(vim.filetype.add {:extension {[:sbt :sc] :scala [:text :txt] :text}
+(vim.filetype.add {:extension {:sbt :scala :sc :scala :txt :text}
                    :filename {:Jenkinsfile :groovy :tmux.conf :tmux}})
 
 (comment "---- COMPLETION ----")
