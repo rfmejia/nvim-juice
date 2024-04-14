@@ -2,40 +2,40 @@
 (local {: concat} (autoload :nfnl.core))
 (local {: autocmd : auto-setup : set-opts} (autoload :juice.util))
 
-(local basic [{1 :Olical/nfnl :ft :fennel}
-              {1 :projekt0n/github-nvim-theme
-               :lazy false
-               :priority 1000
-               :config (fn [] (auto-setup :juice.colors))}
-              {1 :nvim-treesitter/nvim-treesitter
-               :event [:BufReadPre :BufNewFile]
-               :build ":TSUpdate"
-               :config (fn []
-                         (let [ts (autoload :nvim-treesitter.configs)
-                               languages [:bash
-                                          :dockerfile
-                                          :fennel
-                                          :hocon
-                                          :javascript
-                                          :json
-                                          :git_config
-                                          :gitcommit
-                                          :gitignore
-                                          :go
-                                          :html
-                                          :java
-                                          :lua
-                                          :markdown
-                                          :scala
-                                          :sql
-                                          :todotxt
-                                          :vim
-                                          :vimdoc
-                                          :yaml]
-                               config {:ensure_installed languages
-                                       :highlight {:enable true}
-                                       :indent {:enable true}}]
-                           (ts.setup config)))}])
+(local core [{1 :Olical/nfnl :ft :fennel}
+             {1 :projekt0n/github-nvim-theme
+              :lazy false
+              :priority 1000
+              :config (fn [] (auto-setup :juice.colors))}
+             {1 :nvim-treesitter/nvim-treesitter
+              :event [:BufReadPre :BufNewFile]
+              :build ":TSUpdate"
+              :config (fn []
+                        (let [ts (autoload :nvim-treesitter.configs)
+                              languages [:bash
+                                         :dockerfile
+                                         :fennel
+                                         :hocon
+                                         :javascript
+                                         :json
+                                         :git_config
+                                         :gitcommit
+                                         :gitignore
+                                         :go
+                                         :html
+                                         :java
+                                         :lua
+                                         :markdown
+                                         :scala
+                                         :sql
+                                         :todotxt
+                                         :vim
+                                         :vimdoc
+                                         :yaml]
+                              config {:ensure_installed languages
+                                      :highlight {:enable true}
+                                      :indent {:enable true}}]
+                          (ts.setup config)))}])
 
 (local ui-tools
        [{1 :stevearc/oil.nvim
@@ -108,7 +108,7 @@
 
 (fn setup []
   (let [lazy (autoload :lazy)
-        plugins (concat basic ui-tools text-tools dev-tools database-tools)
+        plugins (concat core ui-tools text-tools dev-tools database-tools)
         opts {:ui {:border :rounded}
               :performance {:rtp {:disabled_plugins [:rplugin
                                                      :tohtml

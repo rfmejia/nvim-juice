@@ -7,7 +7,7 @@ local _local_3_ = autoload("juice.util")
 local autocmd = _local_3_["autocmd"]
 local auto_setup = _local_3_["auto-setup"]
 local set_opts = _local_3_["set-opts"]
-local basic
+local core
 local function _4_()
   return auto_setup("juice.colors")
 end
@@ -17,7 +17,7 @@ local function _5_()
   local config = {ensure_installed = languages, highlight = {enable = true}, indent = {enable = true}}
   return ts.setup(config)
 end
-basic = {{"Olical/nfnl", ft = "fennel"}, {"projekt0n/github-nvim-theme", priority = 1000, config = _4_, lazy = false}, {"nvim-treesitter/nvim-treesitter", event = {"BufReadPre", "BufNewFile"}, build = ":TSUpdate", config = _5_}}
+core = {{"Olical/nfnl", ft = "fennel"}, {"projekt0n/github-nvim-theme", priority = 1000, config = _4_, lazy = false}, {"nvim-treesitter/nvim-treesitter", event = {"BufReadPre", "BufNewFile"}, build = ":TSUpdate", config = _5_}}
 local ui_tools
 local function _6_()
   local oil = autoload("oil")
@@ -66,7 +66,7 @@ end
 database_tools = {{"kristijanhusak/vim-dadbod-ui", cmd = {"DBUI", "DBUIToggle"}, config = _14_, dependencies = {{"tpope/vim-dadbod", lazy = true}, {"kristijanhusak/vim-dadbod-completion", lazy = true, ft = {"sql", "mysql"}}}}}
 local function setup()
   local lazy = autoload("lazy")
-  local plugins = concat(basic, ui_tools, text_tools, dev_tools, database_tools)
+  local plugins = concat(core, ui_tools, text_tools, dev_tools, database_tools)
   local opts = {ui = {border = "rounded"}, performance = {rtp = {disabled_plugins = {"rplugin", "tohtml", "tutor", "vimball"}}}}
   return lazy.setup(plugins, opts)
 end

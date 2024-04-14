@@ -1,3 +1,5 @@
+init.lua linguist-generated
 lua/**/*.lua linguist-generated
+after/**/*.lua linguist-generated
 lua/nfnl/fennel.lua linguist-vendored
 script/fennel.lua linguist-vendored

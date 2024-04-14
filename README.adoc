@@ -11,8 +11,8 @@ To install, simply clone the following repositories and run nvim:
 
 ```
 git clone https://github.com/rfmejia/nvim-juice ${XDG_CONFIG_HOME}/nvim
-git clone https://github.com/folke/lazy.nvim into ${XDG_DATA_HOME}/nvim/site/pack/juice/start
-git clone https://github.com/Olical/nfnl into ${XDG_DATA_HOME}/nvim/site/pack/juice/start
+git clone https://github.com/folke/lazy.nvim ${XDG_DATA_HOME}/nvim/site/pack/juice/start/lazy.nvim
+git clone https://github.com/Olical/nfnl ${XDG_DATA_HOME}/nvim/site/pack/juice/start/nfnl
 nvim
 ```
 
