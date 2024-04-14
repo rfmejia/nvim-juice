@@ -37,47 +37,38 @@
                                        :indent {:enable true}}]
                            (ts.setup config)))}])
 
-(local ui-tools [{1 :stevearc/oil.nvim
-                  :cmd :Oil
-                  :config (fn []
-                            (let [oil (autoload :oil)
-                                  config {:default_file_explorer true
-                                          :delete_to_trash true}]
-                              (oil.setup config)))}
-                 {1 :nvim-telescope/telescope.nvim
-                  :tag :0.1.6
-                  :dependencies [:nvim-lua/plenary.nvim]
-                  :config (fn []
-                            (let [telescope (autoload :telescope)
-                                  actions (autoload :telescope.actions)
-                                  config {:defaults {:border false
-                                                     :layout_config {:prompt_position :bottom
-                                                                     :height 0.6}
-                                                     :layout_strategy :bottom_pane
-                                                     :mappings {:i {:<esc> actions.close
-                                                                    :<C-u> false}}
-                                                     :path_display {1 :truncate}
-                                                     :preview false
-                                                     :prompt_prefix "? "}}]
-                              (telescope.setup config)))}
-                 {1 :lewis6991/gitsigns.nvim
-                  :event [:BufReadPre :BufNewFile]
-                  :config (fn [] (auto-setup :gitsigns))}
-                 {1 :mbbill/undotree
-                  :cmd :UndotreeToggle
-                  :config (fn []
-                            (set vim.g.undotree_WindowLayout 4)
-                            (set vim.g.undotree_SetFocusWhenToggle 1))}
-                 {1 :alexghergh/nvim-tmux-navigation
-                  :event (fn [] (if (vim.fn.exists :$TMUX) :VeryLazy))
-                  :config (fn []
-                            (let [nav (autoload :nvim-tmux-navigation)
-                                  config {:disabled_when_zoomed true
-                                          :keybindings {:left :<M-h>
-                                                        :down :<M-j>
-                                                        :up :<M-k>
-                                                        :right :<M-l>}}]
-                              (nav.setup config)))}])
+(local ui-tools
+       [{1 :stevearc/oil.nvim
+         :cmd :Oil
+         :config (fn []
+                   (let [oil (autoload :oil)
+                         config {:default_file_explorer true
+                                 :delete_to_trash true}]
+                     (oil.setup config)))}
+        {1 :nvim-telescope/telescope.nvim
+         :tag :0.1.6
+         :dependencies [:nvim-lua/plenary.nvim]
+         :config (fn []
+                   (let [telescope (autoload :telescope)
+                         actions (autoload :telescope.actions)
+                         config {:defaults {:border false
+                                            :layout_config {:prompt_position :bottom
+                                                            :height 0.6}
+                                            :layout_strategy :bottom_pane
+                                            :mappings {:i {:<esc> actions.close
+                                                           :<C-u> false}}
+                                            :path_display {1 :truncate}
+                                            :preview false
+                                            :prompt_prefix "? "}}]
+                     (telescope.setup config)))}
+        {1 :lewis6991/gitsigns.nvim
+         :event [:BufReadPre :BufNewFile]
+         :config (fn [] (auto-setup :gitsigns))}
+        {1 :mbbill/undotree
+         :cmd :UndotreeToggle
+         :config (fn []
+                   (set vim.g.undotree_WindowLayout 4)
+                   (set vim.g.undotree_SetFocusWhenToggle 1))}])
 
 (local text-tools
        [{1 :numToStr/Comment.nvim

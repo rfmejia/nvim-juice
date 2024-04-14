@@ -97,6 +97,10 @@ local function setup()
   --[[ "---- EXTERNAL APPS ----" ]]
   --[[ "utilites in tmux split" ]]
   if exists_3f("$TMUX") then
+    nmap("<M-h>", ":!tmux select-pane -L <cr><cr>", {"noremap", "silent"})
+    nmap("<M-l>", ":!tmux select-pane -R <cr><cr>", {"noremap", "silent"})
+    nmap("<M-k>", ":!tmux select-pane -U <cr><cr>", {"noremap", "silent"})
+    nmap("<M-j>", ":!tmux select-pane -D <cr><cr>", {"noremap", "silent"})
     if executable_3f("lazygit") then
       nmap("<leader>og", ":!tmux neww lazygit<cr><cr>", {"noremap", "silent"})
     else

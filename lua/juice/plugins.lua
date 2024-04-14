@@ -38,44 +38,32 @@ local function _9_()
   vim.g.undotree_SetFocusWhenToggle = 1
   return nil
 end
-local function _10_()
-  if vim.fn.exists("$TMUX") then
-    return "VeryLazy"
-  else
-    return nil
-  end
-end
-local function _12_()
-  local nav = autoload("nvim-tmux-navigation")
-  local config = {disabled_when_zoomed = true, keybindings = {left = "<M-h>", down = "<M-j>", up = "<M-k>", right = "<M-l>"}}
-  return nav.setup(config)
-end
-ui_tools = {{"stevearc/oil.nvim", cmd = "Oil", config = _6_}, {"nvim-telescope/telescope.nvim", tag = "0.1.6", dependencies = {"nvim-lua/plenary.nvim"}, config = _7_}, {"lewis6991/gitsigns.nvim", event = {"BufReadPre", "BufNewFile"}, config = _8_}, {"mbbill/undotree", cmd = "UndotreeToggle", config = _9_}, {"alexghergh/nvim-tmux-navigation", event = _10_, config = _12_}}
+ui_tools = {{"stevearc/oil.nvim", cmd = "Oil", config = _6_}, {"nvim-telescope/telescope.nvim", tag = "0.1.6", dependencies = {"nvim-lua/plenary.nvim"}, config = _7_}, {"lewis6991/gitsigns.nvim", event = {"BufReadPre", "BufNewFile"}, config = _8_}, {"mbbill/undotree", cmd = "UndotreeToggle", config = _9_}}
 local text_tools
-local function _13_()
+local function _10_()
   return auto_setup("Comment")
 end
-local function _14_()
+local function _11_()
   return auto_setup("nvim-surround")
 end
-text_tools = {{"numToStr/Comment.nvim", keys = "gc", config = _13_}, {"kylechui/nvim-surround", keys = {"cs", "ds", "ys"}, config = _14_}}
+text_tools = {{"numToStr/Comment.nvim", keys = "gc", config = _10_}, {"kylechui/nvim-surround", keys = {"cs", "ds", "ys"}, config = _11_}}
 local dev_tools
-local function _15_()
+local function _12_()
   return auto_setup("juice.lsp")
 end
-local function _16_()
+local function _13_()
   vim.g.copilot_workspace_folders = {"$WORKSPACE/myshake-backends", "$WORKSPACE/myshake-bc"}
   return nil
 end
-dev_tools = {{"neovim/nvim-lspconfig", ft = {"go", "scala"}, config = _15_}, {"scalameta/nvim-metals", cmd = "MetalsInit", dependencies = {"nvim-lua/plenary.nvim"}}, {"Olical/conjure", ft = {"clojure", "fennel", "lisp", "scheme"}}, {"github/copilot.vim", cmd = "Copilot", config = _16_}}
+dev_tools = {{"neovim/nvim-lspconfig", ft = {"go", "scala"}, config = _12_}, {"scalameta/nvim-metals", cmd = "MetalsInit", dependencies = {"nvim-lua/plenary.nvim"}}, {"Olical/conjure", ft = {"clojure", "fennel", "lisp", "scheme"}}, {"github/copilot.vim", cmd = "Copilot", config = _13_}}
 local database_tools
-local function _17_()
-  local function _18_()
+local function _14_()
+  local function _15_()
     return set_opts({commentstring = "-- %s", omnifunc = "vim_dadbod_completion#omni"})
   end
-  return autocmd("FileType", {pattern = {"sql", "mysql"}, callback = _18_})
+  return autocmd("FileType", {pattern = {"sql", "mysql"}, callback = _15_})
 end
-database_tools = {{"kristijanhusak/vim-dadbod-ui", cmd = {"DBUI", "DBUIToggle"}, config = _17_, dependencies = {{"tpope/vim-dadbod", lazy = true}, {"kristijanhusak/vim-dadbod-completion", lazy = true, ft = {"sql", "mysql"}}}}}
+database_tools = {{"kristijanhusak/vim-dadbod-ui", cmd = {"DBUI", "DBUIToggle"}, config = _14_, dependencies = {{"tpope/vim-dadbod", lazy = true}, {"kristijanhusak/vim-dadbod-completion", lazy = true, ft = {"sql", "mysql"}}}}}
 local function setup()
   local lazy = autoload("lazy")
   local plugins = concat(basic, ui_tools, text_tools, dev_tools, database_tools)
