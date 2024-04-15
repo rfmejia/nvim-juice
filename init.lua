@@ -1,4 +1,5 @@
 -- [nfnl] Compiled from fnl/init.fnl by https://github.com/Olical/nfnl, do not edit.
+do end (require("juice.bootstrap")).setup()
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local _local_2_ = autoload("juice.statusline")
@@ -7,7 +8,6 @@ local _local_3_ = autoload("juice.util")
 local auto_setup = _local_3_["auto-setup"]
 local executable_3f = _local_3_["executable?"]
 local set_opts = _local_3_["set-opts"]
-auto_setup("juice.bootstrap")
 --[[ "---- LEADER KEYS ----" ]]
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","

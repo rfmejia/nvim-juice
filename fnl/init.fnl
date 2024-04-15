@@ -1,8 +1,10 @@
+; check and install `nfnl` and `lazy.nvim`
+((. (require :juice.bootstrap) :setup))
+
 (local {: autoload} (require :nfnl.module))
 (local {: build-statusline} (autoload :juice.statusline))
 (local {: auto-setup : executable? : set-opts} (autoload :juice.util))
 
-(auto-setup :juice.bootstrap)
 (comment "---- LEADER KEYS ----")
 (set vim.g.mapleader " ")
 (set vim.g.maplocalleader ",")
