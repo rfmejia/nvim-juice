@@ -90,6 +90,7 @@
   (comment "---- EXTERNAL APPS ----")
   (comment "utilites in tmux split")
   (when (exists? :$TMUX)
+    (comment "FIXME handle case where if we are inside nvim with split")
     (nmap :<M-h> ":!tmux select-pane -L <cr><cr>" [:noremap :silent])
     (nmap :<M-l> ":!tmux select-pane -R <cr><cr>" [:noremap :silent])
     (nmap :<M-k> ":!tmux select-pane -U <cr><cr>" [:noremap :silent])

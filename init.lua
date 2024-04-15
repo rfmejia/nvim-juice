@@ -7,6 +7,7 @@ local _local_3_ = autoload("juice.util")
 local auto_setup = _local_3_["auto-setup"]
 local executable_3f = _local_3_["executable?"]
 local set_opts = _local_3_["set-opts"]
+auto_setup("juice.bootstrap")
 --[[ "---- LEADER KEYS ----" ]]
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
