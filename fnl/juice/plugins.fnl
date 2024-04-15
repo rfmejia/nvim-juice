@@ -59,7 +59,7 @@
                                                            :<C-u> false}}
                                             :path_display {1 :truncate}
                                             :preview false
-                                            :prompt_prefix "? "}}]
+                                            :prompt_prefix ":"}}]
                      (telescope.setup config)))}
         {1 :lewis6991/gitsigns.nvim
          :event [:BufReadPre :BufNewFile]

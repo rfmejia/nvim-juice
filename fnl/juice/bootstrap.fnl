@@ -1,29 +1,23 @@
-(local base-path (.. (vim.fn.stdpath :data) :/lazy))
-
-(fn ensure-installed [options]
+(lambda ensure-installed [user repo branch]
   "Clone bootstrap plugins if not installed and add to `runtimepath`"
-  (let [install-path (string.format "%s/%s" base-path options.repo)
-        assert-string (fn [value err-msg]
-                        (when (not (= (type value) :string))
-                          (error err-msg)))
+  (let [base-path (.. (vim.fn.stdpath :data) :/lazy)
+        install-path (string.format "%s/%s" base-path repo)
         path-exists? ((. (or vim.uv vim.loop) :fs_stat) install-path)]
-    (assert-string options.user)
-    (assert-string options.repo)
-    (assert-string options.branch)
     (when (not path-exists?)
-      (print (string.format "Cloning %s/%s:%s to %s..." options.user
-                            options.repo options.branch install-path))
-      (vim.fn.system [:git
-                      :clone
-                      "--filter=blob:none"
-                      (string.format "https://github.com/%s/%s.git"
-                                     options.user options.repo)
-                      (string.format "--branch=%s" options.branch)
-                      install-path]))
+      (let [message (string.format "Cloning %s/%s:%s to %s..." user repo branch
+                                   install-path)
+            git-cmd [:git
+                     :clone
+                     "--filter=blob:none"
+                     (string.format "https://github.com/%s/%s.git" user repo)
+                     (string.format "--branch=%s" branch)
+                     install-path]]
+        (print message)
+        (vim.fn.system git-cmd)))
     (vim.opt.rtp:prepend install-path)))
 
 (fn setup []
-  (ensure-installed {:user :Olical :repo :nfnl :branch :main})
-  (ensure-installed {:user :folke :repo :lazy.nvim :branch :stable}))
+  (ensure-installed :Olical :nfnl :main)
+  (ensure-installed :folke :lazy.nvim :stable))
 
 {: setup}

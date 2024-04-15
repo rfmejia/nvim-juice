@@ -24,21 +24,27 @@ local function tmap(key, map, opts)
   return vim.keymap.set("t", key, map, make_opts(opts))
 end
 local function lua_cmd(str)
+  _G.assert((nil ~= str), "Missing argument str on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:24")
   return string.format("<cmd>lua %s<cr>", str)
 end
 local function lua_statusline(command)
+  _G.assert((nil ~= command), "Missing argument command on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:28")
   return string.format("%%{luaeval(\"%s\")}", command)
 end
 local function executable_3f(cmd)
+  _G.assert((nil ~= cmd), "Missing argument cmd on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:32")
   return (vim.fn.executable(cmd) == 1)
 end
 local function has_3f(cmd)
+  _G.assert((nil ~= cmd), "Missing argument cmd on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:36")
   return (vim.fn.has(cmd) == 1)
 end
 local function exists_3f(env)
+  _G.assert((nil ~= env), "Missing argument env on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:40")
   return (vim.fn.exists(env) == 1)
 end
 local function set_opts(options)
+  _G.assert((nil ~= options), "Missing argument options on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:43")
   if table_3f(options) then
     for k, v in pairs(options) do
       vim.opt[k] = v
@@ -49,6 +55,7 @@ local function set_opts(options)
   end
 end
 local function auto_setup(module)
+  _G.assert((nil ~= module), "Missing argument module on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:49")
   return autoload(module).setup()
 end
 return {nmap = nmap, imap = imap, vmap = vmap, tmap = tmap, ["lua-cmd"] = lua_cmd, ["lua-statusline"] = lua_statusline, ["executable?"] = executable_3f, ["has?"] = has_3f, ["exists?"] = exists_3f, ["set-opts"] = set_opts, ["auto-setup"] = auto_setup, augroup = vim.api.nvim_create_augroup, autocmd = vim.api.nvim_create_autocmd, ["user-command"] = vim.api.nvim_create_user_command}

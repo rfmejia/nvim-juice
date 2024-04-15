@@ -23,6 +23,8 @@ local function initialize_metals()
   config.capabilities = vim.lsp.protocol.make_client_capabilities()
   do end (config)["tvp"] = {panel_alignment = "right", toggle_node_mapping = "<CR>", node_command_mapping = "r"}
   local function _4_(client, bufnr)
+    _G.assert((nil ~= bufnr), "Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:29")
+    _G.assert((nil ~= client), "Missing argument client on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:29")
     lsp["set-buffer-opts"](client, bufnr)
     vim.opt.omnifunc = "v:lua.vim.lsp.omnifunc"
     local function _5_()

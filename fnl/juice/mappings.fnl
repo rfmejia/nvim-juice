@@ -4,7 +4,7 @@
 
 (fn setup []
   (comment "---- GENERAL MAPPINGS ----")
-  (nmap :Y :y$ [])
+  (nmap :Y :y$)
   (nmap :<C-l> ":nohl<cr>" [:noremap])
   (nmap "<leader>;" ":<C-r>\"" [:noremap])
   (nmap :<leader>w ":w<cr>" [:noremap])

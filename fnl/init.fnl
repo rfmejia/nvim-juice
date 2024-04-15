@@ -1,5 +1,6 @@
 ; check and install `nfnl` and `lazy.nvim`
-((. (require :juice.bootstrap) :setup))
+((-> (require :juice.bootstrap)
+     (. :setup)))
 
 (local {: autoload} (require :nfnl.module))
 (local {: build-statusline} (autoload :juice.statusline))

@@ -6,6 +6,8 @@
         rel-fnl-path (vim.fn.fnamemodify fnl-path ":.")]
     (if (= rel-fnl-path :fnl/init.fnl)
         (default.fnl-path->lua-path :init.lua)
+        (= rel-fnl-path :fnl/bootstrap.fnl)
+        (default.fnl-path->lua-path :bootstrap.lua)
         (string.match rel-fnl-path :fnl/after)
         (let [segments (str.split rel-fnl-path "/")
               path (core.butlast (core.rest segments))

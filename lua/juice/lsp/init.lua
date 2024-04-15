@@ -7,6 +7,8 @@ local function setup_go()
   return lspconfig.gopls.setup({settings = settings})
 end
 local function set_buffer_opts(client, bufnr)
+  _G.assert((nil ~= bufnr), "Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/init.fnl:8")
+  _G.assert((nil ~= client), "Missing argument client on /home/rfmejia/.config/nvim/fnl/juice/lsp/init.fnl:8")
   local _local_2_ = autoload("juice.util")
   local nmap = _local_2_["nmap"]
   local imap = _local_2_["imap"]

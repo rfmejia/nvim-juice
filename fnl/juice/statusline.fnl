@@ -21,7 +21,7 @@
       branch (set vim.g.git_branch branch)
       (nil err-msg) (print "Could not get `git branch`: " err-msg))))
 
-(fn count-diagnostic [severity]
+(lambda count-diagnostic [severity]
   "Returns 'n! ' where n is the number of diagnostic messages, otherwise an empty string"
   (let [n (count (vim.diagnostic.get 0 {: severity}))]
     (if (> n 0)

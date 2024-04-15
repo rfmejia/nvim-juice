@@ -21,31 +21,34 @@
   "Defines a keymap in terminal mode"
   (vim.keymap.set :t key map (make-opts opts)))
 
-(fn lua-cmd [str]
+(lambda lua-cmd [str]
   "Wraps a Lua command string in a viml command string"
   (string.format "<cmd>lua %s<cr>" str))
 
-(fn lua-statusline [command]
+(lambda lua-statusline [command]
   "Wraps a Lua command string in vim statusline string"
   (string.format "%%{luaeval(\"%s\")}" command))
 
-(fn executable? [cmd]
-  (= (vim.fn.executable cmd) 1))
+(lambda executable? [cmd]
+  (-> (vim.fn.executable cmd)
+      (= 1)))
 
-(fn has? [cmd]
-  (= (vim.fn.has cmd) 1))
+(lambda has? [cmd]
+  (-> (vim.fn.has cmd)
+      (= 1)))
 
-(fn exists? [env]
+(lambda exists? [env]
   (= (vim.fn.exists env) 1))
 
-(fn set-opts [options]
+(lambda set-opts [options]
   "Given an `options` table, set each pair as `vim.opt.<key> = <value>`"
   (when (table? options)
     (each [k v (pairs options)]
       (tset vim.opt k v))))
 
-(fn auto-setup [module]
-  ((. (autoload module) :setup)))
+(lambda auto-setup [module]
+  ((-> (autoload module)
+       (. :setup))))
 
 {: nmap
  : imap

@@ -11,14 +11,17 @@
 (comment "FIXME This doesn't seem to be reflected" "indentkeys:remove" ["<>>"])
 
 (fn run-scalafmt [path]
-  (let [filename (if (blank? path) (vim.fn.expand "%:p") path)]
-    (vim.fn.system [:scalafmt
-                    :--mode
-                    :changed
-                    :--config
-                    :.scalafmt.conf
-                    filename
-                    filename])))
+  (let [filename (if (blank? path) (vim.fn.expand "%:p") path)
+        scalafmt-cmd [:scalafmt
+                      :--mode
+                      :changed
+                      :--config
+                      :.scalafmt.conf
+                      filename
+                      filename]]
+    (match (vim.fn.system scalafmt-cmd)
+      ok (vim.cmd :e!)
+      (nil err-msg) (print "Could not run `scalafmt`: " err-msg))))
 
 (user-command :ScalafmtApply (fn [] (run-scalafmt)) {:bang true})
 

@@ -1,7 +1,7 @@
 (local {: autoload} (require :nfnl.module))
 (local {: executable?} (autoload :juice.util))
 
-(fn color-attr [hl-group attribute]
+(lambda color-attr [hl-group attribute]
   "Extract an attribute from an existing highlight group"
   (. (vim.api.nvim_get_hl 0 {:name hl-group}) attribute))
 
@@ -41,7 +41,7 @@
 (fn show-extra-whitespace []
   (vim.api.nvim_set_hl 0 :ExtraWhitespace groups.ExtraWhitespace))
 
-(fn get-gnome-colorscheme [dark-scheme light-scheme]
+(lambda get-gnome-colorscheme [dark-scheme light-scheme]
   "If in Gnome check the current system theme and set nvim theme"
   (let [gsettings-cmd [:gsettings
                        :get

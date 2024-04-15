@@ -5,7 +5,7 @@
         settings {:gopls {:analyses {:unusedparams true} :staticcheck true}}]
     (lspconfig.gopls.setup {: settings})))
 
-(fn set-buffer-opts [client bufnr]
+(lambda set-buffer-opts [client bufnr]
   "Buffer-specific lsp options"
   (local {: nmap : imap} (autoload :juice.util))
   (imap :<C-space> :<C-x><C-o> [:noremap :silent])

@@ -1,4 +1,4 @@
-(fn toggle-window [toggle-qf?]
+(lambda toggle-window [toggle-qf?]
   (let [count-win (fn [] (vim.fn.winnr "$"))
         current (count-win)
         open-cmd (if toggle-qf? :copen :lopen)

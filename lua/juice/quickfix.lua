@@ -1,5 +1,6 @@
 -- [nfnl] Compiled from fnl/juice/quickfix.fnl by https://github.com/Olical/nfnl, do not edit.
 local function toggle_window(toggle_qf_3f)
+  _G.assert((nil ~= toggle_qf_3f), "Missing argument toggle-qf? on /home/rfmejia/.config/nvim/fnl/juice/quickfix.fnl:1")
   local count_win
   local function _1_()
     return vim.fn.winnr("$")

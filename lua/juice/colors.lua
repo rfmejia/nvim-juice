@@ -4,6 +4,8 @@ local autoload = _local_1_["autoload"]
 local _local_2_ = autoload("juice.util")
 local executable_3f = _local_2_["executable?"]
 local function color_attr(hl_group, attribute)
+  _G.assert((nil ~= attribute), "Missing argument attribute on /home/rfmejia/.config/nvim/fnl/juice/colors.fnl:4")
+  _G.assert((nil ~= hl_group), "Missing argument hl-group on /home/rfmejia/.config/nvim/fnl/juice/colors.fnl:4")
   return (vim.api.nvim_get_hl(0, {name = hl_group}))[attribute]
 end
 local custom_colors = {["normal-bg"] = color_attr("Normal", "bg"), ["info-fg"] = color_attr("DiagnosticInfo", "fg"), ["error-fg"] = color_attr("DiagnosticError", "fg"), ["warn-fg"] = color_attr("DiagnosticWarn", "fg"), ["statusline-bg"] = color_attr("StatusLine", "bg"), ["dark-gray"] = "#3d3d3d", ["darker-gray"] = "#1d1d1d", ["dark-green"] = "#009000", ["light-gray"] = "#707070"}
@@ -13,6 +15,8 @@ local function show_extra_whitespace()
   return vim.api.nvim_set_hl(0, "ExtraWhitespace", groups.ExtraWhitespace)
 end
 local function get_gnome_colorscheme(dark_scheme, light_scheme)
+  _G.assert((nil ~= light_scheme), "Missing argument light-scheme on /home/rfmejia/.config/nvim/fnl/juice/colors.fnl:44")
+  _G.assert((nil ~= dark_scheme), "Missing argument dark-scheme on /home/rfmejia/.config/nvim/fnl/juice/colors.fnl:44")
   local gsettings_cmd = {"gsettings", "get", "org.gnome.desktop.interface", "color-scheme"}
   if executable_3f("gsettings") then
     local system_theme = vim.fn.system(gsettings_cmd)

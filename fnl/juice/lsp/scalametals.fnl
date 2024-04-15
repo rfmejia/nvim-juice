@@ -1,5 +1,7 @@
 (local {: autoload} (require :nfnl.module))
-(local {: autocmd : augroup : nmap : user-command : vmap} (autoload :juice.util))
+(local {: autocmd : augroup : nmap : user-command : vmap}
+       (autoload :juice.util))
+
 (local {: build-statusline} (autoload :juice.statusline))
 
 (fn initialize-metals []
@@ -24,7 +26,7 @@
                        :toggle_node_mapping :<CR>
                        :node_command_mapping :r})
     (set config.on_attach
-         (fn [client bufnr]
+         (lambda [client bufnr]
            (lsp.set-buffer-opts client bufnr)
            (set vim.opt.omnifunc "v:lua.vim.lsp.omnifunc")
            (vmap :K (fn [] (metals.type_of_range)) [:noremap :silent])

@@ -39,6 +39,7 @@ local function git_branch()
   end
 end
 local function count_diagnostic(severity)
+  _G.assert((nil ~= severity), "Missing argument severity on /home/rfmejia/.config/nvim/fnl/juice/statusline.fnl:24")
   local n = count(vim.diagnostic.get(0, {severity = severity}))
   if (n > 0) then
     return (n .. "! ")

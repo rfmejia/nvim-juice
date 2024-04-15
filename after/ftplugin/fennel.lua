@@ -14,9 +14,19 @@ local function format_fennel(path)
   else
     filename = path
   end
-  return vim.fn.system({"fnlfmt", "--fix", filename})
+  local fnlfmt_cmd = {"fnlfmt", "--fix", filename}
+  local _5_, _6_ = vim.fn.system(fnlfmt_cmd)
+  if (nil ~= _5_) then
+    local ok = _5_
+    return vim.cmd("e!")
+  elseif ((_5_ == nil) and (nil ~= _6_)) then
+    local err_msg = _6_
+    return print("Could not run `fnlfmt`: ", err_msg)
+  else
+    return nil
+  end
 end
-local function _5_()
+local function _8_()
   return format_fennel(vim.fn.expand("%:p"))
 end
-return nmap("<localleader>cf", _5_, {"buffer"})
+return nmap("<localleader>cf", _8_, {"buffer"})

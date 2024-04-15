@@ -12,7 +12,7 @@ local toggle_qf_window = _local_3_["toggle-qf-window"]
 local toggle_loclist_window = _local_3_["toggle-loclist-window"]
 local function setup()
   --[[ "---- GENERAL MAPPINGS ----" ]]
-  nmap("Y", "y$", {})
+  nmap("Y", "y$")
   nmap("<C-l>", ":nohl<cr>", {"noremap"})
   nmap("<leader>;", ":<C-r>\"", {"noremap"})
   nmap("<leader>w", ":w<cr>", {"noremap"})
@@ -97,6 +97,7 @@ local function setup()
   --[[ "---- EXTERNAL APPS ----" ]]
   --[[ "utilites in tmux split" ]]
   if exists_3f("$TMUX") then
+    --[[ "FIXME handle case where if we are inside nvim with split" ]]
     nmap("<M-h>", ":!tmux select-pane -L <cr><cr>", {"noremap", "silent"})
     nmap("<M-l>", ":!tmux select-pane -R <cr><cr>", {"noremap", "silent"})
     nmap("<M-k>", ":!tmux select-pane -U <cr><cr>", {"noremap", "silent"})

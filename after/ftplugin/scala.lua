@@ -17,16 +17,26 @@ local function run_scalafmt(path)
   else
     filename = path
   end
-  return vim.fn.system({"scalafmt", "--mode", "changed", "--config", ".scalafmt.conf", filename, filename})
+  local scalafmt_cmd = {"scalafmt", "--mode", "changed", "--config", ".scalafmt.conf", filename, filename}
+  local _5_, _6_ = vim.fn.system(scalafmt_cmd)
+  if (nil ~= _5_) then
+    local ok = _5_
+    return vim.cmd("e!")
+  elseif ((_5_ == nil) and (nil ~= _6_)) then
+    local err_msg = _6_
+    return print("Could not run `scalafmt`: ", err_msg)
+  else
+    return nil
+  end
 end
-local function _5_()
+local function _8_()
   return run_scalafmt()
 end
-user_command("ScalafmtApply", _5_, {bang = true})
-local function _6_()
+user_command("ScalafmtApply", _8_, {bang = true})
+local function _9_()
   return run_scalafmt(vim.fn.expand("%:p"))
 end
-nmap("<localleader>cf", _6_, {"noremap", "nowait", "silent", "buffer"})
+nmap("<localleader>cf", _9_, {"noremap", "nowait", "silent", "buffer"})
 nmap("<localleader>s", "vip:sort<cr>", {"noremap", "nowait", "silent", "buffer"})
 if executable_3f("sbtn") then
   nmap("<leader>os", ":!tmux split-window -v -l 30\\% sbtn<cr><cr>", {"noremap", "silent", "buffer"})
