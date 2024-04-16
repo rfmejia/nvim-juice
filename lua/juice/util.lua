@@ -39,7 +39,7 @@ local function has_3f(cmd)
   _G.assert((nil ~= cmd), "Missing argument cmd on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:36")
   return (vim.fn.has(cmd) == 1)
 end
-local function exists_3f(env)
+local function env_exists_3f(env)
   _G.assert((nil ~= env), "Missing argument env on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:40")
   return (vim.fn.exists(env) == 1)
 end
@@ -58,4 +58,4 @@ local function auto_setup(module)
   _G.assert((nil ~= module), "Missing argument module on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:49")
   return autoload(module).setup()
 end
-return {nmap = nmap, imap = imap, vmap = vmap, tmap = tmap, ["lua-cmd"] = lua_cmd, ["lua-statusline"] = lua_statusline, ["executable?"] = executable_3f, ["has?"] = has_3f, ["exists?"] = exists_3f, ["set-opts"] = set_opts, ["auto-setup"] = auto_setup, augroup = vim.api.nvim_create_augroup, autocmd = vim.api.nvim_create_autocmd, ["user-command"] = vim.api.nvim_create_user_command}
+return {nmap = nmap, imap = imap, vmap = vmap, tmap = tmap, ["lua-cmd"] = lua_cmd, ["lua-statusline"] = lua_statusline, ["executable?"] = executable_3f, ["has?"] = has_3f, ["env-exists?"] = env_exists_3f, ["set-opts"] = set_opts, ["auto-setup"] = auto_setup, augroup = vim.api.nvim_create_augroup, autocmd = vim.api.nvim_create_autocmd, ["user-command"] = vim.api.nvim_create_user_command}

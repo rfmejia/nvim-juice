@@ -27,7 +27,7 @@ end
 local function _7_()
   local telescope = autoload("telescope")
   local actions = autoload("telescope.actions")
-  local config = {defaults = {layout_config = {prompt_position = "bottom", height = 0.6}, layout_strategy = "bottom_pane", mappings = {i = {["<esc>"] = actions.close, ["<C-u>"] = false}}, path_display = {"truncate"}, prompt_prefix = ":", border = false, preview = false}}
+  local config = {defaults = {layout_config = {prompt_position = "bottom", height = 0.6}, layout_strategy = "bottom_pane", mappings = {i = {["<esc>"] = actions.close, ["<C-u>"] = false}}, path_display = {"truncate"}, prompt_prefix = ":", preview = false, border = false}}
   return telescope.setup(config)
 end
 local function _8_()

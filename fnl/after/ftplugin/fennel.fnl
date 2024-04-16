@@ -4,6 +4,7 @@
 
 (set-opts {:shiftwidth 2 :tabstop 2 :expandtab true :textwidth 100})
 
+; TODO check if thu buffer is not dirty before running fnlfmt
 (fn format-fennel [path]
   (let [filename (if (blank? path)
                      (vim.fn.expand "%:p")

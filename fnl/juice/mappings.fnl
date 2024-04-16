@@ -1,5 +1,7 @@
 (local {: autoload} (require :nfnl.module))
-(local {: nmap : imap : vmap : exists? : executable?} (autoload :juice.util))
+(local {: nmap : imap : vmap : env-exists? : executable?}
+       (autoload :juice.util))
+
 (local {: toggle-qf-window : toggle-loclist-window} (autoload :juice.quickfix))
 
 (fn setup []
@@ -87,18 +89,23 @@
   (nmap :<leader>/l ":.,+s//g<left><left><left><left>" [:noremap])
   (nmap :<leader>/w ":s/\\<<c-r><c-w>\\>//g<left><left>" [:noremap])
   (nmap :<leader>/W ":%s/\\<<c-r><c-w>\\>//g<left><left>" [:noremap])
-  (comment "---- EXTERNAL APPS ----")
-  (comment "utilites in tmux split")
-  (when (exists? :$TMUX)
-    (comment "FIXME handle case where if we are inside nvim with split")
-    (nmap :<M-h> ":!tmux select-pane -L <cr><cr>" [:noremap :silent])
-    (nmap :<M-l> ":!tmux select-pane -R <cr><cr>" [:noremap :silent])
-    (nmap :<M-k> ":!tmux select-pane -U <cr><cr>" [:noremap :silent])
-    (nmap :<M-j> ":!tmux select-pane -D <cr><cr>" [:noremap :silent])
-    (when (executable? :lazygit)
-      (nmap :<leader>og ":!tmux neww lazygit<cr><cr>" [:noremap :silent])))
-  (comment "personal journal")
-  (when (exists? :$JOURNAL)
+  (comment "---- TMUX ----")
+  (if (env-exists? :$TMUX)
+      (do
+        (let [tmux (autoload :juice.tmux)]
+          (nmap :<M-h> tmux.navigate-left [:noremap :silent])
+          (nmap :<M-l> tmux.navigate-right [:noremap :silent])
+          (nmap :<M-k> tmux.navigate-up [:noremap :silent])
+          (nmap :<M-j> tmux.navigate-down [:noremap :silent]))
+        (when (executable? :lazygit)
+          (nmap :<leader>og ":!tmux neww lazygit<cr><cr>" [:noremap :silent])))
+      (do
+        (nmap :<M-h> (lua-cmd "wincmd h") [:noremap :silent])
+        (nmap :<M-l> (lua-cmd "wincmd l") [:noremap :silent])
+        (nmap :<M-k> (lua-cmd "wincmd k") [:noremap :silent])
+        (nmap :<M-j> (lua-cmd "wincmd j") [:noremap :silent])))
+  (comment "---- JOURNAL ----")
+  (when (env-exists? :$JOURNAL)
     (nmap :<leader>oj (fn [] (vim.cmd (.. ":$tabnew" :$JOURNAL/journal.adoc)))
           [:noremap :silent])
     (nmap :<leader>ov (fn [] (vim.cmd (.. ":$tabnew" :$JOURNAL/vim/vim.md)))

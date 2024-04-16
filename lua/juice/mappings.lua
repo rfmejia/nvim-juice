@@ -5,7 +5,7 @@ local _local_2_ = autoload("juice.util")
 local nmap = _local_2_["nmap"]
 local imap = _local_2_["imap"]
 local vmap = _local_2_["vmap"]
-local exists_3f = _local_2_["exists?"]
+local env_exists_3f = _local_2_["env-exists?"]
 local executable_3f = _local_2_["executable?"]
 local _local_3_ = autoload("juice.quickfix")
 local toggle_qf_window = _local_3_["toggle-qf-window"]
@@ -94,22 +94,27 @@ local function setup()
   nmap("<leader>/l", ":.,+s//g<left><left><left><left>", {"noremap"})
   nmap("<leader>/w", ":s/\\<<c-r><c-w>\\>//g<left><left>", {"noremap"})
   nmap("<leader>/W", ":%s/\\<<c-r><c-w>\\>//g<left><left>", {"noremap"})
-  --[[ "---- EXTERNAL APPS ----" ]]
-  --[[ "utilites in tmux split" ]]
-  if exists_3f("$TMUX") then
-    --[[ "FIXME handle case where if we are inside nvim with split" ]]
-    nmap("<M-h>", ":!tmux select-pane -L <cr><cr>", {"noremap", "silent"})
-    nmap("<M-l>", ":!tmux select-pane -R <cr><cr>", {"noremap", "silent"})
-    nmap("<M-k>", ":!tmux select-pane -U <cr><cr>", {"noremap", "silent"})
-    nmap("<M-j>", ":!tmux select-pane -D <cr><cr>", {"noremap", "silent"})
+  --[[ "---- TMUX ----" ]]
+  if env_exists_3f("$TMUX") then
+    do
+      local tmux = autoload("juice.tmux")
+      nmap("<M-h>", tmux["navigate-left"], {"noremap", "silent"})
+      nmap("<M-l>", tmux["navigate-right"], {"noremap", "silent"})
+      nmap("<M-k>", tmux["navigate-up"], {"noremap", "silent"})
+      nmap("<M-j>", tmux["navigate-down"], {"noremap", "silent"})
+    end
     if executable_3f("lazygit") then
       nmap("<leader>og", ":!tmux neww lazygit<cr><cr>", {"noremap", "silent"})
     else
     end
   else
+    nmap("<M-h>", __fnl_global__lua_2dcmd("wincmd h"), {"noremap", "silent"})
+    nmap("<M-l>", __fnl_global__lua_2dcmd("wincmd l"), {"noremap", "silent"})
+    nmap("<M-k>", __fnl_global__lua_2dcmd("wincmd k"), {"noremap", "silent"})
+    nmap("<M-j>", __fnl_global__lua_2dcmd("wincmd j"), {"noremap", "silent"})
   end
-  --[[ "personal journal" ]]
-  if exists_3f("$JOURNAL") then
+  --[[ "---- JOURNAL ----" ]]
+  if env_exists_3f("$JOURNAL") then
     local function _6_()
       return vim.cmd((":$tabnew" .. "$JOURNAL/journal.adoc"))
     end
