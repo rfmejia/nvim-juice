@@ -33,10 +33,7 @@ local function _8_()
   return run_scalafmt()
 end
 user_command("ScalafmtApply", _8_, {bang = true})
-local function _9_()
-  return run_scalafmt(vim.fn.expand("%:p"))
-end
-nmap("<localleader>cf", _9_, {"noremap", "nowait", "silent", "buffer"})
+--[[ "Make sure we respect lsp if it's enabled" (nmap "<localleader>cf" (fn [] (run-scalafmt (vim.fn.expand "%:p"))) ["noremap" "nowait" "silent" "buffer"]) ]]
 nmap("<localleader>s", "vip:sort<cr>", {"noremap", "nowait", "silent", "buffer"})
 if executable_3f("sbtn") then
   nmap("<leader>os", ":!tmux split-window -v -l 30\\% sbtn<cr><cr>", {"noremap", "silent", "buffer"})

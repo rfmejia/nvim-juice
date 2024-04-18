@@ -25,8 +25,9 @@
 
 (user-command :ScalafmtApply (fn [] (run-scalafmt)) {:bang true})
 
-(nmap :<localleader>cf (fn [] (run-scalafmt (vim.fn.expand "%:p")))
-      [:noremap :nowait :silent :buffer])
+(comment "Make sure we respect lsp if it's enabled"
+  (nmap :<localleader>cf (fn [] (run-scalafmt (vim.fn.expand "%:p")))
+        [:noremap :nowait :silent :buffer]))
 
 (nmap :<localleader>s "vip:sort<cr>" [:noremap :nowait :silent :buffer])
 
