@@ -10,7 +10,6 @@ local count = _local_4_["count"]
 local function git_file_status()
   local path = vim.fn.expand("%:p")
   local git_cmd = ("git file-status " .. path .. " | tr -d ' \\n'")
-  --[[ "TODO Check: if directory then set to blank" ]]
   local _5_, _6_ = vim.fn.system(git_cmd)
   if (nil ~= _5_) then
     local status = _5_
@@ -39,7 +38,7 @@ local function git_branch()
   end
 end
 local function count_diagnostic(severity)
-  _G.assert((nil ~= severity), "Missing argument severity on /home/rfmejia/.config/nvim/fnl/juice/statusline.fnl:24")
+  _G.assert((nil ~= severity), "Missing argument severity on /home/rfmejia/.config/nvim/fnl/juice/statusline.fnl:23")
   local n = count(vim.diagnostic.get(vim.api.nvim_get_current_buf(), {severity = severity}))
   if (n > 0) then
     return (n .. "! ")

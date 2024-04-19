@@ -78,19 +78,14 @@
          :keys [:cs :ds :ys]
          :config (fn [] (auto-setup :nvim-surround))}])
 
-(local dev-tools [{1 :neovim/nvim-lspconfig
-                   :ft [:go :scala]
-                   :config (fn [] (auto-setup :juice.lsp))}
-                  {1 :scalameta/nvim-metals
-                   :cmd :MetalsInit
-                   :dependencies [:nvim-lua/plenary.nvim]}
-                  {1 :Olical/conjure :ft [:clojure :fennel :lisp :scheme]}
-                  {1 :github/copilot.vim
-                   :cmd :Copilot
-                   :config (fn []
-                             (set vim.g.copilot_workspace_folders
-                                  [:$WORKSPACE/myshake-backends
-                                   :$WORKSPACE/myshake-bc]))}])
+(local dev-tools
+       [{1 :neovim/nvim-lspconfig
+         :ft [:go :scala]
+         :config (fn [] (auto-setup :juice.lsp))}
+        {1 :scalameta/nvim-metals
+         :cmd :MetalsInit
+         :dependencies [:nvim-lua/plenary.nvim]}
+        {1 :Olical/conjure :ft [:clojure :fennel :lisp :scheme]}])
 
 (local database-tools
        [{1 :kristijanhusak/vim-dadbod-ui

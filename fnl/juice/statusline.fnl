@@ -7,7 +7,6 @@
   "Updates the git flag(s) of the current file inside g:gitfile"
   (let [path (vim.fn.expand "%:p")
         git-cmd (.. "git file-status " path " | tr -d ' \\n'")]
-    (comment "TODO Check: if directory then set to blank")
     (match (vim.fn.system git-cmd)
       status (set vim.g.git_file_status status)
       (nil err-msg) (print "Could not get `git file-status`: " err-msg))))

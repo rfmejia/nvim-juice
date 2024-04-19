@@ -51,19 +51,15 @@ local dev_tools
 local function _12_()
   return auto_setup("juice.lsp")
 end
-local function _13_()
-  vim.g.copilot_workspace_folders = {"$WORKSPACE/myshake-backends", "$WORKSPACE/myshake-bc"}
-  return nil
-end
-dev_tools = {{"neovim/nvim-lspconfig", ft = {"go", "scala"}, config = _12_}, {"scalameta/nvim-metals", cmd = "MetalsInit", dependencies = {"nvim-lua/plenary.nvim"}}, {"Olical/conjure", ft = {"clojure", "fennel", "lisp", "scheme"}}, {"github/copilot.vim", cmd = "Copilot", config = _13_}}
+dev_tools = {{"neovim/nvim-lspconfig", ft = {"go", "scala"}, config = _12_}, {"scalameta/nvim-metals", cmd = "MetalsInit", dependencies = {"nvim-lua/plenary.nvim"}}, {"Olical/conjure", ft = {"clojure", "fennel", "lisp", "scheme"}}}
 local database_tools
-local function _14_()
-  local function _15_()
+local function _13_()
+  local function _14_()
     return set_opts({commentstring = "-- %s", omnifunc = "vim_dadbod_completion#omni"})
   end
-  return autocmd("FileType", {pattern = {"sql", "mysql"}, callback = _15_})
+  return autocmd("FileType", {pattern = {"sql", "mysql"}, callback = _14_})
 end
-database_tools = {{"kristijanhusak/vim-dadbod-ui", cmd = {"DBUI", "DBUIToggle"}, config = _14_, dependencies = {{"tpope/vim-dadbod", lazy = true}, {"kristijanhusak/vim-dadbod-completion", lazy = true, ft = {"sql", "mysql"}}}}}
+database_tools = {{"kristijanhusak/vim-dadbod-ui", cmd = {"DBUI", "DBUIToggle"}, config = _13_, dependencies = {{"tpope/vim-dadbod", lazy = true}, {"kristijanhusak/vim-dadbod-completion", lazy = true, ft = {"sql", "mysql"}}}}}
 local function setup()
   local lazy = autoload("lazy")
   local plugins = concat(core, ui_tools, text_tools, dev_tools, database_tools)
