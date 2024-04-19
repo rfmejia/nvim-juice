@@ -4,17 +4,16 @@
 
 (set-opts {:shiftwidth 2 :tabstop 2 :expandtab true :textwidth 100})
 
-; TODO check if thu buffer is not dirty before running fnlfmt
-(fn format-fennel [path]
-  (let [filename (if (blank? path)
-                     (vim.fn.expand "%:p")
-                     path)
-        fnlfmt-cmd [:fnlfmt :--fix filename]]
-    (match (vim.fn.system fnlfmt-cmd)
-      ok (vim.cmd :e!)
-      (nil err-msg) (print "Could not run `fnlfmt`: " err-msg))))
+(lambda buffer-is-modified [buf-num]
+  (vim.api.nvim_buf_get_option buf-num :modified))
 
-(nmap :<localleader>cf (fn []
-                         (->> (vim.fn.expand "%:p")
-                              (format-fennel)))
-      [:buffer])
+(lambda format-fennel [path]
+  (let [modified (buffer-is-modified (vim.api.nvim_get_current_buf))
+        fnlfmt-cmd [:fnlfmt :--fix path]]
+    (if (not modified)
+        (match (vim.fn.system fnlfmt-cmd)
+          ok (vim.cmd :e!)
+          (nil err-msg) (print "Could not run `fnlfmt`: " err-msg))
+        (error "fnlfmt: cannot format a modified buffer"))))
+
+(nmap :<localleader>cf (fn [] (format-fennel (vim.fn.expand "%:p"))) [:buffer])
