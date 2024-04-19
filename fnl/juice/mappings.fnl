@@ -1,5 +1,5 @@
 (local {: autoload} (require :nfnl.module))
-(local {: nmap : imap : vmap : executable?} (autoload :juice.util))
+(local {: lua-cmd : nmap : imap : vmap : executable?} (autoload :juice.util))
 (local {: toggle-qf-window : toggle-loclist-window} (autoload :juice.quickfix))
 
 (fn setup []

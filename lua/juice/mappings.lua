@@ -2,6 +2,7 @@
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local _local_2_ = autoload("juice.util")
+local lua_cmd = _local_2_["lua-cmd"]
 local nmap = _local_2_["nmap"]
 local imap = _local_2_["imap"]
 local vmap = _local_2_["vmap"]
@@ -107,10 +108,10 @@ local function setup()
     else
     end
   else
-    nmap("<M-h>", __fnl_global__lua_2dcmd("wincmd h"), {"noremap", "silent"})
-    nmap("<M-l>", __fnl_global__lua_2dcmd("wincmd l"), {"noremap", "silent"})
-    nmap("<M-k>", __fnl_global__lua_2dcmd("wincmd k"), {"noremap", "silent"})
-    nmap("<M-j>", __fnl_global__lua_2dcmd("wincmd j"), {"noremap", "silent"})
+    nmap("<M-h>", lua_cmd("wincmd h"), {"noremap", "silent"})
+    nmap("<M-l>", lua_cmd("wincmd l"), {"noremap", "silent"})
+    nmap("<M-k>", lua_cmd("wincmd k"), {"noremap", "silent"})
+    nmap("<M-j>", lua_cmd("wincmd j"), {"noremap", "silent"})
   end
   --[[ "---- JOURNAL ----" ]]
   if vim.env.JOURNAL then
