@@ -5,7 +5,6 @@ local _local_2_ = autoload("juice.util")
 local nmap = _local_2_["nmap"]
 local imap = _local_2_["imap"]
 local vmap = _local_2_["vmap"]
-local env_exists_3f = _local_2_["env-exists?"]
 local executable_3f = _local_2_["executable?"]
 local _local_3_ = autoload("juice.quickfix")
 local toggle_qf_window = _local_3_["toggle-qf-window"]
@@ -95,7 +94,7 @@ local function setup()
   nmap("<leader>/w", ":s/\\<<c-r><c-w>\\>//g<left><left>", {"noremap"})
   nmap("<leader>/W", ":%s/\\<<c-r><c-w>\\>//g<left><left>", {"noremap"})
   --[[ "---- TMUX ----" ]]
-  if env_exists_3f("$TMUX") then
+  if vim.env.TMUX then
     do
       local tmux = autoload("juice.tmux")
       nmap("<M-h>", tmux["navigate-left"], {"noremap", "silent"})
@@ -114,7 +113,7 @@ local function setup()
     nmap("<M-j>", __fnl_global__lua_2dcmd("wincmd j"), {"noremap", "silent"})
   end
   --[[ "---- JOURNAL ----" ]]
-  if env_exists_3f("$JOURNAL") then
+  if vim.env.JOURNAL then
     local function _6_()
       return vim.cmd((":$tabnew" .. "$JOURNAL/journal.adoc"))
     end

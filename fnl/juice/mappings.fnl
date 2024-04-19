@@ -1,7 +1,5 @@
 (local {: autoload} (require :nfnl.module))
-(local {: nmap : imap : vmap : env-exists? : executable?}
-       (autoload :juice.util))
-
+(local {: nmap : imap : vmap : executable?} (autoload :juice.util))
 (local {: toggle-qf-window : toggle-loclist-window} (autoload :juice.quickfix))
 
 (fn setup []
@@ -90,7 +88,7 @@
   (nmap :<leader>/w ":s/\\<<c-r><c-w>\\>//g<left><left>" [:noremap])
   (nmap :<leader>/W ":%s/\\<<c-r><c-w>\\>//g<left><left>" [:noremap])
   (comment "---- TMUX ----")
-  (if (env-exists? :$TMUX)
+  (if vim.env.TMUX
       (do
         (let [tmux (autoload :juice.tmux)]
           (nmap :<M-h> tmux.navigate-left [:noremap :silent])
@@ -105,7 +103,7 @@
         (nmap :<M-k> (lua-cmd "wincmd k") [:noremap :silent])
         (nmap :<M-j> (lua-cmd "wincmd j") [:noremap :silent])))
   (comment "---- JOURNAL ----")
-  (when (env-exists? :$JOURNAL)
+  (when vim.env.JOURNAL
     (nmap :<leader>oj (fn [] (vim.cmd (.. ":$tabnew" :$JOURNAL/journal.adoc)))
           [:noremap :silent])
     (nmap :<leader>ov (fn [] (vim.cmd (.. ":$tabnew" :$JOURNAL/vim/vim.md)))

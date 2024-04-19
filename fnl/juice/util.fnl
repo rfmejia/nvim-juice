@@ -37,9 +37,6 @@
   (-> (vim.fn.has cmd)
       (= 1)))
 
-(lambda env-exists? [env]
-  (= (vim.fn.exists env) 1))
-
 (lambda set-opts [options]
   "Given an `options` table, set each pair as `vim.opt.<key> = <value>`"
   (when (table? options)
@@ -58,7 +55,6 @@
  : lua-statusline
  : executable?
  : has?
- : env-exists?
  : set-opts
  : auto-setup
  :augroup vim.api.nvim_create_augroup
