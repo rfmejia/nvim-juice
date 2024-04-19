@@ -23,7 +23,9 @@
 
 (lambda count-diagnostic [severity]
   "Returns 'n! ' where n is the number of diagnostic messages, otherwise an empty string"
-  (let [n (count (vim.diagnostic.get 0 {: severity}))]
+  (let [n (-> (vim.api.nvim_get_current_buf)
+              (vim.diagnostic.get {: severity})
+              (count))]
     (if (> n 0)
         (.. n "! ") "")))
 
