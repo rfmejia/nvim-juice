@@ -12,55 +12,52 @@ local toggle_qf_window = _local_3_["toggle-qf-window"]
 local toggle_loclist_window = _local_3_["toggle-loclist-window"]
 local function setup()
   --[[ "---- GENERAL MAPPINGS ----" ]]
-  nmap("Y", "y$")
-  nmap("<C-l>", ":nohl<cr>", {"noremap"})
-  nmap("<leader>;", ":<C-r>\"", {"noremap"})
-  nmap("<leader>w", ":w<cr>", {"noremap"})
-  nmap("<leader>n", ":registers<cr>", {"noremap"})
-  nmap("<F5>", ":make<cr>", {"noremap"})
-  --[[ "Vertically center screen when page scrolling up/down" ]]
-  nmap("<C-d>", "<C-d>zz", {"noremap", "silent"})
-  nmap("<C-u>", "<C-u>zz", {"noremap", "silent"})
-  nmap("<C-o>", "<C-o>zz", {"noremap", "silent"})
-  nmap("<C-i>", "<C-i>zz", {"noremap", "silent"})
-  --[[ "Map omnifunc" ]]
-  imap("<C-t>", "<C-x><C-o>", {"noremap", "silent"})
-  --[[ "easier moving of blocks in visual mode" ]]
-  vmap("<", "<gv", {"noremap"})
-  vmap(">", ">gv", {"noremap"})
-  --[[ "add undo step when typing sentences" ]]
-  imap("\"", "\"<C-g>u", {"noremap", "silent"})
-  imap(".", ".<C-g>u", {"noremap", "silent"})
-  imap("!", "!<C-g>u", {"noremap", "silent"})
-  imap("?", "?<C-g>u", {"noremap", "silent"})
-  imap("(", "(<C-g>u", {"noremap", "silent"})
-  imap(")", ")<C-g>u", {"noremap", "silent"})
-  imap("{", "{<C-g>u", {"noremap", "silent"})
-  imap("}", "}<C-g>u", {"noremap", "silent"})
-  imap("[", "[<C-g>u", {"noremap", "silent"})
-  imap("]", "]<C-g>u", {"noremap", "silent"})
-  --[[ "date shortcuts" ]]
-  nmap("<leader>dt", ":.!date '+\\%a, \\%d \\%b \\%Y'<cr>", {"noremap"})
-  nmap("<leader>dT", ":.!date '+\\%a, \\%d \\%b \\%Y' --date=", {})
+  nmap("Y", "y$", nil, "yank until the end of the line")
+  nmap("<C-l>", ":nohl<cr>", {"noremap"}, "clear search highlight")
+  nmap("<leader>;", ":<C-r>\"", {"noremap"}, "paste register 0 contents in command mode")
+  nmap("<leader>w", ":w<cr>", {"noremap"}, "write buffer")
+  nmap("<leader>n", ":registers<cr>", {"noremap"}, "list registers")
+  nmap("<F5>", ":make<cr>", {"noremap"}, "trigger `make` in shell")
+  do
+    nmap("<C-d>", "<C-d>zz", {"noremap", "silent"})
+    nmap("<C-u>", "<C-u>zz", {"noremap", "silent"})
+    nmap("<C-o>", "<C-o>zz", {"noremap", "silent"})
+    nmap("<C-i>", "<C-i>zz", {"noremap", "silent"})
+  end
+  imap("<C-t>", "<C-x><C-o>", {"noremap", "silent"}, "trigger omnicompletion")
+  do
+    vmap("<", "<gv", {"noremap"})
+    vmap(">", ">gv", {"noremap"})
+  end
+  do
+    imap("\"", "\"<C-g>u", {"noremap", "silent"})
+    imap(".", ".<C-g>u", {"noremap", "silent"})
+    imap("!", "!<C-g>u", {"noremap", "silent"})
+    imap("?", "?<C-g>u", {"noremap", "silent"})
+    imap("(", "(<C-g>u", {"noremap", "silent"})
+    imap(")", ")<C-g>u", {"noremap", "silent"})
+    imap("{", "{<C-g>u", {"noremap", "silent"})
+    imap("}", "}<C-g>u", {"noremap", "silent"})
+    imap("[", "[<C-g>u", {"noremap", "silent"})
+    imap("]", "]<C-g>u", {"noremap", "silent"})
+  end
+  do
+    nmap("<leader>dt", ":.!date '+\\%a, \\%d \\%b \\%Y'<cr>", {"noremap"}, "insert current date")
+    nmap("<leader>dT", ":.!date '+\\%a, \\%d \\%b \\%Y' --date=''<left>", nil, "prompt for date query")
+  end
   --[[ "select completion binding item" ]]
   vim.cmd("inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")
   --[[ "---- MARK MANAGEMENT ----" ]]
-  nmap("<leader>mm", ":marks ARST<cr>", {"noremap"})
-  nmap("<leader>mc", ":delmarks ARST<cr>:echo 'Cleared file marks'<cr>", {"noremap"})
-  nmap("<leader>a", "`Azz", {"noremap"})
-  nmap("<leader>r", "`Rzz", {"noremap"})
-  nmap("<leader>s", "`Szz", {"noremap"})
-  nmap("<leader>t", "`Tzz", {"noremap"})
-  nmap("<leader>ma", "mA:echo 'Marked file A'<cr>", {"noremap"})
-  nmap("<leader>mr", "mR:echo 'Marked file R'<cr>", {"noremap"})
-  nmap("<leader>ms", "mS:echo 'Marked file S'<cr>", {"noremap"})
-  nmap("<leader>mt", "mT:echo 'Marked file T'<cr>", {"noremap"})
-  --[[ "---- WINDOW MANAGEMENT ----" ]]
-  nmap("<M-h>", "<C-w>h", {"noremap", "silent"})
-  nmap("<M-j>", "<C-w>j", {"noremap", "silent"})
-  nmap("<M-k>", "<C-w>k", {"noremap", "silent"})
-  nmap("<M-l>", "<C-w>l", {"noremap", "silent"})
-  nmap("<C-p>", "<C-w>p", {"noremap", "silent"})
+  nmap("<leader>mm", ":marks ARST<cr>", {"noremap"}, "list special file marks")
+  nmap("<leader>mc", ":delmarks ARST<cr>:echo 'Cleared file marks'<cr>", {"noremap"}, "clear special file marks")
+  nmap("<leader>a", "`Azz", {"noremap"}, "jump to A mark")
+  nmap("<leader>r", "`Rzz", {"noremap"}, "jump to R mark")
+  nmap("<leader>s", "`Szz", {"noremap"}, "jump to S mark")
+  nmap("<leader>t", "`Tzz", {"noremap"}, "jump to T mark")
+  nmap("<leader>ma", "mA:echo 'Marked file A'<cr>", {"noremap"}, "set A mark")
+  nmap("<leader>mr", "mR:echo 'Marked file R'<cr>", {"noremap"}, "set R mark")
+  nmap("<leader>ms", "mS:echo 'Marked file S'<cr>", {"noremap"}, "set S mark")
+  nmap("<leader>mt", "mT:echo 'Marked file T'<cr>", {"noremap"}, "set T mark")
   --[[ "---- BUFFER MANAGEMENT ----" ]]
   nmap("<leader>b", ":buffers<cr>:buffer<Space>", {"noremap"})
   nmap("[B", ":bfirst<cr>", {"noremap"})
@@ -77,59 +74,61 @@ local function setup()
   nmap("[T", ":tabfirst<cr>", {"noremap"})
   nmap("]T", ":tablast<cr>", {"noremap"})
   --[[ "---- QUICKFIX LIST ----" ]]
-  nmap("<leader>c", toggle_qf_window, {"noremap"})
-  nmap("[c", ":cprevious<cr>", {"noremap"})
-  nmap("]c", ":cnext<cr>", {"noremap"})
-  nmap("[C", ":cfirst<cr>", {"noremap"})
-  nmap("]C", ":clast<cr>", {"noremap"})
-  --[[ "location list" ]]
-  nmap("<leader>l", toggle_loclist_window, {"noremap"})
-  nmap("[l", ":lprevious<cr>", {"noremap"})
-  nmap("]l", ":lnext<cr>", {"noremap"})
-  nmap("[L", ":lfirst<cr>", {"noremap"})
-  nmap("]L", ":llast<cr>", {"noremap"})
+  nmap("<leader>c", toggle_qf_window, {"noremap"}, "toggle quickfix list")
+  nmap("[c", ":cprevious<cr>", {"noremap"}, "jump to previous entry in quickfix list")
+  nmap("]c", ":cnext<cr>", {"noremap"}, "jump to previous entry in quickfix list")
+  nmap("[C", ":cfirst<cr>", {"noremap"}, "jump to previous entry in quickfix list")
+  nmap("]C", ":clast<cr>", {"noremap"}, "jump to previous entry in quickfix list")
+  nmap("<leader>l", toggle_loclist_window, {"noremap"}, "toggle loclist")
+  nmap("[l", ":lprevious<cr>", {"noremap"}, "jump to previous entry in loclist")
+  nmap("]l", ":lnext<cr>", {"noremap"}, "jump to next entry in loclist")
+  nmap("[L", ":lfirst<cr>", {"noremap"}, "jump to first entry in loclist")
+  nmap("]L", ":llast<cr>", {"noremap"}, "jump to last entry in loclist")
   --[[ "---- SEARCH/REPLACE ----" ]]
-  nmap("<leader>/s", ":s//g<left><left>", {"noremap"})
-  nmap("<leader>/S", ":%s//g<left><left>", {"noremap"})
-  nmap("<leader>/l", ":.,+s//g<left><left><left><left>", {"noremap"})
-  nmap("<leader>/w", ":s/\\<<c-r><c-w>\\>//g<left><left>", {"noremap"})
-  nmap("<leader>/W", ":%s/\\<<c-r><c-w>\\>//g<left><left>", {"noremap"})
+  nmap("<leader>/s", ":s//g<left><left>", {"noremap"}, "prompt for line search")
+  nmap("<leader>/S", ":%s//g<left><left>", {"noremap"}, "prompt for buffer search")
+  nmap("<leader>/w", ":s/\\<<c-r><c-w>\\>//g<left><left>", {"noremap"}, "prompt for line search and replace")
+  nmap("<leader>/W", ":%s/\\<<c-r><c-w>\\>//g<left><left>", {"noremap"}, "prompt for buffer search and replace")
+  nmap("<leader>/v", ":vim // *<left><left><left>", {"noremap"}, "prompt for global search")
+  --[[ "---- WINDOW MANAGEMENT ----" ]]
+  nmap("<C-p>", "<C-w>p", {"noremap", "silent"}, "jump to previous window")
+  if vim.env.TMUX then
+    local tmux = autoload("juice.tmux")
+    nmap("<M-h>", tmux["navigate-left"], {"noremap", "silent"}, "jump to the nvim/tmux window to the left")
+    nmap("<M-l>", tmux["navigate-right"], {"noremap", "silent"}, "jump to the nvim/tmux window to the right")
+    nmap("<M-k>", tmux["navigate-up"], {"noremap", "silent"}, "jump to the nvim/tmux window above")
+    nmap("<M-j>", tmux["navigate-down"], {"noremap", "silent"}, "jump to the nvim/tmux window below")
+  else
+    nmap("<M-h>", "<C-w>h", {"noremap", "silent"}, "jump to the window to the left")
+    nmap("<M-l>", "<C-w>l", {"noremap", "silent"}, "jump to the window to the right")
+    nmap("<M-k>", "<C-w>k", {"noremap", "silent"}, "jump to the window above")
+    nmap("<M-j>", "<C-w>j", {"noremap", "silent"}, "jump to the window below")
+  end
   --[[ "---- TMUX ----" ]]
   if vim.env.TMUX then
-    do
-      local tmux = autoload("juice.tmux")
-      nmap("<M-h>", tmux["navigate-left"], {"noremap", "silent"})
-      nmap("<M-l>", tmux["navigate-right"], {"noremap", "silent"})
-      nmap("<M-k>", tmux["navigate-up"], {"noremap", "silent"})
-      nmap("<M-j>", tmux["navigate-down"], {"noremap", "silent"})
-    end
     if executable_3f("lazygit") then
-      nmap("<leader>og", ":!tmux neww lazygit<cr><cr>", {"noremap", "silent"})
+      nmap("<leader>og", ":!tmux neww lazygit<cr><cr>", {"noremap", "silent"}, "open lazygit in a new tmux window")
     else
     end
   else
-    nmap("<M-h>", lua_cmd("wincmd h"), {"noremap", "silent"})
-    nmap("<M-l>", lua_cmd("wincmd l"), {"noremap", "silent"})
-    nmap("<M-k>", lua_cmd("wincmd k"), {"noremap", "silent"})
-    nmap("<M-j>", lua_cmd("wincmd j"), {"noremap", "silent"})
   end
   --[[ "---- JOURNAL ----" ]]
   if vim.env.JOURNAL then
-    local function _6_()
+    local function _7_()
       return vim.cmd((":$tabnew" .. "$JOURNAL/journal.adoc"))
     end
-    nmap("<leader>oj", _6_, {"noremap", "silent"})
-    local function _7_()
-      return vim.cmd((":$tabnew" .. "$JOURNAL/vim/vim.md"))
+    nmap("<leader>oj", _7_, {"noremap", "silent"}, "open journal in a new tab")
+    local function _8_()
+      return vim.cmd((":$tabnew" .. "$JOURNAL/vim/vim.adoc"))
     end
-    nmap("<leader>ov", _7_, {"noremap", "silent"})
+    nmap("<leader>ov", _8_, {"noremap", "silent"}, "open vim notes in a new tab")
   else
   end
   --[[ "---- PLUGINS ----" ]]
   nmap("<leader>L", ":Lazy<cr>", {"noremap", "silent"})
-  nmap("<leader>e", ":Oil<cr>", {"noremap", "silent"})
-  nmap("<leader>E", ":Oil .<cr>", {"noremap", "silent"})
-  nmap("<leader>u", ":UndotreeToggle<cr>", {"noremap", "silent"})
+  nmap("<leader>e", ":Oil<cr>", {"noremap", "silent"}, "explore files in current file's path")
+  nmap("<leader>E", ":Oil .<cr>", {"noremap", "silent"}, "explore files in current working dir")
+  nmap("<leader>u", ":UndotreeToggle<cr>", {"noremap", "silent"}, "toggle undotree")
   do
     local builtin = autoload("telescope.builtin")
     nmap("<leader>f", builtin.find_files, {"noremap", "silent"})
@@ -137,25 +136,21 @@ local function setup()
     nmap("<leader>p", builtin.oldfiles, {"noremap", "silent"})
     nmap("<leader>k", builtin.keymaps, {"noremap", "silent"})
   end
-  do
-    local gitsigns = autoload("gitsigns")
-    local function _9_()
-      return gitsigns.nav_hunk("next")
-    end
-    nmap("]h", _9_, {"noremap"})
-    local function _10_()
-      return gitsigns.nav_hunk("prev")
-    end
-    nmap("[h", _10_, {"noremap"})
-    local function _11_()
-      return gitsigns.blame_line({full = true})
-    end
-    nmap("<localleader>hS", _11_, {"noremap"})
-    nmap("<localleader>hp", gitsigns.preview_hunk, {"noremap"})
-    nmap("<localleader>hs", gitsigns.stage_hunk, {"noremap"})
-    nmap("<localleader>hS", gitsigns.undo_stage_hunk, {"noremap"})
+  local gitsigns = autoload("gitsigns")
+  local function _10_()
+    return gitsigns.nav_hunk("next")
   end
-  imap("<C-]>", "<Plug>(copilot-next)")
-  return imap("<C-[>", "<Plug>(copilot-prev)")
+  nmap("]h", _10_, {"noremap"})
+  local function _11_()
+    return gitsigns.nav_hunk("prev")
+  end
+  nmap("[h", _11_, {"noremap"})
+  local function _12_()
+    return gitsigns.blame_line({full = true})
+  end
+  nmap("<localleader>hS", _12_, {"noremap"})
+  nmap("<localleader>hp", gitsigns.preview_hunk, {"noremap"})
+  nmap("<localleader>hs", gitsigns.stage_hunk, {"noremap"})
+  return nmap("<localleader>hS", gitsigns.undo_stage_hunk, {"noremap"})
 end
 return {setup = setup}

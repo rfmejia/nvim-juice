@@ -1,10 +1,10 @@
 (local {: autoload} (require :nfnl.module))
 (local {: show-extra-whitespace} (autoload :juice.colors))
 (local {: git-branch : git-file-status} (autoload :juice.statusline))
-(local {: augroup : autocmd : user-command} (autoload :juice.util))
+(local {: augroup : autocmd} (autoload :juice.util))
 
 (fn setup []
-  (user-command :TrimTrailingWhitespaces ":%s/\\s\\+$" {})
+  (vim.api.nvim_create_user_command :TrimTrailingWhitespaces ":%s/\\s\\+$" {})
   (comment "Remember the cursor position of the last editing")
   (autocmd :BufReadPost
            {:pattern "*" :command "if line(\"'\\\"\") | exe \"'\\\"\" | endif"})

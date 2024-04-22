@@ -1,25 +1,27 @@
 (local {: autoload} (require :nfnl.module))
 (local {: merge : reduce : table?} (autoload :nfnl.core))
 
-(fn make-opts [keys]
+(lambda make-opts [?opts ?desc ?bufnr]
   "Produce a table with every `key = true`"
-  (reduce (fn [acc key] (merge acc {key true})) {} keys))
+  (let [init {:desc ?desc :buffer ?bufnr}
+        reducer (fn [acc opt] (merge acc {opt true}))]
+    (reduce reducer init ?opts)))
 
-(fn nmap [key map opts]
+(lambda nmap [key map ?opts ?desc ?bufnr]
   "Defines a keymap in normal mode"
-  (vim.keymap.set :n key map (make-opts opts)))
+  (vim.keymap.set :n key map (make-opts ?opts ?desc ?bufnr)))
 
-(fn imap [key map opts]
+(lambda imap [key map ?opts ?desc ?bufnr]
   "Defines a keymap in insert mode"
-  (vim.keymap.set :i key map (make-opts opts)))
+  (vim.keymap.set :i key map (make-opts ?opts ?desc ?bufnr)))
 
-(fn vmap [key map opts]
+(lambda vmap [key map ?opts ?desc ?bufnr]
   "Defines a keymap in visual mode"
-  (vim.keymap.set :v key map (make-opts opts)))
+  (vim.keymap.set :v key map (make-opts ?opts ?desc ?bufnr)))
 
-(fn tmap [key map opts]
+(lambda tmap [key map ?opts ?desc ?bufnr]
   "Defines a keymap in terminal mode"
-  (vim.keymap.set :t key map (make-opts opts)))
+  (vim.keymap.set :t key map (make-opts ?opts ?desc ?bufnr)))
 
 (lambda lua-cmd [str]
   "Wraps a Lua command string in a viml command string"
@@ -58,5 +60,4 @@
  : set-opts
  : auto-setup
  :augroup vim.api.nvim_create_augroup
- :autocmd vim.api.nvim_create_autocmd
- :user-command vim.api.nvim_create_user_command}
+ :autocmd vim.api.nvim_create_autocmd}

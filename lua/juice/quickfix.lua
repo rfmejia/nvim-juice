@@ -32,4 +32,11 @@ end
 local function toggle_loclist_window()
   return toggle_window(false)
 end
+local function is_quickfix_win_3f()
+  local winH = vim.fn.winnr("h")
+  local winL = vim.fn.winnr("l")
+  local winJ = vim.fn.winnr("j")
+  local winK = vim.fn.winnr("k")
+  return not ((winH == winL) and (winL == winJ) and (winJ == winK))
+end
 return {["toggle-window"] = toggle_window, ["toggle-qf-window"] = toggle_qf_window, ["toggle-loclist-window"] = toggle_loclist_window}

@@ -1,5 +1,4 @@
 (local {: autoload} (require :nfnl.module))
-(local {: blank?} (autoload :nfnl.string))
 (local {: nmap : set-opts} (autoload :juice.util))
 
 (set-opts {:shiftwidth 2 :tabstop 2 :expandtab true :textwidth 100})
@@ -12,8 +11,13 @@
         fnlfmt-cmd [:fnlfmt :--fix path]]
     (if (not modified)
         (match (vim.fn.system fnlfmt-cmd)
-          ok (vim.cmd :e!)
+          _ (vim.cmd :e!)
           (nil err-msg) (print "Could not run `fnlfmt`: " err-msg))
         (error "fnlfmt: cannot format a modified buffer"))))
 
 (nmap :<localleader>cf (fn [] (format-fennel (vim.fn.expand "%:p"))) [:buffer])
+
+(vim.api.nvim_buf_create_user_command 0 :FnlFmt
+                                      (fn []
+                                        (format-fennel (vim.fn.expand "%:p")))
+                                      {:bang true})

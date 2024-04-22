@@ -1,6 +1,5 @@
 (local {: autoload} (require :nfnl.module))
-(local {: autocmd : augroup : nmap : user-command : vmap}
-       (autoload :juice.util))
+(local {: autocmd : augroup : nmap : vmap} (autoload :juice.util))
 
 (local {: build-statusline} (autoload :juice.statusline))
 
@@ -25,21 +24,27 @@
     (tset config :tvp {:panel_alignment :right
                        :toggle_node_mapping :<CR>
                        :node_command_mapping :r})
-    (set config.on_attach
-         (lambda [client bufnr]
-           (lsp.set-buffer-opts client bufnr)
-           (set vim.opt.omnifunc "v:lua.vim.lsp.omnifunc")
-           (vmap :K (fn [] (metals.type_of_range)) [:noremap :silent])
-           (nmap :<localleader>mw
-                 (fn [] (metals.hover_worksheet {:border :rounded}))
-                 [:noremap :silent])
-           (nmap :<localleader>mm
-                 (fn [] (telescope.extensions.metals.commands))
-                 [:noremap :silent])
-           (nmap :<localleader>mt (. (autoload :metals.tvp) :toggle_tree_view)
-                 [:noremap :silent])
-           (nmap :<localleader>mr (. (autoload :metals.tvp) :reveal_in_tree)
-                 [:noremap :silent])))
+    (set config.on_attach (lambda [client bufnr]
+                            (local tvp (autoload :metals.tvp))
+                            (lsp.set-buffer-opts client bufnr)
+                            (set vim.opt.omnifunc "v:lua.vim.lsp.omnifunc")
+                            (vmap :K metals.type_of_range [:noremap :silent]
+                                  "scala type of visual range" bufnr)
+                            (nmap :<localleader>mw
+                                  (fn []
+                                    (metals.hover_worksheet {:border :rounded}))
+                                  [:noremap :silent] "(m)etals (w)orksheet"
+                                  bufnr)
+                            (nmap :<localleader>mc
+                                  telescope.extensions.metals.commands
+                                  [:noremap :silent] "(m)etals (c)commands"
+                                  bufnr)
+                            (nmap :<localleader>mt tvp.toggle_tree_view
+                                  [:noremap :silent]
+                                  "(m)etals (t)oggle tree view" bufnr)
+                            (nmap :<localleader>mr tvp.reveal_in_tree
+                                  [:noremap :silent] "(m)etals (r)eveal in tree"
+                                  bufnr)))
     (comment "Automatically attach Metals to all Scala filetypes (only triggered upon BufEnter)")
     (augroup :metals-group [])
     (autocmd :FileType
@@ -50,7 +55,7 @@
     (metals.initialize_or_attach config)))
 
 (fn register-init-command []
-  (user-command :MetalsInit (fn [] (initialize-metals))
-                {:desc "Start and connect to a Metals server"}))
+  (vim.api.nvim_create_user_command :MetalsInit (fn [] (initialize-metals))
+                                    {:desc "Start and connect to a Metals server"}))
 
 {: register-init-command}

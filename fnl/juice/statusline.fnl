@@ -1,7 +1,7 @@
 (local {: autoload} (require :nfnl.module))
 (local {: join} (autoload :nfnl.string))
+(local {: count-diagnostic} (autoload :juice.lsp))
 (local {: lua-statusline} (autoload :juice.util))
-(local {: count} (autoload :nfnl.core))
 
 (fn git-file-status []
   "Updates the git flag(s) of the current file inside g:gitfile"
@@ -20,13 +20,11 @@
       branch (set vim.g.git_branch branch)
       (nil err-msg) (print "Could not get `git branch`: " err-msg))))
 
-(lambda count-diagnostic [severity]
-  "Returns 'n! ' where n is the number of diagnostic messages, otherwise an empty string"
-  (let [n (-> (vim.api.nvim_get_current_buf)
-              (vim.diagnostic.get {: severity})
-              (count))]
-    (if (> n 0)
-        (.. n "! ") "")))
+(lambda show-diagnostic-count [?buf-num severity]
+  (let [count (count-diagnostic ?buf-num severity)
+        formatted (if (= count 0) ""
+                      (.. count "! "))]
+    formatted))
 
 (fn build-statusline [widgets]
   "Creates a vim statusline string, inserting optional widgets defined as a list of strings"
@@ -36,8 +34,8 @@
         git-status " %{g:git_file_status}"
         git-branch " %{g:git_branch}"
         align-right "%="
-        errors (lua-statusline "require('juice.statusline')['count-diagnostic'](vim.diagnostic.severity.ERROR)")
-        warnings (lua-statusline "require('juice.statusline')['count-diagnostic'](vim.diagnostic.severity.WARN)")
+        buf-errors (lua-statusline "require('juice.statusline')['show-diagnostic-count'](vim.api.nvim_get_current_buf(), vim.diagnostic.severity.ERROR)")
+        buf-warnings (lua-statusline "require('juice.statusline')['show-diagnostic-count'](vim.api.nvim_get_current_buf(), vim.diagnostic.severity.WARN)")
         ruler "%l:%c"
         widget-str (.. " " (join widgets) " ")
         default-color "%#StatusLine#"
@@ -53,9 +51,9 @@
                   align-right
                   widget-str
                   error-color
-                  errors
+                  buf-errors
                   warn-color
-                  warnings
+                  buf-warnings
                   info-color
                   git-branch
                   " "
@@ -64,4 +62,4 @@
         statusline (join template)]
     statusline))
 
-{: git-file-status : git-branch : count-diagnostic : build-statusline}
+{: git-file-status : git-branch : build-statusline : show-diagnostic-count}

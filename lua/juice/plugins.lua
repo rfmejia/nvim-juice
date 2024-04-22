@@ -51,7 +51,7 @@ local dev_tools
 local function _12_()
   return auto_setup("juice.lsp")
 end
-dev_tools = {{"neovim/nvim-lspconfig", ft = {"go", "scala"}, config = _12_}, {"scalameta/nvim-metals", cmd = "MetalsInit", dependencies = {"nvim-lua/plenary.nvim"}}, {"Olical/conjure", ft = {"clojure", "fennel", "lisp", "scheme"}}}
+dev_tools = {{"neovim/nvim-lspconfig", ft = {"fennel", "go", "scala"}, config = _12_}, {"scalameta/nvim-metals", cmd = "MetalsInit", dependencies = {"nvim-lua/plenary.nvim"}}, {"Olical/conjure", ft = {"clojure", "fennel", "lisp", "scheme"}}}
 local database_tools
 local function _13_()
   local function _14_()

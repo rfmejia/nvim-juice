@@ -1,6 +1,6 @@
 (local {: autoload} (require :nfnl.module))
 (local {: blank?} (autoload :nfnl.string))
-(local {: executable? : nmap : set-opts : user-command} (autoload :juice.util))
+(local {: executable? : nmap : set-opts} (autoload :juice.util))
 
 (set-opts {:shiftwidth 2
            :tabstop 2
@@ -23,7 +23,7 @@
       ok (vim.cmd :e!)
       (nil err-msg) (print "Could not run `scalafmt`: " err-msg))))
 
-(user-command :ScalafmtApply (fn [] (run-scalafmt)) {:bang true})
+(vim.api.nvim_buf_create_user_command 0 :ScalafmtApply (fn [] (run-scalafmt)) {:bang true})
 
 (comment "Make sure we respect lsp if it's enabled"
   (nmap :<localleader>cf (fn [] (run-scalafmt (vim.fn.expand "%:p")))

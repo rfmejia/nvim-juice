@@ -5,42 +5,53 @@ local _local_2_ = autoload("nfnl.core")
 local merge = _local_2_["merge"]
 local reduce = _local_2_["reduce"]
 local table_3f = _local_2_["table?"]
-local function make_opts(keys)
-  local function _3_(acc, key)
-    return merge(acc, {[key] = true})
+local function make_opts(_3fopts, _3fdesc, _3fbufnr)
+  local init = {desc = _3fdesc, buffer = _3fbufnr}
+  local reducer
+  local function _3_(acc, opt)
+    return merge(acc, {[opt] = true})
   end
-  return reduce(_3_, {}, keys)
+  reducer = _3_
+  return reduce(reducer, init, _3fopts)
 end
-local function nmap(key, map, opts)
-  return vim.keymap.set("n", key, map, make_opts(opts))
+local function nmap(key, map, _3fopts, _3fdesc, _3fbufnr)
+  _G.assert((nil ~= map), "Missing argument map on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:20")
+  _G.assert((nil ~= key), "Missing argument key on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:20")
+  return vim.keymap.set("n", key, map, make_opts(_3fopts, _3fdesc, _3fbufnr))
 end
-local function imap(key, map, opts)
-  return vim.keymap.set("i", key, map, make_opts(opts))
+local function imap(key, map, _3fopts, _3fdesc, _3fbufnr)
+  _G.assert((nil ~= map), "Missing argument map on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:24")
+  _G.assert((nil ~= key), "Missing argument key on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:24")
+  return vim.keymap.set("i", key, map, make_opts(_3fopts, _3fdesc, _3fbufnr))
 end
-local function vmap(key, map, opts)
-  return vim.keymap.set("v", key, map, make_opts(opts))
+local function vmap(key, map, _3fopts, _3fdesc, _3fbufnr)
+  _G.assert((nil ~= map), "Missing argument map on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:28")
+  _G.assert((nil ~= key), "Missing argument key on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:28")
+  return vim.keymap.set("v", key, map, make_opts(_3fopts, _3fdesc, _3fbufnr))
 end
-local function tmap(key, map, opts)
-  return vim.keymap.set("t", key, map, make_opts(opts))
+local function tmap(key, map, _3fopts, _3fdesc, _3fbufnr)
+  _G.assert((nil ~= map), "Missing argument map on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:32")
+  _G.assert((nil ~= key), "Missing argument key on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:32")
+  return vim.keymap.set("t", key, map, make_opts(_3fopts, _3fdesc, _3fbufnr))
 end
 local function lua_cmd(str)
-  _G.assert((nil ~= str), "Missing argument str on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:24")
+  _G.assert((nil ~= str), "Missing argument str on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:36")
   return string.format("<cmd>lua %s<cr>", str)
 end
 local function lua_statusline(command)
-  _G.assert((nil ~= command), "Missing argument command on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:28")
+  _G.assert((nil ~= command), "Missing argument command on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:40")
   return string.format("%%{luaeval(\"%s\")}", command)
 end
 local function executable_3f(cmd)
-  _G.assert((nil ~= cmd), "Missing argument cmd on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:32")
+  _G.assert((nil ~= cmd), "Missing argument cmd on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:44")
   return (vim.fn.executable(cmd) == 1)
 end
 local function has_3f(cmd)
-  _G.assert((nil ~= cmd), "Missing argument cmd on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:36")
+  _G.assert((nil ~= cmd), "Missing argument cmd on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:48")
   return (vim.fn.has(cmd) == 1)
 end
 local function set_opts(options)
-  _G.assert((nil ~= options), "Missing argument options on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:40")
+  _G.assert((nil ~= options), "Missing argument options on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:52")
   if table_3f(options) then
     for k, v in pairs(options) do
       vim.opt[k] = v
@@ -51,7 +62,7 @@ local function set_opts(options)
   end
 end
 local function auto_setup(module)
-  _G.assert((nil ~= module), "Missing argument module on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:46")
+  _G.assert((nil ~= module), "Missing argument module on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:58")
   return autoload(module).setup()
 end
-return {nmap = nmap, imap = imap, vmap = vmap, tmap = tmap, ["lua-cmd"] = lua_cmd, ["lua-statusline"] = lua_statusline, ["executable?"] = executable_3f, ["has?"] = has_3f, ["set-opts"] = set_opts, ["auto-setup"] = auto_setup, augroup = vim.api.nvim_create_augroup, autocmd = vim.api.nvim_create_autocmd, ["user-command"] = vim.api.nvim_create_user_command}
+return {nmap = nmap, imap = imap, vmap = vmap, tmap = tmap, ["lua-cmd"] = lua_cmd, ["lua-statusline"] = lua_statusline, ["executable?"] = executable_3f, ["has?"] = has_3f, ["set-opts"] = set_opts, ["auto-setup"] = auto_setup, augroup = vim.api.nvim_create_augroup, autocmd = vim.api.nvim_create_autocmd}

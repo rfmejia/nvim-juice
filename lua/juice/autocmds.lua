@@ -9,9 +9,8 @@ local git_file_status = _local_3_["git-file-status"]
 local _local_4_ = autoload("juice.util")
 local augroup = _local_4_["augroup"]
 local autocmd = _local_4_["autocmd"]
-local user_command = _local_4_["user-command"]
 local function setup()
-  user_command("TrimTrailingWhitespaces", ":%s/\\s\\+$", {})
+  vim.api.nvim_create_user_command("TrimTrailingWhitespaces", ":%s/\\s\\+$", {})
   --[[ "Remember the cursor position of the last editing" ]]
   autocmd("BufReadPost", {pattern = "*", command = "if line(\"'\\\"\") | exe \"'\\\"\" | endif"})
   local function _5_()
