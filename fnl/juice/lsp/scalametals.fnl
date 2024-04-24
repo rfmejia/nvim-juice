@@ -17,7 +17,7 @@
           :showImplicitConversionsAndClasses true
           :showInferredType true
           :decorationColor :Conceal
-          :serverVersion :latest.snapshot
+          :serverVersion :1.2.2
           :scalafixRulesDependencies ["com.nequissimus::sort-imports:0.6.1"]})
     (set config.init_options.statusBarProvider :on)
     (set config.capabilities (vim.lsp.protocol.make_client_capabilities))

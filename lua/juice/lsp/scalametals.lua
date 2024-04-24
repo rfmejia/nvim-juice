@@ -17,7 +17,7 @@ local function initialize_metals()
   vim.go.shortmess = (vim.go.shortmess .. "c")
   vim.opt.statusline = build_statusline({"%{g:metals_status}"})
   do end (vim.g)["metals_status"] = "Initializing Metals..."
-  config.settings = {showImplicitArguments = true, showImplicitConversionsAndClasses = true, showInferredType = true, decorationColor = "Conceal", serverVersion = "latest.snapshot", scalafixRulesDependencies = {"com.nequissimus::sort-imports:0.6.1"}}
+  config.settings = {showImplicitArguments = true, showImplicitConversionsAndClasses = true, showInferredType = true, decorationColor = "Conceal", serverVersion = "1.2.2", scalafixRulesDependencies = {"com.nequissimus::sort-imports:0.6.1"}}
   config.init_options.statusBarProvider = "on"
   config.capabilities = vim.lsp.protocol.make_client_capabilities()
   do end (config)["tvp"] = {panel_alignment = "right", toggle_node_mapping = "<CR>", node_command_mapping = "r"}
