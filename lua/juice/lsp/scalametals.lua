@@ -15,7 +15,7 @@ local function initialize_metals()
   local telescope = autoload("telescope")
   vim.opt.signcolumn = "yes:1"
   vim.go.shortmess = (vim.go.shortmess .. "c")
-  vim.opt.statusline = build_statusline({"%{g:metals_status}"})
+  vim.opt.statusline = build_statusline({"%{g:metals_status}", " \226\151\143"})
   do end (vim.g)["metals_status"] = "Initializing Metals..."
   config.settings = {showImplicitArguments = true, showImplicitConversionsAndClasses = true, showInferredType = true, decorationColor = "Conceal", serverVersion = "1.2.2", scalafixRulesDependencies = {"com.nequissimus::sort-imports:0.6.1"}}
   config.init_options.statusBarProvider = "on"

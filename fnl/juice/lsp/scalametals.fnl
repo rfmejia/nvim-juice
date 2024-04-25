@@ -10,7 +10,7 @@
         telescope (autoload :telescope)]
     (set vim.opt.signcolumn "yes:1")
     (set vim.go.shortmess (.. vim.go.shortmess :c))
-    (set vim.opt.statusline (build-statusline ["%{g:metals_status}"]))
+    (set vim.opt.statusline (build-statusline ["%{g:metals_status}" " ●"]))
     (tset vim.g :metals_status "Initializing Metals...")
     (set config.settings
          {:showImplicitArguments true

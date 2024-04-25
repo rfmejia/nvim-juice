@@ -49,15 +49,15 @@
                   default-color
                   buffer-type-flags
                   align-right
+                  info-color
                   widget-str
                   error-color
                   buf-errors
                   warn-color
                   buf-warnings
-                  info-color
+                  default-color
                   git-branch
                   " "
-                  default-color
                   ruler]
         statusline (join template)]
     statusline))

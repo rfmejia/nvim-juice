@@ -31,7 +31,7 @@ end
 local function _8_()
   return run_scalafmt()
 end
-vim.api.nvim_buf_create_user_command(0, "ScalafmtApply", _8_, {bang = true})
+vim.api.nvim_buf_create_user_command(vim.api.nvim_get_current_buf(), "ScalafmtApply", _8_, {bang = true})
 --[[ "Make sure we respect lsp if it's enabled" (nmap "<localleader>cf" (fn [] (run-scalafmt (vim.fn.expand "%:p"))) ["noremap" "nowait" "silent" "buffer"]) ]]
 nmap("<localleader>s", "vip:sort<cr>", {"noremap", "nowait", "silent", "buffer"})
 if executable_3f("sbtn") then

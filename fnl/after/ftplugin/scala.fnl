@@ -23,7 +23,9 @@
       ok (vim.cmd :e!)
       (nil err-msg) (print "Could not run `scalafmt`: " err-msg))))
 
-(vim.api.nvim_buf_create_user_command 0 :ScalafmtApply (fn [] (run-scalafmt)) {:bang true})
+(vim.api.nvim_buf_create_user_command (vim.api.nvim_get_current_buf)
+                                      :ScalafmtApply (fn [] (run-scalafmt))
+                                      {:bang true})
 
 (comment "Make sure we respect lsp if it's enabled"
   (nmap :<localleader>cf (fn [] (run-scalafmt (vim.fn.expand "%:p")))
