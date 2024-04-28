@@ -27,14 +27,14 @@ local function initialize_metals()
     local tvp = autoload("metals.tvp")
     lsp["set-buffer-opts"](client, bufnr)
     vim.opt.omnifunc = "v:lua.vim.lsp.omnifunc"
-    vmap("K", metals.type_of_range, {"noremap", "silent"}, "scala type of visual range", bufnr)
+    vmap("K", metals.type_of_range, {"noremap", "silent"}, "show type of visual selection", bufnr)
     local function _5_()
       return metals.hover_worksheet({border = "rounded"})
     end
-    nmap("<localleader>mw", _5_, {"noremap", "silent"}, "(m)etals (w)orksheet", bufnr)
-    nmap("<localleader>mc", telescope.extensions.metals.commands, {"noremap", "silent"}, "(m)etals (c)commands", bufnr)
+    nmap("<localleader>mw", _5_, {"noremap", "silent"}, "show (m)etals (w)orksheet output in popup", bufnr)
+    nmap("<localleader>mc", telescope.extensions.metals.commands, {"noremap", "silent"}, "list (m)etals (c)commands", bufnr)
     nmap("<localleader>mt", tvp.toggle_tree_view, {"noremap", "silent"}, "(m)etals (t)oggle tree view", bufnr)
-    return nmap("<localleader>mr", tvp.reveal_in_tree, {"noremap", "silent"}, "(m)etals (r)eveal in tree", bufnr)
+    return nmap("<localleader>mr", tvp.reveal_in_tree, {"noremap", "silent"}, "(m)etals (r)eveal current member in tree view", bufnr)
   end
   config.on_attach = _4_
   --[[ "Automatically attach Metals to all Scala filetypes (only triggered upon BufEnter)" ]]

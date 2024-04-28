@@ -140,17 +140,17 @@ local function setup()
   local function _10_()
     return gitsigns.nav_hunk("next")
   end
-  nmap("]h", _10_, {"noremap"})
+  nmap("]g", _10_, {"noremap"}, "jump to next git hunk")
   local function _11_()
     return gitsigns.nav_hunk("prev")
   end
-  nmap("[h", _11_, {"noremap"})
+  nmap("[g", _11_, {"noremap"}, "jump to previous git hunk")
   local function _12_()
     return gitsigns.blame_line({full = true})
   end
-  nmap("<localleader>hS", _12_, {"noremap"})
-  nmap("<localleader>hp", gitsigns.preview_hunk, {"noremap"})
-  nmap("<localleader>hs", gitsigns.stage_hunk, {"noremap"})
-  return nmap("<localleader>hS", gitsigns.undo_stage_hunk, {"noremap"})
+  nmap("<localleader>gb", _12_, {"noremap"}, "(g)it show line (b)lame")
+  nmap("<localleader>hp", gitsigns.preview_hunk, {"noremap"}, "(g)it (p)review hunk")
+  nmap("<localleader>hs", gitsigns.stage_hunk, {"noremap"}, "(g)it (s)tage hunk")
+  return nmap("<localleader>hu", gitsigns.undo_stage_hunk, {"noremap"}, "(g)it (u)ndo staged hunk")
 end
 return {setup = setup}

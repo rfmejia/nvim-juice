@@ -29,21 +29,22 @@
                             (lsp.set-buffer-opts client bufnr)
                             (set vim.opt.omnifunc "v:lua.vim.lsp.omnifunc")
                             (vmap :K metals.type_of_range [:noremap :silent]
-                                  "scala type of visual range" bufnr)
+                                  "show type of visual selection" bufnr)
                             (nmap :<localleader>mw
                                   (fn []
                                     (metals.hover_worksheet {:border :rounded}))
-                                  [:noremap :silent] "(m)etals (w)orksheet"
+                                  [:noremap :silent]
+                                  "show (m)etals (w)orksheet output in popup"
                                   bufnr)
                             (nmap :<localleader>mc
                                   telescope.extensions.metals.commands
-                                  [:noremap :silent] "(m)etals (c)commands"
+                                  [:noremap :silent] "list (m)etals (c)commands"
                                   bufnr)
                             (nmap :<localleader>mt tvp.toggle_tree_view
                                   [:noremap :silent]
                                   "(m)etals (t)oggle tree view" bufnr)
                             (nmap :<localleader>mr tvp.reveal_in_tree
-                                  [:noremap :silent] "(m)etals (r)eveal in tree"
+                                  [:noremap :silent] "(m)etals (r)eveal current member in tree view"
                                   bufnr)))
     (comment "Automatically attach Metals to all Scala filetypes (only triggered upon BufEnter)")
     (augroup :metals-group [])

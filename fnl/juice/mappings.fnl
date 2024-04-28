@@ -134,12 +134,16 @@
     (nmap :<leader>p builtin.oldfiles [:noremap :silent])
     (nmap :<leader>k builtin.keymaps [:noremap :silent]))
   (let [gitsigns (autoload :gitsigns)]
-    (nmap "]h" (fn [] (gitsigns.nav_hunk :next)) [:noremap])
-    (nmap "[h" (fn [] (gitsigns.nav_hunk :prev)) [:noremap])
-    (nmap :<localleader>hS (fn [] (gitsigns.blame_line {:full true}))
-          [:noremap])
-    (nmap :<localleader>hp gitsigns.preview_hunk [:noremap])
-    (nmap :<localleader>hs gitsigns.stage_hunk [:noremap])
-    (nmap :<localleader>hS gitsigns.undo_stage_hunk [:noremap])))
+    (nmap "]g" (fn [] (gitsigns.nav_hunk :next)) [:noremap]
+          "jump to next git hunk")
+    (nmap "[g" (fn [] (gitsigns.nav_hunk :prev)) [:noremap]
+          "jump to previous git hunk")
+    (nmap :<localleader>gb (fn [] (gitsigns.blame_line {:full true}))
+          [:noremap] "(g)it show line (b)lame")
+    (nmap :<localleader>hp gitsigns.preview_hunk [:noremap]
+          "(g)it (p)review hunk")
+    (nmap :<localleader>hs gitsigns.stage_hunk [:noremap] "(g)it (s)tage hunk")
+    (nmap :<localleader>hu gitsigns.undo_stage_hunk [:noremap]
+          "(g)it (u)ndo staged hunk")))
 
 {: setup}
