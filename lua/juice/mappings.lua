@@ -7,9 +7,6 @@ local nmap = _local_2_["nmap"]
 local imap = _local_2_["imap"]
 local vmap = _local_2_["vmap"]
 local executable_3f = _local_2_["executable?"]
-local _local_3_ = autoload("juice.quickfix")
-local toggle_qf_window = _local_3_["toggle-qf-window"]
-local toggle_loclist_window = _local_3_["toggle-loclist-window"]
 local function setup()
   --[[ "---- GENERAL MAPPINGS ----" ]]
   nmap("Y", "y$", nil, "yank until the end of the line")
@@ -74,12 +71,14 @@ local function setup()
   nmap("[T", ":tabfirst<cr>", {"noremap"})
   nmap("]T", ":tablast<cr>", {"noremap"})
   --[[ "---- QUICKFIX LIST ----" ]]
-  nmap("<leader>c", toggle_qf_window, {"noremap"}, "toggle quickfix list")
+  nmap("<leader>co", ":copen<cr>", {"noremap"}, "open quickfix list")
+  nmap("<leader>cc", ":cclose<cr>", {"noremap"}, "close quickfix list")
   nmap("[c", ":cprevious<cr>", {"noremap"}, "jump to previous entry in quickfix list")
   nmap("]c", ":cnext<cr>", {"noremap"}, "jump to previous entry in quickfix list")
   nmap("[C", ":cfirst<cr>", {"noremap"}, "jump to previous entry in quickfix list")
   nmap("]C", ":clast<cr>", {"noremap"}, "jump to previous entry in quickfix list")
-  nmap("<leader>l", toggle_loclist_window, {"noremap"}, "toggle loclist")
+  nmap("<leader>lo", ":lopen<cr>", {"noremap"}, "open loclist list")
+  nmap("<leader>lc", ":lclose<cr>", {"noremap"}, "close loclist list")
   nmap("[l", ":lprevious<cr>", {"noremap"}, "jump to previous entry in loclist")
   nmap("]l", ":lnext<cr>", {"noremap"}, "jump to next entry in loclist")
   nmap("[L", ":lfirst<cr>", {"noremap"}, "jump to first entry in loclist")
@@ -114,14 +113,14 @@ local function setup()
   end
   --[[ "---- JOURNAL ----" ]]
   if vim.env.JOURNAL then
-    local function _7_()
+    local function _6_()
       return vim.cmd((":$tabnew" .. "$JOURNAL/journal.adoc"))
     end
-    nmap("<leader>oj", _7_, {"noremap", "silent"}, "open journal in a new tab")
-    local function _8_()
+    nmap("<leader>oj", _6_, {"noremap", "silent"}, "open journal in a new tab")
+    local function _7_()
       return vim.cmd((":$tabnew" .. "$JOURNAL/vim/vim.adoc"))
     end
-    nmap("<leader>ov", _8_, {"noremap", "silent"}, "open vim notes in a new tab")
+    nmap("<leader>ov", _7_, {"noremap", "silent"}, "open vim notes in a new tab")
   else
   end
   --[[ "---- PLUGINS ----" ]]
@@ -137,20 +136,28 @@ local function setup()
     nmap("<leader>k", builtin.keymaps, {"noremap", "silent"})
   end
   local gitsigns = autoload("gitsigns")
-  local function _10_()
+  local function _9_()
     return gitsigns.nav_hunk("next")
   end
-  nmap("]g", _10_, {"noremap"}, "jump to next git hunk")
-  local function _11_()
+  nmap("]g", _9_, {"noremap"}, "jump to next git hunk")
+  local function _10_()
     return gitsigns.nav_hunk("prev")
   end
-  nmap("[g", _11_, {"noremap"}, "jump to previous git hunk")
-  local function _12_()
+  nmap("[g", _10_, {"noremap"}, "jump to previous git hunk")
+  local function _11_()
     return gitsigns.blame_line({full = true})
   end
-  nmap("<localleader>gb", _12_, {"noremap"}, "(g)it show line (b)lame")
-  nmap("<localleader>hp", gitsigns.preview_hunk, {"noremap"}, "(g)it (p)review hunk")
-  nmap("<localleader>hs", gitsigns.stage_hunk, {"noremap"}, "(g)it (s)tage hunk")
-  return nmap("<localleader>hu", gitsigns.undo_stage_hunk, {"noremap"}, "(g)it (u)ndo staged hunk")
+  nmap("<localleader>gb", _11_, {"noremap"}, "(g)it show line (b)lame")
+  nmap("<localleader>gp", gitsigns.preview_hunk, {"noremap"}, "(g)it (p)review hunk")
+  nmap("<localleader>gs", gitsigns.stage_hunk, {"noremap"}, "(g)it (s)tage hunk")
+  nmap("<localleader>gu", gitsigns.undo_stage_hunk, {"noremap"}, "(g)it (u)ndo staged hunk")
+  local function _12_()
+    return gitsigns.setloclist()
+  end
+  nmap("<localleader>gl", _12_, {"noremap"}, "show buffer (g)it hunks in (l)oclist")
+  local function _13_()
+    return gitsigns.setqflist("all")
+  end
+  return nmap("<localleader>gc", _13_, {"noremap"}, "show all (g)it hunks in qui(c)kfix list")
 end
 return {setup = setup}

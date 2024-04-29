@@ -39,4 +39,4 @@ local function is_quickfix_win_3f()
   local winK = vim.fn.winnr("k")
   return not ((winH == winL) and (winL == winJ) and (winJ == winK))
 end
-return {["toggle-window"] = toggle_window, ["toggle-qf-window"] = toggle_qf_window, ["toggle-loclist-window"] = toggle_loclist_window}
+return {["toggle-window"] = toggle_window, ["toggle-qf-window"] = toggle_qf_window, ["toggle-loclist-window"] = toggle_loclist_window, ["is-quickfix-win?"] = is_quickfix_win_3f}

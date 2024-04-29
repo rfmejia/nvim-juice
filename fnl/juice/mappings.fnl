@@ -1,6 +1,5 @@
 (local {: autoload} (require :nfnl.module))
 (local {: lua-cmd : nmap : imap : vmap : executable?} (autoload :juice.util))
-(local {: toggle-qf-window : toggle-loclist-window} (autoload :juice.quickfix))
 
 (fn setup []
   (comment "---- GENERAL MAPPINGS ----")
@@ -70,13 +69,15 @@
   (nmap "[T" ":tabfirst<cr>" [:noremap])
   (nmap "]T" ":tablast<cr>" [:noremap])
   (comment "---- QUICKFIX LIST ----")
-  (nmap :<leader>c toggle-qf-window [:noremap] "toggle quickfix list")
+  (nmap :<leader>co ":copen<cr>" [:noremap] "open quickfix list")
+  (nmap :<leader>cc ":cclose<cr>" [:noremap] "close quickfix list")
   (nmap "[c" ":cprevious<cr>" [:noremap]
         "jump to previous entry in quickfix list")
   (nmap "]c" ":cnext<cr>" [:noremap] "jump to previous entry in quickfix list")
   (nmap "[C" ":cfirst<cr>" [:noremap] "jump to previous entry in quickfix list")
   (nmap "]C" ":clast<cr>" [:noremap] "jump to previous entry in quickfix list")
-  (nmap :<leader>l toggle-loclist-window [:noremap] "toggle loclist")
+  (nmap :<leader>lo ":lopen<cr>" [:noremap] "open loclist list")
+  (nmap :<leader>lc ":lclose<cr>" [:noremap] "close loclist list")
   (nmap "[l" ":lprevious<cr>" [:noremap] "jump to previous entry in loclist")
   (nmap "]l" ":lnext<cr>" [:noremap] "jump to next entry in loclist")
   (nmap "[L" ":lfirst<cr>" [:noremap] "jump to first entry in loclist")
@@ -140,10 +141,14 @@
           "jump to previous git hunk")
     (nmap :<localleader>gb (fn [] (gitsigns.blame_line {:full true}))
           [:noremap] "(g)it show line (b)lame")
-    (nmap :<localleader>hp gitsigns.preview_hunk [:noremap]
+    (nmap :<localleader>gp gitsigns.preview_hunk [:noremap]
           "(g)it (p)review hunk")
-    (nmap :<localleader>hs gitsigns.stage_hunk [:noremap] "(g)it (s)tage hunk")
-    (nmap :<localleader>hu gitsigns.undo_stage_hunk [:noremap]
-          "(g)it (u)ndo staged hunk")))
+    (nmap :<localleader>gs gitsigns.stage_hunk [:noremap] "(g)it (s)tage hunk")
+    (nmap :<localleader>gu gitsigns.undo_stage_hunk [:noremap]
+          "(g)it (u)ndo staged hunk")
+    (nmap :<localleader>gl (fn [] (gitsigns.setloclist)) [:noremap]
+          "show buffer (g)it hunks in (l)oclist")
+    (nmap :<localleader>gc (fn [] (gitsigns.setqflist :all)) [:noremap]
+          "show all (g)it hunks in qui(c)kfix list")))
 
 {: setup}
