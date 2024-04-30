@@ -1,6 +1,6 @@
 (local {: autoload} (require :nfnl.module))
 (local {: blank?} (autoload :nfnl.string))
-(local {: executable? : nmap : set-opts} (autoload :juice.util))
+(local {: executable? : bufmap : set-opts} (autoload :juice.util))
 
 (set-opts {:shiftwidth 2
            :tabstop 2
@@ -28,16 +28,24 @@
                                       {:bang true})
 
 (comment "Make sure we respect lsp if it's enabled"
-  (nmap :<localleader>cf (fn [] (run-scalafmt (vim.fn.expand "%:p")))
-        [:noremap :nowait :silent :buffer]))
+  (bufmap (vim.api.nvim_get_current_buf)
+          {:n {:<localleader>cf [(fn [] (run-scalafmt (vim.fn.expand "%:p")))
+                                 [:noremap :nowait :silent]
+                                 ""]}}))
 
-(nmap :<localleader>s "vip:sort<cr>" [:noremap :nowait :silent :buffer])
+(bufmap (vim.api.nvim_get_current_buf)
+        {:n {:<localleader>s ["vip:sort<cr>"
+                              [:noremap :nowait :silent]
+                              "sort in paragraph"]}})
 
 (when (executable? :sbtn)
-  (nmap :<leader>os ":!tmux split-window -v -l 30\\% sbtn<cr><cr>"
-        [:noremap :silent :buffer]))
+  (bufmap (vim.api.nvim_get_current_buf)
+          {:n {:<leader>os [":!tmux split-window -v -l 30\\% sbtn<cr><cr>"
+                            [:noremap :silent]
+                            "open sbtn in a tmux split"]}}))
 
 (when (executable? :scala-cli)
-  (nmap :<leader>oc
-        ":!tmux split-window -v -l 30\\% scala-cli console %<cr><cr>"
-        [:noremap :silent :buffer]))
+  (bufmap (vim.api.nvim_get_current_buf)
+          {:n {:<leader>oc [":!tmux split-window -v -l 30\\% scala-cli console %<cr><cr>"
+                            [:noremap :silent]
+                            "open scala-cli in a tmux split"]}}))

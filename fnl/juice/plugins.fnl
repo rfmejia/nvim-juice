@@ -18,9 +18,7 @@
                                          :hocon
                                          :javascript
                                          :json
-                                         :git_config
                                          :gitcommit
-                                         :gitignore
                                          :go
                                          :html
                                          :java
@@ -28,7 +26,6 @@
                                          :markdown
                                          :scala
                                          :sql
-                                         :todotxt
                                          :vim
                                          :vimdoc
                                          :yaml]

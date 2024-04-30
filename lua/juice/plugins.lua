@@ -13,7 +13,7 @@ local function _4_()
 end
 local function _5_()
   local ts = autoload("nvim-treesitter.configs")
-  local languages = {"bash", "dockerfile", "fennel", "hocon", "javascript", "json", "git_config", "gitcommit", "gitignore", "go", "html", "java", "lua", "markdown", "scala", "sql", "todotxt", "vim", "vimdoc", "yaml"}
+  local languages = {"bash", "dockerfile", "fennel", "hocon", "javascript", "json", "gitcommit", "go", "html", "java", "lua", "markdown", "scala", "sql", "vim", "vimdoc", "yaml"}
   local config = {ensure_installed = languages, highlight = {enable = true}, indent = {enable = true}}
   return ts.setup(config)
 end
@@ -27,7 +27,7 @@ end
 local function _7_()
   local telescope = autoload("telescope")
   local actions = autoload("telescope.actions")
-  local config = {defaults = {layout_config = {prompt_position = "bottom", height = 0.6}, layout_strategy = "bottom_pane", mappings = {i = {["<esc>"] = actions.close, ["<C-u>"] = false}}, path_display = {"truncate"}, prompt_prefix = ":", preview = false, border = false}}
+  local config = {defaults = {layout_config = {prompt_position = "bottom", height = 0.6}, layout_strategy = "bottom_pane", mappings = {i = {["<esc>"] = actions.close, ["<C-u>"] = false}}, path_display = {"truncate"}, prompt_prefix = ":", border = false, preview = false}}
   return telescope.setup(config)
 end
 local function _8_()
@@ -51,7 +51,7 @@ local dev_tools
 local function _12_()
   return auto_setup("juice.lsp")
 end
-dev_tools = {{"neovim/nvim-lspconfig", ft = {"fennel", "go", "scala"}, config = _12_}, {"scalameta/nvim-metals", cmd = "MetalsInit", dependencies = {"nvim-lua/plenary.nvim"}}, {"Olical/conjure", ft = {"clojure", "fennel", "lisp", "scheme"}}}
+dev_tools = {{"neovim/nvim-lspconfig", ft = {"go", "scala"}, config = _12_}, {"scalameta/nvim-metals", cmd = "MetalsInit", dependencies = {"nvim-lua/plenary.nvim"}}, {"Olical/conjure", ft = {"clojure", "fennel", "lisp", "scheme"}}}
 local database_tools
 local function _13_()
   local function _14_()

@@ -5,11 +5,10 @@ local _local_2_ = autoload("nfnl.core")
 local println = _local_2_["println"]
 local _local_3_ = autoload("juice.util")
 local executable_3f = _local_3_["executable?"]
-local nmap = _local_3_["nmap"]
+local bufmap = _local_3_["bufmap"]
 local set_opts = _local_3_["set-opts"]
 set_opts({shiftwidth = 2, tabstop = 2, textwidth = 80, wrap = true, spell = true, spelllang = "en_us"})
-nmap("<localleader>d", ":r!date '+\\%a, \\%d \\%b \\%Y' | xargs -0 printf '\\n== \\%s\\n\\n'<cr>k", {"noremap", "silent", "buffer"})
-nmap("<localleader>t", ":r!date '+\\%H:\\%M' | xargs -0 printf '=== \\%s ' | tr -d '\\n'<cr>A", {"noremap", "silent", "buffer"})
+bufmap(vim.api.nvim_get_current_buf(), {n = {["<localleader>d"] = {":r!date '+\\%a, \\%d \\%b \\%Y' | xargs -0 printf '\\n== \\%s\\n\\n'<cr>k", {"noremap", "silent"}, "insert current date as an h2 header"}, ["<localleader>t"] = {":r!date '+\\%H:\\%M' | xargs -0 printf '=== \\%s ' | tr -d '\\n'<cr>A", {"noremap", "silent"}, "insert current time as an h3 header"}}})
 local function preview_in_browser(_in, out, browser_cmd)
   _G.assert((nil ~= browser_cmd), "Missing argument browser-cmd on /home/rfmejia/.config/nvim/fnl/after/ftplugin/asciidoc.fnl:20")
   _G.assert((nil ~= out), "Missing argument out on /home/rfmejia/.config/nvim/fnl/after/ftplugin/asciidoc.fnl:20")
@@ -35,7 +34,7 @@ if vim.env.BROWSER then
   local function _8_()
     return preview_in_browser(_in, out, vim.env.BROWSER)
   end
-  return nmap("<localleader>p", _8_, {"noremap", "silent", "buffer"})
+  return bufmap(vim.api.nvim_get_current_buf(), {n = {["<localleader>p"] = {_8_, {"noremap", "silent"}, "convert to HTML and show preview in browser"}}})
 else
   return nil
 end

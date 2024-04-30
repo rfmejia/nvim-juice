@@ -5,7 +5,7 @@ local _local_2_ = autoload("nfnl.string")
 local blank_3f = _local_2_["blank?"]
 local _local_3_ = autoload("juice.util")
 local executable_3f = _local_3_["executable?"]
-local nmap = _local_3_["nmap"]
+local bufmap = _local_3_["bufmap"]
 local set_opts = _local_3_["set-opts"]
 set_opts({shiftwidth = 2, tabstop = 2, expandtab = true, textwidth = 100, signcolumn = "yes:1"})
 --[[ "FIXME This doesn't seem to be reflected" "indentkeys:remove" ["<>>"] ]]
@@ -32,14 +32,14 @@ local function _8_()
   return run_scalafmt()
 end
 vim.api.nvim_buf_create_user_command(vim.api.nvim_get_current_buf(), "ScalafmtApply", _8_, {bang = true})
---[[ "Make sure we respect lsp if it's enabled" (nmap "<localleader>cf" (fn [] (run-scalafmt (vim.fn.expand "%:p"))) ["noremap" "nowait" "silent" "buffer"]) ]]
-nmap("<localleader>s", "vip:sort<cr>", {"noremap", "nowait", "silent", "buffer"})
+--[[ "Make sure we respect lsp if it's enabled" (bufmap (vim.api.nvim_get_current_buf) {:n {:<localleader>cf [(fn [] (run-scalafmt (vim.fn.expand "%:p"))) ["noremap" "nowait" "silent"] ""]}}) ]]
+bufmap(vim.api.nvim_get_current_buf(), {n = {["<localleader>s"] = {"vip:sort<cr>", {"noremap", "nowait", "silent"}, "sort in paragraph"}}})
 if executable_3f("sbtn") then
-  nmap("<leader>os", ":!tmux split-window -v -l 30\\% sbtn<cr><cr>", {"noremap", "silent", "buffer"})
+  bufmap(vim.api.nvim_get_current_buf(), {n = {["<leader>os"] = {":!tmux split-window -v -l 30\\% sbtn<cr><cr>", {"noremap", "silent"}, "open sbtn in a tmux split"}}})
 else
 end
 if executable_3f("scala-cli") then
-  return nmap("<leader>oc", ":!tmux split-window -v -l 30\\% scala-cli console %<cr><cr>", {"noremap", "silent", "buffer"})
+  return bufmap(vim.api.nvim_get_current_buf(), {n = {["<leader>oc"] = {":!tmux split-window -v -l 30\\% scala-cli console %<cr><cr>", {"noremap", "silent"}, "open scala-cli in a tmux split"}}})
 else
   return nil
 end

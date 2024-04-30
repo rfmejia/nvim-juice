@@ -1,45 +1,62 @@
 (local {: autoload} (require :nfnl.module))
 (local {: count} (autoload :nfnl.core))
 (local lspconfig (autoload :lspconfig))
-(local {: imap : nmap} (autoload :juice.util))
+(local {: bufmap} (autoload :juice.util))
 
 (lambda set-buffer-opts [_ bufnr]
   "Buffer-specific lsp options"
-  (imap :<C-space> :<C-x><C-o> [:noremap :silent])
-  (nmap :gd vim.lsp.buf.definition [:noremap :silent :nowait]
-        "(g)oto (d)efinition" bufnr)
-  (nmap :gt vim.lsp.buf.type_definition [:noremap :silent :nowait]
-        "(g)oto (t)ype definition" bufnr)
-  (nmap :gi vim.lsp.buf.implementation [:noremap :silent]
-        "(g)oto (i)mplementation" bufnr)
-  (nmap :gr vim.lsp.buf.references [:noremap :silent] "(g)oto (r)eferences"
-        bufnr)
-  (nmap :gs vim.lsp.buf.document_symbol [:noremap :silent] "(g)oto (s)ymbol"
-        bufnr)
-  (nmap :gS vim.lsp.buf.workspace_symbol [:noremap :silent]
-        "(g)oto workspace (S)ymbol" bufnr)
-  (nmap :K vim.lsp.buf.hover [:noremap :silent] "hover documentation" bufnr) ; diagnostics
-  (nmap :<localleader>de
-        (fn []
-          (vim.diagnostic.setqflist {:severity vim.diagnostic.severity.ERROR}))
-        [:noremap :silent]
-        "show (d)iagnostic (e)rrors of the workspace in quickfix list" bufnr)
-  (nmap :<localleader>dw vim.diagnostic.setqflist [:noremap :silent]
-        "show (d)iagnostics of the (w)orkspace in quickfix list" bufnr)
-  (nmap :<localleader>db vim.diagnostic.setloclist [:noremap :silent]
-        "show (d)iagnostics of the (b)uffer in local list" bufnr)
-  (nmap "[d" (fn [] (vim.diagnostic.goto_prev {:wrap false}))
-        [:noremap :silent] "goto next diagnostic" bufnr)
-  (nmap "]d" (fn [] (vim.diagnostic.goto_next {:wrap false}))
-        [:noremap :silent] "goto previous diagnostic" bufnr) ; code actions
-  (nmap :<localleader>ca vim.lsp.buf.code_action [:noremap :silent]
-        "(c)ode (a)ctions" bufnr)
-  (nmap :<localleader>cs vim.lsp.buf.signature_help [:noremap :silent]
-        "(c)ode (s)ignature" bufnr)
-  (nmap :<localleader>cr vim.lsp.buf.rename [:noremap]
-        "(c)ode identifier (r)ename" bufnr)
-  (nmap :<localleader>cf (fn [] (vim.lsp.buf.format {:async true}))
-        [:noremap :silent] "(c)ode (f)ormat" bufnr))
+  (bufmap bufnr {:i {:<C-space> [:<C-x><C-o> [:noremap :silent]]}
+                 :n {:gd [vim.lsp.buf.definition
+                          [:noremap :silent :nowait]
+                          "(g)oto (d)efinition"]
+                     :gt [vim.lsp.buf.type_definition
+                          [:noremap :silent :nowait]
+                          "(g)oto (t)ype definition"]
+                     :gi [vim.lsp.buf.implementation
+                          [:noremap :silent]
+                          "(g)oto (i)mplementation"]
+                     :gr [vim.lsp.buf.references
+                          [:noremap :silent]
+                          "(g)oto (r)eferences"]
+                     :gs [vim.lsp.buf.document_symbol
+                          [:noremap :silent]
+                          "(g)oto (s)ymbol"]
+                     :gS [vim.lsp.buf.workspace_symbol
+                          [:noremap :silent]
+                          "(g)oto workspace (S)ymbol"]
+                     :K [vim.lsp.buf.hover
+                         [:noremap :silent]
+                         "hover documentation"]}})
+  (bufmap bufnr ; diagnostics
+          {:n {:<localleader>de [(fn []
+                                   (vim.diagnostic.setqflist {:severity vim.diagnostic.severity.ERROR}))
+                                 [:noremap :silent]
+                                 "show (d)iagnostic (e)rrors of the workspace in quickfix list"]
+               :<localleader>dw [vim.diagnostic.setqflist
+                                 [:noremap :silent]
+                                 "show (d)iagnostics of the (w)orkspace in quickfix list"]
+               :<localleader>db [vim.diagnostic.setloclist
+                                 [:noremap :silent]
+                                 "show (d)iagnostics of the (b)uffer in local list"]
+               "[d" [(fn [] (vim.diagnostic.goto_prev {:wrap false}))
+                     [:noremap :silent]
+                     "goto next diagnostic"]
+               "]d" [(fn [] (vim.diagnostic.goto_next {:wrap false}))
+                     [:noremap :silent]
+                     "goto previous diagnostic"]}})
+  (bufmap bufnr ; code actions
+          {:n {:<localleader>ca [vim.lsp.buf.code_action
+                                 [:noremap :silent]
+                                 "(c)ode (a)ctions"]
+               :<localleader>cs [vim.lsp.buf.signature_help
+                                 [:noremap :silent]
+                                 "(c)ode (s)ignature"]
+               :<localleader>cr [vim.lsp.buf.rename
+                                 [:noremap]
+                                 "(c)ode identifier (r)ename"]
+               :<localleader>cf [(fn [] (vim.lsp.buf.format {:async true}))
+                                 [:noremap :silent]
+                                 "(c)ode (f)ormat"]}}))
 
 (fn setup-go []
   (let [settings {:gopls {:analyses {:unusedparams true} :staticcheck true}}]

@@ -7,6 +7,21 @@
         reducer (fn [acc opt] (merge acc {opt true}))]
     (reduce reducer init ?opts)))
 
+(comment "TODO optionally add a top-level string for comments")
+(lambda map [mappings]
+  (each [mode maps (pairs mappings)]
+    (each [key params (pairs maps)]
+      (let [(action flags desc bufnr) (unpack params)
+            opts (make-opts flags desc bufnr)]
+        (vim.keymap.set mode key action opts)))))
+
+(lambda bufmap [bufnr mappings]
+  (each [mode maps (pairs mappings)]
+    (each [key params (pairs maps)]
+      (let [(action flags desc) (unpack params)
+            opts (make-opts flags desc bufnr)]
+        (vim.keymap.set mode key action opts)))))
+
 (lambda nmap [key map ?opts ?desc ?bufnr]
   "Defines a keymap in normal mode"
   (vim.keymap.set :n key map (make-opts ?opts ?desc ?bufnr)))
@@ -53,6 +68,8 @@
  : imap
  : vmap
  : tmap
+ : map
+ : bufmap
  : lua-cmd
  : lua-statusline
  : executable?

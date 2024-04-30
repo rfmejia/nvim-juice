@@ -2,7 +2,7 @@
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local _local_2_ = autoload("juice.util")
-local nmap = _local_2_["nmap"]
+local bufmap = _local_2_["bufmap"]
 local set_opts = _local_2_["set-opts"]
 set_opts({shiftwidth = 2, tabstop = 2, expandtab = true, textwidth = 100})
 local function buffer_is_modified(buf_num)
@@ -31,7 +31,7 @@ end
 local function _7_()
   return format_fennel(vim.fn.expand("%:p"))
 end
-nmap("<localleader>cf", _7_, {"buffer"})
+bufmap(vim.api.nvim_get_current_buf(), {n = {["<localleader>cf"] = {_7_, nil, ""}}})
 local function _8_()
   return format_fennel(vim.fn.expand("%:p"))
 end
