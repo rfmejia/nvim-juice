@@ -1,5 +1,4 @@
 (local {: autoload} (require :nfnl.module))
-(local {: nmap} (autoload :juice.util))
 
 (local directions {:up [:k :-U] :down [:j :-D] :left [:h :-L] :right [:l :-R]})
 (lambda vim-direction [direction] (?. directions direction 1))

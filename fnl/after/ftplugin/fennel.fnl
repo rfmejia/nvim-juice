@@ -17,8 +17,8 @@
 
 (bufmap (vim.api.nvim_get_current_buf)
         {:n {:<localleader>cf [(fn [] (format-fennel (vim.fn.expand "%:p")))
-                               nil
-                               ""]}})
+                               [:noremap :silent]
+                               "(c)ode (f)ormat"]}})
 
 (vim.api.nvim_buf_create_user_command 0 :FnlFmt
                                       (fn []

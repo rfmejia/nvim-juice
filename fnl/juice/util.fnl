@@ -22,9 +22,9 @@
             opts (make-opts flags desc bufnr)]
         (vim.keymap.set mode key action opts)))))
 
-(lambda nmap [key map ?opts ?desc ?bufnr]
-  "Defines a keymap in normal mode"
-  (vim.keymap.set :n key map (make-opts ?opts ?desc ?bufnr)))
+(lambda nmap [mappings]
+  "Defines keymaps in normal mode"
+  (map {:n mappings}))
 
 (lambda imap [key map ?opts ?desc ?bufnr]
   "Defines a keymap in insert mode"

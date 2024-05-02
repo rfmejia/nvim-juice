@@ -31,7 +31,7 @@ end
 local function _7_()
   return format_fennel(vim.fn.expand("%:p"))
 end
-bufmap(vim.api.nvim_get_current_buf(), {n = {["<localleader>cf"] = {_7_, nil, ""}}})
+bufmap(vim.api.nvim_get_current_buf(), {n = {["<localleader>cf"] = {_7_, {"noremap", "silent"}, "(c)ode (f)ormat"}}})
 local function _8_()
   return format_fennel(vim.fn.expand("%:p"))
 end

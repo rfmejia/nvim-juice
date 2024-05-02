@@ -38,10 +38,9 @@ local function bufmap(bufnr, mappings)
   end
   return nil
 end
-local function nmap(key, map0, _3fopts, _3fdesc, _3fbufnr)
-  _G.assert((nil ~= map0), "Missing argument map on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:25")
-  _G.assert((nil ~= key), "Missing argument key on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:25")
-  return vim.keymap.set("n", key, map0, make_opts(_3fopts, _3fdesc, _3fbufnr))
+local function nmap(mappings)
+  _G.assert((nil ~= mappings), "Missing argument mappings on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:25")
+  return map({n = mappings})
 end
 local function imap(key, map0, _3fopts, _3fdesc, _3fbufnr)
   _G.assert((nil ~= map0), "Missing argument map on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:29")
