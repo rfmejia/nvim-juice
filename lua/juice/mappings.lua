@@ -13,8 +13,8 @@ do local _ = {Y = {"y$", "yank until the end of the line"}, ["<C-l>"] = {":nohl<
 local function setup()
   nmap({Y = {"y$", nil, "yank until the end of the line"}, ["<C-l>"] = {":nohl<cr>", {"noremap"}, "clear search highlight"}, ["<leader>;"] = {":<C-r>\"", {"noremap"}, "paste register 0 contents in command mode"}, ["<leader>w"] = {":w<cr>", {"noremap"}, "write buffer"}, ["<leader>n"] = {":registers<cr>", {"noremap"}, "list registers"}, ["<F5>"] = {":make<cr>", {"noremap"}, "trigger `make` in shell"}})
   nmap({["<C-d>"] = {"<C-d>zz", {"noremap", "silent"}}, ["<C-u>"] = {"<C-u>zz", {"noremap", "silent"}}, ["<C-o>"] = {"<C-o>zz", {"noremap", "silent"}}, ["<C-i>"] = {"<C-i>zz", {"noremap", "silent"}}})
-  map({v = {["<"] = {"<gv", {"noremap"}}, [">"] = {">gv", {"noremap"}}}})
-  map({i = {["\""] = {"\"<C-g>u", {"noremap", "silent"}}, ["."] = {".<C-g>u", {"noremap", "silent"}}, ["!"] = {"!<C-g>u", {"noremap", "silent"}}, ["?"] = {"?<C-g>u", {"noremap", "silent"}}, ["("] = {"(<C-g>u", {"noremap", "silent"}}, [")"] = {")<C-g>u", {"noremap", "silent"}}, ["{"] = {"{<C-g>u", {"noremap", "silent"}}, ["}"] = {"}<C-g>u", {"noremap", "silent"}}, ["["] = {"[<C-g>u", {"noremap", "silent"}}, ["]"] = {"]<C-g>u", {"noremap", "silent"}}}})
+  vmap({["<"] = {"<gv", {"noremap"}}, [">"] = {">gv", {"noremap"}}})
+  imap({["\""] = {"\"<C-g>u", {"noremap", "silent"}}, ["."] = {".<C-g>u", {"noremap", "silent"}}, ["!"] = {"!<C-g>u", {"noremap", "silent"}}, ["?"] = {"?<C-g>u", {"noremap", "silent"}}, ["("] = {"(<C-g>u", {"noremap", "silent"}}, [")"] = {")<C-g>u", {"noremap", "silent"}}, ["{"] = {"{<C-g>u", {"noremap", "silent"}}, ["}"] = {"}<C-g>u", {"noremap", "silent"}}, ["["] = {"[<C-g>u", {"noremap", "silent"}}, ["]"] = {"]<C-g>u", {"noremap", "silent"}}})
   nmap({["<leader>dt"] = {":.!date '+\\%a, \\%d \\%b \\%Y'<cr>", {"noremap"}, "insert current date"}, ["<leader>dT"] = {":.!date '+\\%a, \\%d \\%b \\%Y' --date=''<left>", {"noremap"}, "prompt for date query"}})
   --[[ "select completion binding item" ]]
   vim.cmd("inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")

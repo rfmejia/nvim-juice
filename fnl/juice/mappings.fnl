@@ -25,19 +25,19 @@
          :<C-u> [:<C-u>zz [:noremap :silent]]
          :<C-o> [:<C-o>zz [:noremap :silent]]
          :<C-i> [:<C-i>zz [:noremap :silent]]})
-  (map ; Indent blocks in visual mode
-       {:v {:< [:<gv [:noremap]] :> [:>gv [:noremap]]}})
-  (map ; Add undo step when typing sentences
-       {:i {"\"" ["\"<C-g>u" [:noremap :silent]]
-            :. [:.<C-g>u [:noremap :silent]]
-            :! [:!<C-g>u [:noremap :silent]]
-            :? [:?<C-g>u [:noremap :silent]]
-            "(" ["(<C-g>u" [:noremap :silent]]
-            ")" [")<C-g>u" [:noremap :silent]]
-            "{" ["{<C-g>u" [:noremap :silent]]
-            "}" ["}<C-g>u" [:noremap :silent]]
-            "[" ["[<C-g>u" [:noremap :silent]]
-            "]" ["]<C-g>u" [:noremap :silent]]}})
+  (vmap ; Indent blocks in visual mode
+        {:< [:<gv [:noremap]] :> [:>gv [:noremap]]})
+  (imap ; Add undo step when typing sentences
+        {"\"" ["\"<C-g>u" [:noremap :silent]]
+         :. [:.<C-g>u [:noremap :silent]]
+         :! [:!<C-g>u [:noremap :silent]]
+         :? [:?<C-g>u [:noremap :silent]]
+         "(" ["(<C-g>u" [:noremap :silent]]
+         ")" [")<C-g>u" [:noremap :silent]]
+         "{" ["{<C-g>u" [:noremap :silent]]
+         "}" ["}<C-g>u" [:noremap :silent]]
+         "[" ["[<C-g>u" [:noremap :silent]]
+         "]" ["]<C-g>u" [:noremap :silent]]})
   (nmap ; date shortcuts
         {:<leader>dt [":.!date '+\\%a, \\%d \\%b \\%Y'<cr>"
                       [:noremap]

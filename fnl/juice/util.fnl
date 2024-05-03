@@ -26,17 +26,13 @@
   "Defines keymaps in normal mode"
   (map {:n mappings}))
 
-(lambda imap [key map ?opts ?desc ?bufnr]
+(lambda imap [mappings]
   "Defines a keymap in insert mode"
-  (vim.keymap.set :i key map (make-opts ?opts ?desc ?bufnr)))
+  (map {:i mappings}))
 
-(lambda vmap [key map ?opts ?desc ?bufnr]
+(lambda vmap [mappings]
   "Defines a keymap in visual mode"
-  (vim.keymap.set :v key map (make-opts ?opts ?desc ?bufnr)))
-
-(lambda tmap [key map ?opts ?desc ?bufnr]
-  "Defines a keymap in terminal mode"
-  (vim.keymap.set :t key map (make-opts ?opts ?desc ?bufnr)))
+  (map {:v mappings}))
 
 (lambda lua-cmd [str]
   "Wraps a Lua command string in a viml command string"
@@ -67,7 +63,6 @@
 {: nmap
  : imap
  : vmap
- : tmap
  : map
  : bufmap
  : lua-cmd
