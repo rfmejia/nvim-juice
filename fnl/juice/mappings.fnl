@@ -3,12 +3,14 @@
        (autoload :juice.util))
 
 ; most common is [:noremap :silent], so make a negation?
-{:Y [:y$ "yank until the end of the line"]
- :<C-l> [":nohl<cr>" "clear search highlight" :noremap]
- "<leader>;" [":<C-r>\"" "paste register 0 contents in command mode" :noremap]
- :<leader>w [":w<cr>" "write buffer" :noremap]
- :<leader>n [":registers<cr>" "list registers" :noremap :silent]
- :<F5> [":make<cr>" "trigger `make` in shell" :noremap]}
+(comment (nmap (vim.api.nvim_get_current_buf) [:noremap]
+               {:Y [:y$ "yank until the end of the line"]
+                :<C-l> [":nohl<cr>" "clear search highlight"]
+                "<leader>;" [":<C-r>\""
+                             "paste register 0 contents in command mode"]
+                :<leader>w [":w<cr>" "write buffer"]
+                :<leader>n [":registers<cr>" "list registers"]
+                :<F5> [":make<cr>" "trigger `make` in shell"]}))
 
 (fn setup []
   (nmap ; ---- GENERAL MAPPINGS ----

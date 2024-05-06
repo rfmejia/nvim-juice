@@ -9,7 +9,7 @@ local map = _local_2_["map"]
 local imap = _local_2_["imap"]
 local vmap = _local_2_["vmap"]
 local executable_3f = _local_2_["executable?"]
-do local _ = {Y = {"y$", "yank until the end of the line"}, ["<C-l>"] = {":nohl<cr>", "clear search highlight", "noremap"}, ["<leader>;"] = {":<C-r>\"", "paste register 0 contents in command mode", "noremap"}, ["<leader>w"] = {":w<cr>", "write buffer", "noremap"}, ["<leader>n"] = {":registers<cr>", "list registers", "noremap", "silent"}, ["<F5>"] = {":make<cr>", "trigger `make` in shell", "noremap"}} end
+--[[ (nmap (vim.api.nvim_get_current_buf) ["noremap"] {:<C-l> [":nohl<cr>" "clear search highlight"] :<F5> [":make<cr>" "trigger `make` in shell"] "<leader>;" [":<C-r>\"" "paste register 0 contents in command mode"] :<leader>n [":registers<cr>" "list registers"] :<leader>w [":w<cr>" "write buffer"] :Y ["y$" "yank until the end of the line"]}) ]]
 local function setup()
   nmap({Y = {"y$", nil, "yank until the end of the line"}, ["<C-l>"] = {":nohl<cr>", {"noremap"}, "clear search highlight"}, ["<leader>;"] = {":<C-r>\"", {"noremap"}, "paste register 0 contents in command mode"}, ["<leader>w"] = {":w<cr>", {"noremap"}, "write buffer"}, ["<leader>n"] = {":registers<cr>", {"noremap"}, "list registers"}, ["<F5>"] = {":make<cr>", {"noremap"}, "trigger `make` in shell"}})
   nmap({["<C-d>"] = {"<C-d>zz", {"noremap", "silent"}}, ["<C-u>"] = {"<C-u>zz", {"noremap", "silent"}}, ["<C-o>"] = {"<C-o>zz", {"noremap", "silent"}}, ["<C-i>"] = {"<C-i>zz", {"noremap", "silent"}}})

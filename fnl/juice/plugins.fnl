@@ -13,20 +13,16 @@
               :config (fn []
                         (let [ts (autoload :nvim-treesitter.configs)
                               languages [:bash
-                                         :dockerfile
                                          :fennel
-                                         :hocon
-                                         :javascript
-                                         :json
                                          :gitcommit
                                          :go
-                                         :html
+                                         :hocon
                                          :java
+                                         :json
                                          :lua
                                          :markdown
                                          :scala
                                          :sql
-                                         :vim
                                          :vimdoc
                                          :yaml]
                               config {:ensure_installed languages

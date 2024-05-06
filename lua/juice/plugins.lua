@@ -13,7 +13,7 @@ local function _4_()
 end
 local function _5_()
   local ts = autoload("nvim-treesitter.configs")
-  local languages = {"bash", "dockerfile", "fennel", "hocon", "javascript", "json", "gitcommit", "go", "html", "java", "lua", "markdown", "scala", "sql", "vim", "vimdoc", "yaml"}
+  local languages = {"bash", "fennel", "gitcommit", "go", "hocon", "java", "json", "lua", "markdown", "scala", "sql", "vimdoc", "yaml"}
   local config = {ensure_installed = languages, highlight = {enable = true}, indent = {enable = true}}
   return ts.setup(config)
 end
