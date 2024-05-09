@@ -16,11 +16,10 @@
         (error "fnlfmt: cannot format a modified buffer"))))
 
 (bufmap (vim.api.nvim_get_current_buf)
-        {:n {:<localleader>cf [(fn [] (format-fennel (vim.fn.expand "%:p")))
+        {:n {:<localleader>cf [#(format-fennel (vim.fn.expand "%:p"))
                                [:noremap :silent]
                                "(c)ode (f)ormat"]}})
 
 (vim.api.nvim_buf_create_user_command 0 :FnlFmt
-                                      (fn []
-                                        (format-fennel (vim.fn.expand "%:p")))
+                                      #(format-fennel (vim.fn.expand "%:p"))
                                       {:bang true})

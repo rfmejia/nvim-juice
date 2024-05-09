@@ -27,7 +27,6 @@
   (let [in (vim.fn.expand "%:p")
         out :/tmp/preview.html]
     (bufmap (vim.api.nvim_get_current_buf)
-            {:n {:<localleader>p [(fn []
-                                    (preview-in-browser in out vim.env.BROWSER))
+            {:n {:<localleader>p [#(preview-in-browser in out vim.env.BROWSER)
                                   [:noremap :silent]
                                   "convert to HTML and show preview in browser"]}})))

@@ -32,7 +32,7 @@ local function _8_()
   return run_scalafmt()
 end
 vim.api.nvim_buf_create_user_command(vim.api.nvim_get_current_buf(), "ScalafmtApply", _8_, {bang = true})
---[[ "Make sure we respect lsp if it's enabled" (bufmap (vim.api.nvim_get_current_buf) {:n {:<localleader>cf [(fn [] (run-scalafmt (vim.fn.expand "%:p"))) ["noremap" "nowait" "silent"] ""]}}) ]]
+--[[ "Make sure we respect lsp if it's enabled" (bufmap (vim.api.nvim_get_current_buf) {:n {:<localleader>cf [(hashfn (run-scalafmt (vim.fn.expand "%:p"))) ["noremap" "nowait" "silent"] ""]}}) ]]
 bufmap(vim.api.nvim_get_current_buf(), {n = {["<localleader>s"] = {"vip:sort<cr>", {"noremap", "nowait", "silent"}, "sort in paragraph"}}})
 if executable_3f("sbtn") then
   bufmap(vim.api.nvim_get_current_buf(), {n = {["<leader>os"] = {":!tmux split-window -v -l 30\\% sbtn<cr><cr>", {"noremap", "silent"}, "open sbtn in a tmux split"}}})

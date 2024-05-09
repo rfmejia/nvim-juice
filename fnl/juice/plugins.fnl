@@ -6,7 +6,7 @@
              {1 :projekt0n/github-nvim-theme
               :lazy false
               :priority 1000
-              :config (fn [] (auto-setup :juice.colors))}
+              :config #(auto-setup :juice.colors)}
              {1 :nvim-treesitter/nvim-treesitter
               :event [:BufReadPre :BufNewFile]
               :build ":TSUpdate"
@@ -52,29 +52,28 @@
                                                            :<C-u> false}}
                                             :path_display {1 :truncate}
                                             :preview false
-                                            :prompt_prefix ":"}}]
+                                            :prompt_prefix "/"}}]
                      (telescope.setup config)))}
         {1 :lewis6991/gitsigns.nvim
          :event [:BufReadPre :BufNewFile]
-         :config (fn [] (auto-setup :gitsigns))}
+         :config #(auto-setup :gitsigns)}
         {1 :mbbill/undotree
          :cmd :UndotreeToggle
          :config (fn []
                    (set vim.g.undotree_WindowLayout 4)
                    (set vim.g.undotree_SetFocusWhenToggle 1))}])
 
-(local text-tools
-       [{1 :numToStr/Comment.nvim
-         :keys :gc
-         :config (fn [] (auto-setup :Comment))}
-        {1 :kylechui/nvim-surround
-         :keys [:cs :ds :ys]
-         :config (fn [] (auto-setup :nvim-surround))}])
+(local text-tools [{1 :numToStr/Comment.nvim
+                    :keys :gc
+                    :config #(auto-setup :Comment)}
+                   {1 :kylechui/nvim-surround
+                    :keys [:cs :ds :ys]
+                    :config #(auto-setup :nvim-surround)}])
 
 (local dev-tools
        [{1 :neovim/nvim-lspconfig
          :ft [:go :scala]
-         :config (fn [] (auto-setup :juice.lsp))}
+         :config #(auto-setup :juice.lsp)}
         {1 :scalameta/nvim-metals
          :cmd :MetalsInit
          :dependencies [:nvim-lua/plenary.nvim]}
@@ -83,12 +82,10 @@
 (local database-tools
        [{1 :kristijanhusak/vim-dadbod-ui
          :cmd [:DBUI :DBUIToggle]
-         :config (fn []
-                   (autocmd :FileType
-                            {:pattern [:sql :mysql]
-                             :callback (fn []
-                                         (set-opts {:commentstring "-- %s"
-                                                    :omnifunc "vim_dadbod_completion#omni"}))}))
+         :config #(autocmd :FileType
+                           {:pattern [:sql :mysql]
+                            :callback #(set-opts {:commentstring "-- %s"
+                                                  :omnifunc "vim_dadbod_completion#omni"})})
          :dependencies [{1 :tpope/vim-dadbod :lazy true}
                         {1 :kristijanhusak/vim-dadbod-completion
                          :lazy true

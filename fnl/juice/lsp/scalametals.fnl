@@ -33,8 +33,7 @@
                    {:v {:K [metals.type_of_range
                             [:noremap :silent]
                             "show type of visual selection"]}
-                    :n {:<localleader>mw [(fn []
-                                            (metals.hover_worksheet {:border :rounded}))
+                    :n {:<localleader>mw [#(metals.hover_worksheet {:border :rounded})
                                           [:noremap :silent]
                                           "show (m)etals (w)orksheet output in popup"]
                         :<localleader>mc [telescope.extensions.metals.commands
@@ -51,12 +50,12 @@
     (autocmd :FileType
              {:group :metals-group
               :pattern [:scala :sbt :java]
-              :callback (fn [] (metals.initialize_or_attach config))})
+              :callback #(metals.initialize_or_attach config)})
     (comment "Initialize Metals for the first time")
     (metals.initialize_or_attach config)))
 
 (fn register-init-command []
-  (vim.api.nvim_create_user_command :MetalsInit (fn [] (initialize-metals))
+  (vim.api.nvim_create_user_command :MetalsInit #(initialize-metals)
                                     {:desc "Start and connect to a Metals server"}))
 
 {: register-init-command}

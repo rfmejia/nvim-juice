@@ -29,7 +29,7 @@ local function setup_go()
   return lspconfig.gopls.setup({["set-buffer-opts"] = set_buffer_opts, settings = settings})
 end
 local function count_diagnostic(_3fbufnr, severity)
-  _G.assert((nil ~= severity), "Missing argument severity on /home/rfmejia/.config/nvim/fnl/juice/lsp/init.fnl:65")
+  _G.assert((nil ~= severity), "Missing argument severity on /home/rfmejia/.config/nvim/fnl/juice/lsp/init.fnl:64")
   return count(vim.diagnostic.get(_3fbufnr, {severity = severity}))
 end
 local function setup()

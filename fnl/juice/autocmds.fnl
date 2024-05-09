@@ -18,8 +18,7 @@
   (autocmd :TextYankPost
            {:group :highlight-group
             :pattern "*"
-            :callback (fn []
-                        (vim.highlight.on_yank {:timeout 200 :on_visual false}))})
+            :callback #(vim.highlight.on_yank {:timeout 200 :on_visual false})})
   (comment "highlight TODO, FIXME and Note: keywords")
   (autocmd [:WinEnter :VimEnter]
            {:group :highlight-group

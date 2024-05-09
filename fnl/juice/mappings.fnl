@@ -144,12 +144,10 @@
                           "open lazygit in a new tmux window"]})))
   (comment "---- JOURNAL ----")
   (when vim.env.JOURNAL
-    (nmap {:<leader>oj [(fn []
-                          (vim.cmd (.. ":$tabnew" :$JOURNAL/journal.adoc)))
+    (nmap {:<leader>oj [#(vim.cmd (.. ":$tabnew" :$JOURNAL/journal.adoc))
                         [:noremap :silent]
                         "open journal in a new tab"]
-           :<leader>ov [(fn []
-                          (vim.cmd (.. ":$tabnew" :$JOURNAL/vim/vim.adoc)))
+           :<leader>ov [#(vim.cmd (.. ":$tabnew" :$JOURNAL/vim/vim.adoc))
                         [:noremap :silent]
                         "open vim notes in a new tab"]}))
   (comment "---- PLUGINS ----")
@@ -173,13 +171,11 @@
                        "telescope oldfiles"]
            :<leader>k [builtin.keymaps [:noremap :silent] "telescope keymaps"]}))
   (let [gitsigns (autoload :gitsigns)]
-    (nmap {"]g" [(fn [] (gitsigns.nav_hunk :next))
-                 [:noremap]
-                 "jump to next git hunk"]
-           "[g" [(fn [] (gitsigns.nav_hunk :prev))
+    (nmap {"]g" [#(gitsigns.nav_hunk :next) [:noremap] "jump to next git hunk"]
+           "[g" [#(gitsigns.nav_hunk :prev)
                  [:noremap]
                  "jump to previous git hunk"]
-           :<localleader>gb [(fn [] (gitsigns.blame_line {:full true}))
+           :<localleader>gb [#(gitsigns.blame_line {:full true})
                              [:noremap]
                              "(g)it show line (b)lame"]
            :<localleader>gp [gitsigns.preview_hunk
@@ -191,10 +187,10 @@
            :<localleader>gu [gitsigns.undo_stage_hunk
                              [:noremap]
                              "(g)it (u)ndo staged hunk"]
-           :<localleader>gl [(fn [] (gitsigns.setloclist))
+           :<localleader>gl [#(gitsigns.setloclist)
                              [:noremap]
                              "show buffer (g)it hunks in (l)oclist"]
-           :<localleader>gc [(fn [] (gitsigns.setqflist :all))
+           :<localleader>gc [#(gitsigns.setqflist :all)
                              [:noremap]
                              "show all (g)it hunks in qui(c)kfix list"]})))
 

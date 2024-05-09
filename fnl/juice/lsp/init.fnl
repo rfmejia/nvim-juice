@@ -28,8 +28,7 @@
                          [:noremap :silent]
                          "hover documentation"]}})
   (bufmap bufnr ; diagnostics
-          {:n {:<localleader>de [(fn []
-                                   (vim.diagnostic.setqflist {:severity vim.diagnostic.severity.ERROR}))
+          {:n {:<localleader>de [#(vim.diagnostic.setqflist {:severity vim.diagnostic.severity.ERROR})
                                  [:noremap :silent]
                                  "show (d)iagnostic (e)rrors of the workspace in quickfix list"]
                :<localleader>dw [vim.diagnostic.setqflist
@@ -38,10 +37,10 @@
                :<localleader>db [vim.diagnostic.setloclist
                                  [:noremap :silent]
                                  "show (d)iagnostics of the (b)uffer in local list"]
-               "[d" [(fn [] (vim.diagnostic.goto_prev {:wrap false}))
+               "[d" [#(vim.diagnostic.goto_prev {:wrap false})
                      [:noremap :silent]
                      "goto next diagnostic"]
-               "]d" [(fn [] (vim.diagnostic.goto_next {:wrap false}))
+               "]d" [#(vim.diagnostic.goto_next {:wrap false})
                      [:noremap :silent]
                      "goto previous diagnostic"]}})
   (bufmap bufnr ; code actions
@@ -54,7 +53,7 @@
                :<localleader>cr [vim.lsp.buf.rename
                                  [:noremap]
                                  "(c)ode identifier (r)ename"]
-               :<localleader>cf [(fn [] (vim.lsp.buf.format {:async true}))
+               :<localleader>cf [#(vim.lsp.buf.format {:async true})
                                  [:noremap :silent]
                                  "(c)ode (f)ormat"]}}))
 

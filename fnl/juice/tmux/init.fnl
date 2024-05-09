@@ -28,7 +28,7 @@
     (tmux-navigate direction)))
 
 {: navigate
- :navigate-up (fn [] (navigate :up))
- :navigate-down (fn [] (navigate :down))
- :navigate-left (fn [] (navigate :left))
- :navigate-right (fn [] (navigate :right))}
+ :navigate-up #(navigate :up)
+ :navigate-down #(navigate :down)
+ :navigate-left #(navigate :left)
+ :navigate-right #(navigate :right)}

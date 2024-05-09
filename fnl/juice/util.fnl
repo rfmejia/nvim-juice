@@ -22,18 +22,6 @@
             opts (make-opts flags desc bufnr)]
         (vim.keymap.set mode key action opts)))))
 
-(lambda nmap [mappings]
-  "Defines keymaps in normal mode"
-  (map {:n mappings}))
-
-(lambda imap [mappings]
-  "Defines a keymap in insert mode"
-  (map {:i mappings}))
-
-(lambda vmap [mappings]
-  "Defines a keymap in visual mode"
-  (map {:v mappings}))
-
 (lambda lua-cmd [str]
   "Wraps a Lua command string in a viml command string"
   (string.format "<cmd>lua %s<cr>" str))
@@ -60,10 +48,10 @@
   ((-> (autoload module)
        (. :setup))))
 
-{: nmap
- : imap
- : vmap
- : map
+{: map
+ :nmap #(map {:n $1})
+ :imap #(map {:i $1})
+ :vmap #(map {:v $1})
  : bufmap
  : lua-cmd
  : lua-statusline
