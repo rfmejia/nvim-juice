@@ -31,38 +31,33 @@ local function _7_()
   return telescope.setup(config)
 end
 local function _8_()
-  return auto_setup("gitsigns")
-end
-local function _9_()
   vim.g.undotree_WindowLayout = 4
   vim.g.undotree_SetFocusWhenToggle = 1
   return nil
 end
-ui_tools = {{"stevearc/oil.nvim", cmd = "Oil", config = _6_}, {"nvim-telescope/telescope.nvim", tag = "0.1.6", dependencies = {"nvim-lua/plenary.nvim"}, config = _7_}, {"lewis6991/gitsigns.nvim", event = {"BufReadPre", "BufNewFile"}, config = _8_}, {"mbbill/undotree", cmd = "UndotreeToggle", config = _9_}}
-local text_tools
-local function _10_()
-  return auto_setup("Comment")
-end
-local function _11_()
-  return auto_setup("nvim-surround")
-end
-text_tools = {{"numToStr/Comment.nvim", keys = "gc", config = _10_}, {"kylechui/nvim-surround", keys = {"cs", "ds", "ys"}, config = _11_}}
+ui_tools = {{"stevearc/oil.nvim", cmd = "Oil", config = _6_}, {"nvim-telescope/telescope.nvim", tag = "0.1.6", dependencies = {"nvim-lua/plenary.nvim"}, config = _7_}, {"lewis6991/gitsigns.nvim", event = {"BufReadPre", "BufNewFile"}, config = true}, {"mbbill/undotree", cmd = "UndotreeToggle", config = _8_}}
+local text_tools = {{"numToStr/Comment.nvim", keys = "gc", config = true}, {"kylechui/nvim-surround", keys = {"cs", "ds", "ys"}, config = true}}
 local dev_tools
-local function _12_()
+local function _9_()
   return auto_setup("juice.lsp")
 end
-dev_tools = {{"neovim/nvim-lspconfig", ft = {"go", "scala"}, config = _12_}, {"scalameta/nvim-metals", cmd = "MetalsInit", dependencies = {"nvim-lua/plenary.nvim"}}, {"Olical/conjure", ft = {"clojure", "fennel", "lisp", "scheme"}}}
+dev_tools = {{"neovim/nvim-lspconfig", config = _9_}, {"scalameta/nvim-metals", cmd = "MetalsInit", dependencies = {"nvim-lua/plenary.nvim"}}, {"Olical/conjure", ft = {"clojure", "fennel", "lisp", "scheme"}}}
 local database_tools
-local function _13_()
-  local function _14_()
+local function _10_()
+  local function _11_()
     return set_opts({commentstring = "-- %s", omnifunc = "vim_dadbod_completion#omni"})
   end
-  return autocmd("FileType", {pattern = {"sql", "mysql"}, callback = _14_})
+  return autocmd("FileType", {pattern = {"sql", "mysql"}, callback = _11_})
 end
-database_tools = {{"kristijanhusak/vim-dadbod-ui", cmd = {"DBUI", "DBUIToggle"}, config = _13_, dependencies = {{"tpope/vim-dadbod", lazy = true}, {"kristijanhusak/vim-dadbod-completion", lazy = true, ft = {"sql", "mysql"}}}}}
+database_tools = {{"kristijanhusak/vim-dadbod-ui", cmd = {"DBUI", "DBUIToggle"}, config = _10_, dependencies = {{"tpope/vim-dadbod", lazy = true}, {"kristijanhusak/vim-dadbod-completion", lazy = true, ft = {"sql", "mysql"}}}}}
+local test_tools
+local function _12_()
+  return auto_setup("mini.notify")
+end
+test_tools = {{"echasnovski/mini.notify", config = _12_}}
 local function setup()
   local lazy = autoload("lazy")
-  local plugins = concat(core, ui_tools, text_tools, dev_tools, database_tools)
+  local plugins = concat(core, ui_tools, text_tools, dev_tools, database_tools, test_tools)
   local opts = {ui = {border = "rounded"}, performance = {rtp = {disabled_plugins = {"rplugin", "tohtml", "tutor", "vimball"}}}}
   return lazy.setup(plugins, opts)
 end

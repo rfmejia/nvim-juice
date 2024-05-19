@@ -56,24 +56,19 @@
                      (telescope.setup config)))}
         {1 :lewis6991/gitsigns.nvim
          :event [:BufReadPre :BufNewFile]
-         :config #(auto-setup :gitsigns)}
+         :config true}
         {1 :mbbill/undotree
          :cmd :UndotreeToggle
          :config (fn []
                    (set vim.g.undotree_WindowLayout 4)
                    (set vim.g.undotree_SetFocusWhenToggle 1))}])
 
-(local text-tools [{1 :numToStr/Comment.nvim
-                    :keys :gc
-                    :config #(auto-setup :Comment)}
-                   {1 :kylechui/nvim-surround
-                    :keys [:cs :ds :ys]
-                    :config #(auto-setup :nvim-surround)}])
+(local text-tools
+       [{1 :numToStr/Comment.nvim :keys :gc :config true}
+        {1 :kylechui/nvim-surround :keys [:cs :ds :ys] :config true}])
 
 (local dev-tools
-       [{1 :neovim/nvim-lspconfig
-         :ft [:go :scala]
-         :config #(auto-setup :juice.lsp)}
+       [{1 :neovim/nvim-lspconfig :config #(auto-setup :juice.lsp)}
         {1 :scalameta/nvim-metals
          :cmd :MetalsInit
          :dependencies [:nvim-lua/plenary.nvim]}
@@ -91,9 +86,13 @@
                          :lazy true
                          :ft [:sql :mysql]}]}])
 
+(local test-tools [{1 :echasnovski/mini.notify
+                    :config #(auto-setup :mini.notify)}])
+
 (fn setup []
   (let [lazy (autoload :lazy)
-        plugins (concat core ui-tools text-tools dev-tools database-tools)
+        plugins (concat core ui-tools text-tools dev-tools database-tools
+                        test-tools)
         opts {:ui {:border :rounded}
               :performance {:rtp {:disabled_plugins [:rplugin
                                                      :tohtml
