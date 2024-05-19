@@ -9,6 +9,9 @@
                       :info-fg (color-attr :DiagnosticInfo :fg)
                       :error-fg (color-attr :DiagnosticError :fg)
                       :warn-fg (color-attr :DiagnosticWarn :fg)
+                      :hint-fg (color-attr :DiagnosticHint :fg)
+                      :info-fg (color-attr :DiagnosticInfo :fg)
+                      :ok-fg (color-attr :DiagnosticOk :fg)
                       :statusline-bg (color-attr :StatusLine :bg)
                       :dark-gray "#3d3d3d"
                       :darker-gray "#1d1d1d"
@@ -22,6 +25,9 @@
                :CursorLineNr {:link :Normal}
                :DiagnosticVirtualTextError {:fg c.error-fg :style :italic}
                :DiagnosticVirtualTextWarn {:fg c.warn-fg :style :italic}
+               :DiagnosticVirtualTextHint {:fg c.hint-fg :style :italic}
+               :DiagnosticVirtualTextInfo {:fg c.info-fg :style :italic}
+               :DiagnosticVirtualTextOk {:fg c.ok-fg :style :italic}
                :ExtraWhitespace {:fg c.error-fg :undercurl true}
                :FloatBorder {:fg c.light-gray}
                :LineNr {:fg c.dark-gray :bg c.cursor-bg}

@@ -68,13 +68,17 @@
       (count)))
 
 (fn setup []
-  (let [scalametals (autoload :juice.lsp.scalametals)]
+  (let [scalametals (autoload :juice.lsp.scalametals)
+        diagnostic-config {:underline false
+                           :virtual_text {}
+                           :signs false
+                           :float {:border :rounded}}]
     (comment "lsp popup colors and borders")
     (set vim.lsp.handlers.textDocument/hover
          (vim.lsp.with vim.lsp.handlers.hover {:border :rounded}))
     (set vim.lsp.handlers.textDocument/signatureHelp
          (vim.lsp.with vim.lsp.handlers.signature_help {:border :rounded}))
-    (vim.diagnostic.config {:float {:border :rounded}})
+    (vim.diagnostic.config diagnostic-config)
     (comment "set up languages")
     (scalametals.register-init-command)
     (setup-go)))
