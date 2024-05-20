@@ -27,7 +27,7 @@ end
 local function _7_()
   local telescope = autoload("telescope")
   local actions = autoload("telescope.actions")
-  local config = {defaults = {layout_config = {prompt_position = "bottom", height = 0.6}, layout_strategy = "bottom_pane", mappings = {i = {["<esc>"] = actions.close, ["<C-u>"] = false}}, path_display = {"truncate"}, prompt_prefix = "/", border = false, preview = false}}
+  local config = {defaults = {layout_config = {prompt_position = "bottom", height = 0.6}, layout_strategy = "bottom_pane", mappings = {i = {["<esc>"] = actions.close, ["<C-u>"] = false}}, path_display = {"truncate"}, prompt_prefix = "/", preview = false, border = false}}
   return telescope.setup(config)
 end
 local function _8_()
@@ -50,14 +50,9 @@ local function _10_()
   return autocmd("FileType", {pattern = {"sql", "mysql"}, callback = _11_})
 end
 database_tools = {{"kristijanhusak/vim-dadbod-ui", cmd = {"DBUI", "DBUIToggle"}, config = _10_, dependencies = {{"tpope/vim-dadbod", lazy = true}, {"kristijanhusak/vim-dadbod-completion", lazy = true, ft = {"sql", "mysql"}}}}}
-local test_tools
-local function _12_()
-  return auto_setup("mini.notify")
-end
-test_tools = {{"echasnovski/mini.notify", config = _12_}}
 local function setup()
   local lazy = autoload("lazy")
-  local plugins = concat(core, ui_tools, text_tools, dev_tools, database_tools, test_tools)
+  local plugins = concat(core, ui_tools, text_tools, dev_tools, database_tools)
   local opts = {ui = {border = "rounded"}, performance = {rtp = {disabled_plugins = {"rplugin", "tohtml", "tutor", "vimball"}}}}
   return lazy.setup(plugins, opts)
 end

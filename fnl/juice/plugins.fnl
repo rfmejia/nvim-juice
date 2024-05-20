@@ -85,13 +85,9 @@
                          :lazy true
                          :ft [:sql :mysql]}]}])
 
-(local test-tools [{1 :echasnovski/mini.notify
-                    :config #(auto-setup :mini.notify)}])
-
 (fn setup []
   (let [lazy (autoload :lazy)
-        plugins (concat core ui-tools text-tools dev-tools database-tools
-                        test-tools)
+        plugins (concat core ui-tools text-tools dev-tools database-tools)
         opts {:ui {:border :rounded}
               :performance {:rtp {:disabled_plugins [:rplugin
                                                      :tohtml
