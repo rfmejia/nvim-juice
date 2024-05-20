@@ -69,7 +69,7 @@
 
 (fn setup []
   (let [scalametals (autoload :juice.lsp.scalametals)
-        diagnostic-config {:underline false
+        diagnostic-config {:underline [vim.diagnostic.severity.WARN]
                            :virtual_text {}
                            :signs false
                            :float {:border :rounded}}]
