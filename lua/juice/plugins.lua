@@ -36,7 +36,7 @@ local function _8_()
   return nil
 end
 ui_tools = {{"stevearc/oil.nvim", cmd = "Oil", config = _6_}, {"nvim-telescope/telescope.nvim", tag = "0.1.6", dependencies = {"nvim-lua/plenary.nvim"}, config = _7_}, {"lewis6991/gitsigns.nvim", event = {"BufReadPre", "BufNewFile"}, config = true}, {"mbbill/undotree", cmd = "UndotreeToggle", config = _8_}}
-local text_tools = {{"numToStr/Comment.nvim", keys = "gc", config = true}, {"kylechui/nvim-surround", keys = {"cs", "ds", "ys"}, config = true}}
+local text_tools = {{"kylechui/nvim-surround", keys = {"cs", "ds", "ys"}, config = true}}
 local dev_tools
 local function _9_()
   return auto_setup("juice.lsp")

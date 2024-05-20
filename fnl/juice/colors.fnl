@@ -5,14 +5,14 @@
   "Extract an attribute from an existing highlight group"
   (. (vim.api.nvim_get_hl 0 {:name hl-group}) attribute))
 
-(local custom-colors {:normal-bg (color-attr :Normal :bg)
+(local custom-colors {:normal-bg "#000000"
                       :info-fg (color-attr :DiagnosticInfo :fg)
                       :error-fg (color-attr :DiagnosticError :fg)
                       :warn-fg (color-attr :DiagnosticWarn :fg)
                       :hint-fg (color-attr :DiagnosticHint :fg)
                       :info-fg (color-attr :DiagnosticInfo :fg)
                       :ok-fg (color-attr :DiagnosticOk :fg)
-                      :statusline-bg (color-attr :StatusLine :bg)
+                      :statusline-bg "#000000"
                       :dark-gray "#3d3d3d"
                       :darker-gray "#1d1d1d"
                       :dark-green "#009000"
@@ -34,6 +34,7 @@
                :LineNrAbove {:fg c.dark-gray :bg c.normal-bg}
                :LineNrBelow {:fg c.dark-gray :bg c.normal-bg}
                :MsgArea {:fg c.light-gray}
+               :Normal {:bg c.normal-bg}
                :NormalFloat {:bg c.normal-bg}
                :SpellBad {:fg c.warn-fg :style :undercurl}
                :StatusLine {:fg c.light-gray :bg c.normal-bg}

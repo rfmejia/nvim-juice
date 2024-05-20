@@ -64,8 +64,7 @@
                    (set vim.g.undotree_SetFocusWhenToggle 1))}])
 
 (local text-tools
-       [{1 :numToStr/Comment.nvim :keys :gc :config true}
-        {1 :kylechui/nvim-surround :keys [:cs :ds :ys] :config true}])
+       [{1 :kylechui/nvim-surround :keys [:cs :ds :ys] :config true}])
 
 (local dev-tools
        [{1 :neovim/nvim-lspconfig :config #(auto-setup :juice.lsp)}
