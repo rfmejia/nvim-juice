@@ -85,9 +85,15 @@
                          :lazy true
                          :ft [:sql :mysql]}]}])
 
+(local vim-fu [{1 :m4xshen/hardtime.nvim
+                       :dependencies [{1 :MunifTanjim/nui.nvim}
+                                      {1 :nvim-lua/plenary.nvim}]
+                       :config true}])
+
 (fn setup []
   (let [lazy (autoload :lazy)
-        plugins (concat core ui-tools text-tools dev-tools database-tools)
+        plugins (concat core ui-tools text-tools dev-tools database-tools
+                        vim-fu)
         opts {:ui {:border :rounded}
               :performance {:rtp {:disabled_plugins [:rplugin
                                                      :tohtml

@@ -70,9 +70,9 @@
          "]b" [":bnext<cr>" [:noremap]]
          :<leader>x [":bp|bdelete #<cr>" [:noremap]]})
   (nmap ; ---- TAB MANAGEMENT ----
-        {:tn [":tabnew<cr>" [:noremap]]
-         :tc [":tabclose<cr>" [:noremap]]
-         :ts [":tab split<cr>" [:noremap]]
+        {:<leader>tn [":tabnew<cr>" [:noremap]]
+         :<leader>tc [":tabclose<cr>" [:noremap]]
+         :<leader>ts [":tab split<cr>" [:noremap]]
          "[t" [":tabprevious<cr>" [:noremap]]
          "]t" [":tabnext<cr>" [:noremap]]
          "[T" [":tabfirst<cr>" [:noremap]]
