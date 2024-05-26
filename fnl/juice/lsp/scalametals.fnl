@@ -16,9 +16,9 @@
          {:showImplicitArguments true
           :showImplicitConversionsAndClasses true
           :showInferredType true
-          :decorationColor :Conceal
+          ;:decorationColor :Conceal
           ; :serverVersion :1.2.2
-          :scalafixRulesDependencies ["com.nequissimus::sort-imports:0.6.1"]})
+          })
     (set config.init_options.statusBarProvider :on)
     (set config.capabilities (vim.lsp.protocol.make_client_capabilities))
     (tset config :tvp {:panel_alignment :right

@@ -3,7 +3,7 @@
 
 (set-opts {:shiftwidth 2
            :tabstop 2
-           :textwidth 80
+           :textwidth 100
            :wrap true
            :spell true
            :spelllang :en_us})

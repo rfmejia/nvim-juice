@@ -1,6 +1,7 @@
 (local {: autoload} (require :nfnl.module))
 (local {: concat} (autoload :nfnl.core))
 (local {: autocmd : auto-setup : set-opts} (autoload :juice.util))
+(local {: nmap} (autoload :juice.util))
 
 (local core [{1 :Olical/nfnl :ft :fennel}
              {1 :projekt0n/github-nvim-theme
@@ -33,11 +34,7 @@
 (local ui-tools
        [{1 :stevearc/oil.nvim
          :cmd :Oil
-         :config (fn []
-                   (let [oil (autoload :oil)
-                         config {:default_file_explorer true
-                                 :delete_to_trash true}]
-                     (oil.setup config)))}
+         :config {:default_file_explorer true :delete_to_trash true}}
         {1 :nvim-telescope/telescope.nvim
          :tag :0.1.6
          :dependencies [:nvim-lua/plenary.nvim]
@@ -86,9 +83,9 @@
                          :ft [:sql :mysql]}]}])
 
 (local vim-fu [{1 :m4xshen/hardtime.nvim
-                       :dependencies [{1 :MunifTanjim/nui.nvim}
-                                      {1 :nvim-lua/plenary.nvim}]
-                       :config true}])
+                :dependencies [{1 :MunifTanjim/nui.nvim}
+                               {1 :nvim-lua/plenary.nvim}]
+                :config true}])
 
 (fn setup []
   (let [lazy (autoload :lazy)
