@@ -78,4 +78,4 @@ end
 local function _7_(_241)
   return map({v = _241})
 end
-return {map = map, nmap = _5_, imap = _6_, vmap = _7_, bufmap = bufmap, ["lua-cmd"] = lua_cmd, ["lua-statusline"] = lua_statusline, ["executable?"] = executable_3f, ["has?"] = has_3f, ["set-opts"] = set_opts, ["auto-setup"] = auto_setup, augroup = vim.api.nvim_create_augroup, autocmd = vim.api.nvim_create_autocmd}
+return {map = map, nmap = _5_, imap = _6_, vmap = _7_, bufmap = bufmap, ["lua-cmd"] = lua_cmd, ["lua-statusline"] = lua_statusline, ["executable?"] = executable_3f, ["has?"] = has_3f, ["set-opts"] = set_opts, ["auto-setup"] = auto_setup}
