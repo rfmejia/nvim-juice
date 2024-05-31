@@ -2,8 +2,6 @@
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local _local_2_ = autoload("juice.util")
-local autocmd = _local_2_["autocmd"]
-local augroup = _local_2_["augroup"]
 local bufmap = _local_2_["bufmap"]
 local _local_3_ = autoload("juice.statusline")
 local build_statusline = _local_3_["build-statusline"]
@@ -21,8 +19,8 @@ local function initialize_metals()
   config.capabilities = vim.lsp.protocol.make_client_capabilities()
   do end (config)["tvp"] = {panel_alignment = "right", toggle_node_mapping = "<CR>", node_command_mapping = "r"}
   local function _4_(client, bufnr)
-    _G.assert((nil ~= bufnr), "Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:28")
-    _G.assert((nil ~= client), "Missing argument client on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:28")
+    _G.assert((nil ~= bufnr), "Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:26")
+    _G.assert((nil ~= client), "Missing argument client on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:26")
     local tvp = autoload("metals.tvp")
     lsp["set-buffer-opts"](client, bufnr)
     vim.opt.omnifunc = "v:lua.vim.lsp.omnifunc"
@@ -33,11 +31,11 @@ local function initialize_metals()
   end
   config.on_attach = _4_
   --[[ "Automatically attach Metals to all Scala filetypes (only triggered upon BufEnter)" ]]
-  augroup("metals-group", {})
+  vim.api.nvim_create_augroup("metals-group", {})
   local function _6_()
     return metals.initialize_or_attach(config)
   end
-  autocmd("FileType", {group = "metals-group", pattern = {"scala", "sbt", "java"}, callback = _6_})
+  vim.api.nvim_create_autocmd("FileType", {group = "metals-group", pattern = {"scala", "sbt", "java"}, callback = _6_})
   --[[ "Initialize Metals for the first time" ]]
   return metals.initialize_or_attach(config)
 end

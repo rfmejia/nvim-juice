@@ -23,10 +23,7 @@
                           "(g)oto (s)ymbol"]
                      :gS [vim.lsp.buf.workspace_symbol
                           [:noremap :silent]
-                          "(g)oto workspace (S)ymbol"]
-                     :K [vim.lsp.buf.hover
-                         [:noremap :silent]
-                         "hover documentation"]}})
+                          "(g)oto workspace (S)ymbol"]}})
   (bufmap bufnr ; diagnostics
           {:n {:<localleader>de [#(vim.diagnostic.setqflist {:severity vim.diagnostic.severity.ERROR})
                                  [:noremap :silent]
@@ -36,13 +33,7 @@
                                  "show (d)iagnostics of the (w)orkspace in quickfix list"]
                :<localleader>db [vim.diagnostic.setloclist
                                  [:noremap :silent]
-                                 "show (d)iagnostics of the (b)uffer in local list"]
-               "[d" [#(vim.diagnostic.goto_prev {:wrap false})
-                     [:noremap :silent]
-                     "goto next diagnostic"]
-               "]d" [#(vim.diagnostic.goto_next {:wrap false})
-                     [:noremap :silent]
-                     "goto previous diagnostic"]}})
+                                 "show (d)iagnostics of the (b)uffer in local list"]}})
   (bufmap bufnr ; code actions
           {:n {:<localleader>ca [vim.lsp.buf.code_action
                                  [:noremap :silent]
