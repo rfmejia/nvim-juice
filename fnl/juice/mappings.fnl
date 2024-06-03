@@ -2,16 +2,6 @@
 (local {: lua-cmd : map-keys : nmap : map : imap : vmap : executable?}
        (autoload :juice.util))
 
-; most common is [:noremap :silent], so make a negation?
-(comment (nmap (vim.api.nvim_get_current_buf) [:noremap]
-               {:Y [:y$ "yank until the end of the line"]
-                :<C-l> [":nohl<cr>" "clear search highlight"]
-                "<leader>;" [":<C-r>\""
-                             "paste register 0 contents in command mode"]
-                :<leader>w [":w<cr>" "write buffer"]
-                :<leader>n [":registers<cr>" "list registers"]
-                :<F5> [":make<cr>" "trigger `make` in shell"]}))
-
 (fn setup []
   (nmap ; ---- GENERAL MAPPINGS ----
         {:Y [:y$ nil "yank until the end of the line"]
@@ -161,37 +151,77 @@
          :<leader>u [":UndotreeToggle<cr>"
                      [:noremap :silent]
                      "toggle undotree"]})
-  (let [builtin (autoload :telescope.builtin)]
-    (nmap {:<leader>f [builtin.find_files [:noremap :silent] "telescope files"]
-           :<leader>g [builtin.git_files
-                       [:noremap :silent]
-                       "telescope git files"]
-           :<leader>p [builtin.oldfiles
-                       [:noremap :silent]
-                       "telescope oldfiles"]
-           :<leader>k [builtin.keymaps [:noremap :silent] "telescope keymaps"]}))
-  (let [gitsigns (autoload :gitsigns)]
-    (nmap {"]g" [#(gitsigns.nav_hunk :next) [:noremap] "jump to next git hunk"]
-           "[g" [#(gitsigns.nav_hunk :prev)
-                 [:noremap]
-                 "jump to previous git hunk"]
-           :<localleader>gb [#(gitsigns.blame_line {:full true})
-                             [:noremap]
-                             "(g)it show line (b)lame"]
-           :<localleader>gp [gitsigns.preview_hunk
-                             [:noremap]
-                             "(g)it (p)review hunk"]
-           :<localleader>gs [gitsigns.stage_hunk
-                             [:noremap]
-                             "(g)it (s)tage hunk"]
-           :<localleader>gu [gitsigns.undo_stage_hunk
-                             [:noremap]
-                             "(g)it (u)ndo staged hunk"]
-           :<localleader>gl [#(gitsigns.setloclist)
-                             [:noremap]
-                             "show buffer (g)it hunks in (l)oclist"]
-           :<localleader>gc [#(gitsigns.setqflist :all)
-                             [:noremap]
-                             "show all (g)it hunks in qui(c)kfix list"]})))
+  (let [builtin (autoload :telescope.builtin)
+        maps {:<leader>f [builtin.find_files
+                          [:noremap :silent]
+                          "telescope (f)iles"]
+              :<leader>g [builtin.git_files
+                          [:noremap :silent]
+                          "telescope (g)it files"]
+              :<leader>p [builtin.oldfiles
+                          [:noremap :silent]
+                          "telescope oldfiles"]
+              :<leader>k [builtin.keymaps
+                          [:noremap :silent]
+                          "telescope (k)eymaps"]}]
+    (nmap maps))
+  (let [gitsigns (autoload :gitsigns)
+        nav-maps {"]g" [#(gitsigns.nav_hunk :next {:wrap false :preview true})
+                        [:noremap]
+                        "jump to next git hunk"]
+                  "[g" [#(gitsigns.nav_hunk :prev {:wrap false :preview true})
+                        [:noremap]
+                        "jump to previous git hunk"]}
+        action-maps {:<localleader>gs [gitsigns.stage_hunk
+                                       [:noremap]
+                                       "(g)it (s)tage hunk"]
+                     :<localleader>gu [gitsigns.undo_stage_hunk
+                                       [:noremap]
+                                       "(g)it (u)ndo staged hunk"]
+                     :<localleader>gr [gitsigns.reset_hunk
+                                       [:noremap]
+                                       "(g)it (r)eset hunk"]
+                     :<localleader>gS [gitsigns.stage_buffer
+                                       [:noremap]
+                                       "(g)it (S)tage buffer"]
+                     :<localleader>gR [gitsigns.reset_buffer
+                                       [:noremap]
+                                       "(g)it (R)eset buffer"]}
+        visual-action-maps {:<localleader>gs [#(gitsigns.stage_hunk {(vim.fn.line ".") (vim.fn.line :v)})
+                                              [:noremap]
+                                              "(g)it (s)tage hunk"]
+                            :<localleader>gr [#(gitsigns.reset_hunk {(vim.fn.line ".") (vim.fn.line :v)})
+                                              [:noremap]
+                                              "(g)it (r)eset hunk"]}
+        blame-maps {:<localleader>gb [#(gitsigns.blame_line {:full true})
+                                      [:noremap]
+                                      "(g)it show line (b)lame"]
+                    :<localleader>gB [gitsigns.toggle_current_line_blame
+                                      [:noremap]
+                                      "(g)it toggle current line (B)lame"]}
+        view-maps {:<localleader>gp [gitsigns.preview_hunk
+                                     [:noremap]
+                                     "(g)it (p)review hunk"]
+                   :<localleader>gd [gitsigns.diffthis
+                                     [:noremap]
+                                     "(g)it show (d)iff"]
+                   :<localleader>gD [gitsigns.toggle_deleted
+                                     [:noremap]
+                                     "(g)it toggle (D)eleted hunks"]}
+        list-maps {:<localleader>gl [#(gitsigns.setloclist)
+                                     [:noremap]
+                                     "show buffer (g)it hunks in (l)oclist"]
+                   :<localleader>gc [#(gitsigns.setqflist :all)
+                                     [:noremap]
+                                     "show all (g)it hunks in qui(c)kfix list"]}]
+    (each [_ mappings (ipairs [nav-maps
+                               action-maps
+                               blame-maps
+                               view-maps
+                               list-maps])]
+      (nmap mappings))
+    (vmap visual-action-maps))
+  (let [neogit (autoload :neogit)]
+    (nmap {:<leader>on [neogit.open [:noremap] "(o)pen (n)eogit"]})))
 
 {: setup}

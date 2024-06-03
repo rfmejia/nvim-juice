@@ -9,7 +9,6 @@ local map = _local_2_["map"]
 local imap = _local_2_["imap"]
 local vmap = _local_2_["vmap"]
 local executable_3f = _local_2_["executable?"]
---[[ (nmap (vim.api.nvim_get_current_buf) ["noremap"] {:<C-l> [":nohl<cr>" "clear search highlight"] :<F5> [":make<cr>" "trigger `make` in shell"] "<leader>;" [":<C-r>\"" "paste register 0 contents in command mode"] :<leader>n [":registers<cr>" "list registers"] :<leader>w [":w<cr>" "write buffer"] :Y ["y$" "yank until the end of the line"]}) ]]
 local function setup()
   nmap({Y = {"y$", nil, "yank until the end of the line"}, ["<C-l>"] = {":nohl<cr>", {"noremap"}, "clear search highlight"}, ["<leader>;"] = {":<C-r>\"", {"noremap"}, "paste register 0 contents in command mode"}, ["<leader>w"] = {":w<cr>", {"noremap"}, "write buffer"}, ["<leader>n"] = {":registers<cr>", {"noremap"}, "list registers"}, ["<F5>"] = {":make<cr>", {"noremap"}, "trigger `make` in shell"}})
   nmap({["<C-d>"] = {"<C-d>zz", {"noremap", "silent"}}, ["<C-u>"] = {"<C-u>zz", {"noremap", "silent"}}, ["<C-o>"] = {"<C-o>zz", {"noremap", "silent"}}, ["<C-i>"] = {"<C-i>zz", {"noremap", "silent"}}})
@@ -54,24 +53,48 @@ local function setup()
   nmap({["<leader>L"] = {":Lazy<cr>", {"noremap", "silent"}}, ["<leader>e"] = {":Oil<cr>", {"noremap", "silent"}, "explore files in current file's path"}, ["<leader>E"] = {":Oil .<cr>", {"noremap", "silent"}, "explore files in current working dir"}, ["<leader>u"] = {":UndotreeToggle<cr>", {"noremap", "silent"}, "toggle undotree"}})
   do
     local builtin = autoload("telescope.builtin")
-    nmap({["<leader>f"] = {builtin.find_files, {"noremap", "silent"}, "telescope files"}, ["<leader>g"] = {builtin.git_files, {"noremap", "silent"}, "telescope git files"}, ["<leader>p"] = {builtin.oldfiles, {"noremap", "silent"}, "telescope oldfiles"}, ["<leader>k"] = {builtin.keymaps, {"noremap", "silent"}, "telescope keymaps"}})
+    local maps = {["<leader>f"] = {builtin.find_files, {"noremap", "silent"}, "telescope (f)iles"}, ["<leader>g"] = {builtin.git_files, {"noremap", "silent"}, "telescope (g)it files"}, ["<leader>p"] = {builtin.oldfiles, {"noremap", "silent"}, "telescope oldfiles"}, ["<leader>k"] = {builtin.keymaps, {"noremap", "silent"}, "telescope (k)eymaps"}}
+    nmap(maps)
   end
-  local gitsigns = autoload("gitsigns")
-  local function _9_()
-    return gitsigns.nav_hunk("next")
+  do
+    local gitsigns = autoload("gitsigns")
+    local nav_maps
+    local function _9_()
+      return gitsigns.nav_hunk("next", {preview = true, wrap = false})
+    end
+    local function _10_()
+      return gitsigns.nav_hunk("prev", {preview = true, wrap = false})
+    end
+    nav_maps = {["]g"] = {_9_, {"noremap"}, "jump to next git hunk"}, ["[g"] = {_10_, {"noremap"}, "jump to previous git hunk"}}
+    local action_maps = {["<localleader>gs"] = {gitsigns.stage_hunk, {"noremap"}, "(g)it (s)tage hunk"}, ["<localleader>gu"] = {gitsigns.undo_stage_hunk, {"noremap"}, "(g)it (u)ndo staged hunk"}, ["<localleader>gr"] = {gitsigns.reset_hunk, {"noremap"}, "(g)it (r)eset hunk"}, ["<localleader>gS"] = {gitsigns.stage_buffer, {"noremap"}, "(g)it (S)tage buffer"}, ["<localleader>gR"] = {gitsigns.reset_buffer, {"noremap"}, "(g)it (R)eset buffer"}}
+    local visual_action_maps
+    local function _11_()
+      return gitsigns.stage_hunk({[vim.fn.line(".")] = vim.fn.line("v")})
+    end
+    local function _12_()
+      return gitsigns.reset_hunk({[vim.fn.line(".")] = vim.fn.line("v")})
+    end
+    visual_action_maps = {["<localleader>gs"] = {_11_, {"noremap"}, "(g)it (s)tage hunk"}, ["<localleader>gr"] = {_12_, {"noremap"}, "(g)it (r)eset hunk"}}
+    local blame_maps
+    local function _13_()
+      return gitsigns.blame_line({full = true})
+    end
+    blame_maps = {["<localleader>gb"] = {_13_, {"noremap"}, "(g)it show line (b)lame"}, ["<localleader>gB"] = {gitsigns.toggle_current_line_blame, {"noremap"}, "(g)it toggle current line (B)lame"}}
+    local view_maps = {["<localleader>gp"] = {gitsigns.preview_hunk, {"noremap"}, "(g)it (p)review hunk"}, ["<localleader>gd"] = {gitsigns.diffthis, {"noremap"}, "(g)it show (d)iff"}, ["<localleader>gD"] = {gitsigns.toggle_deleted, {"noremap"}, "(g)it toggle (D)eleted hunks"}}
+    local list_maps
+    local function _14_()
+      return gitsigns.setloclist()
+    end
+    local function _15_()
+      return gitsigns.setqflist("all")
+    end
+    list_maps = {["<localleader>gl"] = {_14_, {"noremap"}, "show buffer (g)it hunks in (l)oclist"}, ["<localleader>gc"] = {_15_, {"noremap"}, "show all (g)it hunks in qui(c)kfix list"}}
+    for _, mappings in ipairs({nav_maps, action_maps, blame_maps, view_maps, list_maps}) do
+      nmap(mappings)
+    end
+    vmap(visual_action_maps)
   end
-  local function _10_()
-    return gitsigns.nav_hunk("prev")
-  end
-  local function _11_()
-    return gitsigns.blame_line({full = true})
-  end
-  local function _12_()
-    return gitsigns.setloclist()
-  end
-  local function _13_()
-    return gitsigns.setqflist("all")
-  end
-  return nmap({["]g"] = {_9_, {"noremap"}, "jump to next git hunk"}, ["[g"] = {_10_, {"noremap"}, "jump to previous git hunk"}, ["<localleader>gb"] = {_11_, {"noremap"}, "(g)it show line (b)lame"}, ["<localleader>gp"] = {gitsigns.preview_hunk, {"noremap"}, "(g)it (p)review hunk"}, ["<localleader>gs"] = {gitsigns.stage_hunk, {"noremap"}, "(g)it (s)tage hunk"}, ["<localleader>gu"] = {gitsigns.undo_stage_hunk, {"noremap"}, "(g)it (u)ndo staged hunk"}, ["<localleader>gl"] = {_12_, {"noremap"}, "show buffer (g)it hunks in (l)oclist"}, ["<localleader>gc"] = {_13_, {"noremap"}, "show all (g)it hunks in qui(c)kfix list"}})
+  local neogit = autoload("neogit")
+  return nmap({["<leader>on"] = {neogit.open, {"noremap"}, "(o)pen (n)eogit"}})
 end
 return {setup = setup}
