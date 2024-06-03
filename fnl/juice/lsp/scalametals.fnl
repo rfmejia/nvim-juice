@@ -4,7 +4,7 @@
 (local {: build-statusline} (autoload :juice.statusline))
 
 (fn initialize-metals []
-  (let [lsp (autoload :juice.lsp)
+  (let [juice-lsp (autoload :juice.lsp)
         metals (autoload :metals)
         config (metals.bare_config)
         telescope (autoload :telescope)]
@@ -22,33 +22,33 @@
     (tset config :tvp {:panel_alignment :right
                        :toggle_node_mapping :<CR>
                        :node_command_mapping :r})
+    (set config.handlers juice-lsp.handlers)
     (set config.on_attach
          (lambda [client bufnr]
-           (local tvp (autoload :metals.tvp))
-           (lsp.set-buffer-opts client bufnr)
-           (set vim.opt.omnifunc "v:lua.vim.lsp.omnifunc")
-           (bufmap bufnr
-                   {:v {:K [metals.type_of_range
-                            [:noremap :silent]
-                            "show type of visual selection"]}
-                    :n {:<localleader>mw [#(metals.hover_worksheet {:border :rounded})
-                                          [:noremap :silent]
-                                          "show (m)etals (w)orksheet output in popup"]
-                        :<localleader>mc [telescope.extensions.metals.commands
-                                          [:noremap :silent]
-                                          "list (m)etals (c)commands"]
-                        :<localleader>mt [tvp.toggle_tree_view
-                                          [:noremap :silent]
-                                          "(m)etals (t)oggle tree view"]
-                        :<localleader>mr [tvp.reveal_in_tree
-                                          [:noremap :silent]
-                                          "(m)etals (r)eveal current member in tree view"]}})))
+           (let [tvp (autoload :metals.tvp)
+                 metals-maps {:v {:K [metals.type_of_range
+                                      [:noremap :silent]
+                                      "show type of visual selection"]}
+                              :n {:<localleader>mw [#(metals.hover_worksheet {:border :rounded})
+                                                    [:noremap :silent]
+                                                    "show (m)etals (w)orksheet output in popup"]
+                                  :<localleader>mc [telescope.extensions.metals.commands
+                                                    [:noremap :silent]
+                                                    "list (m)etals (c)commands"]
+                                  :<localleader>mt [tvp.toggle_tree_view
+                                                    [:noremap :silent]
+                                                    "(m)etals (t)oggle tree view"]
+                                  :<localleader>mr [tvp.reveal_in_tree
+                                                    [:noremap :silent]
+                                                    "(m)etals (r)eveal current member in tree view"]}}]
+             (juice-lsp.set-buffer-opts client bufnr)
+             (bufmap bufnr metals-maps))))
     (comment "Automatically attach Metals to all Scala filetypes (only triggered upon BufEnter)")
     (vim.api.nvim_create_augroup :metals-group [])
     (vim.api.nvim_create_autocmd :FileType
-             {:group :metals-group
-              :pattern [:scala :sbt :java]
-              :callback #(metals.initialize_or_attach config)})
+                                 {:group :metals-group
+                                  :pattern [:scala :sbt :java]
+                                  :callback #(metals.initialize_or_attach config)})
     (comment "Initialize Metals for the first time")
     (metals.initialize_or_attach config)))
 

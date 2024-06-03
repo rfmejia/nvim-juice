@@ -3,6 +3,18 @@
 (local lspconfig (autoload :lspconfig))
 (local {: bufmap} (autoload :juice.util))
 
+(local handlers
+       {:textDocument/publishDiagnostics (vim.lsp.with vim.lsp.diagnostic.on_publish_diagnostics
+                                           {:underline [vim.diagnostic.severity.WARN]
+                                            :update_in_insert true
+                                            :virtual_text {}
+                                            :signs false
+                                            :float {:border :rounded}})
+        :textDocument/hover (vim.lsp.with vim.lsp.handlers.hover
+                              {:border :rounded})
+        :textDocument/signature_help (vim.lsp.with vim.lsp.handlers.signature_help
+                                       {:border :rounded})})
+
 (lambda set-buffer-opts [_ bufnr]
   "Buffer-specific lsp options"
   (bufmap bufnr {:i {:<C-space> [:<C-x><C-o> [:noremap :silent]]}
@@ -59,19 +71,10 @@
       (count)))
 
 (fn setup []
-  (let [scalametals (autoload :juice.lsp.scalametals)
-        diagnostic-config {:underline [vim.diagnostic.severity.WARN]
-                           :virtual_text {}
-                           :signs false
-                           :float {:border :rounded}}]
-    (comment "lsp popup colors and borders")
-    (set vim.lsp.handlers.textDocument/hover
-         (vim.lsp.with vim.lsp.handlers.hover {:border :rounded}))
-    (set vim.lsp.handlers.textDocument/signatureHelp
-         (vim.lsp.with vim.lsp.handlers.signature_help {:border :rounded}))
-    (vim.diagnostic.config diagnostic-config)
-    (comment "set up languages")
+  (let [scalametals (autoload :juice.lsp.scalametals)]
     (scalametals.register-init-command)
-    (setup-go)))
+    (lspconfig.clojure_lsp.setup {:on_attach set-buffer-opts : handlers})
+    (let [settings {:gopls {:analyses {:unusedparams true} :staticcheck true}}]
+      (lspconfig.gopls.setup {:on_attach set-buffer-opts : settings : handlers}))))
 
-{: count-diagnostic : set-buffer-opts : setup}
+{: count-diagnostic : handlers : set-buffer-opts : setup}

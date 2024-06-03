@@ -6,7 +6,7 @@ local bufmap = _local_2_["bufmap"]
 local _local_3_ = autoload("juice.statusline")
 local build_statusline = _local_3_["build-statusline"]
 local function initialize_metals()
-  local lsp = autoload("juice.lsp")
+  local juice_lsp = autoload("juice.lsp")
   local metals = autoload("metals")
   local config = metals.bare_config()
   local telescope = autoload("telescope")
@@ -18,16 +18,18 @@ local function initialize_metals()
   config.init_options.statusBarProvider = "on"
   config.capabilities = vim.lsp.protocol.make_client_capabilities()
   do end (config)["tvp"] = {panel_alignment = "right", toggle_node_mapping = "<CR>", node_command_mapping = "r"}
+  config.handlers = juice_lsp.handlers
   local function _4_(client, bufnr)
-    _G.assert((nil ~= bufnr), "Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:26")
-    _G.assert((nil ~= client), "Missing argument client on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:26")
+    _G.assert((nil ~= bufnr), "Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:27")
+    _G.assert((nil ~= client), "Missing argument client on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:27")
     local tvp = autoload("metals.tvp")
-    lsp["set-buffer-opts"](client, bufnr)
-    vim.opt.omnifunc = "v:lua.vim.lsp.omnifunc"
+    local metals_maps
     local function _5_()
       return metals.hover_worksheet({border = "rounded"})
     end
-    return bufmap(bufnr, {v = {K = {metals.type_of_range, {"noremap", "silent"}, "show type of visual selection"}}, n = {["<localleader>mw"] = {_5_, {"noremap", "silent"}, "show (m)etals (w)orksheet output in popup"}, ["<localleader>mc"] = {telescope.extensions.metals.commands, {"noremap", "silent"}, "list (m)etals (c)commands"}, ["<localleader>mt"] = {tvp.toggle_tree_view, {"noremap", "silent"}, "(m)etals (t)oggle tree view"}, ["<localleader>mr"] = {tvp.reveal_in_tree, {"noremap", "silent"}, "(m)etals (r)eveal current member in tree view"}}})
+    metals_maps = {v = {K = {metals.type_of_range, {"noremap", "silent"}, "show type of visual selection"}}, n = {["<localleader>mw"] = {_5_, {"noremap", "silent"}, "show (m)etals (w)orksheet output in popup"}, ["<localleader>mc"] = {telescope.extensions.metals.commands, {"noremap", "silent"}, "list (m)etals (c)commands"}, ["<localleader>mt"] = {tvp.toggle_tree_view, {"noremap", "silent"}, "(m)etals (t)oggle tree view"}, ["<localleader>mr"] = {tvp.reveal_in_tree, {"noremap", "silent"}, "(m)etals (r)eveal current member in tree view"}}}
+    juice_lsp["set-buffer-opts"](client, bufnr)
+    return bufmap(bufnr, metals_maps)
   end
   config.on_attach = _4_
   --[[ "Automatically attach Metals to all Scala filetypes (only triggered upon BufEnter)" ]]

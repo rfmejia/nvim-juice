@@ -6,6 +6,7 @@ local count = _local_2_["count"]
 local lspconfig = autoload("lspconfig")
 local _local_3_ = autoload("juice.util")
 local bufmap = _local_3_["bufmap"]
+local handlers = {["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {underline = {vim.diagnostic.severity.WARN}, update_in_insert = true, virtual_text = {}, float = {border = "rounded"}, signs = false}), ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {border = "rounded"}), ["textDocument/signature_help"] = vim.lsp.with(vim.lsp.handlers.signature_help, {border = "rounded"})}
 local function set_buffer_opts(_, bufnr)
   _G.assert((nil ~= bufnr), "Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/init.fnl:6")
   bufmap(bufnr, {i = {["<C-space>"] = {"<C-x><C-o>", {"noremap", "silent"}}}, n = {gd = {vim.lsp.buf.definition, {"noremap", "silent", "nowait"}, "(g)oto (d)efinition"}, gt = {vim.lsp.buf.type_definition, {"noremap", "silent", "nowait"}, "(g)oto (t)ype definition"}, gi = {vim.lsp.buf.implementation, {"noremap", "silent"}, "(g)oto (i)mplementation"}, gr = {vim.lsp.buf.references, {"noremap", "silent"}, "(g)oto (r)eferences"}, gs = {vim.lsp.buf.document_symbol, {"noremap", "silent"}, "(g)oto (s)ymbol"}, gS = {vim.lsp.buf.workspace_symbol, {"noremap", "silent"}, "(g)oto workspace (S)ymbol"}}})
@@ -28,13 +29,9 @@ local function count_diagnostic(_3fbufnr, severity)
 end
 local function setup()
   local scalametals = autoload("juice.lsp.scalametals")
-  local diagnostic_config = {underline = {vim.diagnostic.severity.WARN}, virtual_text = {}, float = {border = "rounded"}, signs = false}
-  --[[ "lsp popup colors and borders" ]]
-  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {border = "rounded"})
-  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {border = "rounded"})
-  vim.diagnostic.config(diagnostic_config)
-  --[[ "set up languages" ]]
   scalametals["register-init-command"]()
-  return setup_go()
+  lspconfig.clojure_lsp.setup({on_attach = set_buffer_opts, handlers = handlers})
+  local settings = {gopls = {analyses = {unusedparams = true}, staticcheck = true}}
+  return lspconfig.gopls.setup({on_attach = set_buffer_opts, settings = settings, handlers = handlers})
 end
-return {["count-diagnostic"] = count_diagnostic, ["set-buffer-opts"] = set_buffer_opts, setup = setup}
+return {["count-diagnostic"] = count_diagnostic, handlers = handlers, ["set-buffer-opts"] = set_buffer_opts, setup = setup}
