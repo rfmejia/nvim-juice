@@ -65,7 +65,7 @@ local function _13_()
   neogit.setup()
   return juice_mappings["neogit-maps"]()
 end
-git_tools = {{"lewis6991/gitsigns.nvim", event = {"BufReadPre", "BufNewFile"}, config = _12_}, {"NeogitOrg/neogit", cmd = "Neogit", keys = "<leader>on", dependencies = {{"nvim-lua/plenary.nvim"}, {"sindrets/diffview.nvim"}, {"nvim-telescope/telescope.nvim"}}, config = _13_}}
+git_tools = {{"lewis6991/gitsigns.nvim", event = {"BufReadPre", "BufNewFile"}, config = _12_}, {"NeogitOrg/neogit", cmd = "Neogit", keys = "<leader>og", dependencies = {{"nvim-lua/plenary.nvim"}, {"sindrets/diffview.nvim"}, {"nvim-telescope/telescope.nvim"}}, config = _13_}}
 local vim_fu = {{"m4xshen/hardtime.nvim", event = {"BufReadPre", "BufNewFile"}, dependencies = {{"MunifTanjim/nui.nvim"}, {"nvim-lua/plenary.nvim"}}, config = true}}
 local function setup()
   local lazy = autoload("lazy")
