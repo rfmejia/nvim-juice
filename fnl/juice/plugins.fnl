@@ -1,6 +1,7 @@
 (local {: autoload} (require :nfnl.module))
 (local {: concat} (autoload :nfnl.core))
 (local {: auto-setup : nmap : set-opts} (autoload :juice.util))
+(local juice-mappings (autoload :juice.mappings))
 
 (local core [{1 :Olical/nfnl :ft :fennel}
              {1 :projekt0n/github-nvim-theme
@@ -43,7 +44,9 @@
                          :ft [:sql :mysql]}]}])
 
 (local dev-tools
-       [{1 :neovim/nvim-lspconfig :config #(auto-setup :juice.lsp)}
+       [{1 :neovim/nvim-lspconfig
+         :ft [:clojure :go :scala]
+         :config #(auto-setup :juice.lsp)}
         {1 :scalameta/nvim-metals
          :cmd :MetalsInit
          :dependencies [:nvim-lua/plenary.nvim]}
@@ -57,37 +60,57 @@
                    (set vim.g.undotree_WindowLayout 4)
                    (set vim.g.undotree_SetFocusWhenToggle 1))}])
 
-(local file-tools [{1 :stevearc/oil.nvim
-                    :cmd :Oil
-                    :config {:default_file_explorer true :delete_to_trash true}}
-                   {1 :nvim-telescope/telescope.nvim
-                    :tag :0.1.6
-                    :dependencies [:nvim-lua/plenary.nvim]
-                    :config (fn []
-                              (let [telescope (autoload :telescope)
-                                    actions (autoload :telescope.actions)
-                                    config {:defaults {:border false
-                                                       :layout_config {:prompt_position :bottom
-                                                                       :height 0.4}
-                                                       :layout_strategy :bottom_pane
-                                                       :mappings {:i {:<esc> actions.close
-                                                                      :<C-u> false}}
-                                                       :path_display {1 :truncate}
-                                                       :preview false
-                                                       :prompt_prefix "/"
-                                                       :prompt_title :test}}]
-                                (telescope.setup config)))}])
+(local file-tools
+       [{1 :stevearc/oil.nvim
+         :cmd :Oil
+         :keys :<leader>e
+         :config (fn []
+                   (let [oil (autoload :oil)
+                         config {:default_file_explorer true
+                                 :delete_to_trash true
+                                 :view_options {:show_hidden true}}]
+                     (oil.setup config)
+                     (juice-mappings.oil-maps)))}
+        {1 :nvim-telescope/telescope.nvim
+         :tag :0.1.6
+         :keys [:<leader>f :<leader>p :<leader>g :<leader>k]
+         :dependencies [:nvim-lua/plenary.nvim]
+         :config (fn []
+                   (let [telescope (autoload :telescope)
+                         actions (autoload :telescope.actions)
+                         config {:defaults {:border false
+                                            :layout_config {:prompt_position :bottom
+                                                            :height 0.4}
+                                            :layout_strategy :bottom_pane
+                                            :mappings {:i {:<esc> actions.close
+                                                           :<C-u> false}}
+                                            :path_display {1 :truncate}
+                                            :preview false
+                                            :prompt_prefix "/"
+                                            :prompt_title :test}}]
+                     (telescope.setup config)
+                     (juice-mappings.telescope-maps)))}])
 
-(local git-tools [{1 :lewis6991/gitsigns.nvim
-                   :event [:BufReadPre :BufNewFile]
-                   :config true}
-                  {1 :NeogitOrg/neogit
-                   :dependencies [{1 :nvim-lua/plenary.nvim}
-                                  {1 :sindrets/diffview.nvim}
-                                  {1 :nvim-telescope/telescope.nvim}]
-                   :config true}])
+(local git-tools
+       [{1 :lewis6991/gitsigns.nvim
+         :event [:BufReadPre :BufNewFile]
+         :config (fn []
+                   (let [gitsigns (autoload :gitsigns)]
+                     (gitsigns.setup)
+                     (juice-mappings.gitsigns-maps)))}
+        {1 :NeogitOrg/neogit
+         :cmd :Neogit
+         :keys :<leader>on
+         :dependencies [{1 :nvim-lua/plenary.nvim}
+                        {1 :sindrets/diffview.nvim}
+                        {1 :nvim-telescope/telescope.nvim}]
+         :config (fn []
+                   (let [neogit (autoload :neogit)]
+                     (neogit.setup)
+                     (juice-mappings.neogit-maps)))}])
 
 (local vim-fu [{1 :m4xshen/hardtime.nvim
+                :event [:BufReadPre :BufNewFile]
                 :dependencies [{1 :MunifTanjim/nui.nvim}
                                {1 :nvim-lua/plenary.nvim}]
                 :config true}])

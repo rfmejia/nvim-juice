@@ -142,29 +142,34 @@
                         "open vim notes in a new tab"]}))
   (comment "---- PLUGINS ----")
   (nmap {:<leader>L [":Lazy<cr>" [:noremap :silent]]
-         :<leader>e [":Oil<cr>"
-                     [:noremap :silent]
-                     "explore files in current file's path"]
-         :<leader>E [":Oil .<cr>"
-                     [:noremap :silent]
-                     "explore files in current working dir"]
          :<leader>u [":UndotreeToggle<cr>"
                      [:noremap :silent]
-                     "toggle undotree"]})
+                     "toggle undotree"]}))
+
+(fn oil-maps []
+  (let [oil (autoload :oil)
+        maps {:<leader>e [#(oil.open)
+                          [:noremap :silent]
+                          "explore files in current file's path"]}]
+    (nmap maps)))
+
+(fn telescope-maps []
   (let [builtin (autoload :telescope.builtin)
         maps {:<leader>f [builtin.find_files
                           [:noremap :silent]
                           "telescope (f)iles"]
-              :<leader>g [builtin.git_files
-                          [:noremap :silent]
-                          "telescope (g)it files"]
               :<leader>p [builtin.oldfiles
                           [:noremap :silent]
                           "telescope oldfiles"]
+              :<leader>g [builtin.git_files
+                          [:noremap :silent]
+                          "telescope (g)it files"]
               :<leader>k [builtin.keymaps
                           [:noremap :silent]
                           "telescope (k)eymaps"]}]
-    (nmap maps))
+    (nmap maps)))
+
+(fn gitsigns-maps []
   (let [gitsigns (autoload :gitsigns)
         nav-maps {"]g" [#(gitsigns.nav_hunk :next {:wrap false :preview true})
                         [:noremap]
@@ -220,8 +225,10 @@
                                view-maps
                                list-maps])]
       (nmap mappings))
-    (vmap visual-action-maps))
+    (vmap visual-action-maps)))
+
+(fn neogit-maps []
   (let [neogit (autoload :neogit)]
     (nmap {:<leader>on [neogit.open [:noremap] "(o)pen (n)eogit"]})))
 
-{: setup}
+{: setup : oil-maps : telescope-maps : gitsigns-maps : neogit-maps}

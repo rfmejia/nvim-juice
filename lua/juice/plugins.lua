@@ -7,6 +7,7 @@ local _local_3_ = autoload("juice.util")
 local auto_setup = _local_3_["auto-setup"]
 local nmap = _local_3_["nmap"]
 local set_opts = _local_3_["set-opts"]
+local juice_mappings = autoload("juice.mappings")
 local core
 local function _4_()
   return auto_setup("juice.colors")
@@ -30,7 +31,7 @@ local dev_tools
 local function _8_()
   return auto_setup("juice.lsp")
 end
-dev_tools = {{"neovim/nvim-lspconfig", config = _8_}, {"scalameta/nvim-metals", cmd = "MetalsInit", dependencies = {"nvim-lua/plenary.nvim"}}, {"Olical/conjure", ft = {"clojure", "fennel", "lisp", "scheme"}}}
+dev_tools = {{"neovim/nvim-lspconfig", ft = {"clojure", "go", "scala"}, config = _8_}, {"scalameta/nvim-metals", cmd = "MetalsInit", dependencies = {"nvim-lua/plenary.nvim"}}, {"Olical/conjure", ft = {"clojure", "fennel", "lisp", "scheme"}}}
 local editing_tools
 local function _9_()
   vim.g.undotree_WindowLayout = 4
@@ -40,14 +41,32 @@ end
 editing_tools = {{"kylechui/nvim-surround", keys = {"cs", "ds", "ys"}, config = true}, {"mbbill/undotree", cmd = "UndotreeToggle", config = _9_}}
 local file_tools
 local function _10_()
+  local oil = autoload("oil")
+  local config = {default_file_explorer = true, delete_to_trash = true, view_options = {show_hidden = true}}
+  oil.setup(config)
+  return juice_mappings["oil-maps"]()
+end
+local function _11_()
   local telescope = autoload("telescope")
   local actions = autoload("telescope.actions")
   local config = {defaults = {layout_config = {prompt_position = "bottom", height = 0.4}, layout_strategy = "bottom_pane", mappings = {i = {["<esc>"] = actions.close, ["<C-u>"] = false}}, path_display = {"truncate"}, prompt_prefix = "/", prompt_title = "test", border = false, preview = false}}
-  return telescope.setup(config)
+  telescope.setup(config)
+  return juice_mappings["telescope-maps"]()
 end
-file_tools = {{"stevearc/oil.nvim", cmd = "Oil", config = {default_file_explorer = true, delete_to_trash = true}}, {"nvim-telescope/telescope.nvim", tag = "0.1.6", dependencies = {"nvim-lua/plenary.nvim"}, config = _10_}}
-local git_tools = {{"lewis6991/gitsigns.nvim", event = {"BufReadPre", "BufNewFile"}, config = true}, {"NeogitOrg/neogit", dependencies = {{"nvim-lua/plenary.nvim"}, {"sindrets/diffview.nvim"}, {"nvim-telescope/telescope.nvim"}}, config = true}}
-local vim_fu = {{"m4xshen/hardtime.nvim", dependencies = {{"MunifTanjim/nui.nvim"}, {"nvim-lua/plenary.nvim"}}, config = true}}
+file_tools = {{"stevearc/oil.nvim", cmd = "Oil", keys = "<leader>e", config = _10_}, {"nvim-telescope/telescope.nvim", tag = "0.1.6", keys = {"<leader>f", "<leader>p", "<leader>g", "<leader>k"}, dependencies = {"nvim-lua/plenary.nvim"}, config = _11_}}
+local git_tools
+local function _12_()
+  local gitsigns = autoload("gitsigns")
+  gitsigns.setup()
+  return juice_mappings["gitsigns-maps"]()
+end
+local function _13_()
+  local neogit = autoload("neogit")
+  neogit.setup()
+  return juice_mappings["neogit-maps"]()
+end
+git_tools = {{"lewis6991/gitsigns.nvim", event = {"BufReadPre", "BufNewFile"}, config = _12_}, {"NeogitOrg/neogit", cmd = "Neogit", keys = "<leader>on", dependencies = {{"nvim-lua/plenary.nvim"}, {"sindrets/diffview.nvim"}, {"nvim-telescope/telescope.nvim"}}, config = _13_}}
+local vim_fu = {{"m4xshen/hardtime.nvim", event = {"BufReadPre", "BufNewFile"}, dependencies = {{"MunifTanjim/nui.nvim"}, {"nvim-lua/plenary.nvim"}}, config = true}}
 local function setup()
   local lazy = autoload("lazy")
   local plugins = concat(core, database_tools, dev_tools, editing_tools, file_tools, git_tools, vim_fu)

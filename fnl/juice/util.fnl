@@ -7,7 +7,6 @@
         reducer (fn [acc opt] (merge acc {opt true}))]
     (reduce reducer init ?opts)))
 
-(comment "TODO optionally add a top-level string for comments")
 (lambda map [mappings]
   (each [mode maps (pairs mappings)]
     (each [key params (pairs maps)]

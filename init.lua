@@ -18,7 +18,7 @@ set_opts({number = true, relativenumber = true, signcolumn = "yes:1", cursorline
 --[[ "---- SEARCH OPTIONS ----" ]]
 set_opts({hlsearch = true, incsearch = true, ignorecase = true, smartcase = true, wrapscan = false})
 --[[ "---- FILETYPES ----" ]]
-vim.filetype.add({extension = {sbt = "scala", sc = "scala", txt = "text"}, filename = {Jenkinsfile = "groovy", ["tmux.conf"] = "tmux"}})
+vim.filetype.add({extension = {edn = "clojure", sbt = "scala", sc = "scala", txt = "text"}, filename = {Jenkinsfile = "groovy", ["tmux.conf"] = "tmux"}})
 --[[ "---- COMPLETION ----" ]]
 set_opts({complete = ".,w,b,u,t,kspell", completeopt = "menu,menuone,noselect,noinsert", path = ".,,", wildmode = "lastused,longest,full", wildignore = "*/.git/*,*/.ammonite/*,*/.bloop/*,*/.metals/*,*/node_modules/*,*/build/*,*/target/*,*.class", wildignorecase = true, wildoptions = "pum"})
 --[[ "use ripgrep if available" ]]

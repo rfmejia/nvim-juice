@@ -14,9 +14,8 @@ local function make_opts(_3fopts, _3fdesc, _3fbufnr)
   reducer = _3_
   return reduce(reducer, init, _3fopts)
 end
---[[ "TODO optionally add a top-level string for comments" ]]
 local function map(mappings)
-  _G.assert((nil ~= mappings), "Missing argument mappings on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:11")
+  _G.assert((nil ~= mappings), "Missing argument mappings on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:10")
   for mode, maps in pairs(mappings) do
     for key, params in pairs(maps) do
       local action, flags, desc, bufnr = unpack(params)
@@ -27,8 +26,8 @@ local function map(mappings)
   return nil
 end
 local function bufmap(bufnr, mappings)
-  _G.assert((nil ~= mappings), "Missing argument mappings on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:18")
-  _G.assert((nil ~= bufnr), "Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:18")
+  _G.assert((nil ~= mappings), "Missing argument mappings on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:17")
+  _G.assert((nil ~= bufnr), "Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:17")
   for mode, maps in pairs(mappings) do
     for key, params in pairs(maps) do
       local action, flags, desc = unpack(params)
@@ -39,23 +38,23 @@ local function bufmap(bufnr, mappings)
   return nil
 end
 local function lua_cmd(str)
-  _G.assert((nil ~= str), "Missing argument str on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:25")
+  _G.assert((nil ~= str), "Missing argument str on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:24")
   return string.format("<cmd>lua %s<cr>", str)
 end
 local function lua_statusline(command)
-  _G.assert((nil ~= command), "Missing argument command on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:29")
+  _G.assert((nil ~= command), "Missing argument command on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:28")
   return string.format("%%{luaeval(\"%s\")}", command)
 end
 local function executable_3f(cmd)
-  _G.assert((nil ~= cmd), "Missing argument cmd on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:33")
+  _G.assert((nil ~= cmd), "Missing argument cmd on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:32")
   return (vim.fn.executable(cmd) == 1)
 end
 local function has_3f(cmd)
-  _G.assert((nil ~= cmd), "Missing argument cmd on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:37")
+  _G.assert((nil ~= cmd), "Missing argument cmd on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:36")
   return (vim.fn.has(cmd) == 1)
 end
 local function set_opts(options)
-  _G.assert((nil ~= options), "Missing argument options on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:41")
+  _G.assert((nil ~= options), "Missing argument options on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:40")
   if table_3f(options) then
     for k, v in pairs(options) do
       vim.opt[k] = v
@@ -66,7 +65,7 @@ local function set_opts(options)
   end
 end
 local function auto_setup(module)
-  _G.assert((nil ~= module), "Missing argument module on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:47")
+  _G.assert((nil ~= module), "Missing argument module on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:46")
   return autoload(module).setup()
 end
 local function _5_(_241)
