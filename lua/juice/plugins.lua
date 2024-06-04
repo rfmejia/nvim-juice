@@ -49,11 +49,11 @@ end
 local function _11_()
   local telescope = autoload("telescope")
   local actions = autoload("telescope.actions")
-  local config = {defaults = {layout_config = {prompt_position = "bottom", height = 0.4}, layout_strategy = "bottom_pane", mappings = {i = {["<esc>"] = actions.close, ["<C-u>"] = false}}, path_display = {"truncate"}, prompt_prefix = "/", prompt_title = "test", border = false, preview = false}}
+  local config = {defaults = {layout_config = {prompt_position = "bottom", height = 0.4}, layout_strategy = "bottom_pane", mappings = {i = {["<esc>"] = actions.close, ["<C-u>"] = false}}, path_display = {"truncate"}, prompt_prefix = "/", prompt_title = "test", preview = false, border = false}}
   telescope.setup(config)
   return juice_mappings["telescope-maps"]()
 end
-file_tools = {{"stevearc/oil.nvim", cmd = "Oil", keys = "<leader>e", config = _10_}, {"nvim-telescope/telescope.nvim", tag = "0.1.6", keys = {"<leader>f", "<leader>p", "<leader>g", "<leader>k"}, dependencies = {"nvim-lua/plenary.nvim"}, config = _11_}}
+file_tools = {{"stevearc/oil.nvim", cmd = "Oil", keys = "<leader>e", config = _10_}, {"nvim-telescope/telescope.nvim", tag = "0.1.6", keys = {"<leader>f", "<leader>p", "<leader>g", "<leader>k"}, cmd = "Telescope", dependencies = {"nvim-lua/plenary.nvim"}, config = _11_}}
 local git_tools
 local function _12_()
   local gitsigns = autoload("gitsigns")

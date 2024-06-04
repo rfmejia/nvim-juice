@@ -74,6 +74,7 @@
         {1 :nvim-telescope/telescope.nvim
          :tag :0.1.6
          :keys [:<leader>f :<leader>p :<leader>g :<leader>k]
+         :cmd :Telescope
          :dependencies [:nvim-lua/plenary.nvim]
          :config (fn []
                    (let [telescope (autoload :telescope)

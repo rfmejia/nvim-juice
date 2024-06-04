@@ -129,7 +129,7 @@
   (comment "---- TMUX ----")
   (when vim.env.TMUX
     (when (executable? :lazygit)
-      (nmap {:<leader>og [":!tmux neww lazygit<cr><cr>"
+      (nmap {:<leader>ol [":!tmux neww lazygit<cr><cr>"
                           [:noremap :silent]
                           "open lazygit in a new tmux window"]})))
   (comment "---- JOURNAL ----")
@@ -229,6 +229,6 @@
 
 (fn neogit-maps []
   (let [neogit (autoload :neogit)]
-    (nmap {:<leader>on [neogit.open [:noremap] "(o)pen (n)eogit"]})))
+    (nmap {:<leader>og [neogit.open [:noremap] "(o)pen (n)eogit"]})))
 
 {: setup : oil-maps : telescope-maps : gitsigns-maps : neogit-maps}

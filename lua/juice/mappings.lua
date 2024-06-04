@@ -33,7 +33,7 @@ local function setup()
   --[[ "---- TMUX ----" ]]
   if vim.env.TMUX then
     if executable_3f("lazygit") then
-      nmap({["<leader>og"] = {":!tmux neww lazygit<cr><cr>", {"noremap", "silent"}, "open lazygit in a new tmux window"}})
+      nmap({["<leader>ol"] = {":!tmux neww lazygit<cr><cr>", {"noremap", "silent"}, "open lazygit in a new tmux window"}})
     else
     end
   else
@@ -106,6 +106,6 @@ local function gitsigns_maps()
 end
 local function neogit_maps()
   local neogit = autoload("neogit")
-  return nmap({["<leader>on"] = {neogit.open, {"noremap"}, "(o)pen (n)eogit"}})
+  return nmap({["<leader>og"] = {neogit.open, {"noremap"}, "(o)pen (n)eogit"}})
 end
 return {setup = setup, ["oil-maps"] = oil_maps, ["telescope-maps"] = telescope_maps, ["gitsigns-maps"] = gitsigns_maps, ["neogit-maps"] = neogit_maps}
