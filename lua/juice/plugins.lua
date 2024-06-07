@@ -14,7 +14,7 @@ local function _4_()
 end
 local function _5_()
   local ts = autoload("nvim-treesitter.configs")
-  local languages = {"bash", "fennel", "gitcommit", "go", "hocon", "java", "json", "lua", "markdown", "scala", "sql", "vimdoc", "yaml"}
+  local languages = {"bash", "clojure", "fennel", "gitcommit", "go", "hocon", "java", "json", "lua", "markdown", "scala", "sql", "vimdoc", "yaml"}
   local config = {ensure_installed = languages, highlight = {enable = true}, indent = {enable = true}}
   return ts.setup(config)
 end
@@ -38,7 +38,7 @@ local function _9_()
   vim.g.undotree_SetFocusWhenToggle = 1
   return nil
 end
-editing_tools = {{"kylechui/nvim-surround", keys = {"cs", "ds", "ys"}, config = true}, {"mbbill/undotree", cmd = "UndotreeToggle", config = _9_}}
+editing_tools = {{"kylechui/nvim-surround", keys = {"cs", "ds", "ys"}, config = true}, {"echasnovski/mini.ai", keys = {"ca", "da", "ya", "va", "ci", "di", "yi", "vi"}, config = true}, {"mbbill/undotree", cmd = "UndotreeToggle", config = _9_}}
 local file_tools
 local function _10_()
   local oil = autoload("oil")
@@ -49,7 +49,7 @@ end
 local function _11_()
   local telescope = autoload("telescope")
   local actions = autoload("telescope.actions")
-  local config = {defaults = {layout_config = {prompt_position = "bottom", height = 0.4}, layout_strategy = "bottom_pane", mappings = {i = {["<esc>"] = actions.close, ["<C-u>"] = false}}, path_display = {"truncate"}, prompt_prefix = "/", prompt_title = "test", preview = false, border = false}}
+  local config = {defaults = {layout_config = {prompt_position = "bottom", height = 0.4}, layout_strategy = "bottom_pane", mappings = {i = {["<esc>"] = actions.close, ["<C-u>"] = false}}, path_display = {"truncate"}, prompt_prefix = "/", prompt_title = "test", border = false, preview = false}}
   telescope.setup(config)
   return juice_mappings["telescope-maps"]()
 end
@@ -66,10 +66,9 @@ local function _13_()
   return juice_mappings["neogit-maps"]()
 end
 git_tools = {{"lewis6991/gitsigns.nvim", event = {"BufReadPre", "BufNewFile"}, config = _12_}, {"NeogitOrg/neogit", cmd = "Neogit", keys = "<leader>og", dependencies = {{"nvim-lua/plenary.nvim"}, {"sindrets/diffview.nvim"}, {"nvim-telescope/telescope.nvim"}}, config = _13_}}
-local vim_fu = {{"m4xshen/hardtime.nvim", event = {"BufReadPre", "BufNewFile"}, dependencies = {{"MunifTanjim/nui.nvim"}, {"nvim-lua/plenary.nvim"}}, config = true}}
 local function setup()
   local lazy = autoload("lazy")
-  local plugins = concat(core, database_tools, dev_tools, editing_tools, file_tools, git_tools, vim_fu)
+  local plugins = concat(core, database_tools, dev_tools, editing_tools, file_tools, git_tools)
   local opts = {ui = {border = "rounded"}, performance = {rtp = {disabled_plugins = {"rplugin", "tohtml", "tutor", "vimball"}}}}
   return lazy.setup(plugins, opts)
 end

@@ -14,6 +14,7 @@
               :config (fn []
                         (let [ts (autoload :nvim-treesitter.configs)
                               languages [:bash
+                                         :clojure
                                          :fennel
                                          :gitcommit
                                          :go
@@ -54,6 +55,9 @@
 
 (local editing-tools
        [{1 :kylechui/nvim-surround :keys [:cs :ds :ys] :config true}
+        {1 :echasnovski/mini.ai
+         :keys [:ca :da :ya :va :ci :di :yi :vi]
+         :config true}
         {1 :mbbill/undotree
          :cmd :UndotreeToggle
          :config (fn []
@@ -110,16 +114,10 @@
                      (neogit.setup)
                      (juice-mappings.neogit-maps)))}])
 
-(local vim-fu [{1 :m4xshen/hardtime.nvim
-                :event [:BufReadPre :BufNewFile]
-                :dependencies [{1 :MunifTanjim/nui.nvim}
-                               {1 :nvim-lua/plenary.nvim}]
-                :config true}])
-
 (fn setup []
   (let [lazy (autoload :lazy)
         plugins (concat core database-tools dev-tools editing-tools file-tools
-                        git-tools vim-fu)
+                        git-tools)
         opts {:ui {:border :rounded}
               :performance {:rtp {:disabled_plugins [:rplugin
                                                      :tohtml
