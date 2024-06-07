@@ -55,9 +55,6 @@
 
 (local editing-tools
        [{1 :kylechui/nvim-surround :keys [:cs :ds :ys] :config true}
-        {1 :echasnovski/mini.ai
-         :keys [:ca :da :ya :va :ci :di :yi :vi]
-         :config true}
         {1 :mbbill/undotree
          :cmd :UndotreeToggle
          :config (fn []

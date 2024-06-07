@@ -38,7 +38,7 @@ local function _9_()
   vim.g.undotree_SetFocusWhenToggle = 1
   return nil
 end
-editing_tools = {{"kylechui/nvim-surround", keys = {"cs", "ds", "ys"}, config = true}, {"echasnovski/mini.ai", keys = {"ca", "da", "ya", "va", "ci", "di", "yi", "vi"}, config = true}, {"mbbill/undotree", cmd = "UndotreeToggle", config = _9_}}
+editing_tools = {{"kylechui/nvim-surround", keys = {"cs", "ds", "ys"}, config = true}, {"mbbill/undotree", cmd = "UndotreeToggle", config = _9_}}
 local file_tools
 local function _10_()
   local oil = autoload("oil")
@@ -49,7 +49,7 @@ end
 local function _11_()
   local telescope = autoload("telescope")
   local actions = autoload("telescope.actions")
-  local config = {defaults = {layout_config = {prompt_position = "bottom", height = 0.4}, layout_strategy = "bottom_pane", mappings = {i = {["<esc>"] = actions.close, ["<C-u>"] = false}}, path_display = {"truncate"}, prompt_prefix = "/", prompt_title = "test", border = false, preview = false}}
+  local config = {defaults = {layout_config = {prompt_position = "bottom", height = 0.4}, layout_strategy = "bottom_pane", mappings = {i = {["<esc>"] = actions.close, ["<C-u>"] = false}}, path_display = {"truncate"}, prompt_prefix = "/", prompt_title = "test", preview = false, border = false}}
   telescope.setup(config)
   return juice_mappings["telescope-maps"]()
 end
