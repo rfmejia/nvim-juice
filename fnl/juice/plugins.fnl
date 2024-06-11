@@ -54,7 +54,9 @@
 (local lisp-tools
        (let [languages [:clojure :fennel]]
          [{1 :Olical/conjure :ft languages}
-          {1 :julienvincent/nvim-paredit :ft languages :config true}
+          {1 :julienvincent/nvim-paredit
+           :ft languages
+           :config {:use_default_keys true :indent {:enabled true}}}
           {1 :julienvincent/nvim-paredit-fennel
            :ft :fennel
            :config true

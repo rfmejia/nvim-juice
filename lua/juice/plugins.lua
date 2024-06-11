@@ -35,7 +35,7 @@ dev_tools = {{"neovim/nvim-lspconfig", ft = {"clojure", "go", "scala"}, config =
 local lisp_tools
 do
   local languages = {"clojure", "fennel"}
-  lisp_tools = {{"Olical/conjure", ft = languages}, {"julienvincent/nvim-paredit", ft = languages, config = true}, {"julienvincent/nvim-paredit-fennel", ft = "fennel", config = true, dependencies = "julienvincent/nvim-paredit"}}
+  lisp_tools = {{"Olical/conjure", ft = languages}, {"julienvincent/nvim-paredit", ft = languages, config = {use_default_keys = true, indent = {enabled = true}}}, {"julienvincent/nvim-paredit-fennel", ft = "fennel", config = true, dependencies = "julienvincent/nvim-paredit"}}
 end
 local editing_tools
 local function _9_()
