@@ -31,14 +31,19 @@ local dev_tools
 local function _8_()
   return auto_setup("juice.lsp")
 end
-dev_tools = {{"neovim/nvim-lspconfig", ft = {"clojure", "go", "scala"}, config = _8_}, {"scalameta/nvim-metals", cmd = "MetalsInit", dependencies = {"nvim-lua/plenary.nvim"}}, {"Olical/conjure", ft = {"clojure", "fennel", "lisp", "scheme"}}}
+dev_tools = {{"neovim/nvim-lspconfig", ft = {"clojure", "go", "scala"}, config = _8_}, {"scalameta/nvim-metals", cmd = "MetalsInit", dependencies = {"nvim-lua/plenary.nvim"}}}
+local lisp_tools
+do
+  local languages = {"clojure", "fennel"}
+  lisp_tools = {{"Olical/conjure", ft = languages}, {"julienvincent/nvim-paredit", ft = languages, config = true}, {"julienvincent/nvim-paredit-fennel", ft = "fennel", config = true, dependencies = "julienvincent/nvim-paredit"}}
+end
 local editing_tools
 local function _9_()
   vim.g.undotree_WindowLayout = 4
   vim.g.undotree_SetFocusWhenToggle = 1
   return nil
 end
-editing_tools = {{"kylechui/nvim-surround", keys = {"cs", "ds", "ys"}, config = true}, {"mbbill/undotree", cmd = "UndotreeToggle", config = _9_}}
+editing_tools = {{"kylechui/nvim-surround", keys = {"cs", "ds", "ys"}, config = true}, {"windwp/nvim-autopairs", event = "InsertEnter", config = true}, {"mbbill/undotree", cmd = "UndotreeToggle", config = _9_}}
 local file_tools
 local function _10_()
   local oil = autoload("oil")
@@ -68,7 +73,7 @@ end
 git_tools = {{"lewis6991/gitsigns.nvim", event = {"BufReadPre", "BufNewFile"}, config = _12_}, {"NeogitOrg/neogit", cmd = "Neogit", keys = "<leader>og", dependencies = {{"nvim-lua/plenary.nvim"}, {"sindrets/diffview.nvim"}, {"nvim-telescope/telescope.nvim"}}, config = _13_}}
 local function setup()
   local lazy = autoload("lazy")
-  local plugins = concat(core, database_tools, dev_tools, editing_tools, file_tools, git_tools)
+  local plugins = concat(core, database_tools, dev_tools, editing_tools, file_tools, git_tools, lisp_tools)
   local opts = {ui = {border = "rounded"}, performance = {rtp = {disabled_plugins = {"rplugin", "tohtml", "tutor", "vimball"}}}}
   return lazy.setup(plugins, opts)
 end

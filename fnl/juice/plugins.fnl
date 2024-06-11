@@ -44,17 +44,25 @@
                          :lazy true
                          :ft [:sql :mysql]}]}])
 
-(local dev-tools
-       [{1 :neovim/nvim-lspconfig
-         :ft [:clojure :go :scala]
-         :config #(auto-setup :juice.lsp)}
-        {1 :scalameta/nvim-metals
-         :cmd :MetalsInit
-         :dependencies [:nvim-lua/plenary.nvim]}
-        {1 :Olical/conjure :ft [:clojure :fennel :lisp :scheme]}])
+(local dev-tools [{1 :neovim/nvim-lspconfig
+                   :ft [:clojure :go :scala]
+                   :config #(auto-setup :juice.lsp)}
+                  {1 :scalameta/nvim-metals
+                   :cmd :MetalsInit
+                   :dependencies [:nvim-lua/plenary.nvim]}])
+
+(local lisp-tools
+       (let [languages [:clojure :fennel]]
+         [{1 :Olical/conjure :ft languages}
+          {1 :julienvincent/nvim-paredit :ft languages :config true}
+          {1 :julienvincent/nvim-paredit-fennel
+           :ft :fennel
+           :config true
+           :dependencies :julienvincent/nvim-paredit}]))
 
 (local editing-tools
        [{1 :kylechui/nvim-surround :keys [:cs :ds :ys] :config true}
+        {1 :windwp/nvim-autopairs :event :InsertEnter :config true}
         {1 :mbbill/undotree
          :cmd :UndotreeToggle
          :config (fn []
@@ -114,7 +122,7 @@
 (fn setup []
   (let [lazy (autoload :lazy)
         plugins (concat core database-tools dev-tools editing-tools file-tools
-                        git-tools)
+                        git-tools lisp-tools)
         opts {:ui {:border :rounded}
               :performance {:rtp {:disabled_plugins [:rplugin
                                                      :tohtml

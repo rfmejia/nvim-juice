@@ -2,6 +2,7 @@
 (local {: bufmap : set-opts} (autoload :juice.util))
 
 (set-opts {:shiftwidth 2 :tabstop 2 :expandtab true :textwidth 100})
+(set vim.bo.commentstring ";; %s")
 
 (lambda buffer-is-modified [buf-num]
   (vim.api.nvim_buf_get_option buf-num :modified))
