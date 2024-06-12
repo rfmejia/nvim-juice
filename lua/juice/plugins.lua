@@ -35,42 +35,55 @@ dev_tools = {{"neovim/nvim-lspconfig", ft = {"clojure", "go", "scala"}, config =
 local lisp_tools
 do
   local languages = {"clojure", "fennel"}
-  lisp_tools = {{"Olical/conjure", ft = languages}, {"julienvincent/nvim-paredit", ft = languages, config = {use_default_keys = true, indent = {enabled = true}}}, {"julienvincent/nvim-paredit-fennel", ft = "fennel", config = true, dependencies = "julienvincent/nvim-paredit"}}
+  local function _9_()
+    vim.g["conjure#result#register"] = "*"
+    vim.g["conjure#mapping#doc_word"] = "gk"
+    vim.g["conjure#log#botright"] = true
+    local function _10_()
+      return set_opts({commentstring = ";; %s"})
+    end
+    vim.api.nvim_create_autocmd("FileType", {pattern = languages, callback = _10_, desc = "Lisp style line comment", group = vim.api.nvim_create_augroup("comment_group", {clear = true})})
+    local function _11_()
+      return vim.lsp.buf.format({async = false})
+    end
+    return vim.api.nvim_create_autocmd("BufWritePre", {pattern = languages, callback = _11_, desc = "Format on buffer write", group = vim.api.nvim_create_augroup("format_group", {clear = true})})
+  end
+  lisp_tools = {{"Olical/conjure", ft = languages, config = _9_}, {"julienvincent/nvim-paredit", ft = languages, config = {use_default_keys = true, indent = {enabled = true}}}, {"julienvincent/nvim-paredit-fennel", ft = "fennel", config = true, dependencies = "julienvincent/nvim-paredit"}}
 end
 local editing_tools
-local function _9_()
+local function _12_()
   vim.g.undotree_WindowLayout = 4
   vim.g.undotree_SetFocusWhenToggle = 1
   return nil
 end
-editing_tools = {{"kylechui/nvim-surround", keys = {"cs", "ds", "ys"}, config = true}, {"windwp/nvim-autopairs", event = "InsertEnter", config = true}, {"mbbill/undotree", cmd = "UndotreeToggle", config = _9_}}
+editing_tools = {{"kylechui/nvim-surround", keys = {"cs", "ds", "ys"}, config = true}, {"windwp/nvim-autopairs", event = "InsertEnter", config = true}, {"mbbill/undotree", cmd = "UndotreeToggle", config = _12_}}
 local file_tools
-local function _10_()
+local function _13_()
   local oil = autoload("oil")
   local config = {default_file_explorer = true, delete_to_trash = true, view_options = {show_hidden = true}}
   oil.setup(config)
   return juice_mappings["oil-maps"]()
 end
-local function _11_()
+local function _14_()
   local telescope = autoload("telescope")
   local actions = autoload("telescope.actions")
   local config = {defaults = {layout_config = {prompt_position = "bottom", height = 0.4}, layout_strategy = "bottom_pane", mappings = {i = {["<esc>"] = actions.close, ["<C-u>"] = false}}, path_display = {"truncate"}, prompt_prefix = "/", prompt_title = "test", preview = false, border = false}}
   telescope.setup(config)
   return juice_mappings["telescope-maps"]()
 end
-file_tools = {{"stevearc/oil.nvim", cmd = "Oil", keys = "<leader>e", config = _10_}, {"nvim-telescope/telescope.nvim", tag = "0.1.6", keys = {"<leader>f", "<leader>p", "<leader>g", "<leader>k"}, cmd = "Telescope", dependencies = {"nvim-lua/plenary.nvim"}, config = _11_}}
+file_tools = {{"stevearc/oil.nvim", cmd = "Oil", keys = "<leader>e", config = _13_}, {"nvim-telescope/telescope.nvim", tag = "0.1.6", keys = {"<leader>f", "<leader>p", "<leader>g", "<leader>k"}, cmd = "Telescope", dependencies = {"nvim-lua/plenary.nvim"}, config = _14_}}
 local git_tools
-local function _12_()
+local function _15_()
   local gitsigns = autoload("gitsigns")
   gitsigns.setup()
   return juice_mappings["gitsigns-maps"]()
 end
-local function _13_()
+local function _16_()
   local neogit = autoload("neogit")
   neogit.setup()
   return juice_mappings["neogit-maps"]()
 end
-git_tools = {{"lewis6991/gitsigns.nvim", event = {"BufReadPre", "BufNewFile"}, config = _12_}, {"NeogitOrg/neogit", cmd = "Neogit", keys = "<leader>og", dependencies = {{"nvim-lua/plenary.nvim"}, {"sindrets/diffview.nvim"}, {"nvim-telescope/telescope.nvim"}}, config = _13_}}
+git_tools = {{"lewis6991/gitsigns.nvim", event = {"BufReadPre", "BufNewFile"}, config = _15_}, {"NeogitOrg/neogit", cmd = "Neogit", keys = "<leader>og", dependencies = {{"nvim-lua/plenary.nvim"}, {"sindrets/diffview.nvim"}, {"nvim-telescope/telescope.nvim"}}, config = _16_}}
 local function setup()
   local lazy = autoload("lazy")
   local plugins = concat(core, database_tools, dev_tools, editing_tools, file_tools, git_tools, lisp_tools)

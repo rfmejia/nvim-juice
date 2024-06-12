@@ -53,7 +53,24 @@
 
 (local lisp-tools
        (let [languages [:clojure :fennel]]
-         [{1 :Olical/conjure :ft languages}
+         [{1 :Olical/conjure
+           :ft languages
+           :config (fn []
+                     (set vim.g.conjure#result#register "*")
+                     (set vim.g.conjure#mapping#doc_word :gk)
+                     (set vim.g.conjure#log#botright true)
+                     (vim.api.nvim_create_autocmd :FileType
+                                                  {:pattern languages
+                                                   :callback #(set-opts {:commentstring ";; %s"})
+                                                   :desc "Lisp style line comment"
+                                                   :group (vim.api.nvim_create_augroup :comment_group
+                                                                                       {:clear true})})
+                     (vim.api.nvim_create_autocmd :BufWritePre
+                                                  {:pattern languages
+                                                   :callback #(vim.lsp.buf.format {:async false})
+                                                   :desc "Format on buffer write"
+                                                   :group (vim.api.nvim_create_augroup :format_group
+                                                                                       {:clear true})}))}
           {1 :julienvincent/nvim-paredit
            :ft languages
            :config {:use_default_keys true :indent {:enabled true}}}
