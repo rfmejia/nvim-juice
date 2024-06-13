@@ -96,6 +96,7 @@
                    (let [oil (autoload :oil)
                          config {:default_file_explorer true
                                  :delete_to_trash true
+                                 :skip_confirm_for_simple_edits true
                                  :view_options {:show_hidden true}}]
                      (oil.setup config)
                      (juice-mappings.oil-maps)))}

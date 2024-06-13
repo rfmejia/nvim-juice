@@ -60,7 +60,7 @@ editing_tools = {{"kylechui/nvim-surround", keys = {"cs", "ds", "ys"}, config = 
 local file_tools
 local function _13_()
   local oil = autoload("oil")
-  local config = {default_file_explorer = true, delete_to_trash = true, view_options = {show_hidden = true}}
+  local config = {default_file_explorer = true, delete_to_trash = true, skip_confirm_for_simple_edits = true, view_options = {show_hidden = true}}
   oil.setup(config)
   return juice_mappings["oil-maps"]()
 end
