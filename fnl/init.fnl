@@ -96,3 +96,4 @@
 (auto-setup :juice.mappings)
 (auto-setup :juice.autocmds)
 (auto-setup :juice.git)
+(auto-setup :juice.whitespace)

@@ -28,4 +28,6 @@ else
 end
 auto_setup("juice.plugins")
 auto_setup("juice.mappings")
-return auto_setup("juice.autocmds")
+auto_setup("juice.autocmds")
+auto_setup("juice.git")
+return auto_setup("juice.whitespace")
