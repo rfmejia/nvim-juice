@@ -3,7 +3,7 @@
      (. :setup)))
 
 (local {: autoload} (require :nfnl.module))
-(local {: build-statusline} (autoload :juice.statusline))
+(local statusline (autoload :juice.statusline))
 (local {: auto-setup : executable? : set-opts} (autoload :juice.util))
 
 (comment "---- LEADER KEYS ----")
@@ -53,7 +53,7 @@
            :linebreak true
            ; show single status line only
            :laststatus 3
-           :statusline (build-statusline [])})
+           :statusline (statusline.build [])})
 
 (comment "---- SEARCH OPTIONS ----")
 (set-opts {; turn on highlight search
@@ -97,3 +97,4 @@
 (auto-setup :juice.autocmds)
 (auto-setup :juice.git)
 (auto-setup :juice.whitespace)
+(auto-setup :juice.tmux-nav)
