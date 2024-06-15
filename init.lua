@@ -42,5 +42,5 @@ vim.api.nvim_create_autocmd("TermOpen", {group = "terminal-group", pattern = "*"
 auto_setup("juice.plugins")
 auto_setup("juice.mappings")
 auto_setup("juice.git")
-auto_setup("juice.whitespace")
-return auto_setup("juice.tmux-nav")
+auto_setup("juice.tmux-nav")
+return auto_setup("juice.whitespace")

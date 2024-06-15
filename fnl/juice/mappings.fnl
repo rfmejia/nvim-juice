@@ -1,173 +1,222 @@
 (local {: autoload} (require :nfnl.module))
-(local {: lua-cmd : map-keys : nmap : map : imap : vmap : executable?}
-       (autoload :juice.util))
+(local core (autoload :nfnl.core))
+(local util (autoload :juice.util))
+
+(local general
+       [[:n :Y :y$ {:desc "yank until the end of the line"}]
+        [:n :<C-l> ":nohl<cr>" {:desc "clear search highlight" :noremap true}]
+        [:n
+         "<leader>;"
+         ":<C-r>\""
+         {:desc "paste register 0 contents in command mode" :noremap true}]
+        [:n :<leader>w ":w<cr>" {:desc "write buffer" :noremap true}]
+        [:n :<leader>n ":registers<cr>" {:desc "list registers" :noremap true}]
+        [:n :<F5> ":make<cr>" {:desc "trigger `make` in shell" :noremap true}]])
+
+(local jumps [[:n :<C-d> :<C-d>zz {:noremap true :silent true}]
+              [:n :<C-u> :<C-u>zz {:noremap true :silent true}]
+              [:n :<C-o> :<C-o>zz {:noremap true :silent true}]
+              [:n :<C-i> :<C-i>zz {:noremap true :silent true}]])
+
+; Add undo step when typing sentences
+(local undo-steps
+       [[:i "\"" "\"<C-g>u" {:noremap true :silent true}]
+        [:i "." :.<C-g>u {:noremap true :silent true}]
+        [:i "!" :!<C-g>u {:noremap true :silent true}]
+        [:i "?" :?<C-g>u {:noremap true :silent true}]
+        [:i "(" "(<C-g>u" {:noremap true :silent true}]
+        [:i ")" ")<C-g>u" {:noremap true :silent true}]
+        [:i "{" "{<C-g>u" {:noremap true :silent true}]
+        [:i "}" "}<C-g>u" {:noremap true :silent true}]
+        [:i "[" "[<C-g>u" {:noremap true :silent true}]
+        [:i "]" "]<C-g>u" {:noremap true :silent true}]])
+
+(local dates [[:n
+               :<leader>dt
+               ":.!date '+\\%a, \\%d \\%b \\%Y'<cr>"
+               {:desc "insert current date" :noremap true}]
+              [:n
+               :<leader>dT
+               ":.!date '+\\%a, \\%d \\%b \\%Y' --date=''<left>"
+               {:desc "prompt for date query" :noremap true}]])
+
+(local marks [[:n
+               :<leader>mm
+               ":marks ARST<cr>"
+               {:noremap true :desc "list file marks ARST"}]
+              [:n
+               :<leader>mc
+               ":delmarks ARST<cr>:echo 'Cleared file marks'<cr>"
+               {:noremap true :desc "clear special file marks"}]
+              [:n :<leader>a "`Azz" {:noremap true :desc "jump to A mark"}]
+              [:n :<leader>r "`Rzz" {:noremap true :desc "jump to R mark"}]
+              [:n :<leader>s "`Szz" {:noremap true :desc "jump to S mark"}]
+              [:n :<leader>t "`Tzz" {:noremap true :desc "jump to T mark"}]
+              [:n
+               :<leader>ma
+               "mA:echo 'Marked file A'<cr>"
+               {:noremap true :desc "set A mark"}]
+              [:n
+               :<leader>mr
+               "mR:echo 'Marked file R'<cr>"
+               {:noremap true :desc "set R mark"}]
+              [:n
+               :<leader>ms
+               "mS:echo 'Marked file S'<cr>"
+               {:noremap true :desc "set S mark"}]
+              [:n
+               :<leader>mt
+               "mT:echo 'Marked file T'<cr>"
+               {:noremap true :desc "set T mark"}]])
+
+(local buffers
+       [[:n :<leader>b ":buffers<cr>:buffer<Space>" {:noremap true}]
+        [:n "[B" ":bfirst<cr>" {:noremap true}]
+        [:n "]B" ":blast<cr>" {:noremap true}]
+        [:n "[b" ":bprevious<cr>" {:noremap true}]
+        [:n "]b" ":bnext<cr>" {:noremap true}]
+        [:n :<leader>x ":bp|bdelete #<cr>" {:noremap true}]])
+
+(local tabs [[:n :<leader>tn ":tabnew<cr>" {:noremap true}]
+             [:n :<leader>tc ":tabclose<cr>" {:noremap true}]
+             [:n :<leader>ts ":tab split<cr>" {:noremap true}]
+             [:n "[t" ":tabprevious<cr>" {:noremap true}]
+             [:n "]t" ":tabnext<cr>" {:noremap true}]
+             [:n "[T" ":tabfirst<cr>" {:noremap true}]
+             [:n "]T" ":tablast<cr>" {:noremap true}]])
+
+(local quickfix
+       [[:n
+         :<leader>co
+         ":copen<cr>"
+         {:noremap true :desc "open quickfix list"}]
+        [:n
+         :<leader>cc
+         ":cclose<cr>"
+         {:noremap true :desc "close quickfix list"}]
+        [:n
+         "[c"
+         ":cprevious<cr>"
+         {:noremap true :desc "jump to previous entry in quickfix list"}]
+        [:n
+         "]c"
+         ":cnext<cr>"
+         {:noremap true :desc "jump to previous entry in quickfix list"}]
+        [:n
+         "[C"
+         ":cfirst<cr>"
+         {:noremap true :desc "jump to previous entry in quickfix list"}]
+        [:n
+         "]C"
+         ":clast<cr>"
+         {:noremap true :desc "jump to previous entry in quickfix list"}]
+        [:n :<leader>lo ":lopen<cr>" {:noremap true :desc "open loclist list"}]
+        [:n
+         :<leader>lc
+         ":lclose<cr>"
+         {:noremap true :desc "close loclist list"}]
+        [:n
+         "[l"
+         ":lprevious<cr>"
+         {:noremap true :desc "jump to previous entry in loclist"}]
+        [:n
+         "]l"
+         ":lnext<cr>"
+         {:noremap true :desc "jump to next entry in loclist"}]
+        [:n
+         "[L"
+         ":lfirst<cr>"
+         {:noremap true :desc "jump to first entry in loclist"}]
+        [:n
+         "]L"
+         ":llast<cr>"
+         {:noremap true :desc "jump to last entry in loclist"}]])
+
+(local search-replace
+       [[:n
+         :<leader>/s
+         ":s//g<left><left>"
+         {:noremap true :desc "prompt for line search"}]
+        [:n
+         :<leader>/S
+         ":%s//g<left><left>"
+         {:noremap true :desc "prompt for buffer search"}]
+        [:n
+         :<leader>/w
+         ":s/\\<<c-r><c-w>\\>//g<left><left>"
+         {:noremap true :desc "prompt for line search and replace"}]
+        [:n
+         :<leader>/W
+         ":%s/\\<<c-r><c-w>\\>//g<left><left>"
+         {:noremap true :desc "prompt for buffer search and replace"}]
+        [:n
+         :<leader>/v
+         ":vim // *<left><left><left>"
+         {:noremap true :desc "prompt for global search"}]])
+
+(local visual-indent [[:n "<" :<gv {:noremap true}]
+                      [:n ">" :>gv {:noremap true}]])
 
 (fn setup []
-  (nmap ; ---- GENERAL MAPPINGS ----
-        {:Y [:y$ nil "yank until the end of the line"]
-         :<C-l> [":nohl<cr>" [:noremap] "clear search highlight"]
-         "<leader>;" [":<C-r>\""
-                      [:noremap]
-                      "paste register 0 contents in command mode"]
-         :<leader>w [":w<cr>" [:noremap] "write buffer"]
-         :<leader>n [":registers<cr>" [:noremap] "list registers"]
-         :<F5> [":make<cr>" [:noremap] "trigger `make` in shell"]})
-  (nmap ; Vertically center screen when page scrolling up/down
-        {:<C-d> [:<C-d>zz [:noremap :silent]]
-         :<C-u> [:<C-u>zz [:noremap :silent]]
-         :<C-o> [:<C-o>zz [:noremap :silent]]
-         :<C-i> [:<C-i>zz [:noremap :silent]]})
-  (vmap ; Indent blocks in visual mode
-        {:< [:<gv [:noremap]] :> [:>gv [:noremap]]})
-  (imap ; Add undo step when typing sentences
-        {"\"" ["\"<C-g>u" [:noremap :silent]]
-         :. [:.<C-g>u [:noremap :silent]]
-         :! [:!<C-g>u [:noremap :silent]]
-         :? [:?<C-g>u [:noremap :silent]]
-         "(" ["(<C-g>u" [:noremap :silent]]
-         ")" [")<C-g>u" [:noremap :silent]]
-         "{" ["{<C-g>u" [:noremap :silent]]
-         "}" ["}<C-g>u" [:noremap :silent]]
-         "[" ["[<C-g>u" [:noremap :silent]]
-         "]" ["]<C-g>u" [:noremap :silent]]})
-  (nmap ; date shortcuts
-        {:<leader>dt [":.!date '+\\%a, \\%d \\%b \\%Y'<cr>"
-                      [:noremap]
-                      "insert current date"]
-         :<leader>dT [":.!date '+\\%a, \\%d \\%b \\%Y' --date=''<left>"
-                      [:noremap]
-                      "prompt for date query"]})
+  (let [mappings (core.concat general jumps undo-steps dates marks buffers tabs
+                              quickfix search-replace visual-indent)]
+    (util.set-keys mappings))
   (comment "select completion binding item")
   (vim.cmd "inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")
-  (nmap ; ---- MARK MANAGEMENT ----
-        {:<leader>mm [":marks ARST<cr>" [:noremap] "list special file marks"]
-         :<leader>mc [":delmarks ARST<cr>:echo 'Cleared file marks'<cr>"
-                      [:noremap]
-                      "clear special file marks"]
-         :<leader>a ["`Azz" [:noremap] "jump to A mark"]
-         :<leader>r ["`Rzz" [:noremap] "jump to R mark"]
-         :<leader>s ["`Szz" [:noremap] "jump to S mark"]
-         :<leader>t ["`Tzz" [:noremap] "jump to T mark"]
-         :<leader>ma ["mA:echo 'Marked file A'<cr>" [:noremap] "set A mark"]
-         :<leader>mr ["mR:echo 'Marked file R'<cr>" [:noremap] "set R mark"]
-         :<leader>ms ["mS:echo 'Marked file S'<cr>" [:noremap] "set S mark"]
-         :<leader>mt ["mT:echo 'Marked file T'<cr>" [:noremap] "set T mark"]})
-  (nmap ; ---- BUFFER MANAGEMENT ----
-        {:<leader>b [":buffers<cr>:buffer<Space>" [:noremap]]
-         "[B" [":bfirst<cr>" [:noremap]]
-         "]B" [":blast<cr>" [:noremap]]
-         "[b" [":bprevious<cr>" [:noremap]]
-         "]b" [":bnext<cr>" [:noremap]]
-         :<leader>x [":bp|bdelete #<cr>" [:noremap]]})
-  (nmap ; ---- TAB MANAGEMENT ----
-        {:<leader>tn [":tabnew<cr>" [:noremap]]
-         :<leader>tc [":tabclose<cr>" [:noremap]]
-         :<leader>ts [":tab split<cr>" [:noremap]]
-         "[t" [":tabprevious<cr>" [:noremap]]
-         "]t" [":tabnext<cr>" [:noremap]]
-         "[T" [":tabfirst<cr>" [:noremap]]
-         "]T" [":tablast<cr>" [:noremap]]})
-  (nmap ; ---- QUICKFIX LIST ----
-        {:<leader>co [":copen<cr>" [:noremap] "open quickfix list"]
-         :<leader>cc [":cclose<cr>" [:noremap] "close quickfix list"]
-         "[c" [":cprevious<cr>"
-               [:noremap]
-               "jump to previous entry in quickfix list"]
-         "]c" [":cnext<cr>"
-               [:noremap]
-               "jump to previous entry in quickfix list"]
-         "[C" [":cfirst<cr>"
-               [:noremap]
-               "jump to previous entry in quickfix list"]
-         "]C" [":clast<cr>"
-               [:noremap]
-               "jump to previous entry in quickfix list"]
-         :<leader>lo [":lopen<cr>" [:noremap] "open loclist list"]
-         :<leader>lc [":lclose<cr>" [:noremap] "close loclist list"]
-         "[l" [":lprevious<cr>" [:noremap] "jump to previous entry in loclist"]
-         "]l" [":lnext<cr>" [:noremap] "jump to next entry in loclist"]
-         "[L" [":lfirst<cr>" [:noremap] "jump to first entry in loclist"]
-         "]L" [":llast<cr>" [:noremap] "jump to last entry in loclist"]})
-  (nmap ; ---- SEARCH/REPLACE ----
-        {:<leader>/s [":s//g<left><left>" [:noremap] "prompt for line search"]
-         :<leader>/S [":%s//g<left><left>"
-                      [:noremap]
-                      "prompt for buffer search"]
-         :<leader>/w [":s/\\<<c-r><c-w>\\>//g<left><left>"
-                      [:noremap]
-                      "prompt for line search and replace"]
-         :<leader>/W [":%s/\\<<c-r><c-w>\\>//g<left><left>"
-                      [:noremap]
-                      "prompt for buffer search and replace"]
-         :<leader>/v [":vim // *<left><left><left>"
-                      [:noremap]
-                      "prompt for global search"]})
-  (comment "---- WINDOW MANAGEMENT ----")
-  (nmap {:<C-p> [:<C-w>p [:noremap :silent] "jump to previous window"]})
-  (if vim.env.TMUX
-      (let [tmux (autoload :juice.tmux)]
-        (nmap {:<M-h> [tmux.navigate-left
-                       [:noremap :silent]
-                       "jump to the nvim/tmux window to the left"]
-               :<M-l> [tmux.navigate-right
-                       [:noremap :silent]
-                       "jump to the nvim/tmux window to the right"]
-               :<M-k> [tmux.navigate-up
-                       [:noremap :silent]
-                       "jump to the nvim/tmux window above"]
-               :<M-j> [tmux.navigate-down
-                       [:noremap :silent]
-                       "jump to the nvim/tmux window below"]}))
-      (nmap {:<M-h> [:<C-w>h
-                     [:noremap :silent]
-                     "jump to the window to the left"]
-             :<M-l> [:<C-w>l
-                     [:noremap :silent]
-                     "jump to the window to the right"]
-             :<M-k> [:<C-w>k [:noremap :silent] "jump to the window above"]
-             :<M-j> [:<C-w>j [:noremap :silent] "jump to the window below"]}))
   (comment "---- TMUX ----")
   (when vim.env.TMUX
-    (when (executable? :lazygit)
-      (nmap {:<leader>ol [":!tmux neww lazygit<cr><cr>"
-                          [:noremap :silent]
-                          "open lazygit in a new tmux window"]})))
+    (when (util.executable? :lazygit)
+      (vim.keymap.set :n :<leader>ol ":!tmux neww lazygit<cr><cr>"
+                      {:desc "open lazygit in a new tmux window"
+                       :noremap true
+                       :silent true})))
   (comment "---- JOURNAL ----")
   (when vim.env.JOURNAL
-    (nmap {:<leader>oj [#(vim.cmd (.. ":$tabnew" :$JOURNAL/journal.adoc))
-                        [:noremap :silent]
-                        "open journal in a new tab"]
-           :<leader>ov [#(vim.cmd (.. ":$tabnew" :$JOURNAL/vim/vim.adoc))
-                        [:noremap :silent]
-                        "open vim notes in a new tab"]}))
+    (util.set-keys [[:n
+                     :<leader>oj
+                     #(vim.cmd (.. ":$tabnew" :$JOURNAL/journal.adoc))
+                     {:desc "open journal in a new tab"
+                      :noremap true
+                      :silent true}]
+                    [:n
+                     :<leader>ov
+                     #(vim.cmd (.. ":$tabnew" :$JOURNAL/vim/vim.adoc))
+                     {:desc "open vim notes in a new tab"
+                      :noremap true
+                      :silent true}]]))
   (comment "---- PLUGINS ----")
-  (nmap {:<leader>L [":Lazy<cr>" [:noremap :silent]]
-         :<leader>u [":UndotreeToggle<cr>"
-                     [:noremap :silent]
-                     "toggle undotree"]}))
+  (util.set-keys [[:n :<leader>L ":Lazy<cr>" {:noremap true :silent true}]
+                  [:n
+                   :<leader>u
+                   ":UndotreeToggle<cr>"
+                   {:desc "toggle undotree" :noremap true :silent true}]]))
 
 (fn oil-maps []
-  (let [oil (autoload :oil)
-        maps {:<leader>e [#(oil.open)
-                          [:noremap :silent]
-                          "explore files in current file's path"]}]
-    (nmap maps)))
+  (let [oil (autoload :oil)]
+    (vim.keymap.set :n :<leader>e #(oil.open)
+                    {:desc "explore files in current file's path"
+                     :noremap true
+                     :silent true})))
 
 (fn telescope-maps []
   (let [builtin (autoload :telescope.builtin)
-        maps {:<leader>f [builtin.find_files
-                          [:noremap :silent]
-                          "telescope (f)iles"]
-              :<leader>p [builtin.oldfiles
-                          [:noremap :silent]
-                          "telescope oldfiles"]
-              :<leader>g [builtin.git_files
-                          [:noremap :silent]
-                          "telescope (g)it files"]
-              :<leader>k [builtin.keymaps
-                          [:noremap :silent]
-                          "telescope (k)eymaps"]}]
-    (nmap maps)))
+        maps [[:n
+               :<leader>f
+               builtin.find_files
+               {:desc "telescope (f)iles" :noremap true}]
+              [:n
+               :<leader>p
+               builtin.oldfiles
+               {:desc "telescope oldfiles" :noremap true}]
+              [:n
+               :<leader>g
+               builtin.git_files
+               {:desc "telescope (g)it files" :noremap true}]
+              [:n
+               :<leader>k
+               builtin.keymaps
+               {:desc "telescope (k)eymaps" :noremap true}]]]
+    (util.set-keys maps)))
 
 (fn gitsigns-maps []
   (let [gitsigns (autoload :gitsigns)
@@ -224,11 +273,12 @@
                                blame-maps
                                view-maps
                                list-maps])]
-      (nmap mappings))
-    (vmap visual-action-maps)))
+      (util.nmap mappings))
+    (util.vmap visual-action-maps)))
 
 (fn neogit-maps []
   (let [neogit (autoload :neogit)]
-    (nmap {:<leader>og [neogit.open [:noremap] "(o)pen (n)eogit"]})))
+    (vim.keymap.set :n :<leader>og neogit.open
+                    {:desc "(o)pen (n)eogit" :noremap true})))
 
 {: setup : oil-maps : telescope-maps : gitsigns-maps : neogit-maps}

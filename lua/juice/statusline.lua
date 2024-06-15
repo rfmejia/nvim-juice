@@ -18,7 +18,7 @@ local function show_diagnostic_count(_3fbuf_num, severity)
   end
   return formatted
 end
-local function build_statusline(widgets)
+local function build(widgets)
   local filename = "%f"
   local buffer_modified_flags = "%m"
   local buffer_type_flags = "%q%h%r"
@@ -37,4 +37,4 @@ local function build_statusline(widgets)
   local statusline = str.join(template)
   return statusline
 end
-return {["build-statusline"] = build_statusline, ["show-diagnostic-count"] = show_diagnostic_count}
+return {build = build, ["show-diagnostic-count"] = show_diagnostic_count}

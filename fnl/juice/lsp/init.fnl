@@ -1,7 +1,7 @@
 (local {: autoload} (require :nfnl.module))
-(local {: count} (autoload :nfnl.core))
+(local core (autoload :nfnl.core))
 (local lspconfig (autoload :lspconfig))
-(local {: bufmap} (autoload :juice.util))
+(local util (autoload :juice.util))
 
 (local handlers
        {:textDocument/publishDiagnostics (vim.lsp.with vim.lsp.diagnostic.on_publish_diagnostics
@@ -68,19 +68,21 @@
                                goto-maps
                                diagnostic-maps
                                code-action-maps])]
-      (bufmap bufnr mappings))))
+      (util.bufmap bufnr mappings))))
 
 (lambda count-diagnostic [?bufnr severity]
   "Returns 'n! ' where n is the number of diagnostic messages, otherwise an empty string"
   (-> ?bufnr
       (vim.diagnostic.get {: severity})
-      (count)))
+      (core.count)))
 
 (fn setup []
-  (let [scalametals (autoload :juice.lsp.scalametals)]
+  (let [scalametals (autoload :juice.lsp.scalametals)
+        go-settings {:gopls {:analyses {:unusedparams true} :staticcheck true}}]
     (scalametals.register-init-command)
     (lspconfig.clojure_lsp.setup {:on_attach set-buffer-opts : handlers})
-    (let [settings {:gopls {:analyses {:unusedparams true} :staticcheck true}}]
-      (lspconfig.gopls.setup {:on_attach set-buffer-opts : settings : handlers}))))
+    (lspconfig.gopls.setup {:on_attach set-buffer-opts
+                            : go-settings
+                            : handlers})))
 
 {: count-diagnostic : handlers : set-buffer-opts : setup}

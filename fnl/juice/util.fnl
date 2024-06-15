@@ -1,11 +1,11 @@
 (local {: autoload} (require :nfnl.module))
-(local {: merge : reduce : table?} (autoload :nfnl.core))
+(local core (autoload :nfnl.core))
 
 (lambda make-opts [?opts ?desc ?bufnr]
   "Produce a table with every `key = true`"
   (let [init {:desc ?desc :buffer ?bufnr}
-        reducer (fn [acc opt] (merge acc {opt true}))]
-    (reduce reducer init ?opts)))
+        reducer (fn [acc opt] (core.merge acc {opt true}))]
+    (core.reduce reducer init ?opts)))
 
 (lambda map [mappings]
   (each [mode maps (pairs mappings)]
@@ -33,9 +33,14 @@
   (-> (vim.fn.has cmd)
       (= 1)))
 
+(lambda set-keys [mappings]
+  (each [_ mapping (ipairs mappings)]
+    (let [(mode lhs rhs opts) (unpack mapping)]
+      (vim.keymap.set mode lhs rhs opts))))
+
 (lambda set-opts [options]
   "Given an `options` table, set each pair as `vim.opt.<key> = <value>`"
-  (when (table? options)
+  (when (core.table? options)
     (each [k v (pairs options)]
       (tset vim.opt k v))))
 
@@ -45,11 +50,11 @@
 
 {: map
  :nmap #(map {:n $1})
- :imap #(map {:i $1})
  :vmap #(map {:v $1})
  : bufmap
  : lua-cmd
  : executable?
  : has?
+ : set-keys
  : set-opts
  : auto-setup}

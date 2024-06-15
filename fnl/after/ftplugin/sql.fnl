@@ -1,17 +1,33 @@
 (local {: autoload} (require :nfnl.module))
-(local {: bufmap} (autoload :juice.util))
+(local util (autoload :juice.util))
 
-(bufmap (vim.api.nvim_get_current_buf)
-        {:n {:<localleader>du [":DBUIToggle<cr>" [:noremap] "toggle dadbod ui"]
-             "<localleader>d;" [":DB g:db "
-                                [:noremap]
-                                "run an sql statement in command mode"]
-             :<localleader>dd [":.DB g:db<cr>"
-                               [:noremap]
-                               "run line as an sql statement"]
-             :<localleader>dp ["vip:DB g:db<cr>"
-                               [:noremap]
-                               "run paragraph as an sql statement"]
-             :<localleader>db [":%DB g:db<cr>"
-                               [:noremap]
-                               "run buffer as sql statements"]}})
+(util.set-keys [[:n
+                 :<localleader>du
+                 ":DBUIToggle<cr>"
+                 {:desc "toggle dadbod ui"
+                  :noremap true
+                  :buffer (vim.api.nvim_get_current_buf)}]
+                [:n
+                 "<localleader>d;"
+                 ":DB g:db "
+                 {:desc "run an sql statement in command mode"
+                  :noremap true
+                  :buffer (vim.api.nvim_get_current_buf)}]
+                [:n
+                 :<localleader>dd
+                 ":.DB g:db<cr>"
+                 {:desc "run line as an sql statement"
+                  :noremap true
+                  :buffer (vim.api.nvim_get_current_buf)}]
+                [:n
+                 :<localleader>dp
+                 "vip:DB g:db<cr>"
+                 {:desc "run paragraph as an sql statement"
+                  :noremap true
+                  :buffer (vim.api.nvim_get_current_buf)}]
+                [:n
+                 :<localleader>db
+                 ":%DB g:db<cr>"
+                 {:desc "run buffer as sql statements"
+                  :noremap true
+                  :buffer (vim.api.nvim_get_current_buf)}]])

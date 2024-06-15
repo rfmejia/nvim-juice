@@ -12,7 +12,7 @@
                       (.. count "! "))]
     formatted))
 
-(fn build-statusline [widgets]
+(fn build [widgets]
   "Creates a vim statusline string, inserting optional widgets defined as a list of strings"
   (let [filename "%f"
         buffer-modified-flags "%m"
@@ -48,4 +48,4 @@
         statusline (str.join template)]
     statusline))
 
-{: build-statusline : show-diagnostic-count}
+{: build : show-diagnostic-count}

@@ -1,11 +1,11 @@
 (local {: autoload} (require :nfnl.module))
-(local {: bufmap : set-opts} (autoload :juice.util))
+(local util (autoload :juice.util))
 
-(set-opts {:shiftwidth 2
-           :tabstop 2
-           :expandtab true
-           :textwidth 100
-           :commentstring ";; %s"})
+(util.set-opts {:shiftwidth 2
+                :tabstop 2
+                :expandtab true
+                :textwidth 100
+                :commentstring ";; %s"})
 
 (lambda buffer-is-modified [buf-num]
   (vim.api.nvim_buf_get_option buf-num :modified))
@@ -19,10 +19,8 @@
           (nil err-msg) (print "Could not run `fnlfmt`: " err-msg))
         (error "fnlfmt: cannot format a modified buffer"))))
 
-(bufmap (vim.api.nvim_get_current_buf)
-        {:n {:<localleader>cf [#(format-fennel (vim.fn.expand "%:p"))
-                               [:noremap :silent]
-                               "(c)ode (f)ormat"]}})
+(vim.keymap.set :n :<localleader>cf #(format-fennel (vim.fn.expand "%:p"))
+                {:noremap true :silent true :desc "(c)ode (f)ormat"})
 
 (vim.api.nvim_buf_create_user_command 0 :FnlFmt
                                       #(format-fennel (vim.fn.expand "%:p"))

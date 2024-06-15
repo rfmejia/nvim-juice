@@ -1,7 +1,6 @@
 (local {: autoload} (require :nfnl.module))
-(local {: bufmap} (autoload :juice.util))
-
-(local {: build-statusline} (autoload :juice.statusline))
+(local statusline (autoload :juice.statusline))
+(local util (autoload :juice.util))
 
 (fn initialize-metals []
   (let [juice-lsp (autoload :juice.lsp)
@@ -10,7 +9,7 @@
         telescope (autoload :telescope)]
     (set vim.opt.signcolumn "yes:1")
     (set vim.go.shortmess (.. vim.go.shortmess :c))
-    (set vim.opt.statusline (build-statusline ["%{g:metals_status}" " ●"]))
+    (set vim.opt.statusline (statusline.build ["%{g:metals_status}" " ●"]))
     (tset vim.g :metals_status "Initializing Metals...")
     (set config.settings {:showImplicitArguments true
                           :showImplicitConversionsAndClasses true
@@ -42,7 +41,7 @@
                                                     [:noremap :silent]
                                                     "(m)etals (r)eveal current member in tree view"]}}]
              (juice-lsp.set-buffer-opts client bufnr)
-             (bufmap bufnr metals-maps))))
+             (util.bufmap bufnr metals-maps))))
     (comment "Automatically attach Metals to all Scala filetypes (only triggered upon BufEnter)")
     (vim.api.nvim_create_augroup :metals-group [])
     (vim.api.nvim_create_autocmd :FileType
