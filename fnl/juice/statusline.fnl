@@ -1,10 +1,13 @@
 (local {: autoload} (require :nfnl.module))
-(local {: join} (autoload :nfnl.string))
-(local {: count-diagnostic} (autoload :juice.lsp))
-(local {: lua-statusline} (autoload :juice.util))
+(local str (autoload :nfnl.string))
+(local lsp (autoload :juice.lsp))
+
+(lambda wrap-luaeval [command]
+  "Wraps a Lua command string in vim statusline string"
+  (string.format "%%{luaeval(\"%s\")}" command))
 
 (lambda show-diagnostic-count [?buf-num severity]
-  (let [count (count-diagnostic ?buf-num severity)
+  (let [count (lsp.count-diagnostic ?buf-num severity)
         formatted (if (= count 0) ""
                       (.. count "! "))]
     formatted))
@@ -17,10 +20,10 @@
         git-status " %{g:git_file_status}"
         git-branch " %{g:git_branch}"
         align-right "%="
-        buf-errors (lua-statusline "require('juice.statusline')['show-diagnostic-count'](vim.api.nvim_get_current_buf(), vim.diagnostic.severity.ERROR)")
-        buf-warnings (lua-statusline "require('juice.statusline')['show-diagnostic-count'](vim.api.nvim_get_current_buf(), vim.diagnostic.severity.WARN)")
+        buf-errors (wrap-luaeval "require('juice.statusline')['show-diagnostic-count'](vim.api.nvim_get_current_buf(), vim.diagnostic.severity.ERROR)")
+        buf-warnings (wrap-luaeval "require('juice.statusline')['show-diagnostic-count'](vim.api.nvim_get_current_buf(), vim.diagnostic.severity.WARN)")
         ruler "%l:%c"
-        widget-str (.. " " (join widgets) " ")
+        widget-str (.. " " (str.join widgets) " ")
         default-color "%#StatusLine#"
         info-color "%#StatusLineInfo#"
         error-color "%#StatusLineError#"
@@ -42,7 +45,7 @@
                   git-branch
                   " "
                   ruler]
-        statusline (join template)]
+        statusline (str.join template)]
     statusline))
 
 {: build-statusline : show-diagnostic-count}

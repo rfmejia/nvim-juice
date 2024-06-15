@@ -25,10 +25,6 @@
   "Wraps a Lua command string in a viml command string"
   (string.format "<cmd>lua %s<cr>" str))
 
-(lambda lua-statusline [command]
-  "Wraps a Lua command string in vim statusline string"
-  (string.format "%%{luaeval(\"%s\")}" command))
-
 (lambda executable? [cmd]
   (-> (vim.fn.executable cmd)
       (= 1)))
@@ -53,7 +49,6 @@
  :vmap #(map {:v $1})
  : bufmap
  : lua-cmd
- : lua-statusline
  : executable?
  : has?
  : set-opts
