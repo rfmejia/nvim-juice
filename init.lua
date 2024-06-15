@@ -25,9 +25,22 @@ if executable_3f("rg") then
   set_opts({grepprg = "rg --smart-case --hidden --follow --no-heading --vimgrep", grepformat = "%f:%l:%c:%m,%f:%l:%m"})
 else
 end
+--[[ "---- AUTOCMDS ----" ]]
+--[[ "Remember the cursor position of the last editing" ]]
+vim.api.nvim_create_autocmd("BufReadPost", {pattern = "*", command = "if line(\"'\\\"\") | exe \"'\\\"\" | endif"})
+vim.api.nvim_create_augroup("highlight-group", {})
+--[[ "highlight yanked text" ]]
+local function _4_()
+  return vim.highlight.on_yank({timeout = 200, on_visual = false})
+end
+vim.api.nvim_create_autocmd("TextYankPost", {group = "highlight-group", pattern = "*", callback = _4_})
+--[[ "highlight TODO, FIXME and Note: keywords" ]]
+vim.api.nvim_create_autocmd({"WinEnter", "VimEnter"}, {group = "highlight-group", pattern = "*", command = ":silent! call matchadd('Todo','TODO\\|FIXME\\|Note:', -1)"})
+vim.api.nvim_create_augroup("terminal-group", {})
+--[[ "remove signcolumn in terminal mode" ]]
+vim.api.nvim_create_autocmd("TermOpen", {group = "terminal-group", pattern = "*", command = "set signcolumn=no"})
 auto_setup("juice.plugins")
 auto_setup("juice.mappings")
-auto_setup("juice.autocmds")
 auto_setup("juice.git")
 auto_setup("juice.whitespace")
 return auto_setup("juice.tmux-nav")
