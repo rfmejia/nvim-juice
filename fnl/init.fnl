@@ -95,3 +95,4 @@
 (auto-setup :juice.plugins)
 (auto-setup :juice.mappings)
 (auto-setup :juice.autocmds)
+(auto-setup :juice.git)

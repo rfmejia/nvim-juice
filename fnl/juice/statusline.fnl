@@ -3,23 +3,6 @@
 (local {: count-diagnostic} (autoload :juice.lsp))
 (local {: lua-statusline} (autoload :juice.util))
 
-(fn git-file-status []
-  "Updates the git flag(s) of the current file inside g:gitfile"
-  (let [path (vim.fn.expand "%:p")
-        git-cmd (.. "git file-status " path " | tr -d ' \\n'")]
-    (match (vim.fn.system git-cmd)
-      status (set vim.g.git_file_status status)
-      (nil err-msg) (print "Could not get `git file-status`: " err-msg))))
-
-(fn git-branch []
-  "Set vim.g.git_branch of current working directory (if any)"
-  (let [path (vim.fn.expand "%:h")
-        git-cmd (.. "git -C " path
-                    " branch --show-current --no-color 2> /dev/null | tr -d ' \\n'")]
-    (match (vim.fn.system git-cmd)
-      branch (set vim.g.git_branch branch)
-      (nil err-msg) (print "Could not get `git branch`: " err-msg))))
-
 (lambda show-diagnostic-count [?buf-num severity]
   (let [count (count-diagnostic ?buf-num severity)
         formatted (if (= count 0) ""
@@ -62,4 +45,4 @@
         statusline (join template)]
     statusline))
 
-{: git-file-status : git-branch : build-statusline : show-diagnostic-count}
+{: build-statusline : show-diagnostic-count}

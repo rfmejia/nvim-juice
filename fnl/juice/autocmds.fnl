@@ -1,6 +1,5 @@
 (local {: autoload} (require :nfnl.module))
 (local {: show-extra-whitespace} (autoload :juice.colors))
-(local {: git-branch : git-file-status} (autoload :juice.statusline))
 
 (fn setup []
   (vim.api.nvim_create_user_command :TrimTrailingWhitespaces ":%s/\\s\\+$" {})
@@ -8,11 +7,6 @@
   (vim.api.nvim_create_autocmd :BufReadPost
                                {:pattern "*"
                                 :command "if line(\"'\\\"\") | exe \"'\\\"\" | endif"})
-  (vim.api.nvim_create_autocmd [:BufEnter :BufWritePost]
-                               {:pattern "*"
-                                :callback (fn []
-                                            (git-file-status)
-                                            (git-branch))})
   (vim.api.nvim_create_augroup :highlight-group [])
   (comment "highlight yanked text")
   (vim.api.nvim_create_autocmd :TextYankPost
