@@ -39,13 +39,13 @@
                                    "sort in paragraph"]}})
 
 (when (util.executable? :sbtn)
-  (bufmap (vim.api.nvim_get_current_buf)
-          {:n {:<leader>os [":!tmux split-window -v -l 30\\% sbtn<cr><cr>"
-                            [:noremap :silent]
-                            "open sbtn in a tmux split"]}}))
+  (util.bufmap (vim.api.nvim_get_current_buf)
+               {:n {:<leader>os [":!tmux split-window -v -l 30\\% sbtn<cr><cr>"
+                                 [:noremap :silent]
+                                 "open sbtn in a tmux split"]}}))
 
 (when (util.executable? :scala-cli)
-  (bufmap (vim.api.nvim_get_current_buf)
-          {:n {:<leader>oc [":!tmux split-window -v -l 30\\% scala-cli console %<cr><cr>"
-                            [:noremap :silent]
-                            "open scala-cli in a tmux split"]}}))
+  (util.bufmap (vim.api.nvim_get_current_buf)
+               {:n {:<leader>oc [":!tmux split-window -v -l 30\\% scala-cli console %<cr><cr>"
+                                 [:noremap :silent]
+                                 "open scala-cli in a tmux split"]}}))

@@ -31,11 +31,11 @@ vim.api.nvim_buf_create_user_command(vim.api.nvim_get_current_buf(), "ScalafmtAp
 --[[ "Make sure we respect lsp if it's enabled" (util.bufmap (vim.api.nvim_get_current_buf) {:n {:<localleader>cf [(hashfn (run-scalafmt (vim.fn.expand "%:p"))) ["noremap" "nowait" "silent"] ""]}}) ]]
 util.bufmap(vim.api.nvim_get_current_buf(), {n = {["<localleader>s"] = {"vip:sort<cr>", {"noremap", "nowait", "silent"}, "sort in paragraph"}}})
 if util["executable?"]("sbtn") then
-  bufmap(vim.api.nvim_get_current_buf(), {n = {["<leader>os"] = {":!tmux split-window -v -l 30\\% sbtn<cr><cr>", {"noremap", "silent"}, "open sbtn in a tmux split"}}})
+  util.bufmap(vim.api.nvim_get_current_buf(), {n = {["<leader>os"] = {":!tmux split-window -v -l 30\\% sbtn<cr><cr>", {"noremap", "silent"}, "open sbtn in a tmux split"}}})
 else
 end
 if util["executable?"]("scala-cli") then
-  return bufmap(vim.api.nvim_get_current_buf(), {n = {["<leader>oc"] = {":!tmux split-window -v -l 30\\% scala-cli console %<cr><cr>", {"noremap", "silent"}, "open scala-cli in a tmux split"}}})
+  return util.bufmap(vim.api.nvim_get_current_buf(), {n = {["<leader>oc"] = {":!tmux split-window -v -l 30\\% scala-cli console %<cr><cr>", {"noremap", "silent"}, "open scala-cli in a tmux split"}}})
 else
   return nil
 end
