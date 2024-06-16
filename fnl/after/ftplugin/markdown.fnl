@@ -1,12 +1,12 @@
 (local {: autoload} (require :nfnl.module))
-(local {: lua-cmd : bufmap : set-opts} (autoload :juice.util))
+(local util (autoload :juice.util))
 
-(set-opts {:shiftwidth 2
-           :tabstop 2
-           :textwidth 100
-           :wrap true
-           :spell true
-           :spelllang :en_us})
+(util.set-opts {:shiftwidth 2
+                :tabstop 2
+                :textwidth 100
+                :wrap true
+                :spell true
+                :spelllang :en_us})
 
 (fn render-markdown-to-html [] ; TODO fix and verify this works
   (let [tmp-file (vim.fn.system [:mktemp :--suffix=.html])
@@ -21,12 +21,12 @@
     (vim.print meta) ; (vim.fn.append (line "0" meta)) ; call append(line('0'), meta)
     ))
 
-(bufmap (vim.api.nvim_get_current_buf)
-        {:n {:<localleader>m [(lua-cmd "require('juice.filetypes.markdown')['insert-yaml-metadata']()")
-                              [:noremap :silent]]
-             :<localleader>v [(lua-cmd "require('juice.filetypes.markdown')['render-markdown-to-html']()")
-                              [:noremap :silent]]
-             :<localleader>d [":r!date '+\\%a, \\%d \\%b \\%Y' | xargs -0 printf '----\\n\\n\\%s\\n'<cr>"
-                              [:noremap :silent]]
-             :<localleader>t [":r!date '+\\%H:\\%M' | xargs -0 printf '> \\%s ' | tr -d '\\n'<cr>A"
-                              [:noremap :silent]]}})
+(util.bufmap (vim.api.nvim_get_current_buf)
+             {:n {:<localleader>m [(util.lua-cmd "require('juice.filetypes.markdown')['insert-yaml-metadata']()")
+                                   [:noremap :silent]]
+                  :<localleader>v [(util.lua-cmd "require('juice.filetypes.markdown')['render-markdown-to-html']()")
+                                   [:noremap :silent]]
+                  :<localleader>d [":r!date '+\\%a, \\%d \\%b \\%Y' | xargs -0 printf '----\\n\\n\\%s\\n'<cr>"
+                                   [:noremap :silent]]
+                  :<localleader>t [":r!date '+\\%H:\\%M' | xargs -0 printf '> \\%s ' | tr -d '\\n'<cr>A"
+                                   [:noremap :silent]]}})
