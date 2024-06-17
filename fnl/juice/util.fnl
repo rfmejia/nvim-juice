@@ -7,13 +7,6 @@
         reducer (fn [acc opt] (core.merge acc {opt true}))]
     (core.reduce reducer init ?opts)))
 
-(lambda map [mappings]
-  (each [mode maps (pairs mappings)]
-    (each [key params (pairs maps)]
-      (let [(action flags desc bufnr) (unpack params)
-            opts (make-opts flags desc bufnr)]
-        (vim.keymap.set mode key action opts)))))
-
 (lambda bufmap [bufnr mappings]
   (each [mode maps (pairs mappings)]
     (each [key params (pairs maps)]
@@ -48,13 +41,4 @@
   ((-> (autoload module)
        (. :setup))))
 
-{: map
- :nmap #(map {:n $1})
- :vmap #(map {:v $1})
- : bufmap
- : lua-cmd
- : executable?
- : has?
- : set-keys
- : set-opts
- : auto-setup}
+{: bufmap : lua-cmd : executable? : has? : set-keys : set-opts : auto-setup}

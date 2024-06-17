@@ -56,41 +56,35 @@ local function telescope_maps()
 end
 local function gitsigns_maps()
   local gitsigns = autoload("gitsigns")
-  local nav_maps
+  local nav
   local function _8_()
     return gitsigns.nav_hunk("next", {preview = true, wrap = false})
   end
   local function _9_()
     return gitsigns.nav_hunk("prev", {preview = true, wrap = false})
   end
-  nav_maps = {["]g"] = {_8_, {"noremap"}, "jump to next git hunk"}, ["[g"] = {_9_, {"noremap"}, "jump to previous git hunk"}}
-  local action_maps = {["<localleader>gs"] = {gitsigns.stage_hunk, {"noremap"}, "(g)it (s)tage hunk"}, ["<localleader>gu"] = {gitsigns.undo_stage_hunk, {"noremap"}, "(g)it (u)ndo staged hunk"}, ["<localleader>gr"] = {gitsigns.reset_hunk, {"noremap"}, "(g)it (r)eset hunk"}, ["<localleader>gS"] = {gitsigns.stage_buffer, {"noremap"}, "(g)it (S)tage buffer"}, ["<localleader>gR"] = {gitsigns.reset_buffer, {"noremap"}, "(g)it (R)eset buffer"}}
-  local visual_action_maps
+  nav = {{"n", "]g", _8_, {noremap = true, desc = "jump to next git hunk"}}, {"n", "[g", _9_, {noremap = true, desc = "jump to previous git hunk"}}}
+  local staging
   local function _10_()
     return gitsigns.stage_hunk({[vim.fn.line(".")] = vim.fn.line("v")})
   end
   local function _11_()
     return gitsigns.reset_hunk({[vim.fn.line(".")] = vim.fn.line("v")})
   end
-  visual_action_maps = {["<localleader>gs"] = {_10_, {"noremap"}, "(g)it (s)tage hunk"}, ["<localleader>gr"] = {_11_, {"noremap"}, "(g)it (r)eset hunk"}}
-  local blame_maps
+  staging = {{"n", "<localleader>gs", gitsigns.stage_hunk, {noremap = true, desc = "(g)it (s)tage hunk"}}, {"n", "<localleader>gu", gitsigns.undo_stage_hunk, {noremap = true, desc = "(g)it (u)ndo staged hunk"}}, {"n", "<localleader>gr", gitsigns.reset_hunk, {noremap = true, desc = "(g)it (r)eset hunk"}}, {"n", "<localleader>gS", gitsigns.stage_buffer, {noremap = true, desc = "(g)it (S)tage buffer"}}, {"n", "<localleader>gR", gitsigns.reset_buffer, {noremap = true, desc = "(g)it (R)eset buffer"}}, {"v", "<localleader>gs", _10_, {noremap = true, desc = "(g)it (s)tage hunk"}}, {"v", "<localleader>gr", _11_, {noremap = true, desc = "(g)it (r)eset hunk"}}}
+  local blame
   local function _12_()
     return gitsigns.blame_line({full = true})
   end
-  blame_maps = {["<localleader>gb"] = {_12_, {"noremap"}, "(g)it show line (b)lame"}, ["<localleader>gB"] = {gitsigns.toggle_current_line_blame, {"noremap"}, "(g)it toggle current line (B)lame"}}
-  local view_maps = {["<localleader>gp"] = {gitsigns.preview_hunk, {"noremap"}, "(g)it (p)review hunk"}, ["<localleader>gd"] = {gitsigns.diffthis, {"noremap"}, "(g)it show (d)iff"}, ["<localleader>gD"] = {gitsigns.toggle_deleted, {"noremap"}, "(g)it toggle (D)eleted hunks"}}
-  local list_maps
+  blame = {{"n", "<localleader>gb", _12_, {noremap = true, desc = "(g)it show line (b)lame"}}, {"n", "<localleader>gB", gitsigns.toggle_current_line_blame, {noremap = true, desc = "(g)it toggle current line (B)lame"}}}
+  local view = {{"n", "<localleader>gp", gitsigns.preview_hunk, {noremap = true, desc = "(g)it (p)review hunk"}}, {"n", "<localleader>gd", gitsigns.diffthis, {noremap = true, desc = "(g)it show (d)iff"}}, {"n", "<localleader>gD", gitsigns.toggle_deleted, {noremap = true, desc = "(g)it toggle (D)eleted hunks"}}}
+  local list
   local function _13_()
-    return gitsigns.setloclist()
-  end
-  local function _14_()
     return gitsigns.setqflist("all")
   end
-  list_maps = {["<localleader>gl"] = {_13_, {"noremap"}, "show buffer (g)it hunks in (l)oclist"}, ["<localleader>gc"] = {_14_, {"noremap"}, "show all (g)it hunks in qui(c)kfix list"}}
-  for _, mappings in ipairs({nav_maps, action_maps, blame_maps, view_maps, list_maps}) do
-    util.nmap(mappings)
-  end
-  return util.vmap(visual_action_maps)
+  list = {{"n", "<localleader>gl", gitsigns.setloclist, {noremap = true, desc = "show buffer (g)it hunks in (l)oclist"}}, {"n", "<localleader>gc", _13_, {noremap = true, desc = "show all (g)it hunks in qui(c)kfix list"}}}
+  local mappings = core.concat(nav, staging, blame, view, list)
+  return util["set-keys"](mappings)
 end
 local function neogit_maps()
   local neogit = autoload("neogit")
