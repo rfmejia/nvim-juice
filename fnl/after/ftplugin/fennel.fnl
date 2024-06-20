@@ -20,7 +20,7 @@
         (error "fnlfmt: cannot format a modified buffer"))))
 
 (vim.keymap.set :n :<localleader>cf #(format-fennel (vim.fn.expand "%:p"))
-                {:noremap true :silent true :desc "(c)ode (f)ormat"})
+                {:desc "(c)ode (f)ormat"})
 
 (vim.api.nvim_buf_create_user_command 0 :FnlFmt
                                       #(format-fennel (vim.fn.expand "%:p"))

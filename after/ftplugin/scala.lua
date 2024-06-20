@@ -28,14 +28,14 @@ local function _6_()
   return run_scalafmt()
 end
 vim.api.nvim_buf_create_user_command(vim.api.nvim_get_current_buf(), "ScalafmtApply", _6_, {bang = true})
---[[ "Make sure we respect lsp if it's enabled" (util.bufmap (vim.api.nvim_get_current_buf) {:n {:<localleader>cf [(hashfn (run-scalafmt (vim.fn.expand "%:p"))) ["noremap" "nowait" "silent"] ""]}}) ]]
-util.bufmap(vim.api.nvim_get_current_buf(), {n = {["<localleader>s"] = {"vip:sort<cr>", {"noremap", "nowait", "silent"}, "sort in paragraph"}}})
+--[[ "Make sure we respect lsp if it's enabled" (vim.keymap.set "n" "<localleader>cf" (hashfn (run-scalafmt (vim.fn.expand "%:p"))) {:buffer (vim.api.nvim_get_current_buf) :desc "" :nowait true :silent true}) ]]
+vim.keymap.set("n", "<localleader>s", "vip:sort<cr>", {desc = "sort in paragraph", nowait = true, buffer = vim.api.nvim_get_current_buf(), silent = true})
 if util["executable?"]("sbtn") then
-  util.bufmap(vim.api.nvim_get_current_buf(), {n = {["<leader>os"] = {":!tmux split-window -v -l 30\\% sbtn<cr><cr>", {"noremap", "silent"}, "open sbtn in a tmux split"}}})
+  vim.keymap.set("n", "<leader>os", ":!tmux split-window -v -l 30\\% sbtn<cr><cr>", {desc = "open sbtn in a tmux split", buffer = vim.api.nvim_get_current_buf(), silent = true})
 else
 end
 if util["executable?"]("scala-cli") then
-  return util.bufmap(vim.api.nvim_get_current_buf(), {n = {["<leader>oc"] = {":!tmux split-window -v -l 30\\% scala-cli console %<cr><cr>", {"noremap", "silent"}, "open scala-cli in a tmux split"}}})
+  return vim.keymap.set("n", "<leader>oc", ":!tmux split-window -v -l 30\\% scala-cli console %<cr><cr>", {desc = "open scala-cli in a tmux split", buffer = vim.api.nvim_get_current_buf(), silent = true})
 else
   return nil
 end

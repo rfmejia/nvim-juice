@@ -1,19 +1,6 @@
 (local {: autoload} (require :nfnl.module))
 (local core (autoload :nfnl.core))
 
-(lambda make-opts [?opts ?desc ?bufnr]
-  "Produce a table with every `key = true`"
-  (let [init {:desc ?desc :buffer ?bufnr}
-        reducer (fn [acc opt] (core.merge acc {opt true}))]
-    (core.reduce reducer init ?opts)))
-
-(lambda bufmap [bufnr mappings]
-  (each [mode maps (pairs mappings)]
-    (each [key params (pairs maps)]
-      (let [(action flags desc) (unpack params)
-            opts (make-opts flags desc bufnr)]
-        (vim.keymap.set mode key action opts)))))
-
 (lambda lua-cmd [str]
   "Wraps a Lua command string in a viml command string"
   (string.format "<cmd>lua %s<cr>" str))
@@ -41,4 +28,4 @@
   ((-> (autoload module)
        (. :setup))))
 
-{: bufmap : lua-cmd : executable? : has? : set-keys : set-opts : auto-setup}
+{: lua-cmd : executable? : has? : set-keys : set-opts : auto-setup}

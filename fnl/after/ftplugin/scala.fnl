@@ -28,24 +28,27 @@
                                       {:bang true})
 
 (comment "Make sure we respect lsp if it's enabled"
-  (util.bufmap (vim.api.nvim_get_current_buf)
-               {:n {:<localleader>cf [#(run-scalafmt (vim.fn.expand "%:p"))
-                                      [:noremap :nowait :silent]
-                                      ""]}}))
+  (vim.keymap.set :n :<localleader>cf #(run-scalafmt (vim.fn.expand "%:p"))
+                  {:desc ""
+                   :buffer (vim.api.nvim_get_current_buf)
+                   :nowait true
+                   :silent true}))
 
-(util.bufmap (vim.api.nvim_get_current_buf)
-             {:n {:<localleader>s ["vip:sort<cr>"
-                                   [:noremap :nowait :silent]
-                                   "sort in paragraph"]}})
+(vim.keymap.set :n :<localleader>s "vip:sort<cr>"
+                {:desc "sort in paragraph"
+                 :nowait true
+                 :buffer (vim.api.nvim_get_current_buf)
+                 :silent true})
 
 (when (util.executable? :sbtn)
-  (util.bufmap (vim.api.nvim_get_current_buf)
-               {:n {:<leader>os [":!tmux split-window -v -l 30\\% sbtn<cr><cr>"
-                                 [:noremap :silent]
-                                 "open sbtn in a tmux split"]}}))
+  (vim.keymap.set :n :<leader>os ":!tmux split-window -v -l 30\\% sbtn<cr><cr>"
+                  {:desc "open sbtn in a tmux split"
+                   :buffer (vim.api.nvim_get_current_buf)
+                   :silent true}))
 
 (when (util.executable? :scala-cli)
-  (util.bufmap (vim.api.nvim_get_current_buf)
-               {:n {:<leader>oc [":!tmux split-window -v -l 30\\% scala-cli console %<cr><cr>"
-                                 [:noremap :silent]
-                                 "open scala-cli in a tmux split"]}}))
+  (vim.keymap.set :n :<leader>oc
+                  ":!tmux split-window -v -l 30\\% scala-cli console %<cr><cr>"
+                  {:desc "open scala-cli in a tmux split"
+                   :buffer (vim.api.nvim_get_current_buf)
+                   :silent true}))

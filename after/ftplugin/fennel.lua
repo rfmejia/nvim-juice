@@ -29,7 +29,7 @@ end
 local function _6_()
   return format_fennel(vim.fn.expand("%:p"))
 end
-vim.keymap.set("n", "<localleader>cf", _6_, {noremap = true, silent = true, desc = "(c)ode (f)ormat"})
+vim.keymap.set("n", "<localleader>cf", _6_, {desc = "(c)ode (f)ormat"})
 local function _7_()
   return format_fennel(vim.fn.expand("%:p"))
 end

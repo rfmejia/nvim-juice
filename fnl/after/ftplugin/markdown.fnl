@@ -21,12 +21,27 @@
     (vim.print meta) ; (vim.fn.append (line "0" meta)) ; call append(line('0'), meta)
     ))
 
-(util.bufmap (vim.api.nvim_get_current_buf)
-             {:n {:<localleader>m [(util.lua-cmd "require('juice.filetypes.markdown')['insert-yaml-metadata']()")
-                                   [:noremap :silent]]
-                  :<localleader>v [(util.lua-cmd "require('juice.filetypes.markdown')['render-markdown-to-html']()")
-                                   [:noremap :silent]]
-                  :<localleader>d [":r!date '+\\%a, \\%d \\%b \\%Y' | xargs -0 printf '----\\n\\n\\%s\\n'<cr>"
-                                   [:noremap :silent]]
-                  :<localleader>t [":r!date '+\\%H:\\%M' | xargs -0 printf '> \\%s ' | tr -d '\\n'<cr>A"
-                                   [:noremap :silent]]}})
+(util.set-keys [[:n
+                 :<localleader>m
+                 (util.lua-cmd "require('juice.filetypes.markdown')['insert-yaml-metadata']()")
+                 {:desc "insert metadata as a YAML header"
+                  :buffer (vim.api.nvim_get_current_buf)
+                  :silent true}]
+                [:n
+                 :<localleader>v
+                 (util.lua-cmd "require('juice.filetypes.markdown')['render-markdown-to-html']()")
+                 {:desc "convert to HTML and show preview in browser"
+                  :buffer (vim.api.nvim_get_current_buf)
+                  :silent true}]
+                [:n
+                 :<localleader>d
+                 ":r!date '+\\%a, \\%d \\%b \\%Y' | xargs -0 printf '----\\n\\n\\%s\\n'<cr>"
+                 {:desc "insert current date as an h2 header"
+                  :buffer (vim.api.nvim_get_current_buf)
+                  :silent true}]
+                [:n
+                 :<localleader>t
+                 ":r!date '+\\%H:\\%M' | xargs -0 printf '> \\%s ' | tr -d '\\n'<cr>A"
+                 {:desc "insert current time as an h3 header"
+                  :buffer (vim.api.nvim_get_current_buf)
+                  :silent true}]])
