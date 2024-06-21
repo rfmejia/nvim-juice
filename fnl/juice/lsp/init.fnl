@@ -98,6 +98,7 @@
   (let [scalametals (autoload :juice.lsp.scalametals)
         go-settings {:gopls {:analyses {:unusedparams true} :staticcheck true}}]
     (scalametals.register-init-command)
+    (lspconfig.jdtls.setup {:on_attach set-buffer-opts : handlers})
     (lspconfig.clojure_lsp.setup {:on_attach set-buffer-opts : handlers})
     (lspconfig.gopls.setup {:on_attach set-buffer-opts
                             : go-settings

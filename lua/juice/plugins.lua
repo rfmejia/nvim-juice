@@ -27,7 +27,7 @@ local dev_tools
 local function _6_()
   return util["auto-setup"]("juice.lsp")
 end
-dev_tools = {{"neovim/nvim-lspconfig", ft = {"clojure", "go", "scala"}, config = _6_}, {"scalameta/nvim-metals", cmd = "MetalsInit", dependencies = {"nvim-lua/plenary.nvim"}}}
+dev_tools = {{"neovim/nvim-lspconfig", ft = {"clojure", "java", "go", "scala"}, config = _6_}, {"scalameta/nvim-metals", cmd = "MetalsInit", dependencies = {"nvim-lua/plenary.nvim"}}}
 local lisp_tools
 do
   local languages = {"clojure", "fennel"}

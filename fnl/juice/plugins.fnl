@@ -44,7 +44,7 @@
                          :ft [:sql :mysql]}]}])
 
 (local dev-tools [{1 :neovim/nvim-lspconfig
-                   :ft [:clojure :go :scala]
+                   :ft [:clojure :java :go :scala]
                    :config #(util.auto-setup :juice.lsp)}
                   {1 :scalameta/nvim-metals
                    :cmd :MetalsInit

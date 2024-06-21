@@ -37,6 +37,7 @@ local function setup()
   local scalametals = autoload("juice.lsp.scalametals")
   local go_settings = {gopls = {analyses = {unusedparams = true}, staticcheck = true}}
   scalametals["register-init-command"]()
+  lspconfig.jdtls.setup({on_attach = set_buffer_opts, handlers = handlers})
   lspconfig.clojure_lsp.setup({on_attach = set_buffer_opts, handlers = handlers})
   return lspconfig.gopls.setup({on_attach = set_buffer_opts, ["go-settings"] = go_settings, handlers = handlers})
 end
