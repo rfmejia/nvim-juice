@@ -13,7 +13,7 @@ local function ensure_installed(user, repo, branch)
     vim.fn.system(git_cmd)
   else
   end
-  return (vim.opt.rtp):prepend(install_path)
+  return vim.opt.rtp:prepend(install_path)
 end
 local function setup()
   ensure_installed("Olical", "nfnl", "main")

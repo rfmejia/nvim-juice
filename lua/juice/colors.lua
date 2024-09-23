@@ -6,7 +6,7 @@ local util = autoload("juice.util")
 local function color_attr(hl_group, attribute)
   _G.assert((nil ~= attribute), "Missing argument attribute on /home/rfmejia/.config/nvim/fnl/juice/colors.fnl:5")
   _G.assert((nil ~= hl_group), "Missing argument hl-group on /home/rfmejia/.config/nvim/fnl/juice/colors.fnl:5")
-  return (vim.api.nvim_get_hl(0, {name = hl_group}))[attribute]
+  return vim.api.nvim_get_hl(0, {name = hl_group})[attribute]
 end
 local custom_colors = {["normal-bg"] = "#000000", ["info-fg"] = color_attr("DiagnosticInfo", "fg"), ["error-fg"] = color_attr("DiagnosticError", "fg"), ["warn-fg"] = color_attr("DiagnosticWarn", "fg"), ["hint-fg"] = color_attr("DiagnosticHint", "fg"), ["ok-fg"] = color_attr("DiagnosticOk", "fg"), ["statusline-bg"] = "#000000", ["dark-gray"] = "#3d3d3d", ["darker-gray"] = "#1d1d1d", ["dark-green"] = "#009000", ["light-gray"] = "#707070"}
 local c = custom_colors

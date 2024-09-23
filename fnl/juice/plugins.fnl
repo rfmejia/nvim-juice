@@ -60,7 +60,7 @@
                      (set vim.g.conjure#log#botright true))}
           {1 :julienvincent/nvim-paredit
            :ft languages
-           :config {:use_default_keys true :indent {:enabled true}}}
+           :opts {:use_default_keys true :indent {:enabled true}}}
           {1 :julienvincent/nvim-paredit-fennel
            :ft :fennel
            :config true

@@ -8,11 +8,11 @@ local function vim_direction(direction)
   _G.assert((nil ~= direction), "Missing argument direction on /home/rfmejia/.config/nvim/fnl/juice/tmux-nav.fnl:6")
   local t_2_ = directions
   if (nil ~= t_2_) then
-    t_2_ = (t_2_)[direction]
+    t_2_ = t_2_[direction]
   else
   end
   if (nil ~= t_2_) then
-    t_2_ = (t_2_)[1]
+    t_2_ = t_2_[1]
   else
   end
   return t_2_
@@ -21,11 +21,11 @@ local function tmux_direction(direction)
   _G.assert((nil ~= direction), "Missing argument direction on /home/rfmejia/.config/nvim/fnl/juice/tmux-nav.fnl:7")
   local t_5_ = directions
   if (nil ~= t_5_) then
-    t_5_ = (t_5_)[direction]
+    t_5_ = t_5_[direction]
   else
   end
   if (nil ~= t_5_) then
-    t_5_ = (t_5_)[2]
+    t_5_ = t_5_[2]
   else
   end
   return t_5_
@@ -35,21 +35,21 @@ local function vim_navigate(direction)
   return vim.cmd(("wincmd" .. " " .. vim_direction(direction)))
 end
 local function get_tmux_socket()
-  local _8_ = vim.env.TMUX
-  if (nil ~= _8_) then
-    local _9_ = vim.fn.split(_8_, ",")
-    if (nil ~= _9_) then
-      local t_10_ = _9_
-      if (nil ~= t_10_) then
-        t_10_ = (t_10_)[1]
+  local tmp_3_auto = vim.env.TMUX
+  if (nil ~= tmp_3_auto) then
+    local tmp_3_auto0 = vim.fn.split(tmp_3_auto, ",")
+    if (nil ~= tmp_3_auto0) then
+      local t_8_ = tmp_3_auto0
+      if (nil ~= t_8_) then
+        t_8_ = t_8_[1]
       else
       end
-      return t_10_
+      return t_8_
     else
-      return _9_
+      return nil
     end
   else
-    return _8_
+    return nil
   end
 end
 local function tmux_navigate(direction)
@@ -57,12 +57,12 @@ local function tmux_navigate(direction)
   local socket = get_tmux_socket()
   local pane = tmux_direction(direction)
   local tmux_cmd = {"tmux", "-S", socket, "select-pane", pane}
-  local _14_, _15_ = vim.fn.system(tmux_cmd)
-  if (nil ~= _14_) then
-    local ok = _14_
+  local _12_, _13_ = vim.fn.system(tmux_cmd)
+  if (nil ~= _12_) then
+    local ok = _12_
     return nil
-  elseif ((_14_ == nil) and (nil ~= _15_)) then
-    local err_msg = _15_
+  elseif ((_12_ == nil) and (nil ~= _13_)) then
+    local err_msg = _13_
     return print("Could not run `tmux`: ", err_msg)
   else
     return nil
@@ -84,19 +84,19 @@ local function setup_default_mapping(in_tmux_3f)
   local options = {left = {desc = "jump to the left window", noremap = true, silent = true}, right = {desc = "jump to the right window", noremap = true, silent = true}, up = {desc = "jump to the window above", noremap = true, silent = true}, down = {desc = "jump to the window below", noremap = true, silent = true}}
   local vim_keys = {left = "<C-w>h", right = "<C-w>l", up = "<C-w>k", down = "<C-w>l"}
   local tmux_keys
-  local function _18_()
+  local function _16_()
     return navigate("left")
   end
-  local function _19_()
+  local function _17_()
     return navigate("right")
   end
-  local function _20_()
+  local function _18_()
     return navigate("up")
   end
-  local function _21_()
+  local function _19_()
     return navigate("down")
   end
-  tmux_keys = {left = _18_, right = _19_, up = _20_, down = _21_}
+  tmux_keys = {left = _16_, right = _17_, up = _18_, down = _19_}
   local win_nav
   if in_tmux_3f then
     win_nav = tmux_keys
@@ -104,17 +104,17 @@ local function setup_default_mapping(in_tmux_3f)
     win_nav = vim_keys
   end
   local make_mapping
-  local function _23_(dir)
+  local function _21_(dir)
     _G.assert((nil ~= dir), "Missing argument dir on /home/rfmejia/.config/nvim/fnl/juice/tmux-nav.fnl:52")
     local mapping
-    local function _24_(_241)
+    local function _22_(_241)
       return core.get(_241, dir)
     end
-    mapping = core.map(_24_, {nav_keys, win_nav, options})
+    mapping = core.map(_22_, {nav_keys, win_nav, options})
     table.insert(mapping, 1, "n")
     return mapping
   end
-  make_mapping = _23_
+  make_mapping = _21_
   local mappings = core.map(make_mapping, {"left", "right", "up", "down"})
   return util["set-keys"](mappings)
 end

@@ -37,7 +37,7 @@ do
     vim.g["conjure#log#botright"] = true
     return nil
   end
-  lisp_tools = {{"Olical/conjure", ft = languages, config = _7_}, {"julienvincent/nvim-paredit", ft = languages, config = {use_default_keys = true, indent = {enabled = true}}}, {"julienvincent/nvim-paredit-fennel", ft = "fennel", config = true, dependencies = "julienvincent/nvim-paredit"}}
+  lisp_tools = {{"Olical/conjure", ft = languages, config = _7_}, {"julienvincent/nvim-paredit", ft = languages, opts = {use_default_keys = true, indent = {enabled = true}}}, {"julienvincent/nvim-paredit-fennel", ft = "fennel", config = true, dependencies = "julienvincent/nvim-paredit"}}
 end
 local editing_tools
 local function _8_()
