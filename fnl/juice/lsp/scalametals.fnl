@@ -11,9 +11,11 @@
         options {:signcolumn "yes:1"
                  :shortmess (.. vim.go.shortmess :c)
                  :statusline (statusline.build ["%{g:metals_status}" " ●"])}
-        metals-settings {:showImplicitArguments true
-                         :showImplicitConversionsAndClasses true
-                         :showInferredType true}
+        metals-settings {:inlayHints {:hintsInPatternMatch {:enable true}
+                                      :implicitArguments {:enable true}
+                                      :implicitConversions {:enable true}
+                                      :inferredTypes {:enable true}
+                                      :typeParameters {:enable true}}}
         metals-maps (lambda [bufnr]
                       [[:v
                         :K
@@ -38,12 +40,6 @@
                         {:desc "(m)etals (r)eveal current member in tree view"
                          :buffer bufnr}]])]
     (util.set-opts options)
-    (comment "Automatically attach Metals to all Scala filetypes (only triggered upon BufEnter)")
-    (vim.api.nvim_create_augroup :metals-group [])
-    (vim.api.nvim_create_autocmd :FileType
-                                 {:group :metals-group
-                                  :pattern [:scala :sbt :java]
-                                  :callback #(metals.initialize_or_attach config)})
     (set config.settings metals-settings)
     (set config.init_options.statusBarProvider :on)
     (set config.capabilities (vim.lsp.protocol.make_client_capabilities))
@@ -55,6 +51,15 @@
          (lambda [client bufnr]
            (juice-lsp.set-buffer-opts client bufnr)
            (util.set-keys (metals-maps bufnr))))
+    (comment "Automatically attach Metals to all Scala filetypes (only triggered upon BufEnter)")
+    (vim.api.nvim_create_augroup :metals-group [])
+    (vim.api.nvim_create_autocmd :FileType
+                                 {:group :metals-group
+                                  :pattern [:scala :sbt :java]
+                                  :callback #(metals.initialize_or_attach config)})
+    (vim.api.nvim_create_user_command :MetalsInit
+                                      #(metals.initialize_or_attach config)
+                                      {:desc "Start and connect to a Metals server"})
     (comment "Initialize Metals for the first time")
     (tset vim.g :metals_status "Initializing Metals...")
     (metals.initialize_or_attach config)))
