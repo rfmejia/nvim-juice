@@ -68,7 +68,9 @@
 
 (local editing-tools
        [{1 :kylechui/nvim-surround :keys [:cs :ds :ys] :config true}
-        {1 :windwp/nvim-autopairs :event :InsertEnter :config true}
+        {1 :windwp/nvim-autopairs
+         :event :InsertEnter
+         :opts {:enable_check_bracket_line false}}
         {1 :mbbill/undotree
          :cmd :UndotreeToggle
          :config (fn []
@@ -79,11 +81,11 @@
                     :cmd :Oil
                     :keys :<leader>e
                     :config #(let [oil (autoload :oil)
-                                   config {:default_file_explorer true
-                                           :delete_to_trash true
-                                           :skip_confirm_for_simple_edits true
-                                           :view_options {:show_hidden true}}]
-                               (oil.setup config)
+                                   opts {:default_file_explorer true
+                                         :delete_to_trash true
+                                         :skip_confirm_for_simple_edits true
+                                         :view_options {:show_hidden true}}]
+                               (oil.setup opts)
                                (mappings.oil-maps))}
                    {1 :nvim-telescope/telescope.nvim
                     :tag :0.1.6
@@ -93,17 +95,17 @@
                     :config (fn []
                               (let [telescope (autoload :telescope)
                                     actions (autoload :telescope.actions)
-                                    config {:defaults {:border false
-                                                       :layout_config {:prompt_position :bottom
-                                                                       :height 0.4}
-                                                       :layout_strategy :bottom_pane
-                                                       :mappings {:i {:<esc> actions.close
-                                                                      :<C-u> false}}
-                                                       :path_display {1 :truncate}
-                                                       :preview false
-                                                       :prompt_prefix "/"
-                                                       :prompt_title :test}}]
-                                (telescope.setup config)
+                                    opts {:defaults {:border false
+                                                     :layout_config {:prompt_position :bottom
+                                                                     :height 0.4}
+                                                     :layout_strategy :bottom_pane
+                                                     :mappings {:i {:<esc> actions.close
+                                                                    :<C-u> false}}
+                                                     :path_display {1 :truncate}
+                                                     :preview false
+                                                     :prompt_prefix "/"
+                                                     :prompt_title :test}}]
+                                (telescope.setup opts)
                                 (mappings.telescope-maps)))}])
 
 (local git-tools [{1 :lewis6991/gitsigns.nvim

@@ -45,19 +45,19 @@ local function _8_()
   vim.g.undotree_SetFocusWhenToggle = 1
   return nil
 end
-editing_tools = {{"kylechui/nvim-surround", keys = {"cs", "ds", "ys"}, config = true}, {"windwp/nvim-autopairs", event = "InsertEnter", config = true}, {"mbbill/undotree", cmd = "UndotreeToggle", config = _8_}}
+editing_tools = {{"kylechui/nvim-surround", keys = {"cs", "ds", "ys"}, config = true}, {"windwp/nvim-autopairs", event = "InsertEnter", opts = {enable_check_bracket_line = false}}, {"mbbill/undotree", cmd = "UndotreeToggle", config = _8_}}
 local file_tools
 local function _9_()
   local oil = autoload("oil")
-  local config = {default_file_explorer = true, delete_to_trash = true, skip_confirm_for_simple_edits = true, view_options = {show_hidden = true}}
-  oil.setup(config)
+  local opts = {default_file_explorer = true, delete_to_trash = true, skip_confirm_for_simple_edits = true, view_options = {show_hidden = true}}
+  oil.setup(opts)
   return mappings["oil-maps"]()
 end
 local function _10_()
   local telescope = autoload("telescope")
   local actions = autoload("telescope.actions")
-  local config = {defaults = {layout_config = {prompt_position = "bottom", height = 0.4}, layout_strategy = "bottom_pane", mappings = {i = {["<esc>"] = actions.close, ["<C-u>"] = false}}, path_display = {"truncate"}, prompt_prefix = "/", prompt_title = "test", border = false, preview = false}}
-  telescope.setup(config)
+  local opts = {defaults = {layout_config = {prompt_position = "bottom", height = 0.4}, layout_strategy = "bottom_pane", mappings = {i = {["<esc>"] = actions.close, ["<C-u>"] = false}}, path_display = {"truncate"}, prompt_prefix = "/", prompt_title = "test", border = false, preview = false}}
+  telescope.setup(opts)
   return mappings["telescope-maps"]()
 end
 file_tools = {{"stevearc/oil.nvim", cmd = "Oil", keys = "<leader>e", config = _9_}, {"nvim-telescope/telescope.nvim", tag = "0.1.6", keys = {"<leader>f", "<leader>p", "<leader>g", "<leader>k"}, cmd = "Telescope", dependencies = {"nvim-lua/plenary.nvim"}, config = _10_}}
