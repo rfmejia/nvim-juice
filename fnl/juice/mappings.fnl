@@ -151,26 +151,30 @@
                      {:desc "open journal in a new tab" :silent true}]
                     [:n
                      :<leader>ov
-                     #(vim.cmd (.. ":$tabnew" :$JOURNAL/vim/vim.adoc))
+                     #(vim.cmd (.. ":$tabnew" :$JOURNAL/linux/vim.adoc))
                      {:desc "open vim notes in a new tab" :silent true}]]))
   (comment "---- PLUGINS ----")
   (util.set-keys [[:n :<leader>L ":Lazy<cr>" {:silent true}]
                   [:n
                    :<leader>u
                    ":UndotreeToggle<cr>"
-                   {:desc "toggle undotree" :silent true}]]))
+                   {:desc "(undotree) toggle" :silent true}]]))
 
 (fn oil-maps []
   (let [oil (autoload :oil)]
     (vim.keymap.set :n :<leader>e #(oil.open)
-                    {:desc "explore files in current file's path" :silent true})))
+                    {:desc "(oil) explore files in current file's path"
+                     :silent true})))
 
 (fn telescope-maps []
   (let [builtin (autoload :telescope.builtin)
-        maps [[:n :<leader>f builtin.find_files {:desc "telescope (f)iles"}]
-              [:n :<leader>p builtin.oldfiles {:desc "telescope oldfiles"}]
-              [:n :<leader>g builtin.git_files {:desc "telescope (g)it files"}]
-              [:n :<leader>k builtin.keymaps {:desc "telescope (k)eymaps"}]]]
+        maps [[:n :<leader>f builtin.find_files {:desc "(telescope) (f)iles"}]
+              [:n :<leader>p builtin.oldfiles {:desc "(telescope) oldfiles"}]
+              [:n
+               :<leader>g
+               builtin.git_files
+               {:desc "(telescope) (g)it files"}]
+              [:n :<leader>k builtin.keymaps {:desc "(telescope) (k)eymaps"}]]]
     (util.set-keys maps)))
 
 (fn gitsigns-maps []
@@ -178,19 +182,19 @@
         nav [[:n
               "]g"
               #(gitsigns.nav_hunk :next {:wrap false :preview true})
-              {:desc "jump to next git hunk"}]
+              {:desc "(gitsigns) jump to next git hunk"}]
              [:n
               "[g"
               #(gitsigns.nav_hunk :prev {:wrap false :preview true})
-              {:desc "jump to previous git hunk"}]]
+              {:desc "(gitsigns) jump to previous git hunk"}]]
         staging [[:n
                   :<localleader>gs
                   gitsigns.stage_hunk
-                  {:desc "(g)it (s)tage hunk"}]
+                  {:desc "(gitsigns) (g)it (s)tage hunk"}]
                  [:n
                   :<localleader>gu
                   gitsigns.undo_stage_hunk
-                  {:desc "(g)it (u)ndo staged hunk"}]
+                  {:desc "(gitsigns) (g)it (u)ndo staged hunk"}]
                  [:n
                   :<localleader>gr
                   gitsigns.reset_hunk
@@ -198,52 +202,53 @@
                  [:n
                   :<localleader>gS
                   gitsigns.stage_buffer
-                  {:desc "(g)it (S)tage buffer"}]
+                  {:desc "(gitsigns) (g)it (S)tage buffer"}]
                  [:n
                   :<localleader>gR
                   gitsigns.reset_buffer
-                  {:desc "(g)it (R)eset buffer"}]
+                  {:desc "(gitsigns) (g)it (R)eset buffer"}]
                  [:v
                   :<localleader>gs
                   #(gitsigns.stage_hunk {(vim.fn.line ".") (vim.fn.line :v)})
-                  {:desc "(g)it (s)tage hunk"}]
+                  {:desc "(gitsigns) (g)it (s)tage hunk"}]
                  [:v
                   :<localleader>gr
                   #(gitsigns.reset_hunk {(vim.fn.line ".") (vim.fn.line :v)})
-                  {:desc "(g)it (r)eset hunk"}]]
+                  {:desc "(gitsigns) (g)it (r)eset hunk"}]]
         blame [[:n
                 :<localleader>gb
                 #(gitsigns.blame_line {:full true})
-                {:desc "(g)it show line (b)lame"}]
+                {:desc "(gitsigns) (g)it show line (b)lame"}]
                [:n
                 :<localleader>gB
                 gitsigns.toggle_current_line_blame
-                {:desc "(g)it toggle current line (B)lame"}]]
+                {:desc "(gitsigns) (g)it toggle current line (B)lame"}]]
         view [[:n
                :<localleader>gp
                gitsigns.preview_hunk
-               {:desc "(g)it (p)review hunk"}]
+               {:desc "(gitsigns) (g)it (p)review hunk"}]
               [:n
                :<localleader>gd
                gitsigns.diffthis
-               {:desc "(g)it show (d)iff"}]
+               {:desc "(gitsigns) (g)it show (d)iff"}]
               [:n
                :<localleader>gD
                gitsigns.toggle_deleted
-               {:desc "(g)it toggle (D)eleted hunks"}]]
+               {:desc "(gitsigns) (g)it toggle (D)eleted hunks"}]]
         list [[:n
                :<localleader>gl
                gitsigns.setloclist
-               {:desc "show buffer (g)it hunks in (l)oclist"}]
+               {:desc "(gitsigns) show buffer (g)it hunks in (l)oclist"}]
               [:n
                :<localleader>gc
                #(gitsigns.setqflist :all)
-               {:desc "show all (g)it hunks in qui(c)kfix list"}]]
+               {:desc "(gitsigns) show all (g)it hunks in qui(c)kfix list"}]]
         mappings (core.concat nav staging blame view list)]
     (util.set-keys mappings)))
 
 (fn neogit-maps []
   (let [neogit (autoload :neogit)]
-    (vim.keymap.set :n :<leader>og neogit.open {:desc "(o)pen (n)eogit"})))
+    (vim.keymap.set :n :<leader>og neogit.open
+                    {:desc "(neogit) (o)pen neo(g)it"})))
 
 {: setup : oil-maps : telescope-maps : gitsigns-maps : neogit-maps}
