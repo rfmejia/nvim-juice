@@ -67,6 +67,8 @@
     (gh-theme.setup {: options : groups})
     (comment vim.cmd.colorscheme
       (get-gnome-colorscheme :github_dark :github_light))
-    (vim.cmd.colorscheme :github_dark)))
+    (comment vim.cmd.colorscheme :github_dark)
+    (vim.cmd "set notermguicolors")
+    (vim.cmd.colorscheme :default)))
 
 {: setup : color-attr}

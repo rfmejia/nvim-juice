@@ -31,6 +31,8 @@ local function setup()
   local options = {transparent = true}
   gh_theme.setup({options = options, groups = groups})
   --[[ vim.cmd.colorscheme (get-gnome-colorscheme "github_dark" "github_light") ]]
-  return vim.cmd.colorscheme("github_dark")
+  --[[ vim.cmd.colorscheme "github_dark" ]]
+  vim.cmd("set notermguicolors")
+  return vim.cmd.colorscheme("default")
 end
 return {setup = setup, ["color-attr"] = color_attr}
