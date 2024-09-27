@@ -120,6 +120,7 @@
 
 (util.auto-setup :juice.plugins)
 (util.auto-setup :juice.mappings)
+(util.auto-setup :juice.colorscheme)
 (util.auto-setup :juice.git)
 (util.auto-setup :juice.tmux-nav)
 (util.auto-setup :juice.whitespace)

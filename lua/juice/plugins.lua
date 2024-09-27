@@ -14,7 +14,7 @@ local function _3_()
   local config = {ensure_installed = languages, highlight = {enable = true}, indent = {enable = true}}
   return ts.setup(config)
 end
-core_tools = {{"Olical/nfnl", ft = "fennel"}, {"projekt0n/github-nvim-theme", priority = 1000, config = _2_, lazy = false}, {"nvim-treesitter/nvim-treesitter", event = {"BufReadPre", "BufNewFile"}, build = ":TSUpdate", config = _3_}}
+core_tools = {{"Olical/nfnl", ft = "fennel"}, {"projekt0n/github-nvim-theme", priority = 1000, config = _2_, enabled = false, lazy = false}, {"nvim-treesitter/nvim-treesitter", event = {"BufReadPre", "BufNewFile"}, build = ":TSUpdate", config = _3_}}
 local database_tools
 local function _4_()
   local function _5_()
