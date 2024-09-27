@@ -1,12 +1,12 @@
 (local {: autoload} (require :nfnl.module))
 (local util (autoload :juice.util))
 
-(util.set-opts {:shiftwidth 2
-                :tabstop 2
-                :textwidth 100
-                :wrap true
-                :spell true
-                :spelllang :en_us})
+(util.assoc-in vim.opt {:shiftwidth 2
+                        :tabstop 2
+                        :textwidth 100
+                        :wrap true
+                        :spell true
+                        :spelllang :en_us})
 
 (fn render-markdown-to-html [] ; TODO fix and verify this works
   (let [tmp-file (vim.fn.system [:mktemp :--suffix=.html])

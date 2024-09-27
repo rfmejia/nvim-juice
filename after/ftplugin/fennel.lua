@@ -2,7 +2,7 @@
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local util = autoload("juice.util")
-util["set-opts"]({shiftwidth = 2, tabstop = 2, expandtab = true, textwidth = 100, commentstring = ";; %s"})
+util["assoc-in"](vim.opt, {shiftwidth = 2, tabstop = 2, expandtab = true, textwidth = 100, commentstring = ";; %s"})
 local function buffer_is_modified(buf_num)
   _G.assert((nil ~= buf_num), "Missing argument buf-num on /home/rfmejia/.config/nvim/fnl/after/ftplugin/fennel.fnl:10")
   return vim.api.nvim_buf_get_option(buf_num, "modified")

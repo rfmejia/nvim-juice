@@ -1,9 +1,9 @@
 (local {: autoload} (require :nfnl.module))
-(local {: set-opts} (autoload :juice.util))
+(local util (autoload :juice.util))
 
-(set-opts {:shiftwidth 2
-           :tabstop 2
-           :textwidth 80
-           :wrap true
-           :spell true
-           :spelllang :en_us})
+(util.assoc-in vim.opt {:shiftwidth 2
+                        :tabstop 2
+                        :textwidth 80
+                        :wrap true
+                        :spell true
+                        :spelllang :en_us})

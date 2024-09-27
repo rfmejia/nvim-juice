@@ -1,13 +1,12 @@
 (local {: autoload} (require :nfnl.module))
-(local {: executable? : set-opts} (autoload :juice.util))
 (local util (autoload :juice.util))
 
-(util.set-opts {:shiftwidth 2
-                :tabstop 2
-                :textwidth 80
-                :wrap true
-                :spell true
-                :spelllang :en_us})
+(util.assoc-in vim.opt {:shiftwidth 2
+                        :tabstop 2
+                        :textwidth 80
+                        :wrap true
+                        :spell true
+                        :spelllang :en_us})
 
 (fn insert-lines [text]
   "Insert text at the current cursor position"

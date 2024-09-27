@@ -20,7 +20,7 @@ local function initialize_metals()
     return {{"v", "K", metals.type_of_range, {desc = "show type of visual selection", buffer = bufnr}}, {"n", "<localleader>mw", _3_, {desc = "show (m)etals (w)orksheet output in popup", buffer = bufnr}}, {"n", "<localleader>mc", telescope.extensions.metals.commands, {desc = "list (m)etals (c)commands", buffer = bufnr}}, {"n", "<localleader>mt", tvp.toggle_tree_view, {desc = "(m)etals (t)oggle tree view", buffer = bufnr}}, {"n", "<localleader>mr", tvp.reveal_in_tree, {desc = "(m)etals (r)eveal current member in tree view", buffer = bufnr}}}
   end
   metals_maps = _2_
-  util["set-opts"](options)
+  util["assoc-in"](vim.opt, options)
   config.settings = metals_settings
   config.init_options.statusBarProvider = "on"
   config.capabilities = vim.lsp.protocol.make_client_capabilities()

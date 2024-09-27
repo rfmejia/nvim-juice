@@ -2,7 +2,7 @@
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local util = autoload("juice.util")
-util["set-opts"]({shiftwidth = 2, tabstop = 2, textwidth = 100, wrap = true, spell = true, spelllang = "en_us"})
+util["assoc-in"](vim.opt, {shiftwidth = 2, tabstop = 2, textwidth = 100, wrap = true, spell = true, spelllang = "en_us"})
 local function render_markdown_to_html()
   local tmp_file = vim.fn.system({"mktemp", "--suffix=.html"})
   local current_file = vim.fn.expand("%:p")

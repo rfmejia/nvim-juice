@@ -17,24 +17,26 @@ end
 local function set_keys(mappings)
   _G.assert((nil ~= mappings), "Missing argument mappings on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:16")
   for _, mapping in ipairs(mappings) do
-    local mode, lhs, rhs, opts = unpack(mapping)
-    vim.keymap.set(mode, lhs, rhs, opts)
+    vim.keymap.set(unpack(mapping))
   end
   return nil
 end
-local function set_opts(options)
-  _G.assert((nil ~= options), "Missing argument options on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:21")
-  if core["table?"](options) then
-    for k, v in pairs(options) do
-      vim.opt[k] = v
+local function assoc_in(t, ...)
+  _G.assert((nil ~= t), "Missing argument t on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:20")
+  for _, options in ipairs({...}) do
+    if core["table?"](options) then
+      for k, v in pairs(options) do
+        core.assoc(t, k, v)
+      end
+    else
     end
-    return nil
-  else
-    return nil
   end
+  return nil
 end
-local function auto_setup(module)
-  _G.assert((nil ~= module), "Missing argument module on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:27")
-  return autoload(module).setup()
+local function auto_setup(...)
+  for _, module in ipairs({...}) do
+    autoload(module).setup()
+  end
+  return nil
 end
-return {["lua-cmd"] = lua_cmd, ["executable?"] = executable_3f, ["has?"] = has_3f, ["set-keys"] = set_keys, ["set-opts"] = set_opts, ["auto-setup"] = auto_setup}
+return {["lua-cmd"] = lua_cmd, ["executable?"] = executable_3f, ["has?"] = has_3f, ["set-keys"] = set_keys, ["assoc-in"] = assoc_in, ["auto-setup"] = auto_setup}

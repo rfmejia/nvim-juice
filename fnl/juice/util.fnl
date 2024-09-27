@@ -15,17 +15,17 @@
 
 (lambda set-keys [mappings]
   (each [_ mapping (ipairs mappings)]
-    (let [(mode lhs rhs opts) (unpack mapping)]
-      (vim.keymap.set mode lhs rhs opts))))
+    (vim.keymap.set (unpack mapping))))
 
-(lambda set-opts [options]
-  "Given an `options` table, set each pair as `vim.opt.<key> = <value>`"
-  (when (core.table? options)
-    (each [k v (pairs options)]
-      (tset vim.opt k v))))
+(lambda assoc-in [t ...]
+  "Given one or more tables of options, set each entry in the table as `<t>.<key> = <value>`"
+  (each [_ options (ipairs [...])]
+    (when (core.table? options)
+      (each [k v (pairs options)]
+        (core.assoc t k v)))))
 
-(lambda auto-setup [module]
-  ((-> (autoload module)
-       (. :setup))))
+(lambda auto-setup [...]
+  (each [_ module (ipairs [...])]
+    ((. (autoload module) :setup))))
 
-{: lua-cmd : executable? : has? : set-keys : set-opts : auto-setup}
+{: lua-cmd : executable? : has? : set-keys : assoc-in : auto-setup}

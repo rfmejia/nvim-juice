@@ -1,11 +1,11 @@
 (local {: autoload} (require :nfnl.module))
 (local util (autoload :juice.util))
 
-(util.set-opts {:shiftwidth 2
-                :tabstop 2
-                :expandtab true
-                :textwidth 100
-                :commentstring ";; %s"})
+(util.assoc-in vim.opt {:shiftwidth 2
+                        :tabstop 2
+                        :expandtab true
+                        :textwidth 100
+                        :commentstring ";; %s"})
 
 (lambda buffer-is-modified [buf-num]
   (vim.api.nvim_buf_get_option buf-num :modified))

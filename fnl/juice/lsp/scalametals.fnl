@@ -39,7 +39,7 @@
                         tvp.reveal_in_tree
                         {:desc "(m)etals (r)eveal current member in tree view"
                          :buffer bufnr}]])]
-    (util.set-opts options)
+    (util.assoc-in vim.opt options)
     (set config.settings metals-settings)
     (set config.init_options.statusBarProvider :on)
     (set config.capabilities (vim.lsp.protocol.make_client_capabilities))

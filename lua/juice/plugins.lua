@@ -18,7 +18,7 @@ core_tools = {{"Olical/nfnl", ft = "fennel"}, {"projekt0n/github-nvim-theme", pr
 local database_tools
 local function _4_()
   local function _5_()
-    return util["set-opts"]({commentstring = "-- %s", omnifunc = "vim_dadbod_completion#omni"})
+    return util["assoc-in"](vim.opt, {commentstring = "-- %s", omnifunc = "vim_dadbod_completion#omni"})
   end
   return vim.api.nvim_create_autocmd("FileType", {pattern = {"sql", "mysql"}, callback = _5_})
 end
@@ -32,18 +32,13 @@ local lisp_tools
 do
   local languages = {"clojure", "fennel"}
   local function _7_()
-    vim.g["conjure#result#register"] = "*"
-    vim.g["conjure#mapping#doc_word"] = "gk"
-    vim.g["conjure#log#botright"] = true
-    return nil
+    return util["assoc-in"](vim.g, {["conjure#result#register"] = "*", ["conjure#mapping#doc_word"] = "gk", ["conjure#log#botright"] = true})
   end
   lisp_tools = {{"Olical/conjure", ft = languages, config = _7_}, {"julienvincent/nvim-paredit", ft = languages, opts = {use_default_keys = true, indent = {enabled = true}}}, {"julienvincent/nvim-paredit-fennel", ft = "fennel", config = true, dependencies = "julienvincent/nvim-paredit"}}
 end
 local editing_tools
 local function _8_()
-  vim.g.undotree_WindowLayout = 4
-  vim.g.undotree_SetFocusWhenToggle = 1
-  return nil
+  return util["assoc-in"](vim.g, {undotree_WindowLayout = 4, undotree_SetFocusWhenToggle = 1})
 end
 editing_tools = {{"kylechui/nvim-surround", keys = {"cs", "ds", "ys"}, config = true}, {"windwp/nvim-autopairs", event = "InsertEnter", opts = {enable_check_bracket_line = false}}, {"mbbill/undotree", cmd = "UndotreeToggle", config = _8_}}
 local file_tools

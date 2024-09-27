@@ -2,11 +2,11 @@
 (local str (autoload :nfnl.string))
 (local util (autoload :juice.util))
 
-(util.set-opts {:shiftwidth 2
-                :tabstop 2
-                :expandtab true
-                :textwidth 100
-                :signcolumn "yes:1"})
+(util.assoc-in vim.opt {:shiftwidth 2
+                        :tabstop 2
+                        :expandtab true
+                        :textwidth 100
+                        :signcolumn "yes:1"})
 
 (comment "FIXME This doesn't seem to be reflected" "indentkeys:remove" ["<>>"])
 
