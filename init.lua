@@ -5,7 +5,7 @@ local autoload = _local_1_["autoload"]
 local core = autoload("nfnl.core")
 local statusline = autoload("juice.statusline")
 local util = autoload("juice.util")
---[[ "---- LEADER KEYS ----" ]]
+--[[ "---- GENERAL OPTIONS ----" ]]
 util["assoc-in"](vim.g, {mapleader = " ", maplocalleader = ","})
 local behavior = {clipboard = "unnamedplus", smartindent = true, shiftwidth = 2, tabstop = 2, softtabstop = 2, expandtab = true, mouse = "", shortmess = "filnxtToOF", undolevels = 5000, undofile = true, foldenable = false}
 local visual = {number = true, relativenumber = true, signcolumn = "yes:1", cursorline = true, splitbelow = true, splitright = true, linebreak = true, laststatus = 3, statusline = statusline.build({}), wrap = false}
@@ -35,4 +35,4 @@ vim.api.nvim_create_autocmd({"WinEnter", "VimEnter"}, {group = "highlight-group"
 vim.api.nvim_create_augroup("terminal-group", {})
 --[[ "remove signcolumn in terminal mode" ]]
 vim.api.nvim_create_autocmd("TermOpen", {group = "terminal-group", pattern = "*", command = "set signcolumn=no"})
-return util["auto-setup"]("juice.plugins", "juice.mappings", "juice.colorscheme", "juice.git", "juice.tmux-nav", "juice.whitespace")
+return util["auto-setup"]("juice.colorscheme", "juice.plugins", "juice.mappings", "juice.git", "juice.tmux-nav", "juice.whitespace")

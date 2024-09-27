@@ -1,7 +1,6 @@
 {
   "conjure": { "branch": "master", "commit": "6d2bc7f7b24c2c43d54f263bee7b9b08aef5d1a1" },
   "diffview.nvim": { "branch": "main", "commit": "4516612fe98ff56ae0415a259ff6361a89419b0a" },
-  "github-nvim-theme": { "branch": "main", "commit": "0e4636f556880d13c00d8a8f686fae8df7c9845f" },
   "gitsigns.nvim": { "branch": "main", "commit": "863903631e676b33e8be2acb17512fdc1b80b4fb" },
   "lazy.nvim": { "branch": "main", "commit": "460e1cd8f24e364d54543a4b0e83f6f4ec1f65fb" },
   "neogit": { "branch": "master", "commit": "d6f5bdd4344d3f07fb6932834f9009b55eb8a511" },

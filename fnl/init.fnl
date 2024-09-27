@@ -7,7 +7,7 @@
 (local statusline (autoload :juice.statusline))
 (local util (autoload :juice.util))
 
-(comment "---- LEADER KEYS ----")
+(comment "---- GENERAL OPTIONS ----")
 (util.assoc-in vim.g {:mapleader " " :maplocalleader ","})
 
 (local behavior {; use linux system clipboard
@@ -119,5 +119,5 @@
                               :pattern "*"
                               :command "set signcolumn=no"})
 
-(util.auto-setup :juice.plugins :juice.mappings :juice.colorscheme :juice.git
+(util.auto-setup :juice.colorscheme :juice.plugins :juice.mappings :juice.git
                  :juice.tmux-nav :juice.whitespace)

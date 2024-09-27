@@ -4,11 +4,6 @@
 (local mappings (autoload :juice.mappings))
 
 (local core-tools [{1 :Olical/nfnl :ft :fennel}
-                   {1 :projekt0n/github-nvim-theme
-                    :lazy false
-                    :enabled false
-                    :priority 1000
-                    :config #(util.auto-setup :juice.colors)}
                    {1 :nvim-treesitter/nvim-treesitter
                     :event [:BufReadPre :BufNewFile]
                     :build ":TSUpdate"
