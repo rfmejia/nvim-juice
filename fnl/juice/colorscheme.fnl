@@ -2,12 +2,13 @@
 (local core (autoload :nfnl.core))
 (local str (autoload :nfnl.string))
 
-(local cterm-opts
-       {:Comment {:ctermfg :DarkGray :italic true}
-        :Todo {:ctermfg :Yellow :bold true}
-        :CursorLineNr {:ctermfg :White}
-        [:LineNrAbove :LineNrBelow] {:ctermfg :DarkGray}
-        [:NonText :WinSeparator] {:ctermfg :Black}})
+(local cterm-opts {:Comment {:ctermfg :DarkGray :italic true}
+                   :Constant {:ctermfg :Green}
+                   :CursorLineNr {:ctermfg :White}
+                   [:Delimiter :Operator :Special :Statement] {:ctermfg :Gray}
+                   [:LineNrAbove :LineNrBelow] {:ctermfg :DarkGray}
+                   [:NonText :WinSeparator] {:ctermfg :Black}
+                   :Todo {:ctermfg :Yellow :bold true}})
 
 (local diagnostic-virtual-text
        {:DiagnosticVirtualTextError {:ctermfg :DarkRed :italic true}
