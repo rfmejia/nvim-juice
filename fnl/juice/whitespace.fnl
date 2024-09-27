@@ -2,7 +2,7 @@
 (local colors (autoload :juice.colors))
 
 (fn setup []
-  (let [hi-cmd "hi ExtraWhitespace gui=undercurl guifg=red"
+  (let [hi-cmd "hi ExtraWhitespace cterm=undercurl ctermfg=red"
         match-all-cmd "match ExtraWhitespace /\\s\\+$/"
         match-partial-cmd "match ExtraWhitespace /\\s\\+\\%#\\@<!$/"
         clear-matches-cmd "call clearmatches()"]

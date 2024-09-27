@@ -8,7 +8,7 @@ local diagnostic_virtual_text = {DiagnosticVirtualTextError = {ctermfg = "DarkRe
 local statusline = {StatusLine = {ctermfg = "DarkGray", ctermbg = "NONE"}, StatusLineError = {ctermfg = "DarkRed"}, StatusLineInfo = {ctermfg = "DarkCyan"}, StatusLineWarn = {ctermfg = "DarkYellow"}}
 local telescope = {TelescopeSelection = {ctermfg = "White"}, TelescopeNormal = {ctermfg = "Gray"}}
 local function set_hl(hi_options)
-  _G.assert((nil ~= hi_options), "Missing argument hi-options on /home/rfmejia/.config/nvim/fnl/juice/colorscheme.fnl:30")
+  _G.assert((nil ~= hi_options), "Missing argument hi-options on /home/rfmejia/.config/nvim/fnl/juice/colorscheme.fnl:27")
   for hi_group, opts in pairs(hi_options) do
     if core["sequential?"](hi_group) then
       for _, sub_group in ipairs(hi_group) do

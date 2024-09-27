@@ -3,7 +3,7 @@ local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local colors = autoload("juice.colors")
 local function setup()
-  local hi_cmd = "hi ExtraWhitespace gui=undercurl guifg=red"
+  local hi_cmd = "hi ExtraWhitespace cterm=undercurl ctermfg=red"
   local match_all_cmd = "match ExtraWhitespace /\\s\\+$/"
   local match_partial_cmd = "match ExtraWhitespace /\\s\\+\\%#\\@<!$/"
   local clear_matches_cmd = "call clearmatches()"

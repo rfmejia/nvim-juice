@@ -2,9 +2,6 @@
 (local core (autoload :nfnl.core))
 (local str (autoload :nfnl.string))
 
-;; test
-
-;; TODO Break up into logical groups
 (local cterm-opts
        {:Comment {:ctermfg :DarkGray :italic true}
         :Todo {:ctermfg :Yellow :bold true}
