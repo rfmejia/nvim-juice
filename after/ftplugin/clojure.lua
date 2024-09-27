@@ -3,7 +3,7 @@ local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local _local_2_ = autoload("juice.util")
 local set_opts = _local_2_["set-opts"]
-set_opts({shiftwidth = 2, tabstop = 2, expandtab = true, textwidth = 100, commentstring = ";; %s"})
+set_opts({shiftwidth = 2, tabstop = 2, expandtab = true, textwidth = 100, commentstring = ";; %s", spell = false})
 local function _3_()
   return vim.lsp.buf.format({async = false})
 end

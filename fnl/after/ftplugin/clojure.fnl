@@ -5,6 +5,7 @@
            :tabstop 2
            :expandtab true
            :textwidth 100
+           :spell false
            :commentstring ";; %s"})
 
 (vim.api.nvim_create_autocmd :BufWritePre
