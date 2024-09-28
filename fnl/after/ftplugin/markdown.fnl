@@ -14,34 +14,77 @@
     (vim.fn.system :$DOTFILES/pandoc/md-to-html current-file tmp-file
                    "&& ${BROWSER}" tmp-file)))
 
+(lambda insert-lines [...]
+  "Insert text at the current cursor position"
+  (let [buf (vim.api.nvim_get_current_buf)
+        (row col) (unpack (vim.api.nvim_win_get_cursor 0))
+        _row (- row 1)]
+    (vim.api.nvim_buf_set_lines buf _row (+ _row 1) false [...])))
+
 (fn insert-yaml-metadata []
   (let [filename (vim.fn.expand "%:t:r")
-        now (vim.fn.strftime "%FT%T%z" (vim.fn.localtime))
-        meta ["---" "title: " filename "created: " now "tags: []" "---"]]
-    (vim.print meta) ; (vim.fn.append (line "0" meta)) ; call append(line('0'), meta)
-    ))
+        now (vim.fn.strftime "%FT%T%z" (vim.fn.localtime))]
+    (insert-lines "---" "title: " filename "created: " now "tags: []" "---")))
+
+(lambda insert-week []
+  (lambda find-day [dir day new-time]
+    (let [new-day (vim.fn.strftime "%a" new-time)
+          secs-in-a-day (* 60 60 24)]
+      (if (= day new-day) (vim.fn.strftime "%b %d" new-time)
+          (find-day dir day
+                    (if (= dir :fwd) (+ new-time secs-in-a-day)
+                        (- new-time secs-in-a-day))))))
+  (let [week-num (vim.fn.strftime "%U")
+        week-start (find-day :back :Mon (vim.fn.localtime))
+        week-end (find-day :fwd :Sun (vim.fn.localtime))
+        text (.. "## Week " week-num " (" week-start " to " week-end ")")]
+    (insert-lines "----" "" text "")))
+
+(lambda insert-day []
+  (let [curr-day (vim.fn.strftime "%a, %d %b %Y")
+        text (.. "### " curr-day)]
+    (insert-lines text "")))
+
+(lambda insert-time []
+  (let [curr-time (vim.fn.strftime "%H:%M")
+        text (.. "#### " curr-time " ")]
+    (insert-lines text)))
+
+(lambda insert-task [] (insert-lines "- [ ] "))
 
 (util.set-keys [[:n
                  :<localleader>m
-                 (util.lua-cmd "require('juice.filetypes.markdown')['insert-yaml-metadata']()")
+                 insert-yaml-metadata
                  {:desc "insert metadata as a YAML header"
                   :buffer (vim.api.nvim_get_current_buf)
                   :silent true}]
                 [:n
                  :<localleader>v
-                 (util.lua-cmd "require('juice.filetypes.markdown')['render-markdown-to-html']()")
+                 render-markdown-to-html
                  {:desc "convert to HTML and show preview in browser"
                   :buffer (vim.api.nvim_get_current_buf)
                   :silent true}]
                 [:n
+                 :<localleader>w
+                 insert-week
+                 {:desc "insert current week as an h2 header"
+                  :buffer (vim.api.nvim_get_current_buf)
+                  :silent true}]
+                [:n
                  :<localleader>d
-                 ":r!date '+\\%a, \\%d \\%b \\%Y' | xargs -0 printf '----\\n\\n\\%s\\n'<cr>"
-                 {:desc "insert current date as an h2 header"
+                 insert-day
+                 {:desc "insert current date as an h3 header"
                   :buffer (vim.api.nvim_get_current_buf)
                   :silent true}]
                 [:n
                  :<localleader>t
-                 ":r!date '+\\%H:\\%M' | xargs -0 printf '> \\%s ' | tr -d '\\n'<cr>A"
-                 {:desc "insert current time as an h3 header"
+                 insert-time
+                 {:desc "insert current time as an h4 header"
+                  :buffer (vim.api.nvim_get_current_buf)
+                  :silent true}]
+                [:n
+                 :<localleader>x
+                 insert-task
+                 {:desc "insert current time as an h4 header"
                   :buffer (vim.api.nvim_get_current_buf)
                   :silent true}]])

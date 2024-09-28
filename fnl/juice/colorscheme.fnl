@@ -8,6 +8,7 @@
                    [:Delimiter :Operator :Special :Statement] {:ctermfg :Gray}
                    [:LineNrAbove :LineNrBelow] {:ctermfg :DarkGray}
                    [:NonText :WinSeparator] {:ctermfg :Black}
+                   :Title {:ctermfg :DarkCyan :bold true}
                    :Todo {:ctermfg :Yellow :bold true}})
 
 (local diagnostic-virtual-text

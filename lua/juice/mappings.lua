@@ -31,7 +31,7 @@ local function setup()
   --[[ "---- JOURNAL ----" ]]
   if vim.env.JOURNAL then
     local function _4_()
-      return vim.cmd((":$tabnew" .. "$JOURNAL/journal.adoc"))
+      return vim.cmd((":$tabnew" .. "$JOURNAL/journal.md"))
     end
     local function _5_()
       return vim.cmd((":$tabnew" .. "$JOURNAL/linux/vim.adoc"))

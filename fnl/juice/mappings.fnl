@@ -147,7 +147,7 @@
   (when vim.env.JOURNAL
     (util.set-keys [[:n
                      :<leader>oj
-                     #(vim.cmd (.. ":$tabnew" :$JOURNAL/journal.adoc))
+                     #(vim.cmd (.. ":$tabnew" :$JOURNAL/journal.md))
                      {:desc "open journal in a new tab" :silent true}]
                     [:n
                      :<leader>ov
