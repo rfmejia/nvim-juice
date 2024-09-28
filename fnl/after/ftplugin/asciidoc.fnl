@@ -1,4 +1,5 @@
 (local {: autoload} (require :nfnl.module))
+(local notify (autoload :nfnl.notify))
 (local util (autoload :juice.util))
 
 (util.assoc-in vim.opt {:shiftwidth 2
@@ -49,7 +50,7 @@
   (if (util.executable? :asciidoctor)
       (match (vim.fn.system [:asciidoctor :-o out in])
         ok (vim.fn.system [browser-cmd out])
-        (nil err-msg) (error (.. "Could not run asciidoctor: " err-msg)))))
+        (nil err-msg) (notify.error (.. "Could not run asciidoctor: " err-msg)))))
 
 (when vim.env.BROWSER
   (let [in (vim.fn.expand "%:p")

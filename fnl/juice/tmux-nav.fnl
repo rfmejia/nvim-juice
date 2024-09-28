@@ -1,5 +1,6 @@
 (local {: autoload} (require :nfnl.module))
 (local core (autoload :nfnl.core))
+(local notify (autoload :nfnl.notify))
 (local util (autoload :juice.util))
 
 (local directions {:up [:k :-U] :down [:j :-D] :left [:h :-L] :right [:l :-R]})
@@ -21,7 +22,7 @@
         tmux-cmd [:tmux :-S socket :select-pane pane]]
     (match (vim.fn.system tmux-cmd)
       ok nil
-      (nil err-msg) (print "Could not run `tmux`: " err-msg))))
+      (nil err-msg) (notify.error "Could not run `tmux`: " err-msg))))
 
 (lambda navigate [direction]
   (local current-vim-win (vim.fn.winnr))

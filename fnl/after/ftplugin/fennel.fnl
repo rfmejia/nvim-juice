@@ -1,4 +1,5 @@
 (local {: autoload} (require :nfnl.module))
+(local notify (autoload :nfnl.notify))
 (local util (autoload :juice.util))
 
 (util.assoc-in vim.opt {:shiftwidth 2
@@ -16,8 +17,8 @@
     (if (not modified)
         (match (vim.fn.system fnlfmt-cmd)
           _ (vim.cmd :e!)
-          (nil err-msg) (print "Could not run `fnlfmt`: " err-msg))
-        (error "fnlfmt: cannot format a modified buffer"))))
+          (nil err-msg) (notify.error "Could not run `fnlfmt`: " err-msg))
+        (notify.error "fnlfmt: cannot format a modified buffer"))))
 
 (vim.keymap.set :n :<localleader>cf #(format-fennel (vim.fn.expand "%:p"))
                 {:desc "(c)ode (f)ormat"})
