@@ -2,14 +2,15 @@
 (local core (autoload :nfnl.core))
 (local str (autoload :nfnl.string))
 
-(local cterm-opts {:Comment {:ctermfg :DarkGray :italic true}
+(local cterm-opts {:Comment {:ctermfg :Gray :italic true}
                    :Constant {:ctermfg :Green}
                    :CursorLineNr {:ctermfg :White}
-                   [:Delimiter :Operator :Special :Statement] {:ctermfg :Gray}
-                   [:LineNrAbove :LineNrBelow] {:ctermfg :DarkGray}
+                   [:Delimiter :Operator :Special :Statement] {:ctermfg :White}
+                   [:LineNrAbove :LineNrBelow] {:ctermfg :Gray}
                    [:NonText :WinSeparator] {:ctermfg :Black}
                    :Title {:ctermfg :DarkCyan :bold true}
-                   :Todo {:ctermfg :Yellow :bold true}})
+                   :Todo {:ctermfg :Yellow :bold true}
+                   :WinSeparator {:ctermfg :DarkGray}})
 
 (local diagnostic-virtual-text
        {:DiagnosticVirtualTextError {:ctermfg :DarkRed :italic true}
@@ -18,7 +19,7 @@
         :DiagnosticVirtualTextOk {:ctermfg :DarkGreen :italic true}
         :DiagnosticVirtualTextWarn {:ctermfg :DarkYellow :italic true}})
 
-(local statusline {:StatusLine {:ctermfg :DarkGray :ctermbg :NONE}
+(local statusline {:StatusLine {:ctermfg :Gray :ctermbg :NONE}
                    :StatusLineError {:ctermfg :DarkRed}
                    :StatusLineInfo {:ctermfg :DarkCyan}
                    :StatusLineWarn {:ctermfg :DarkYellow}})

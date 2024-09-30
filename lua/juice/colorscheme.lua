@@ -3,12 +3,12 @@ local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local core = autoload("nfnl.core")
 local str = autoload("nfnl.string")
-local cterm_opts = {Comment = {ctermfg = "DarkGray", italic = true}, Constant = {ctermfg = "Green"}, CursorLineNr = {ctermfg = "White"}, [{"Delimiter", "Operator", "Special", "Statement"}] = {ctermfg = "Gray"}, [{"LineNrAbove", "LineNrBelow"}] = {ctermfg = "DarkGray"}, [{"NonText", "WinSeparator"}] = {ctermfg = "Black"}, Title = {ctermfg = "DarkCyan", bold = true}, Todo = {ctermfg = "Yellow", bold = true}}
+local cterm_opts = {Comment = {ctermfg = "Gray", italic = true}, Constant = {ctermfg = "Green"}, CursorLineNr = {ctermfg = "White"}, [{"Delimiter", "Operator", "Special", "Statement"}] = {ctermfg = "White"}, [{"LineNrAbove", "LineNrBelow"}] = {ctermfg = "Gray"}, [{"NonText", "WinSeparator"}] = {ctermfg = "Black"}, Title = {ctermfg = "DarkCyan", bold = true}, Todo = {ctermfg = "Yellow", bold = true}, WinSeparator = {ctermfg = "DarkGray"}}
 local diagnostic_virtual_text = {DiagnosticVirtualTextError = {ctermfg = "DarkRed", italic = true}, DiagnosticVirtualTextHint = {ctermfg = "DarkBlue", italic = true}, DiagnosticVirtualTextInfo = {ctermfg = "DarkCyan", italic = true}, DiagnosticVirtualTextOk = {ctermfg = "DarkGreen", italic = true}, DiagnosticVirtualTextWarn = {ctermfg = "DarkYellow", italic = true}}
-local statusline = {StatusLine = {ctermfg = "DarkGray", ctermbg = "NONE"}, StatusLineError = {ctermfg = "DarkRed"}, StatusLineInfo = {ctermfg = "DarkCyan"}, StatusLineWarn = {ctermfg = "DarkYellow"}}
+local statusline = {StatusLine = {ctermfg = "Gray", ctermbg = "NONE"}, StatusLineError = {ctermfg = "DarkRed"}, StatusLineInfo = {ctermfg = "DarkCyan"}, StatusLineWarn = {ctermfg = "DarkYellow"}}
 local telescope = {TelescopeSelection = {ctermfg = "White"}, TelescopeNormal = {ctermfg = "Gray"}}
 local function set_hl(hi_options)
-  _G.assert((nil ~= hi_options), "Missing argument hi-options on /home/rfmejia/.config/nvim/fnl/juice/colorscheme.fnl:29")
+  _G.assert((nil ~= hi_options), "Missing argument hi-options on /home/rfmejia/.config/nvim/fnl/juice/colorscheme.fnl:30")
   for hi_group, opts in pairs(hi_options) do
     if core["sequential?"](hi_group) then
       for _, sub_group in ipairs(hi_group) do
