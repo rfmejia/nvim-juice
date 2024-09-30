@@ -3,12 +3,12 @@ local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local core = autoload("nfnl.core")
 local str = autoload("nfnl.string")
-local cterm_opts = {Comment = {ctermfg = "Gray", italic = true}, Constant = {ctermfg = "Green"}, CursorLineNr = {ctermfg = "White"}, [{"Delimiter", "Operator", "Special", "Statement"}] = {ctermfg = "White"}, [{"LineNrAbove", "LineNrBelow"}] = {ctermfg = "Gray"}, [{"NonText", "WinSeparator"}] = {ctermfg = "Black"}, Title = {ctermfg = "DarkCyan", bold = true}, Todo = {ctermfg = "Yellow", bold = true}, WinSeparator = {ctermfg = "DarkGray"}}
-local diagnostic_virtual_text = {DiagnosticVirtualTextError = {ctermfg = "DarkRed", italic = true}, DiagnosticVirtualTextHint = {ctermfg = "DarkBlue", italic = true}, DiagnosticVirtualTextInfo = {ctermfg = "DarkCyan", italic = true}, DiagnosticVirtualTextOk = {ctermfg = "DarkGreen", italic = true}, DiagnosticVirtualTextWarn = {ctermfg = "DarkYellow", italic = true}}
-local statusline = {StatusLine = {ctermfg = "Gray", ctermbg = "NONE"}, StatusLineError = {ctermfg = "DarkRed"}, StatusLineInfo = {ctermfg = "DarkCyan"}, StatusLineWarn = {ctermfg = "DarkYellow"}}
-local telescope = {TelescopeSelection = {ctermfg = "White"}, TelescopeNormal = {ctermfg = "Gray"}}
+local general = {Comment = {fg = "Gray", ctermfg = "Gray", italic = true}, Constant = {fg = "Green"}, CursorLine = {bg = "NONE"}, [{"Delimiter", "Operator", "Special", "Statement"}] = {fg = "White"}, [{"LineNrAbove", "LineNrBelow"}] = {fg = "Gray"}, NonText = {fg = "Black"}, Normal = {bg = "NONE"}, Title = {fg = "DarkCyan", bold = true}, Todo = {fg = "Yellow", bold = true}, WinSeparator = {fg = "Gray"}}
+local diagnostic_virtual_text = {DiagnosticVirtualTextError = {fg = "DarkRed", italic = true}, DiagnosticVirtualTextHint = {fg = "DarkBlue", italic = true}, DiagnosticVirtualTextInfo = {fg = "DarkCyan", italic = true}, DiagnosticVirtualTextOk = {fg = "DarkGreen", italic = true}, DiagnosticVirtualTextWarn = {fg = "DarkYellow", italic = true}}
+local statusline = {StatusLine = {fg = "Gray", bg = "NONE"}, StatusLineError = {fg = "DarkRed"}, StatusLineInfo = {fg = "DarkCyan"}, StatusLineWarn = {fg = "DarkYellow"}}
+local telescope = {TelescopeSelection = {fg = "White"}, TelescopeNormal = {fg = "Gray"}}
 local function set_hl(hi_options)
-  _G.assert((nil ~= hi_options), "Missing argument hi-options on /home/rfmejia/.config/nvim/fnl/juice/colorscheme.fnl:30")
+  _G.assert((nil ~= hi_options), "Missing argument hi-options on /home/rfmejia/.config/nvim/fnl/juice/colorscheme.fnl:31")
   for hi_group, opts in pairs(hi_options) do
     if core["sequential?"](hi_group) then
       for _, sub_group in ipairs(hi_group) do
@@ -23,7 +23,6 @@ local function set_hl(hi_options)
 end
 local function setup()
   vim.cmd.colorscheme("default")
-  vim.cmd("set notermguicolors")
-  return core.map(set_hl, {cterm_opts, diagnostic_virtual_text, statusline, telescope})
+  return core.map(set_hl, {general, diagnostic_virtual_text, statusline, telescope})
 end
 return {setup = setup}
