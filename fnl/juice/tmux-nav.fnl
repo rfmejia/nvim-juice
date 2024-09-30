@@ -30,7 +30,7 @@
   (when (= current-vim-win (vim.fn.winnr))
     (tmux-navigate direction)))
 
-(lambda setup-default-mapping [in-tmux?]
+(fn setup-default-mapping [in-tmux?]
   (let [nav-keys {:left :<M-h> :right :<M-l> :up :<M-k> :down :<M-j>}
         options {:left {:desc "jump to the left window"
                         :noremap true

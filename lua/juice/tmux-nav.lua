@@ -80,7 +80,6 @@ local function navigate(direction)
   end
 end
 local function setup_default_mapping(in_tmux_3f)
-  _G.assert((nil ~= in_tmux_3f), "Missing argument in-tmux? on /home/rfmejia/.config/nvim/fnl/juice/tmux-nav.fnl:33")
   local nav_keys = {left = "<M-h>", right = "<M-l>", up = "<M-k>", down = "<M-j>"}
   local options = {left = {desc = "jump to the left window", noremap = true, silent = true}, right = {desc = "jump to the right window", noremap = true, silent = true}, up = {desc = "jump to the window above", noremap = true, silent = true}, down = {desc = "jump to the window below", noremap = true, silent = true}}
   local vim_keys = {left = "<C-w>h", right = "<C-w>l", up = "<C-w>k", down = "<C-w>l"}
