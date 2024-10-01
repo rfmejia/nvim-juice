@@ -3,7 +3,7 @@ local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local core = autoload("nfnl.core")
 local str = autoload("nfnl.string")
-local general = {Comment = {fg = "Gray", ctermfg = "Gray", italic = true}, Constant = {fg = "Green"}, CursorLine = {bg = "NONE"}, [{"Delimiter", "Operator", "Special", "Statement"}] = {fg = "White"}, [{"LineNrAbove", "LineNrBelow"}] = {fg = "Gray"}, NonText = {fg = "Black"}, Normal = {bg = "NONE"}, Title = {fg = "DarkCyan", bold = true}, Todo = {fg = "Yellow", bold = true}, WinSeparator = {fg = "Gray"}}
+local general = {Comment = {fg = "Gray", ctermfg = "Gray", italic = true}, Constant = {fg = "Green"}, CursorLine = {bg = "NONE"}, [{"Delimiter", "Operator", "Special", "Statement"}] = {fg = "Gray"}, [{"LineNrAbove", "LineNrBelow"}] = {fg = "Gray"}, NonText = {fg = "Black"}, Normal = {bg = "NONE"}, Title = {fg = "DarkCyan", bold = true}, Todo = {fg = "Yellow", bold = true}, WinSeparator = {fg = "Gray"}}
 local diagnostic_virtual_text = {DiagnosticVirtualTextError = {fg = "DarkRed", italic = true}, DiagnosticVirtualTextHint = {fg = "DarkBlue", italic = true}, DiagnosticVirtualTextInfo = {fg = "DarkCyan", italic = true}, DiagnosticVirtualTextOk = {fg = "DarkGreen", italic = true}, DiagnosticVirtualTextWarn = {fg = "DarkYellow", italic = true}}
 local statusline = {StatusLine = {fg = "Gray", bg = "NONE"}, StatusLineError = {fg = "DarkRed"}, StatusLineInfo = {fg = "DarkCyan"}, StatusLineWarn = {fg = "DarkYellow"}}
 local telescope = {TelescopeSelection = {fg = "White"}, TelescopeNormal = {fg = "Gray"}}

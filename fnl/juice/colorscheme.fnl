@@ -5,7 +5,7 @@
 (local general {:Comment {:fg :Gray :ctermfg :Gray :italic true}
                 :Constant {:fg :Green}
                 :CursorLine {:bg :NONE}
-                [:Delimiter :Operator :Special :Statement] {:fg :White}
+                [:Delimiter :Operator :Special :Statement] {:fg :Gray}
                 [:LineNrAbove :LineNrBelow] {:fg :Gray}
                 :NonText {:fg :Black}
                 :Normal {:bg :NONE}
