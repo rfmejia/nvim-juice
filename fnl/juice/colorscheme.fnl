@@ -9,6 +9,7 @@
                 [:LineNrAbove :LineNrBelow] {:fg :Gray}
                 :NonText {:fg :Black}
                 :Normal {:bg :NONE}
+                :SpellBad {:fg :NvimLightRed :undercurl true}
                 :Title {:fg :DarkCyan :bold true}
                 :Todo {:fg :Yellow :bold true}
                 :WinSeparator {:fg :Gray}})
