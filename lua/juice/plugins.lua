@@ -31,7 +31,7 @@ do
   local function _6_()
     return util["assoc-in"](vim.g, {["conjure#result#register"] = "*", ["conjure#mapping#doc_word"] = "gk", ["conjure#log#botright"] = true})
   end
-  lisp_tools = {{"Olical/conjure", ft = languages, config = _6_}, {"julienvincent/nvim-paredit", ft = languages, opts = {use_default_keys = true, indent = {enabled = true}}}, {"julienvincent/nvim-paredit-fennel", ft = "fennel", config = true, dependencies = "julienvincent/nvim-paredit"}}
+  lisp_tools = {{"Olical/conjure", ft = languages, config = _6_}, {"julienvincent/nvim-paredit", ft = languages, opts = {use_default_keys = true, indent = {enabled = true}}}}
 end
 local editing_tools
 local function _7_()

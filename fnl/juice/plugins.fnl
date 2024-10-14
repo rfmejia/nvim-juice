@@ -59,11 +59,7 @@
                                     "conjure#log#botright" true})}
           {1 :julienvincent/nvim-paredit
            :ft languages
-           :opts {:use_default_keys true :indent {:enabled true}}}
-          {1 :julienvincent/nvim-paredit-fennel
-           :ft :fennel
-           :config true
-           :dependencies :julienvincent/nvim-paredit}]))
+           :opts {:use_default_keys true :indent {:enabled true}}}]))
 
 (local editing-tools
        [{1 :kylechui/nvim-surround :keys [:cs :ds :ys] :config true}
