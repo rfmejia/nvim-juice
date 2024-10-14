@@ -106,16 +106,7 @@
                    :event [:BufReadPre :BufNewFile]
                    :config #(let [gitsigns (autoload :gitsigns)]
                               (gitsigns.setup)
-                              (mappings.gitsigns-maps))}
-                  {1 :NeogitOrg/neogit
-                   :cmd :Neogit
-                   :keys :<leader>og
-                   :dependencies [{1 :nvim-lua/plenary.nvim}
-                                  {1 :sindrets/diffview.nvim}
-                                  {1 :nvim-telescope/telescope.nvim}]
-                   :config #(let [neogit (autoload :neogit)]
-                              (neogit.setup)
-                              (mappings.neogit-maps))}])
+                              (mappings.gitsigns-maps))}])
 
 (fn setup []
   (let [lazy (autoload :lazy)

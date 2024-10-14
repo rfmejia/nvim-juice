@@ -59,12 +59,7 @@ local function _10_()
   gitsigns.setup()
   return mappings["gitsigns-maps"]()
 end
-local function _11_()
-  local neogit = autoload("neogit")
-  neogit.setup()
-  return mappings["neogit-maps"]()
-end
-git_tools = {{"lewis6991/gitsigns.nvim", event = {"BufReadPre", "BufNewFile"}, config = _10_}, {"NeogitOrg/neogit", cmd = "Neogit", keys = "<leader>og", dependencies = {{"nvim-lua/plenary.nvim"}, {"sindrets/diffview.nvim"}, {"nvim-telescope/telescope.nvim"}}, config = _11_}}
+git_tools = {{"lewis6991/gitsigns.nvim", event = {"BufReadPre", "BufNewFile"}, config = _10_}}
 local function setup()
   local lazy = autoload("lazy")
   local plugins = core.concat(core_tools, database_tools, dev_tools, editing_tools, file_tools, git_tools, lisp_tools)

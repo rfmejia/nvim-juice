@@ -86,8 +86,4 @@ local function gitsigns_maps()
   local mappings = core.concat(nav, staging, blame, view, list)
   return util["set-keys"](mappings)
 end
-local function neogit_maps()
-  local neogit = autoload("neogit")
-  return vim.keymap.set("n", "<leader>og", neogit.open, {desc = "(neogit) (o)pen neo(g)it"})
-end
-return {setup = setup, ["oil-maps"] = oil_maps, ["telescope-maps"] = telescope_maps, ["gitsigns-maps"] = gitsigns_maps, ["neogit-maps"] = neogit_maps}
+return {setup = setup, ["oil-maps"] = oil_maps, ["telescope-maps"] = telescope_maps, ["gitsigns-maps"] = gitsigns_maps}

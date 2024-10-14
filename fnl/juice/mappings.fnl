@@ -246,9 +246,4 @@
         mappings (core.concat nav staging blame view list)]
     (util.set-keys mappings)))
 
-(fn neogit-maps []
-  (let [neogit (autoload :neogit)]
-    (vim.keymap.set :n :<leader>og neogit.open
-                    {:desc "(neogit) (o)pen neo(g)it"})))
-
-{: setup : oil-maps : telescope-maps : gitsigns-maps : neogit-maps}
+{: setup : oil-maps : telescope-maps : gitsigns-maps}
