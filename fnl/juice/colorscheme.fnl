@@ -12,6 +12,7 @@
                 :SpellBad {:fg :NvimLightRed :undercurl true}
                 :Title {:fg :DarkCyan :bold true}
                 :Todo {:fg :Yellow :bold true}
+                :Visual {:reverse true}
                 :WinSeparator {:fg :Gray}})
 
 (local diagnostic-virtual-text
