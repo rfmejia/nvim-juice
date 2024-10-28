@@ -41,8 +41,9 @@
                   buf-errors
                   warn-color
                   buf-warnings
-                  default-color
+                  info-color
                   git-branch
+                  default-color
                   " "
                   ruler]
         statusline (str.join template)]

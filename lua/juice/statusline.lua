@@ -33,7 +33,7 @@ local function build(widgets)
   local info_color = "%#StatusLineInfo#"
   local error_color = "%#StatusLineError#"
   local warn_color = "%#StatusLineWarn#"
-  local template = {filename, buffer_modified_flags, info_color, git_status, default_color, buffer_type_flags, align_right, info_color, widget_str, error_color, buf_errors, warn_color, buf_warnings, default_color, git_branch, " ", ruler}
+  local template = {filename, buffer_modified_flags, info_color, git_status, default_color, buffer_type_flags, align_right, info_color, widget_str, error_color, buf_errors, warn_color, buf_warnings, info_color, git_branch, default_color, " ", ruler}
   local statusline = str.join(template)
   return statusline
 end

@@ -2,7 +2,6 @@
 require("juice.bootstrap").setup()
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
-local core = autoload("nfnl.core")
 local statusline = autoload("juice.statusline")
 local util = autoload("juice.util")
 --[[ "---- GENERAL OPTIONS ----" ]]
@@ -35,4 +34,4 @@ vim.api.nvim_create_autocmd({"WinEnter", "VimEnter"}, {group = "highlight-group"
 vim.api.nvim_create_augroup("terminal-group", {})
 --[[ "remove signcolumn in terminal mode" ]]
 vim.api.nvim_create_autocmd("TermOpen", {group = "terminal-group", pattern = "*", command = "set signcolumn=no"})
-return util["auto-setup"]("juice.colorscheme", "juice.plugins", "juice.mappings", "juice.git", "juice.tmux-nav", "juice.whitespace")
+return util["auto-setup"]("juice.colorscheme", "juice.plugins", "juice.mappings", "git-info", "tmux-nav", "juice.whitespace")

@@ -3,7 +3,6 @@
      (. :setup)))
 
 (local {: autoload} (require :nfnl.module))
-(local core (autoload :nfnl.core))
 (local statusline (autoload :juice.statusline))
 (local util (autoload :juice.util))
 
@@ -119,5 +118,5 @@
                               :pattern "*"
                               :command "set signcolumn=no"})
 
-(util.auto-setup :juice.colorscheme :juice.plugins :juice.mappings :juice.git
-                 :juice.tmux-nav :juice.whitespace)
+(util.auto-setup :juice.colorscheme :juice.plugins :juice.mappings
+                  :git-info :tmux-nav :juice.whitespace)
