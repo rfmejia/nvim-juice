@@ -17,13 +17,13 @@ end
 local function insert_yaml_metadata()
   local filename = vim.fn.expand("%:t:r")
   local now = vim.fn.strftime("%FT%T%z", vim.fn.localtime())
-  return insert_lines("---", "title: ", filename, "created: ", now, "tags: []", "---")
+  return insert_lines("---", ("title: " .. filename), ("created: " .. now), "tags: []", "---", "")
 end
 local function insert_week()
   local function find_day(dir, day, new_time)
-    _G.assert((nil ~= new_time), "Missing argument new-time on /home/rfmejia/.config/nvim/fnl/after/ftplugin/markdown.fnl:30")
-    _G.assert((nil ~= day), "Missing argument day on /home/rfmejia/.config/nvim/fnl/after/ftplugin/markdown.fnl:30")
-    _G.assert((nil ~= dir), "Missing argument dir on /home/rfmejia/.config/nvim/fnl/after/ftplugin/markdown.fnl:30")
+    _G.assert((nil ~= new_time), "Missing argument new-time on /home/rfmejia/.config/nvim/fnl/after/ftplugin/markdown.fnl:31")
+    _G.assert((nil ~= day), "Missing argument day on /home/rfmejia/.config/nvim/fnl/after/ftplugin/markdown.fnl:31")
+    _G.assert((nil ~= dir), "Missing argument dir on /home/rfmejia/.config/nvim/fnl/after/ftplugin/markdown.fnl:31")
     local new_day = vim.fn.strftime("%a", new_time)
     local secs_in_a_day = (60 * 60 * 24)
     if (day == new_day) then
@@ -48,7 +48,7 @@ end
 local function insert_day()
   local curr_day = vim.fn.strftime("%a, %d %b %Y")
   local text = ("### " .. curr_day)
-  return insert_lines(text, "")
+  return insert_lines(text)
 end
 local function insert_time()
   local curr_time = vim.fn.strftime("%H:%M")

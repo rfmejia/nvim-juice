@@ -10,6 +10,7 @@
          ":<C-r>\""
          {:desc "paste register 0 contents in command mode"}]
         [:n :<leader>w ":w<cr>" {:desc "write buffer" :silent true}]
+        [:n :<leader>m ":messages<cr>" {:desc "show messages"}]
         [:n :<leader>n ":registers<cr>" {:desc "list registers"}]
         [:n :<F5> ":make<cr>" {:desc "trigger `make` in shell"}]
         [:n

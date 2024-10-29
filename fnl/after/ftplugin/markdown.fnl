@@ -24,7 +24,8 @@
 (fn insert-yaml-metadata []
   (let [filename (vim.fn.expand "%:t:r")
         now (vim.fn.strftime "%FT%T%z" (vim.fn.localtime))]
-    (insert-lines "---" "title: " filename "created: " now "tags: []" "---")))
+    (insert-lines "---" (.. "title: " filename) (.. "created: " now) "tags: []"
+                  "---" "")))
 
 (lambda insert-week []
   (lambda find-day [dir day new-time]
@@ -43,7 +44,7 @@
 (lambda insert-day []
   (let [curr-day (vim.fn.strftime "%a, %d %b %Y")
         text (.. "### " curr-day)]
-    (insert-lines text "")))
+    (insert-lines text)))
 
 (lambda insert-time []
   (let [curr-time (vim.fn.strftime "%H:%M")
