@@ -161,24 +161,34 @@
                    ":UndotreeToggle<cr>"
                    {:desc "(undotree) toggle" :silent true}]]))
 
-(fn oil-maps []
+(fn set-oil-maps []
   (let [oil (autoload :oil)]
-    (vim.keymap.set :n :<leader>e #(oil.open)
-                    {:desc "(oil) explore files in current file's path"
-                     :silent true})))
+    (util.set-keys [[:n
+                     :<leader>e
+                     #(oil.open)
+                     {:desc "(oil) explore files in current file's path"
+                      :silent true}]])))
 
-(fn telescope-maps []
-  (let [builtin (autoload :telescope.builtin)
-        maps [[:n :<leader>f builtin.find_files {:desc "(telescope) (f)iles"}]
-              [:n :<leader>p builtin.oldfiles {:desc "(telescope) oldfiles"}]
-              [:n
-               :<leader>g
-               builtin.git_files
-               {:desc "(telescope) (g)it files"}]
-              [:n :<leader>k builtin.keymaps {:desc "(telescope) (k)eymaps"}]]]
-    (util.set-keys maps)))
+(fn set-telescope-maps []
+  (let [builtin (autoload :telescope.builtin)]
+    (util.set-keys [[:n
+                     :<leader>f
+                     builtin.find_files
+                     {:desc "(telescope) (f)iles"}]
+                    [:n
+                     :<leader>p
+                     builtin.oldfiles
+                     {:desc "(telescope) oldfiles"}]
+                    [:n
+                     :<leader>g
+                     builtin.git_files
+                     {:desc "(telescope) (g)it files"}]
+                    [:n
+                     :<leader>k
+                     builtin.keymaps
+                     {:desc "(telescope) (k)eymaps"}]])))
 
-(fn gitsigns-maps []
+(fn set-gitsigns-maps []
   (let [gitsigns (autoload :gitsigns)
         nav [[:n
               "]g"
@@ -243,8 +253,37 @@
               [:n
                :<localleader>gc
                #(gitsigns.setqflist :all)
-               {:desc "(gitsigns) show all (g)it hunks in qui(c)kfix list"}]]
-        mappings (core.concat nav staging blame view list)]
-    (util.set-keys mappings)))
+               {:desc "(gitsigns) show all (g)it hunks in qui(c)kfix list"}]]]
+    (util.set-keys (core.concat nav staging blame view list))))
 
-{: setup : oil-maps : telescope-maps : gitsigns-maps}
+(fn set-dadbod-maps []
+  (util.set-keys [[:n
+                   "<localleader>d;"
+                   ":DB g:db "
+                   {:desc "run an sql statement in command mode"
+                    :noremap true
+                    :buffer (vim.api.nvim_get_current_buf)}]
+                  [:n
+                   :<localleader>dd
+                   ":.DB g:db<cr>"
+                   {:desc "run line as an sql statement"
+                    :noremap true
+                    :buffer (vim.api.nvim_get_current_buf)}]
+                  [:n
+                   :<localleader>dp
+                   "vip:DB g:db<cr>"
+                   {:desc "run paragraph as an sql statement"
+                    :noremap true
+                    :buffer (vim.api.nvim_get_current_buf)}]
+                  [:n
+                   :<localleader>db
+                   ":%DB g:db<cr>"
+                   {:desc "run buffer as sql statements"
+                    :noremap true
+                    :buffer (vim.api.nvim_get_current_buf)}]]))
+
+{: setup
+ : set-oil-maps
+ : set-telescope-maps
+ : set-gitsigns-maps
+ : set-dadbod-maps}

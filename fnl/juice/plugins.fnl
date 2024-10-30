@@ -29,18 +29,17 @@
                                ;; we need to call `nvim-treesitter.configs.setup`
                                (ts.setup config))}])
 
-(local database-tools
-       [{1 :kristijanhusak/vim-dadbod-ui
-         :cmd [:DBUI :DBUIToggle]
-         :config #(vim.api.nvim_create_autocmd :FileType
-                                               {:pattern [:sql :mysql]
-                                                :callback #(util.assoc-in vim.opt
-                                                                          {:commentstring "-- %s"
-                                                                           :omnifunc "vim_dadbod_completion#omni"})})
-         :dependencies [{1 :tpope/vim-dadbod :lazy true}
-                        {1 :kristijanhusak/vim-dadbod-completion
-                         :lazy true
-                         :ft [:sql :mysql]}]}])
+(local database-tools [{1 :tpope/vim-dadbod
+                        :cmd :DB
+                        :config #(vim.api.nvim_create_autocmd :FileType
+                                                              {:pattern [:sql
+                                                                         :mysql]
+                                                               :callback (fn []
+                                                                           (mappings.set-dadbod-maps)
+                                                                           (set vim.opt.omnifunc
+                                                                                "vim_dadbod_completion#omni"))})
+                        :dependencies [{1 :kristijanhusak/vim-dadbod-completion
+                                        :lazy true}]}])
 
 (local dev-tools [{1 :neovim/nvim-lspconfig
                    :ft [:clojure :java :go :scala]
@@ -72,41 +71,42 @@
                                  {:undotree_WindowLayout 4
                                   :undotree_SetFocusWhenToggle 1})}])
 
-(local file-tools [{1 :stevearc/oil.nvim
-                    :cmd :Oil
-                    :keys :<leader>e
-                    :config #(let [oil (autoload :oil)
-                                   opts {:default_file_explorer true
-                                         :delete_to_trash true
-                                         :skip_confirm_for_simple_edits true
-                                         :view_options {:show_hidden true}}]
-                               (oil.setup opts)
-                               (mappings.oil-maps))}
-                   {1 :nvim-telescope/telescope.nvim
-                    :tag :0.1.6
-                    :keys [:<leader>f :<leader>p :<leader>g :<leader>k]
-                    :cmd :Telescope
-                    :dependencies [:nvim-lua/plenary.nvim]
-                    :config #(let [telescope (autoload :telescope)
-                                   actions (autoload :telescope.actions)
-                                   opts {:defaults {:border false
-                                                    :layout_config {:prompt_position :bottom
-                                                                    :height 0.4}
-                                                    :layout_strategy :bottom_pane
-                                                    :mappings {:i {:<esc> actions.close
-                                                                   :<C-u> false}}
-                                                    :path_display {1 :truncate}
-                                                    :preview false
-                                                    :prompt_prefix "/"
-                                                    :prompt_title :test}}]
-                               (telescope.setup opts)
-                               (mappings.telescope-maps))}])
+(local file-tools
+       [{1 :stevearc/oil.nvim
+         :cmd :Oil
+         :keys :<leader>e
+         :config #(let [oil (autoload :oil)
+                        opts {:default_file_explorer true
+                              :delete_to_trash true
+                              :skip_confirm_for_simple_edits true
+                              :view_options {:show_hidden true}}]
+                    (oil.setup opts)
+                    (mappings.set-oil-maps))}
+        {1 :nvim-telescope/telescope.nvim
+         :tag :0.1.6
+         :keys [:<leader>f :<leader>p :<leader>g :<leader>k]
+         :cmd :Telescope
+         :dependencies [:nvim-lua/plenary.nvim]
+         :config #(let [telescope (autoload :telescope)
+                        actions (autoload :telescope.actions)
+                        opts {:defaults {:border false
+                                         :layout_config {:prompt_position :bottom
+                                                         :height 0.4}
+                                         :layout_strategy :bottom_pane
+                                         :mappings {:i {:<esc> actions.close
+                                                        :<C-u> false}}
+                                         :path_display {1 :truncate}
+                                         :preview false
+                                         :prompt_prefix "/"
+                                         :prompt_title :test}}]
+                    (telescope.setup opts)
+                    (mappings.set-telescope-maps))}])
 
 (local git-tools [{1 :lewis6991/gitsigns.nvim
                    :event [:BufReadPre :BufNewFile]
                    :config #(let [gitsigns (autoload :gitsigns)]
                               (gitsigns.setup)
-                              (mappings.gitsigns-maps))}])
+                              (mappings.set-gitsigns-maps))}])
 
 (fn setup []
   (let [lazy (autoload :lazy)

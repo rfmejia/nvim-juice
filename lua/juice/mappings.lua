@@ -42,19 +42,18 @@ local function setup()
   --[[ "---- PLUGINS ----" ]]
   return util["set-keys"]({{"n", "<leader>L", ":Lazy<cr>", {silent = true}}, {"n", "<leader>u", ":UndotreeToggle<cr>", {desc = "(undotree) toggle", silent = true}}})
 end
-local function oil_maps()
+local function set_oil_maps()
   local oil = autoload("oil")
   local function _7_()
     return oil.open()
   end
-  return vim.keymap.set("n", "<leader>e", _7_, {desc = "(oil) explore files in current file's path", silent = true})
+  return util["set-keys"]({{"n", "<leader>e", _7_, {desc = "(oil) explore files in current file's path", silent = true}}})
 end
-local function telescope_maps()
+local function set_telescope_maps()
   local builtin = autoload("telescope.builtin")
-  local maps = {{"n", "<leader>f", builtin.find_files, {desc = "(telescope) (f)iles"}}, {"n", "<leader>p", builtin.oldfiles, {desc = "(telescope) oldfiles"}}, {"n", "<leader>g", builtin.git_files, {desc = "(telescope) (g)it files"}}, {"n", "<leader>k", builtin.keymaps, {desc = "(telescope) (k)eymaps"}}}
-  return util["set-keys"](maps)
+  return util["set-keys"]({{"n", "<leader>f", builtin.find_files, {desc = "(telescope) (f)iles"}}, {"n", "<leader>p", builtin.oldfiles, {desc = "(telescope) oldfiles"}}, {"n", "<leader>g", builtin.git_files, {desc = "(telescope) (g)it files"}}, {"n", "<leader>k", builtin.keymaps, {desc = "(telescope) (k)eymaps"}}})
 end
-local function gitsigns_maps()
+local function set_gitsigns_maps()
   local gitsigns = autoload("gitsigns")
   local nav
   local function _8_()
@@ -83,7 +82,9 @@ local function gitsigns_maps()
     return gitsigns.setqflist("all")
   end
   list = {{"n", "<localleader>gl", gitsigns.setloclist, {desc = "(gitsigns) show buffer (g)it hunks in (l)oclist"}}, {"n", "<localleader>gc", _13_, {desc = "(gitsigns) show all (g)it hunks in qui(c)kfix list"}}}
-  local mappings = core.concat(nav, staging, blame, view, list)
-  return util["set-keys"](mappings)
+  return util["set-keys"](core.concat(nav, staging, blame, view, list))
 end
-return {setup = setup, ["oil-maps"] = oil_maps, ["telescope-maps"] = telescope_maps, ["gitsigns-maps"] = gitsigns_maps}
+local function set_dadbod_maps()
+  return util["set-keys"]({{"n", "<localleader>d;", ":DB g:db ", {desc = "run an sql statement in command mode", noremap = true, buffer = vim.api.nvim_get_current_buf()}}, {"n", "<localleader>dd", ":.DB g:db<cr>", {desc = "run line as an sql statement", noremap = true, buffer = vim.api.nvim_get_current_buf()}}, {"n", "<localleader>dp", "vip:DB g:db<cr>", {desc = "run paragraph as an sql statement", noremap = true, buffer = vim.api.nvim_get_current_buf()}}, {"n", "<localleader>db", ":%DB g:db<cr>", {desc = "run buffer as sql statements", noremap = true, buffer = vim.api.nvim_get_current_buf()}}})
+end
+return {setup = setup, ["set-oil-maps"] = set_oil_maps, ["set-telescope-maps"] = set_telescope_maps, ["set-gitsigns-maps"] = set_gitsigns_maps, ["set-dadbod-maps"] = set_dadbod_maps}
