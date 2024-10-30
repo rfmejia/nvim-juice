@@ -148,11 +148,15 @@
   (when vim.env.JOURNAL
     (util.set-keys [[:n
                      :<leader>oj
-                     #(vim.cmd (.. ":$tabnew" :$JOURNAL/journal.md))
+                     (fn []
+                       ((. (autoload :journal-tools) :load-journal-tools))
+                       (vim.cmd (.. ":$tabnew" :$JOURNAL/journal.md)))
                      {:desc "open journal in a new tab" :silent true}]
                     [:n
                      :<leader>ov
-                     #(vim.cmd (.. ":$tabnew" :$JOURNAL/linux/vim.adoc))
+                     (fn []
+                       ((. (autoload :journal-tools) :load-journal-tools))
+                       (vim.cmd (.. ":$tabnew" :$JOURNAL/linux/vim.adoc)))
                      {:desc "open vim notes in a new tab" :silent true}]]))
   (comment "---- PLUGINS ----")
   (util.set-keys [[:n :<leader>L ":Lazy<cr>" {:silent true}]
@@ -166,7 +170,7 @@
     (util.set-keys [[:n
                      :<leader>e
                      #(oil.open)
-                     {:desc "(oil) explore files in current file's path"
+                     {:desc "[oil] explore files in current file's path"
                       :silent true}]])))
 
 (fn set-telescope-maps []
@@ -174,38 +178,38 @@
     (util.set-keys [[:n
                      :<leader>f
                      builtin.find_files
-                     {:desc "(telescope) (f)iles"}]
+                     {:desc "[telescope] (f)iles"}]
                     [:n
                      :<leader>p
                      builtin.oldfiles
-                     {:desc "(telescope) oldfiles"}]
+                     {:desc "[telescope] oldfiles"}]
                     [:n
                      :<leader>g
                      builtin.git_files
-                     {:desc "(telescope) (g)it files"}]
+                     {:desc "[telescope] (g)it files"}]
                     [:n
                      :<leader>k
                      builtin.keymaps
-                     {:desc "(telescope) (k)eymaps"}]])))
+                     {:desc "[telescope] (k)eymaps"}]])))
 
 (fn set-gitsigns-maps []
   (let [gitsigns (autoload :gitsigns)
         nav [[:n
               "]g"
               #(gitsigns.nav_hunk :next {:wrap false :preview true})
-              {:desc "(gitsigns) jump to next git hunk"}]
+              {:desc "[gitsigns] jump to next git hunk"}]
              [:n
               "[g"
               #(gitsigns.nav_hunk :prev {:wrap false :preview true})
-              {:desc "(gitsigns) jump to previous git hunk"}]]
+              {:desc "[gitsigns] jump to previous git hunk"}]]
         staging [[:n
                   :<localleader>gs
                   gitsigns.stage_hunk
-                  {:desc "(gitsigns) (g)it (s)tage hunk"}]
+                  {:desc "[gitsigns] (g)it (s)tage hunk"}]
                  [:n
                   :<localleader>gu
                   gitsigns.undo_stage_hunk
-                  {:desc "(gitsigns) (g)it (u)ndo staged hunk"}]
+                  {:desc "[gitsigns] (g)it (u)ndo staged hunk"}]
                  [:n
                   :<localleader>gr
                   gitsigns.reset_hunk
@@ -213,77 +217,105 @@
                  [:n
                   :<localleader>gS
                   gitsigns.stage_buffer
-                  {:desc "(gitsigns) (g)it (S)tage buffer"}]
+                  {:desc "[gitsigns] (g)it (S)tage buffer"}]
                  [:n
                   :<localleader>gR
                   gitsigns.reset_buffer
-                  {:desc "(gitsigns) (g)it (R)eset buffer"}]
+                  {:desc "[gitsigns] (g)it (R)eset buffer"}]
                  [:v
                   :<localleader>gs
                   #(gitsigns.stage_hunk {(vim.fn.line ".") (vim.fn.line :v)})
-                  {:desc "(gitsigns) (g)it (s)tage hunk"}]
+                  {:desc "[gitsigns] (g)it (s)tage hunk"}]
                  [:v
                   :<localleader>gr
                   #(gitsigns.reset_hunk {(vim.fn.line ".") (vim.fn.line :v)})
-                  {:desc "(gitsigns) (g)it (r)eset hunk"}]]
+                  {:desc "[gitsigns] (g)it (r)eset hunk"}]]
         blame [[:n
                 :<localleader>gb
                 #(gitsigns.blame_line {:full true})
-                {:desc "(gitsigns) (g)it show line (b)lame"}]
+                {:desc "[gitsigns] (g)it show line (b)lame"}]
                [:n
                 :<localleader>gB
                 gitsigns.toggle_current_line_blame
-                {:desc "(gitsigns) (g)it toggle current line (B)lame"}]]
+                {:desc "[gitsigns] (g)it toggle current line (B)lame"}]]
         view [[:n
                :<localleader>gp
                gitsigns.preview_hunk
-               {:desc "(gitsigns) (g)it (p)review hunk"}]
+               {:desc "[gitsigns] (g)it (p)review hunk"}]
               [:n
                :<localleader>gd
                gitsigns.diffthis
-               {:desc "(gitsigns) (g)it show (d)iff"}]
+               {:desc "[gitsigns] (g)it show (d)iff"}]
               [:n
                :<localleader>gD
                gitsigns.toggle_deleted
-               {:desc "(gitsigns) (g)it toggle (D)eleted hunks"}]]
+               {:desc "[gitsigns] (g)it toggle (D)eleted hunks"}]]
         list [[:n
                :<localleader>gl
                gitsigns.setloclist
-               {:desc "(gitsigns) show buffer (g)it hunks in (l)oclist"}]
+               {:desc "[gitsigns] show buffer (g)it hunks in (l)oclist"}]
               [:n
                :<localleader>gc
                #(gitsigns.setqflist :all)
-               {:desc "(gitsigns) show all (g)it hunks in qui(c)kfix list"}]]]
+               {:desc "[gitsigns] show all (g)it hunks in qui(c)kfix list"}]]]
     (util.set-keys (core.concat nav staging blame view list))))
 
 (fn set-dadbod-maps []
   (util.set-keys [[:n
                    "<localleader>d;"
                    ":DB g:db "
-                   {:desc "run an sql statement in command mode"
+                   {:desc "[dadbod] run an sql statement in command mode"
                     :noremap true
                     :buffer (vim.api.nvim_get_current_buf)}]
                   [:n
                    :<localleader>dd
                    ":.DB g:db<cr>"
-                   {:desc "run line as an sql statement"
+                   {:desc "[dadbod] run line as an sql statement"
                     :noremap true
                     :buffer (vim.api.nvim_get_current_buf)}]
                   [:n
                    :<localleader>dp
                    "vip:DB g:db<cr>"
-                   {:desc "run paragraph as an sql statement"
+                   {:desc "[dadbod] run paragraph as an sql statement"
                     :noremap true
                     :buffer (vim.api.nvim_get_current_buf)}]
                   [:n
                    :<localleader>db
                    ":%DB g:db<cr>"
-                   {:desc "run buffer as sql statements"
+                   {:desc "[dadbod] run buffer as sql statements"
                     :noremap true
                     :buffer (vim.api.nvim_get_current_buf)}]]))
+
+(fn set-journal-maps []
+  (let [jtools (autoload :journal-tools)]
+    (util.set-keys [[:n
+                     :<localleader>w
+                     jtools.insert-week
+                     {:desc "[journal] insert current week as an h2 header"
+                      :buffer (vim.api.nvim_get_current_buf)
+                      :silent true}]
+                    [:n
+                     :<localleader>d
+                     jtools.insert-day
+                     {:desc "[journal] insert current date as an h3 header"
+                      :buffer (vim.api.nvim_get_current_buf)
+                      :silent true}]
+                    [:n
+                     :<localleader>t
+                     jtools.insert-time
+                     {:desc "[journal] insert current time as an h4 header"
+                      :buffer (vim.api.nvim_get_current_buf)
+                      :silent true}]
+                    [:n
+                     :<localleader>x
+                     jtools.insert-task
+                     {:desc "[journal] insert current time as an h4 header"
+                      :buffer (vim.api.nvim_get_current_buf)
+                      :silent true}]])))
 
 {: setup
  : set-oil-maps
  : set-telescope-maps
  : set-gitsigns-maps
- : set-dadbod-maps}
+ : set-dadbod-maps
+ : set-journal-maps}

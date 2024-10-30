@@ -31,9 +31,11 @@ local function setup()
   --[[ "---- JOURNAL ----" ]]
   if vim.env.JOURNAL then
     local function _4_()
+      autoload("journal-tools")["load-journal-tools"]()
       return vim.cmd((":$tabnew" .. "$JOURNAL/journal.md"))
     end
     local function _5_()
+      autoload("journal-tools")["load-journal-tools"]()
       return vim.cmd((":$tabnew" .. "$JOURNAL/linux/vim.adoc"))
     end
     util["set-keys"]({{"n", "<leader>oj", _4_, {desc = "open journal in a new tab", silent = true}}, {"n", "<leader>ov", _5_, {desc = "open vim notes in a new tab", silent = true}}})
@@ -47,11 +49,11 @@ local function set_oil_maps()
   local function _7_()
     return oil.open()
   end
-  return util["set-keys"]({{"n", "<leader>e", _7_, {desc = "(oil) explore files in current file's path", silent = true}}})
+  return util["set-keys"]({{"n", "<leader>e", _7_, {desc = "[oil] explore files in current file's path", silent = true}}})
 end
 local function set_telescope_maps()
   local builtin = autoload("telescope.builtin")
-  return util["set-keys"]({{"n", "<leader>f", builtin.find_files, {desc = "(telescope) (f)iles"}}, {"n", "<leader>p", builtin.oldfiles, {desc = "(telescope) oldfiles"}}, {"n", "<leader>g", builtin.git_files, {desc = "(telescope) (g)it files"}}, {"n", "<leader>k", builtin.keymaps, {desc = "(telescope) (k)eymaps"}}})
+  return util["set-keys"]({{"n", "<leader>f", builtin.find_files, {desc = "[telescope] (f)iles"}}, {"n", "<leader>p", builtin.oldfiles, {desc = "[telescope] oldfiles"}}, {"n", "<leader>g", builtin.git_files, {desc = "[telescope] (g)it files"}}, {"n", "<leader>k", builtin.keymaps, {desc = "[telescope] (k)eymaps"}}})
 end
 local function set_gitsigns_maps()
   local gitsigns = autoload("gitsigns")
@@ -62,7 +64,7 @@ local function set_gitsigns_maps()
   local function _9_()
     return gitsigns.nav_hunk("prev", {preview = true, wrap = false})
   end
-  nav = {{"n", "]g", _8_, {desc = "(gitsigns) jump to next git hunk"}}, {"n", "[g", _9_, {desc = "(gitsigns) jump to previous git hunk"}}}
+  nav = {{"n", "]g", _8_, {desc = "[gitsigns] jump to next git hunk"}}, {"n", "[g", _9_, {desc = "[gitsigns] jump to previous git hunk"}}}
   local staging
   local function _10_()
     return gitsigns.stage_hunk({[vim.fn.line(".")] = vim.fn.line("v")})
@@ -70,21 +72,25 @@ local function set_gitsigns_maps()
   local function _11_()
     return gitsigns.reset_hunk({[vim.fn.line(".")] = vim.fn.line("v")})
   end
-  staging = {{"n", "<localleader>gs", gitsigns.stage_hunk, {desc = "(gitsigns) (g)it (s)tage hunk"}}, {"n", "<localleader>gu", gitsigns.undo_stage_hunk, {desc = "(gitsigns) (g)it (u)ndo staged hunk"}}, {"n", "<localleader>gr", gitsigns.reset_hunk, {desc = "(g)it (r)eset hunk"}}, {"n", "<localleader>gS", gitsigns.stage_buffer, {desc = "(gitsigns) (g)it (S)tage buffer"}}, {"n", "<localleader>gR", gitsigns.reset_buffer, {desc = "(gitsigns) (g)it (R)eset buffer"}}, {"v", "<localleader>gs", _10_, {desc = "(gitsigns) (g)it (s)tage hunk"}}, {"v", "<localleader>gr", _11_, {desc = "(gitsigns) (g)it (r)eset hunk"}}}
+  staging = {{"n", "<localleader>gs", gitsigns.stage_hunk, {desc = "[gitsigns] (g)it (s)tage hunk"}}, {"n", "<localleader>gu", gitsigns.undo_stage_hunk, {desc = "[gitsigns] (g)it (u)ndo staged hunk"}}, {"n", "<localleader>gr", gitsigns.reset_hunk, {desc = "(g)it (r)eset hunk"}}, {"n", "<localleader>gS", gitsigns.stage_buffer, {desc = "[gitsigns] (g)it (S)tage buffer"}}, {"n", "<localleader>gR", gitsigns.reset_buffer, {desc = "[gitsigns] (g)it (R)eset buffer"}}, {"v", "<localleader>gs", _10_, {desc = "[gitsigns] (g)it (s)tage hunk"}}, {"v", "<localleader>gr", _11_, {desc = "[gitsigns] (g)it (r)eset hunk"}}}
   local blame
   local function _12_()
     return gitsigns.blame_line({full = true})
   end
-  blame = {{"n", "<localleader>gb", _12_, {desc = "(gitsigns) (g)it show line (b)lame"}}, {"n", "<localleader>gB", gitsigns.toggle_current_line_blame, {desc = "(gitsigns) (g)it toggle current line (B)lame"}}}
-  local view = {{"n", "<localleader>gp", gitsigns.preview_hunk, {desc = "(gitsigns) (g)it (p)review hunk"}}, {"n", "<localleader>gd", gitsigns.diffthis, {desc = "(gitsigns) (g)it show (d)iff"}}, {"n", "<localleader>gD", gitsigns.toggle_deleted, {desc = "(gitsigns) (g)it toggle (D)eleted hunks"}}}
+  blame = {{"n", "<localleader>gb", _12_, {desc = "[gitsigns] (g)it show line (b)lame"}}, {"n", "<localleader>gB", gitsigns.toggle_current_line_blame, {desc = "[gitsigns] (g)it toggle current line (B)lame"}}}
+  local view = {{"n", "<localleader>gp", gitsigns.preview_hunk, {desc = "[gitsigns] (g)it (p)review hunk"}}, {"n", "<localleader>gd", gitsigns.diffthis, {desc = "[gitsigns] (g)it show (d)iff"}}, {"n", "<localleader>gD", gitsigns.toggle_deleted, {desc = "[gitsigns] (g)it toggle (D)eleted hunks"}}}
   local list
   local function _13_()
     return gitsigns.setqflist("all")
   end
-  list = {{"n", "<localleader>gl", gitsigns.setloclist, {desc = "(gitsigns) show buffer (g)it hunks in (l)oclist"}}, {"n", "<localleader>gc", _13_, {desc = "(gitsigns) show all (g)it hunks in qui(c)kfix list"}}}
+  list = {{"n", "<localleader>gl", gitsigns.setloclist, {desc = "[gitsigns] show buffer (g)it hunks in (l)oclist"}}, {"n", "<localleader>gc", _13_, {desc = "[gitsigns] show all (g)it hunks in qui(c)kfix list"}}}
   return util["set-keys"](core.concat(nav, staging, blame, view, list))
 end
 local function set_dadbod_maps()
-  return util["set-keys"]({{"n", "<localleader>d;", ":DB g:db ", {desc = "run an sql statement in command mode", noremap = true, buffer = vim.api.nvim_get_current_buf()}}, {"n", "<localleader>dd", ":.DB g:db<cr>", {desc = "run line as an sql statement", noremap = true, buffer = vim.api.nvim_get_current_buf()}}, {"n", "<localleader>dp", "vip:DB g:db<cr>", {desc = "run paragraph as an sql statement", noremap = true, buffer = vim.api.nvim_get_current_buf()}}, {"n", "<localleader>db", ":%DB g:db<cr>", {desc = "run buffer as sql statements", noremap = true, buffer = vim.api.nvim_get_current_buf()}}})
+  return util["set-keys"]({{"n", "<localleader>d;", ":DB g:db ", {desc = "[dadbod] run an sql statement in command mode", noremap = true, buffer = vim.api.nvim_get_current_buf()}}, {"n", "<localleader>dd", ":.DB g:db<cr>", {desc = "[dadbod] run line as an sql statement", noremap = true, buffer = vim.api.nvim_get_current_buf()}}, {"n", "<localleader>dp", "vip:DB g:db<cr>", {desc = "[dadbod] run paragraph as an sql statement", noremap = true, buffer = vim.api.nvim_get_current_buf()}}, {"n", "<localleader>db", ":%DB g:db<cr>", {desc = "[dadbod] run buffer as sql statements", noremap = true, buffer = vim.api.nvim_get_current_buf()}}})
 end
-return {setup = setup, ["set-oil-maps"] = set_oil_maps, ["set-telescope-maps"] = set_telescope_maps, ["set-gitsigns-maps"] = set_gitsigns_maps, ["set-dadbod-maps"] = set_dadbod_maps}
+local function set_journal_maps()
+  local jtools = autoload("journal-tools")
+  return util["set-keys"]({{"n", "<localleader>w", jtools["insert-week"], {desc = "[journal] insert current week as an h2 header", buffer = vim.api.nvim_get_current_buf(), silent = true}}, {"n", "<localleader>d", jtools["insert-day"], {desc = "[journal] insert current date as an h3 header", buffer = vim.api.nvim_get_current_buf(), silent = true}}, {"n", "<localleader>t", jtools["insert-time"], {desc = "[journal] insert current time as an h4 header", buffer = vim.api.nvim_get_current_buf(), silent = true}}, {"n", "<localleader>x", jtools["insert-task"], {desc = "[journal] insert current time as an h4 header", buffer = vim.api.nvim_get_current_buf(), silent = true}}})
+end
+return {setup = setup, ["set-oil-maps"] = set_oil_maps, ["set-telescope-maps"] = set_telescope_maps, ["set-gitsigns-maps"] = set_gitsigns_maps, ["set-dadbod-maps"] = set_dadbod_maps, ["set-journal-maps"] = set_journal_maps}

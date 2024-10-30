@@ -119,4 +119,4 @@
                               :command "set signcolumn=no"})
 
 (util.auto-setup :juice.colorscheme :juice.plugins :juice.mappings
-                  :git-info :tmux-nav :juice.whitespace)
+                  :git-info :tmux-nav :journal-tools :juice.whitespace)

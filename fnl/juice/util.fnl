@@ -6,12 +6,10 @@
   (string.format "<cmd>lua %s<cr>" str))
 
 (lambda executable? [cmd]
-  (-> (vim.fn.executable cmd)
-      (= 1)))
+  (= (vim.fn.executable cmd) 1))
 
 (lambda has? [cmd]
-  (-> (vim.fn.has cmd)
-      (= 1)))
+  (= (vim.fn.has cmd) 1))
 
 (lambda set-keys [mappings]
   (each [_ mapping (ipairs mappings)]
@@ -28,4 +26,17 @@
   (each [_ module (ipairs [...])]
     ((. (autoload module) :setup))))
 
-{: lua-cmd : executable? : has? : set-keys : assoc-in : auto-setup}
+(lambda insert-lines [...]
+  "Insert text at the current cursor position"
+  (let [buf (vim.api.nvim_get_current_buf)
+        (row col) (unpack (vim.api.nvim_win_get_cursor 0))
+        _row (- row 1)]
+    (vim.api.nvim_buf_set_lines buf _row (+ _row 1) false [...])))
+
+{: lua-cmd
+ : executable?
+ : has?
+ : set-keys
+ : assoc-in
+ : auto-setup
+ : insert-lines}

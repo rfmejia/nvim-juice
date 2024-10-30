@@ -11,18 +11,18 @@ local function executable_3f(cmd)
   return (vim.fn.executable(cmd) == 1)
 end
 local function has_3f(cmd)
-  _G.assert((nil ~= cmd), "Missing argument cmd on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:12")
+  _G.assert((nil ~= cmd), "Missing argument cmd on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:11")
   return (vim.fn.has(cmd) == 1)
 end
 local function set_keys(mappings)
-  _G.assert((nil ~= mappings), "Missing argument mappings on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:16")
+  _G.assert((nil ~= mappings), "Missing argument mappings on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:14")
   for _, mapping in ipairs(mappings) do
     vim.keymap.set(unpack(mapping))
   end
   return nil
 end
 local function assoc_in(t, ...)
-  _G.assert((nil ~= t), "Missing argument t on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:20")
+  _G.assert((nil ~= t), "Missing argument t on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:18")
   for _, options in ipairs({...}) do
     if core["table?"](options) then
       for k, v in pairs(options) do
@@ -39,4 +39,10 @@ local function auto_setup(...)
   end
   return nil
 end
-return {["lua-cmd"] = lua_cmd, ["executable?"] = executable_3f, ["has?"] = has_3f, ["set-keys"] = set_keys, ["assoc-in"] = assoc_in, ["auto-setup"] = auto_setup}
+local function insert_lines(...)
+  local buf = vim.api.nvim_get_current_buf()
+  local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+  local _row = (row - 1)
+  return vim.api.nvim_buf_set_lines(buf, _row, (_row + 1), false, {...})
+end
+return {["lua-cmd"] = lua_cmd, ["executable?"] = executable_3f, ["has?"] = has_3f, ["set-keys"] = set_keys, ["assoc-in"] = assoc_in, ["auto-setup"] = auto_setup, ["insert-lines"] = insert_lines}
