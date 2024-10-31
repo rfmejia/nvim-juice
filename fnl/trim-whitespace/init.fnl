@@ -1,6 +1,3 @@
-(local {: autoload} (require :nfnl.module))
-(local colors (autoload :juice.colors))
-
 (fn setup []
   (let [hi-cmd "hi ExtraWhitespace cterm=undercurl ctermfg=red"
         match-all-cmd "match ExtraWhitespace /\\s\\+$/"
