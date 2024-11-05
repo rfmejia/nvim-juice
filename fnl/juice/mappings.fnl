@@ -45,10 +45,15 @@
                ":.!date '+\\%a, \\%d \\%b \\%Y' --date=''<left>"
                {:desc "prompt for date query"}]])
 
-(local marks [[:n :<leader>mm ":marks ARST<cr>" {:desc "list file marks ARST"}]
+(local marks [[:n
+               :<leader>mm
+               #(vim.cmd.marks :ARST)
+               {:desc "list file marks ARST"}]
               [:n
                :<leader>mc
-               ":delmarks ARST<cr>:echo 'Cleared file marks'<cr>"
+               (fn []
+                 (vim.cmd.delmarks :ARST)
+                 (vim.print "Cleared file marks"))
                {:desc "clear special file marks"}]
               [:n :<leader>a "`Azz" {:desc "jump to A mark"}]
               [:n :<leader>r "`Rzz" {:desc "jump to R mark"}]
