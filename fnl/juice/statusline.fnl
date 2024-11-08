@@ -45,8 +45,7 @@
                   git-branch
                   default-color
                   " "
-                  ruler]
-        statusline (str.join template)]
-    statusline))
+                  ruler]]
+    (str.join template)))
 
 {: build : show-diagnostic-count}

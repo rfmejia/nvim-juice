@@ -5,19 +5,18 @@
 
 (local general
        [[:n :Y :y$ {:desc "yank until the end of the line"}]
-        [:n :<C-l> ":nohl<cr>" {:desc "clear search highlight" :silent true}]
         [:n
          "<leader>;"
          ":<C-r>\""
          {:desc "paste register 0 contents in command mode"}]
         [:n :<leader>w ":w<cr>" {:desc "write buffer" :silent true}]
-        [:n :<leader>R ":registers<cr>" {:desc "list registers"}]
-        [:n :<F5> ":make<cr>" {:desc "trigger `make` in shell"}]
+        [:n :<leader>R vim.cmd.registers {:desc "list registers"}]
+        [:n :g? ":vert h<cr>" {:desc "open help" :silent true}]
         [:n
          :<F2>
          "let @+ = getreg('%')"
          {:desc "copy current file path to clipboard"}]
-        [:n :g? ":vert h<cr>" {:desc "open help" :silent true}]])
+        [:n :<F5> vim.cmd.make {:desc "trigger `make` in shell"}]])
 
 (local jumps [[:n :<C-d> :<C-d>zz {:silent true}]
               [:n :<C-u> :<C-u>zz {:silent true}]
@@ -77,45 +76,45 @@
                {:desc "set T mark"}]])
 
 (local buffers [[:n :<leader>b ":buffers<cr>:buffer<Space>" {}]
-                [:n "[B" ":bfirst<cr>" {}]
-                [:n "]B" ":blast<cr>" {}]
-                [:n "[b" ":bprevious<cr>" {}]
-                [:n "]b" ":bnext<cr>" {}]
+                [:n "[B" vim.cmd.bfirst {}]
+                [:n "]B" vim.cmd.blast {}]
+                [:n "[b" vim.cmd.bprevious {}]
+                [:n "]b" vim.cmd.bnext {}]
                 [:n :<leader>x ":bp|bdelete #<cr>" {}]])
 
-(local tabs [[:n :<leader>tn ":tabnew<cr>" {}]
-             [:n :<leader>tc ":tabclose<cr>" {}]
+(local tabs [[:n :<leader>tn vim.cmd.tabnew {}]
+             [:n :<leader>tc vim.cmd.tabclose {}]
              [:n :<leader>ts ":tab split<cr>" {}]
-             [:n "[t" ":tabprevious<cr>" {}]
-             [:n "]t" ":tabnext<cr>" {}]
-             [:n "[T" ":tabfirst<cr>" {}]
-             [:n "]T" ":tablast<cr>" {}]])
+             [:n "[t" vim.cmd.tabprevious {}]
+             [:n "]t" vim.cmd.tabnext {}]
+             [:n "[T" vim.cmd.tabfirst {}]
+             [:n "]T" vim.cmd.tablast {}]])
 
 (local quickfix
-       [[:n :<leader>co ":copen<cr>" {:desc "open quickfix list"}]
-        [:n :<leader>cc ":cclose<cr>" {:desc "close quickfix list"}]
+       [[:n :<leader>co vim.cmd.copen {:desc "open quickfix list"}]
+        [:n :<leader>cc vim.cmd.cclose {:desc "close quickfix list"}]
         [:n
          "[c"
-         ":cprevious<cr>"
+         vim.cmd.cprevious
          {:desc "jump to previous entry in quickfix list"}]
         [:n
          "]c"
-         ":cnext<cr>"
+         vim.cmd.cnext
          {:desc "jump to previous entry in quickfix list"}]
         [:n
          "[C"
-         ":cfirst<cr>"
+         vim.cmd.cfirst
          {:desc "jump to previous entry in quickfix list"}]
         [:n
          "]C"
-         ":clast<cr>"
+         vim.cmd.clast
          {:desc "jump to previous entry in quickfix list"}]
-        [:n :<leader>lo ":lopen<cr>" {:desc "open loclist list"}]
-        [:n :<leader>lc ":lclose<cr>" {:desc "close loclist list"}]
-        [:n "[l" ":lprevious<cr>" {:desc "jump to previous entry in loclist"}]
-        [:n "]l" ":lnext<cr>" {:desc "jump to next entry in loclist"}]
-        [:n "[L" ":lfirst<cr>" {:desc "jump to first entry in loclist"}]
-        [:n "]L" ":llast<cr>" {:desc "jump to last entry in loclist"}]])
+        [:n :<leader>lo vim.cmd.lopen {:desc "open loclist list"}]
+        [:n :<leader>lc vim.cmd.lclose {:desc "close loclist list"}]
+        [:n "[l" vim.cmd.lprevious {:desc "jump to previous entry in loclist"}]
+        [:n "]l" vim.cmd.lnext {:desc "jump to next entry in loclist"}]
+        [:n "[L" vim.cmd.lfirst {:desc "jump to first entry in loclist"}]
+        [:n "]L" vim.cmd.llast {:desc "jump to last entry in loclist"}]])
 
 (local search-replace
        [[:n :<leader>/s ":s//g<left><left>" {:desc "prompt for line search"}]

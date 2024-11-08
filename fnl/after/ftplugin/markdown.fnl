@@ -35,12 +35,12 @@
 (util.set-keys [[:n
                  :<localleader>m
                  insert-yaml-metadata
-                 {:desc "insert metadata as a YAML header"
+                 {:desc "[markdown] insert metadata as a YAML header"
                   :buffer (vim.api.nvim_get_current_buf)
                   :silent true}]
                 [:n
                  :<localleader>v
                  render-markdown-to-html
-                 {:desc "convert to HTML and show preview in browser"
+                 {:desc "[markdown] convert to HTML and show preview in browser"
                   :buffer (vim.api.nvim_get_current_buf)
                   :silent true}]])

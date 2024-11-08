@@ -10,7 +10,7 @@
 
 (vim.api.nvim_create_autocmd :BufWritePre
                              {:callback #(vim.lsp.buf.format {:async false})
-                              :desc :vim.lsp.buf.format
+                              :desc "[clojure] call vim.lsp.buf.format on save"
                               :pattern [:*.clj :*.edn]
                               :group (vim.api.nvim_create_augroup :format_group
                                                                   {:clear true})})

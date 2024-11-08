@@ -22,7 +22,7 @@
         (notify.error "fnlfmt: cannot format a modified buffer"))))
 
 (vim.keymap.set :n :<localleader>cf #(format-fennel (vim.fn.expand "%:p"))
-                {:desc "(c)ode (f)ormat"})
+                {:desc "[fennel] (c)ode (f)ormat"})
 
 (vim.api.nvim_buf_create_user_command 0 :FnlFmt
                                       #(format-fennel (vim.fn.expand "%:p"))
@@ -31,6 +31,6 @@
 (vim.api.nvim_create_autocmd :BufWritePost
                              {:callback #(format-fennel (vim.fn.expand "%:p"))
                               :buffer (vim.api.nvim_get_current_buf)
-                              :desc "Format on buffer write"
+                              :desc "format on buffer write"
                               :group (vim.api.nvim_create_augroup :format_group
                                                                   {:clear true})})

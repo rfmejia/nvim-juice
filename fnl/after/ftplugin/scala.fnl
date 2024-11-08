@@ -30,26 +30,26 @@
 
 (comment "Make sure we respect lsp if it's enabled"
   (vim.keymap.set :n :<localleader>cf #(run-scalafmt (vim.fn.expand "%:p"))
-                  {:desc ""
+                  {:desc "[scala] run scalafmt on buffer"
                    :buffer (vim.api.nvim_get_current_buf)
                    :nowait true
                    :silent true}))
 
 (vim.keymap.set :n :<localleader>s "vip:sort<cr>"
-                {:desc "sort in paragraph"
+                {:desc "[scala] sort in paragraph"
                  :nowait true
                  :buffer (vim.api.nvim_get_current_buf)
                  :silent true})
 
 (when (util.executable? :sbtn)
   (vim.keymap.set :n :<leader>os ":!tmux split-window -v -l 30\\% sbtn<cr><cr>"
-                  {:desc "open sbtn in a tmux split"
+                  {:desc "[scala] open sbtn in a tmux split"
                    :buffer (vim.api.nvim_get_current_buf)
                    :silent true}))
 
 (when (util.executable? :scala-cli)
   (vim.keymap.set :n :<leader>oc
                   ":!tmux split-window -v -l 30\\% scala-cli console %<cr><cr>"
-                  {:desc "open scala-cli in a tmux split"
+                  {:desc "[scala] open scala-cli in a tmux split"
                    :buffer (vim.api.nvim_get_current_buf)
                    :silent true}))
