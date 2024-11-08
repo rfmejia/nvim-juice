@@ -15,13 +15,11 @@ core_tools = {{"Olical/nfnl", ft = "fennel"}, {"nvim-treesitter/nvim-treesitter"
 local database_tools
 local function _3_()
   local function _4_()
-    mappings["set-dadbod-maps"]()
-    vim.opt.omnifunc = "vim_dadbod_completion#omni"
-    return nil
+    return mappings["set-dadbod-maps"]()
   end
   return vim.api.nvim_create_autocmd("FileType", {pattern = {"sql", "mysql"}, callback = _4_})
 end
-database_tools = {{"tpope/vim-dadbod", cmd = "DB", config = _3_, dependencies = {{"kristijanhusak/vim-dadbod-completion", lazy = true}}}}
+database_tools = {{"tpope/vim-dadbod", ft = {"sql", "mysql"}, config = _3_, dependencies = {{"kristijanhusak/vim-dadbod-completion", lazy = true}}}}
 local dev_tools
 local function _5_()
   return util["auto-setup"]("juice.lsp")

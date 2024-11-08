@@ -19,7 +19,7 @@ local function format_fennel(path)
       return vim.cmd("e!")
     elseif ((_2_ == nil) and (nil ~= _3_)) then
       local err_msg = _3_
-      return notify.error("Could not run `fnlfmt`: ", err_msg)
+      return notify.error("[fennel] Could not run `fnlfmt`: ", err_msg)
     else
       return nil
     end

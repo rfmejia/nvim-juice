@@ -17,7 +17,8 @@
     (if (not modified)
         (match (vim.fn.system fnlfmt-cmd)
           _ (vim.cmd :e!)
-          (nil err-msg) (notify.error "Could not run `fnlfmt`: " err-msg))
+          (nil err-msg) (notify.error "[fennel] Could not run `fnlfmt`: "
+                                      err-msg))
         (notify.error "fnlfmt: cannot format a modified buffer"))))
 
 (vim.keymap.set :n :<localleader>cf #(format-fennel (vim.fn.expand "%:p"))

@@ -64,7 +64,7 @@ local function tmux_navigate(direction)
     return nil
   elseif ((_12_ == nil) and (nil ~= _13_)) then
     local err_msg = _13_
-    return notify.error("Could not run `tmux`: ", err_msg)
+    return notify.error("[tmux-nav] Could not run `tmux`: ", err_msg)
   else
     return nil
   end
@@ -105,7 +105,7 @@ local function setup_default_mapping(in_tmux_3f)
   end
   local make_mapping
   local function _21_(dir)
-    _G.assert((nil ~= dir), "Missing argument dir on /home/rfmejia/.config/nvim/fnl/tmux-nav/init.fnl:53")
+    _G.assert((nil ~= dir), "Missing argument dir on /home/rfmejia/.config/nvim/fnl/tmux-nav/init.fnl:54")
     local mapping
     local function _22_(_241)
       return core.get(_241, dir)

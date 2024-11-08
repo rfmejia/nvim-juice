@@ -50,7 +50,7 @@
   (if (util.executable? :asciidoctor)
       (match (vim.fn.system [:asciidoctor :-o out in])
         ok (vim.fn.system [browser-cmd out])
-        (nil err-msg) (notify.error (.. "Could not run asciidoctor: " err-msg)))))
+        (nil err-msg) (notify.error (.. "[asciidoc] Could not run asciidoctor: " err-msg)))))
 
 (when vim.env.BROWSER
   (let [in (vim.fn.expand "%:p")

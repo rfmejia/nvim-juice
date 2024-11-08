@@ -30,14 +30,11 @@
                                (ts.setup config))}])
 
 (local database-tools [{1 :tpope/vim-dadbod
-                        :cmd :DB
+                        :ft [:sql :mysql]
                         :config #(vim.api.nvim_create_autocmd :FileType
                                                               {:pattern [:sql
                                                                          :mysql]
-                                                               :callback (fn []
-                                                                           (mappings.set-dadbod-maps)
-                                                                           (set vim.opt.omnifunc
-                                                                                "vim_dadbod_completion#omni"))})
+                                                               :callback #(mappings.set-dadbod-maps)})
                         :dependencies [{1 :kristijanhusak/vim-dadbod-completion
                                         :lazy true}]}])
 

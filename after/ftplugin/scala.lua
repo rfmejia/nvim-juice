@@ -20,7 +20,7 @@ local function run_scalafmt(path)
     return vim.cmd("e!")
   elseif ((_3_ == nil) and (nil ~= _4_)) then
     local err_msg = _4_
-    return notify.error("Could not run `scalafmt`: ", err_msg)
+    return notify.error("[scala] Could not run `scalafmt`: ", err_msg)
   else
     return nil
   end

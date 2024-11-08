@@ -61,7 +61,7 @@ local function preview_in_browser(_in, out, browser_cmd)
       return vim.fn.system({browser_cmd, out})
     elseif ((_4_ == nil) and (nil ~= _5_)) then
       local err_msg = _5_
-      return notify.error(("Could not run asciidoctor: " .. err_msg))
+      return notify.error(("[asciidoc] Could not run asciidoctor: " .. err_msg))
     else
       return nil
     end

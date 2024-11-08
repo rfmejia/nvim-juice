@@ -22,7 +22,7 @@
         tmux-cmd [:tmux :-S socket :select-pane pane]]
     (match (vim.fn.system tmux-cmd)
       ok nil
-      (nil err-msg) (notify.error "Could not run `tmux`: " err-msg))))
+      (nil err-msg) (notify.error "[tmux-nav] Could not run `tmux`: " err-msg))))
 
 (lambda navigate [direction]
   (local current-vim-win (vim.fn.winnr))
@@ -31,6 +31,7 @@
     (tmux-navigate direction)))
 
 (fn setup-default-mapping [in-tmux?]
+  ;; TODO Pass these as config options with sensible defaults
   (let [nav-keys {:left :<M-h> :right :<M-l> :up :<M-k> :down :<M-j>}
         options {:left {:desc "jump to the left window"
                         :noremap true

@@ -28,18 +28,17 @@
 
 (fn insert-task [] (util.insert-lines "- [ ] "))
 
-(fn load-journal-tools []
-  (local mappings (autoload :juice.mappings))
-  (mappings.set-journal-maps)
-  ;; Load mappings the first time
+(fn load-journal-tools [{: maps}]
+  ;; Load mappings the first time, then add in FileType autocmd
+  (util.set-keys maps)
   (vim.api.nvim_create_autocmd :FileType
                                {:pattern :markdown
-                                :callback #(mappings.set-journal-maps)})
+                                :callback #(util.set-keys maps)})
   (vim.api.nvim_del_user_command :JournalInit)
-  (notify.info "Loaded journal tools"))
+  (notify.info "[journal-tools] Loaded tools"))
 
-(fn setup []
-  (vim.api.nvim_create_user_command :JournalInit load-journal-tools
+(fn setup [opts]
+  (vim.api.nvim_create_user_command :JournalInit #(load-journal-tools opts)
                                     {:desc "Load default mappings for journal tools"}))
 
 {: setup

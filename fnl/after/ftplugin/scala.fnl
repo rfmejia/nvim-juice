@@ -22,7 +22,7 @@
                       filename]]
     (match (vim.fn.system scalafmt-cmd)
       ok (vim.cmd :e!)
-      (nil err-msg) (notify.error "Could not run `scalafmt`: " err-msg))))
+      (nil err-msg) (notify.error "[scala] Could not run `scalafmt`: " err-msg))))
 
 (vim.api.nvim_buf_create_user_command (vim.api.nvim_get_current_buf)
                                       :ScalafmtApply #(run-scalafmt)

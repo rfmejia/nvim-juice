@@ -12,7 +12,7 @@ local function set_file_status_global_var()
     return nil
   elseif ((_2_ == nil) and (nil ~= _3_)) then
     local err_msg = _3_
-    return notify.error("Could not get `git file-status`: ", err_msg)
+    return notify.error("[git-info] Could not get `git file-status`: ", err_msg)
   else
     return nil
   end
@@ -27,7 +27,7 @@ local function set_branch_global_var()
     return nil
   elseif ((_5_ == nil) and (nil ~= _6_)) then
     local err_msg = _6_
-    return notify.error("Could not get `git branch`: ", err_msg)
+    return notify.error("[git-info] Could not get `git branch`: ", err_msg)
   else
     return nil
   end

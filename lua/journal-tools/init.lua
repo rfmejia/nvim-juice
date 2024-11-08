@@ -42,17 +42,20 @@ end
 local function insert_task()
   return util["insert-lines"]("- [ ] ")
 end
-local function load_journal_tools()
-  local mappings = autoload("juice.mappings")
-  mappings["set-journal-maps"]()
-  local function _4_()
-    return mappings["set-journal-maps"]()
+local function load_journal_tools(_4_)
+  local maps = _4_["maps"]
+  util["set-keys"](maps)
+  local function _5_()
+    return util["set-keys"](maps)
   end
-  vim.api.nvim_create_autocmd("FileType", {pattern = "markdown", callback = _4_})
+  vim.api.nvim_create_autocmd("FileType", {pattern = "markdown", callback = _5_})
   vim.api.nvim_del_user_command("JournalInit")
-  return notify.info("Loaded journal tools")
+  return notify.info("[journal-tools] Loaded tools")
 end
-local function setup()
-  return vim.api.nvim_create_user_command("JournalInit", load_journal_tools, {desc = "Load default mappings for journal tools"})
+local function setup(opts)
+  local function _6_()
+    return load_journal_tools(opts)
+  end
+  return vim.api.nvim_create_user_command("JournalInit", _6_, {desc = "Load default mappings for journal tools"})
 end
 return {setup = setup, ["insert-week"] = insert_week, ["insert-day"] = insert_day, ["insert-time"] = insert_time, ["insert-task"] = insert_task, ["load-journal-tools"] = load_journal_tools}

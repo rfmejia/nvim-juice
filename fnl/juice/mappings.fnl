@@ -1,17 +1,17 @@
 (local {: autoload} (require :nfnl.module))
 (local core (autoload :nfnl.core))
+(local notify (autoload :nfnl.notify))
 (local util (autoload :juice.util))
 
 (local general
        [[:n :Y :y$ {:desc "yank until the end of the line"}]
-        [:n :<C-l> ":nohl<cr>" {:desc "clear search highlight"}]
+        [:n :<C-l> ":nohl<cr>" {:desc "clear search highlight" :silent true}]
         [:n
          "<leader>;"
          ":<C-r>\""
          {:desc "paste register 0 contents in command mode"}]
         [:n :<leader>w ":w<cr>" {:desc "write buffer" :silent true}]
-        [:n :<leader>m ":messages<cr>" {:desc "show messages"}]
-        [:n :<leader>n ":registers<cr>" {:desc "list registers"}]
+        [:n :<leader>R ":registers<cr>" {:desc "list registers"}]
         [:n :<F5> ":make<cr>" {:desc "trigger `make` in shell"}]
         [:n
          :<F2>
@@ -53,7 +53,7 @@
                :<leader>mc
                (fn []
                  (vim.cmd.delmarks :ARST)
-                 (vim.print "Cleared file marks"))
+                 (notify.info "Cleared file marks"))
                {:desc "clear special file marks"}]
               [:n :<leader>a "`Azz" {:desc "jump to A mark"}]
               [:n :<leader>r "`Rzz" {:desc "jump to R mark"}]
@@ -138,37 +138,51 @@
 
 (local visual-indent [[:v "<" :<gv {}] [:v ">" :>gv {}]])
 
+(local plugins [[:n :<leader>L ":Lazy<cr>" {:silent true}]
+                [:n
+                 :<leader>u
+                 ":UndotreeToggle<cr>"
+                 {:desc "(undotree) toggle" :silent true}]])
+
+(local journal-launchers
+       [[:n
+         :<leader>oj
+         (fn []
+           ((. (autoload :journal-tools) :load-journal-tools))
+           (vim.cmd (.. ":$tabnew" :$JOURNAL/journal.md)))
+         {:desc "open journal in a new tab" :silent true}]
+        [:n
+         :<leader>ov
+         (fn []
+           ((. (autoload :journal-tools) :load-journal-tools))
+           (vim.cmd (.. ":$tabnew" :$JOURNAL/linux/vim.adoc)))
+         {:desc "open vim notes in a new tab" :silent true}]])
+
+(local tmux-apps {:lazygit [[:n
+                             :<leader>og
+                             ":!tmux neww lazygit<cr><cr>"
+                             {:desc "open lazygit in a new tmux window"
+                              :silent true}]]
+                  ;; Add editor context-specific apps here, lazydocker is not a good example
+                  :lazydocker [[:n
+                                :<leader>od
+                                ":!tmux neww lazydocker<cr><cr>"
+                                {:desc "open lazydocker in a new tmux window"
+                                 :silent true}]]})
+
 (fn setup []
   (let [mappings (core.concat general jumps undo-steps dates marks buffers tabs
-                              quickfix search-replace visual-indent)]
+                              quickfix search-replace visual-indent plugins)]
     (util.set-keys mappings))
   (comment "select completion binding item")
   (vim.cmd "inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")
   (comment "---- TMUX ----")
   (when vim.env.TMUX
-    (when (util.executable? :lazygit)
-      (vim.keymap.set :n :<leader>ol ":!tmux neww lazygit<cr><cr>"
-                      {:desc "open lazygit in a new tmux window" :silent true})))
+    (each [app mappings (pairs tmux-apps)]
+      (when (util.executable? app)
+        (util.set-keys mappings))))
   (comment "---- JOURNAL ----")
-  (when vim.env.JOURNAL
-    (util.set-keys [[:n
-                     :<leader>oj
-                     (fn []
-                       ((. (autoload :journal-tools) :load-journal-tools))
-                       (vim.cmd (.. ":$tabnew" :$JOURNAL/journal.md)))
-                     {:desc "open journal in a new tab" :silent true}]
-                    [:n
-                     :<leader>ov
-                     (fn []
-                       ((. (autoload :journal-tools) :load-journal-tools))
-                       (vim.cmd (.. ":$tabnew" :$JOURNAL/linux/vim.adoc)))
-                     {:desc "open vim notes in a new tab" :silent true}]]))
-  (comment "---- PLUGINS ----")
-  (util.set-keys [[:n :<leader>L ":Lazy<cr>" {:silent true}]
-                  [:n
-                   :<leader>u
-                   ":UndotreeToggle<cr>"
-                   {:desc "(undotree) toggle" :silent true}]]))
+  (when vim.env.JOURNAL (util.set-keys journal-launchers)))
 
 (fn set-oil-maps []
   (let [oil (autoload :oil)]
@@ -291,36 +305,35 @@
                     :noremap true
                     :buffer (vim.api.nvim_get_current_buf)}]]))
 
-(fn set-journal-maps []
-  (let [jtools (autoload :journal-tools)]
-    (util.set-keys [[:n
-                     :<localleader>w
-                     jtools.insert-week
-                     {:desc "[journal] insert current week as an h2 header"
-                      :buffer (vim.api.nvim_get_current_buf)
-                      :silent true}]
-                    [:n
-                     :<localleader>d
-                     jtools.insert-day
-                     {:desc "[journal] insert current date as an h3 header"
-                      :buffer (vim.api.nvim_get_current_buf)
-                      :silent true}]
-                    [:n
-                     :<localleader>t
-                     jtools.insert-time
-                     {:desc "[journal] insert current time as an h4 header"
-                      :buffer (vim.api.nvim_get_current_buf)
-                      :silent true}]
-                    [:n
-                     :<localleader>x
-                     jtools.insert-task
-                     {:desc "[journal] insert current time as an h4 header"
-                      :buffer (vim.api.nvim_get_current_buf)
-                      :silent true}]])))
+(local journal-maps (let [jtools (autoload :journal-tools)]
+                      [[:n
+                        :<localleader>w
+                        jtools.insert-week
+                        {:desc "[journal] insert current week as an h2 header"
+                         :buffer (vim.api.nvim_get_current_buf)
+                         :silent true}]
+                       [:n
+                        :<localleader>d
+                        jtools.insert-day
+                        {:desc "[journal] insert current date as an h3 header"
+                         :buffer (vim.api.nvim_get_current_buf)
+                         :silent true}]
+                       [:n
+                        :<localleader>t
+                        jtools.insert-time
+                        {:desc "[journal] insert current time as an h4 header"
+                         :buffer (vim.api.nvim_get_current_buf)
+                         :silent true}]
+                       [:n
+                        :<localleader>x
+                        jtools.insert-task
+                        {:desc "[journal] insert current time as an h4 header"
+                         :buffer (vim.api.nvim_get_current_buf)
+                         :silent true}]]))
 
 {: setup
  : set-oil-maps
  : set-telescope-maps
  : set-gitsigns-maps
  : set-dadbod-maps
- : set-journal-maps}
+ : journal-maps}

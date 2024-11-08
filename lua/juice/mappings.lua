@@ -2,8 +2,9 @@
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local core = autoload("nfnl.core")
+local notify = autoload("nfnl.notify")
 local util = autoload("juice.util")
-local general = {{"n", "Y", "y$", {desc = "yank until the end of the line"}}, {"n", "<C-l>", ":nohl<cr>", {desc = "clear search highlight"}}, {"n", "<leader>;", ":<C-r>\"", {desc = "paste register 0 contents in command mode"}}, {"n", "<leader>w", ":w<cr>", {desc = "write buffer", silent = true}}, {"n", "<leader>m", ":messages<cr>", {desc = "show messages"}}, {"n", "<leader>n", ":registers<cr>", {desc = "list registers"}}, {"n", "<F5>", ":make<cr>", {desc = "trigger `make` in shell"}}, {"n", "<F2>", "let @+ = getreg('%')", {desc = "copy current file path to clipboard"}}, {"n", "g?", ":vert h<cr>", {desc = "open help", silent = true}}}
+local general = {{"n", "Y", "y$", {desc = "yank until the end of the line"}}, {"n", "<C-l>", ":nohl<cr>", {desc = "clear search highlight", silent = true}}, {"n", "<leader>;", ":<C-r>\"", {desc = "paste register 0 contents in command mode"}}, {"n", "<leader>w", ":w<cr>", {desc = "write buffer", silent = true}}, {"n", "<leader>R", ":registers<cr>", {desc = "list registers"}}, {"n", "<F5>", ":make<cr>", {desc = "trigger `make` in shell"}}, {"n", "<F2>", "let @+ = getreg('%')", {desc = "copy current file path to clipboard"}}, {"n", "g?", ":vert h<cr>", {desc = "open help", silent = true}}}
 local jumps = {{"n", "<C-d>", "<C-d>zz", {silent = true}}, {"n", "<C-u>", "<C-u>zz", {silent = true}}, {"n", "<C-o>", "<C-o>zz", {silent = true}}, {"n", "<C-i>", "<C-i>zz", {silent = true}}}
 local undo_steps = {{"i", "\"", "\"<C-g>u", {silent = true}}, {"i", ".", ".<C-g>u", {silent = true}}, {"i", "!", "!<C-g>u", {silent = true}}, {"i", "?", "?<C-g>u", {silent = true}}, {"i", "(", "(<C-g>u", {silent = true}}, {"i", ")", ")<C-g>u", {silent = true}}, {"i", "{", "{<C-g>u", {silent = true}}, {"i", "}", "}<C-g>u", {silent = true}}, {"i", "[", "[<C-g>u", {silent = true}}, {"i", "]", "]<C-g>u", {silent = true}}}
 local dates = {{"n", "<leader>dt", ":.!date '+\\%a, \\%d \\%b \\%Y'<cr>", {desc = "insert current date"}}, {"n", "<leader>dT", ":.!date '+\\%a, \\%d \\%b \\%Y' --date=''<left>", {desc = "prompt for date query"}}}
@@ -13,7 +14,7 @@ local function _2_()
 end
 local function _3_()
   vim.cmd.delmarks("ARST")
-  return vim.print("Cleared file marks")
+  return notify.info("Cleared file marks")
 end
 marks = {{"n", "<leader>mm", _2_, {desc = "list file marks ARST"}}, {"n", "<leader>mc", _3_, {desc = "clear special file marks"}}, {"n", "<leader>a", "`Azz", {desc = "jump to A mark"}}, {"n", "<leader>r", "`Rzz", {desc = "jump to R mark"}}, {"n", "<leader>s", "`Szz", {desc = "jump to S mark"}}, {"n", "<leader>t", "`Tzz", {desc = "jump to T mark"}}, {"n", "<leader>ma", "mA:echo 'Marked file A'<cr>", {desc = "set A mark"}}, {"n", "<leader>mr", "mR:echo 'Marked file R'<cr>", {desc = "set R mark"}}, {"n", "<leader>ms", "mS:echo 'Marked file S'<cr>", {desc = "set S mark"}}, {"n", "<leader>mt", "mT:echo 'Marked file T'<cr>", {desc = "set T mark"}}}
 local buffers = {{"n", "<leader>b", ":buffers<cr>:buffer<Space>", {}}, {"n", "[B", ":bfirst<cr>", {}}, {"n", "]B", ":blast<cr>", {}}, {"n", "[b", ":bprevious<cr>", {}}, {"n", "]b", ":bnext<cr>", {}}, {"n", "<leader>x", ":bp|bdelete #<cr>", {}}}
@@ -21,36 +22,41 @@ local tabs = {{"n", "<leader>tn", ":tabnew<cr>", {}}, {"n", "<leader>tc", ":tabc
 local quickfix = {{"n", "<leader>co", ":copen<cr>", {desc = "open quickfix list"}}, {"n", "<leader>cc", ":cclose<cr>", {desc = "close quickfix list"}}, {"n", "[c", ":cprevious<cr>", {desc = "jump to previous entry in quickfix list"}}, {"n", "]c", ":cnext<cr>", {desc = "jump to previous entry in quickfix list"}}, {"n", "[C", ":cfirst<cr>", {desc = "jump to previous entry in quickfix list"}}, {"n", "]C", ":clast<cr>", {desc = "jump to previous entry in quickfix list"}}, {"n", "<leader>lo", ":lopen<cr>", {desc = "open loclist list"}}, {"n", "<leader>lc", ":lclose<cr>", {desc = "close loclist list"}}, {"n", "[l", ":lprevious<cr>", {desc = "jump to previous entry in loclist"}}, {"n", "]l", ":lnext<cr>", {desc = "jump to next entry in loclist"}}, {"n", "[L", ":lfirst<cr>", {desc = "jump to first entry in loclist"}}, {"n", "]L", ":llast<cr>", {desc = "jump to last entry in loclist"}}}
 local search_replace = {{"n", "<leader>/s", ":s//g<left><left>", {desc = "prompt for line search"}}, {"n", "<leader>/S", ":%s//g<left><left>", {desc = "prompt for buffer search"}}, {"n", "<leader>/w", ":s/\\<<c-r><c-w>\\>//g<left><left>", {desc = "prompt for line search and replace"}}, {"n", "<leader>/W", ":%s/\\<<c-r><c-w>\\>//g<left><left>", {desc = "prompt for buffer search and replace"}}, {"n", "<leader>/v", ":vim // *<left><left><left>", {desc = "prompt for global search"}}}
 local visual_indent = {{"v", "<", "<gv", {}}, {"v", ">", ">gv", {}}}
+local plugins = {{"n", "<leader>L", ":Lazy<cr>", {silent = true}}, {"n", "<leader>u", ":UndotreeToggle<cr>", {desc = "(undotree) toggle", silent = true}}}
+local journal_launchers
+local function _4_()
+  autoload("journal-tools")["load-journal-tools"]()
+  return vim.cmd((":$tabnew" .. "$JOURNAL/journal.md"))
+end
+local function _5_()
+  autoload("journal-tools")["load-journal-tools"]()
+  return vim.cmd((":$tabnew" .. "$JOURNAL/linux/vim.adoc"))
+end
+journal_launchers = {{"n", "<leader>oj", _4_, {desc = "open journal in a new tab", silent = true}}, {"n", "<leader>ov", _5_, {desc = "open vim notes in a new tab", silent = true}}}
+local tmux_apps = {lazygit = {{"n", "<leader>og", ":!tmux neww lazygit<cr><cr>", {desc = "open lazygit in a new tmux window", silent = true}}}, lazydocker = {{"n", "<leader>od", ":!tmux neww lazydocker<cr><cr>", {desc = "open lazydocker in a new tmux window", silent = true}}}}
 local function setup()
   do
-    local mappings = core.concat(general, jumps, undo_steps, dates, marks, buffers, tabs, quickfix, search_replace, visual_indent)
+    local mappings = core.concat(general, jumps, undo_steps, dates, marks, buffers, tabs, quickfix, search_replace, visual_indent, plugins)
     util["set-keys"](mappings)
   end
   --[[ "select completion binding item" ]]
   vim.cmd("inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")
   --[[ "---- TMUX ----" ]]
   if vim.env.TMUX then
-    if util["executable?"]("lazygit") then
-      vim.keymap.set("n", "<leader>ol", ":!tmux neww lazygit<cr><cr>", {desc = "open lazygit in a new tmux window", silent = true})
-    else
+    for app, mappings in pairs(tmux_apps) do
+      if util["executable?"](app) then
+        util["set-keys"](mappings)
+      else
+      end
     end
   else
   end
   --[[ "---- JOURNAL ----" ]]
   if vim.env.JOURNAL then
-    local function _6_()
-      autoload("journal-tools")["load-journal-tools"]()
-      return vim.cmd((":$tabnew" .. "$JOURNAL/journal.md"))
-    end
-    local function _7_()
-      autoload("journal-tools")["load-journal-tools"]()
-      return vim.cmd((":$tabnew" .. "$JOURNAL/linux/vim.adoc"))
-    end
-    util["set-keys"]({{"n", "<leader>oj", _6_, {desc = "open journal in a new tab", silent = true}}, {"n", "<leader>ov", _7_, {desc = "open vim notes in a new tab", silent = true}}})
+    return util["set-keys"](journal_launchers)
   else
+    return nil
   end
-  --[[ "---- PLUGINS ----" ]]
-  return util["set-keys"]({{"n", "<leader>L", ":Lazy<cr>", {silent = true}}, {"n", "<leader>u", ":UndotreeToggle<cr>", {desc = "(undotree) toggle", silent = true}}})
 end
 local function set_oil_maps()
   local oil = autoload("oil")
@@ -97,8 +103,9 @@ end
 local function set_dadbod_maps()
   return util["set-keys"]({{"n", "<localleader>d;", ":DB g:db ", {desc = "[dadbod] run an sql statement in command mode", noremap = true, buffer = vim.api.nvim_get_current_buf()}}, {"n", "<localleader>dd", ":.DB g:db<cr>", {desc = "[dadbod] run line as an sql statement", noremap = true, buffer = vim.api.nvim_get_current_buf()}}, {"n", "<localleader>dp", "vip:DB g:db<cr>", {desc = "[dadbod] run paragraph as an sql statement", noremap = true, buffer = vim.api.nvim_get_current_buf()}}, {"n", "<localleader>db", ":%DB g:db<cr>", {desc = "[dadbod] run buffer as sql statements", noremap = true, buffer = vim.api.nvim_get_current_buf()}}})
 end
-local function set_journal_maps()
+local journal_maps
+do
   local jtools = autoload("journal-tools")
-  return util["set-keys"]({{"n", "<localleader>w", jtools["insert-week"], {desc = "[journal] insert current week as an h2 header", buffer = vim.api.nvim_get_current_buf(), silent = true}}, {"n", "<localleader>d", jtools["insert-day"], {desc = "[journal] insert current date as an h3 header", buffer = vim.api.nvim_get_current_buf(), silent = true}}, {"n", "<localleader>t", jtools["insert-time"], {desc = "[journal] insert current time as an h4 header", buffer = vim.api.nvim_get_current_buf(), silent = true}}, {"n", "<localleader>x", jtools["insert-task"], {desc = "[journal] insert current time as an h4 header", buffer = vim.api.nvim_get_current_buf(), silent = true}}})
+  journal_maps = {{"n", "<localleader>w", jtools["insert-week"], {desc = "[journal] insert current week as an h2 header", buffer = vim.api.nvim_get_current_buf(), silent = true}}, {"n", "<localleader>d", jtools["insert-day"], {desc = "[journal] insert current date as an h3 header", buffer = vim.api.nvim_get_current_buf(), silent = true}}, {"n", "<localleader>t", jtools["insert-time"], {desc = "[journal] insert current time as an h4 header", buffer = vim.api.nvim_get_current_buf(), silent = true}}, {"n", "<localleader>x", jtools["insert-task"], {desc = "[journal] insert current time as an h4 header", buffer = vim.api.nvim_get_current_buf(), silent = true}}}
 end
-return {setup = setup, ["set-oil-maps"] = set_oil_maps, ["set-telescope-maps"] = set_telescope_maps, ["set-gitsigns-maps"] = set_gitsigns_maps, ["set-dadbod-maps"] = set_dadbod_maps, ["set-journal-maps"] = set_journal_maps}
+return {setup = setup, ["set-oil-maps"] = set_oil_maps, ["set-telescope-maps"] = set_telescope_maps, ["set-gitsigns-maps"] = set_gitsigns_maps, ["set-dadbod-maps"] = set_dadbod_maps, ["journal-maps"] = journal_maps}
