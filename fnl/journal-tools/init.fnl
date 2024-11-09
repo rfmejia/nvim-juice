@@ -1,6 +1,12 @@
 (local {: autoload} (require :nfnl.module))
+(local core (autoload :nfnl.core))
 (local notify (autoload :nfnl.notify))
 (local util (autoload :juice.util))
+
+(local default-opts {:day-format "%a, %d %b %Y"
+                     :time-format "%H:%M"
+                     :task-format "* [ ] "
+                     :maps nil})
 
 (fn insert-week []
   (lambda find-day [dir day new-time]
@@ -17,25 +23,35 @@
     (util.insert-lines "----" "" text "")))
 
 (fn insert-day []
-  (let [curr-day (vim.fn.strftime "%a, %d %b %Y")
+  (let [day-format (. vim.g.journal_tools :day-format)
+        curr-day (vim.fn.strftime day-format)
         text (.. "### " curr-day)]
     (util.insert-lines text)))
 
 (fn insert-time []
-  (let [curr-time (vim.fn.strftime "%H:%M")
+  (let [time-format (. vim.g.journal_tools :time-format)
+        curr-time (vim.fn.strftime time-format)
         text (.. "#### " curr-time " ")]
     (util.insert-lines text)))
 
-(fn insert-task [] (util.insert-lines "- [ ] "))
+(fn insert-task []
+  (->> (. vim.g.journal_tools :task-format)
+       (util.insert-lines)))
 
-(fn load-journal-tools [{: maps}]
-  ;; Load mappings the first time, then add in FileType autocmd
-  (util.set-keys maps)
-  (vim.api.nvim_create_autocmd :FileType
-                               {:pattern :markdown
-                                :callback #(util.set-keys maps)})
-  (vim.api.nvim_del_user_command :JournalInit)
-  (notify.info "[journal-tools] Loaded tools"))
+(fn load-journal-tools [user-opts]
+  (let [maps (core.merge (?. user-opts :maps) (. default-opts :maps))
+        opts (core.merge default-opts user-opts)]
+    ;; Clear maps from opts
+    (tset opts :maps nil)
+    ;; Load mappings the first time, then add in FileType autocmd
+    (util.set-keys maps)
+    (vim.api.nvim_create_autocmd :FileType
+                                 {:pattern :markdown
+                                  :callback #(util.set-keys maps)})
+    ;; Set global plugin-specific variables
+    (set vim.g.journal_tools opts)
+    (vim.api.nvim_del_user_command :JournalInit)
+    (notify.info "[journal-tools] Loaded tools")))
 
 (fn setup [opts]
   (vim.api.nvim_create_user_command :JournalInit #(load-journal-tools opts)

@@ -20,24 +20,27 @@
                       [[:v
                         :K
                         metals.type_of_range
-                        {:desc "show type of visual selection" :buffer bufnr}]
+                        {:desc "[metals] show type of visual selection"
+                         :buffer bufnr}]
                        [:n
                         :<localleader>mw
                         #(metals.hover_worksheet {:border :rounded})
-                        {:desc "show (m)etals (w)orksheet output in popup"
+                        {:desc "[metals] show (m)etals (w)orksheet output in popup"
                          :buffer bufnr}]
                        [:n
                         :<localleader>mc
                         telescope.extensions.metals.commands
-                        {:desc "list (m)etals (c)commands" :buffer bufnr}]
+                        {:desc "[metals] list (m)etals (c)commands"
+                         :buffer bufnr}]
                        [:n
                         :<localleader>mt
                         tvp.toggle_tree_view
-                        {:desc "(m)etals (t)oggle tree view" :buffer bufnr}]
+                        {:desc "[metals] (m)etals (t)oggle tree view"
+                         :buffer bufnr}]
                        [:n
                         :<localleader>mr
                         tvp.reveal_in_tree
-                        {:desc "(m)etals (r)eveal current member in tree view"
+                        {:desc "[metals] (m)etals (r)eveal current member in tree view"
                          :buffer bufnr}]])]
     (util.assoc-in vim.opt options)
     (set config.settings metals-settings)

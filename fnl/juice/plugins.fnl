@@ -48,6 +48,7 @@
 (local lisp-tools
        (let [languages [:clojure :fennel]]
          [{1 :Olical/conjure
+           :branch :main
            :ft languages
            :config #(util.assoc-in vim.g
                                    {"conjure#result#register" "*"

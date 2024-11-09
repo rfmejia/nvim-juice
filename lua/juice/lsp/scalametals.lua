@@ -17,7 +17,7 @@ local function initialize_metals()
     local function _3_()
       return metals.hover_worksheet({border = "rounded"})
     end
-    return {{"v", "K", metals.type_of_range, {desc = "show type of visual selection", buffer = bufnr}}, {"n", "<localleader>mw", _3_, {desc = "show (m)etals (w)orksheet output in popup", buffer = bufnr}}, {"n", "<localleader>mc", telescope.extensions.metals.commands, {desc = "list (m)etals (c)commands", buffer = bufnr}}, {"n", "<localleader>mt", tvp.toggle_tree_view, {desc = "(m)etals (t)oggle tree view", buffer = bufnr}}, {"n", "<localleader>mr", tvp.reveal_in_tree, {desc = "(m)etals (r)eveal current member in tree view", buffer = bufnr}}}
+    return {{"v", "K", metals.type_of_range, {desc = "[metals] show type of visual selection", buffer = bufnr}}, {"n", "<localleader>mw", _3_, {desc = "[metals] show (m)etals (w)orksheet output in popup", buffer = bufnr}}, {"n", "<localleader>mc", telescope.extensions.metals.commands, {desc = "[metals] list (m)etals (c)commands", buffer = bufnr}}, {"n", "<localleader>mt", tvp.toggle_tree_view, {desc = "[metals] (m)etals (t)oggle tree view", buffer = bufnr}}, {"n", "<localleader>mr", tvp.reveal_in_tree, {desc = "[metals] (m)etals (r)eveal current member in tree view", buffer = bufnr}}}
   end
   metals_maps = _2_
   util["assoc-in"](vim.opt, options)
@@ -27,8 +27,8 @@ local function initialize_metals()
   config["tvp"] = {panel_alignment = "right", toggle_node_mapping = "<CR>", node_command_mapping = "r"}
   config.handlers = juice_lsp.handlers
   local function _4_(client, bufnr)
-    _G.assert((nil ~= bufnr), "Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:51")
-    _G.assert((nil ~= client), "Missing argument client on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:51")
+    _G.assert((nil ~= bufnr), "Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:54")
+    _G.assert((nil ~= client), "Missing argument client on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:54")
     juice_lsp["set-buffer-opts"](client, bufnr)
     return util["set-keys"](metals_maps(bufnr))
   end
