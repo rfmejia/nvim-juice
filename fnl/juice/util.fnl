@@ -22,9 +22,13 @@
       (each [k v (pairs options)]
         (core.assoc t k v)))))
 
-(lambda auto-setup [...]
+(lambda call [plugin func ...]
+  "Autoload and call a plugin function with optional args"
+  ((. (autoload plugin) func) ...))
+
+(lambda call-setup [...]
   (each [_ module (ipairs [...])]
-    ((. (autoload module) :setup))))
+    (call module :setup)))
 
 (lambda insert-lines [...]
   "Insert text at the current cursor position"
@@ -38,5 +42,6 @@
  : has?
  : set-keys
  : assoc-in
- : auto-setup
+ : call
+ : call-setup
  : insert-lines}

@@ -33,9 +33,14 @@ local function assoc_in(t, ...)
   end
   return nil
 end
-local function auto_setup(...)
+local function call(plugin, func, ...)
+  _G.assert((nil ~= func), "Missing argument func on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:25")
+  _G.assert((nil ~= plugin), "Missing argument plugin on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:25")
+  return autoload(plugin)[func](...)
+end
+local function call_setup(...)
   for _, module in ipairs({...}) do
-    autoload(module).setup()
+    call(module, "setup")
   end
   return nil
 end
@@ -45,4 +50,4 @@ local function insert_lines(...)
   local _row = (row - 1)
   return vim.api.nvim_buf_set_lines(buf, _row, (_row + 1), false, {...})
 end
-return {["lua-cmd"] = lua_cmd, ["executable?"] = executable_3f, ["has?"] = has_3f, ["set-keys"] = set_keys, ["assoc-in"] = assoc_in, ["auto-setup"] = auto_setup, ["insert-lines"] = insert_lines}
+return {["lua-cmd"] = lua_cmd, ["executable?"] = executable_3f, ["has?"] = has_3f, ["set-keys"] = set_keys, ["assoc-in"] = assoc_in, call = call, ["call-setup"] = call_setup, ["insert-lines"] = insert_lines}

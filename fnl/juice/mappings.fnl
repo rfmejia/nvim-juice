@@ -180,101 +180,99 @@
                                 {:desc "open lazydocker in a new tmux window"
                                  :silent true}]]})
 
-(fn setup []
-  (let [mappings (core.concat general jumps undo-steps dates marks buffers tabs
-                              quickfix search-replace visual-indent plugins)]
-    (util.set-keys mappings))
-  (comment "select completion binding item")
-  (vim.cmd "inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")
-  (comment "---- TMUX ----")
-  (when vim.env.TMUX
-    (each [app mappings (pairs tmux-apps)]
-      (when (util.executable? app)
-        (util.set-keys mappings))))
-  (comment "---- JOURNAL ----")
-  (when vim.env.JOURNAL (util.set-keys journal-launchers)))
+(local oil-maps [[:n
+                  :<leader>e
+                  #(util.call :oil :open)
+                  {:desc "[oil] explore files in current file's path"
+                   :silent true}]])
 
-(fn build-oil-maps []
-  (let [oil (autoload :oil)]
-    [[:n
-      :<leader>e
-      oil.open
-      {:desc "[oil] explore files in current file's path" :silent true}]]))
+(local telescope-maps [[:n
+                        :<leader>f
+                        #(util.call :telescope.builtin :find_files)
+                        {:desc "[telescope] (f)iles"}]
+                       [:n
+                        :<leader>p
+                        #(util.call :telescope.builtin :oldfiles)
+                        {:desc "[telescope] oldfiles"}]
+                       [:n
+                        :<leader>g
+                        #(util.call :telescope.builtin :git_files)
+                        {:desc "[telescope] (g)it files"}]
+                       [:n
+                        :<leader>k
+                        #(util.call :telescope.builtin :keymaps)
+                        {:desc "[telescope] (k)eymaps"}]])
 
-(fn build-telescope-maps []
-  (let [builtin (autoload :telescope.builtin)]
-    [[:n :<leader>f builtin.find_files {:desc "[telescope] (f)iles"}]
-     [:n :<leader>p builtin.oldfiles {:desc "[telescope] oldfiles"}]
-     [:n :<leader>g builtin.git_files {:desc "[telescope] (g)it files"}]
-     [:n :<leader>k builtin.keymaps {:desc "[telescope] (k)eymaps"}]]))
-
-(fn build-gitsigns-maps []
-  (let [gitsigns (autoload :gitsigns)
-        nav [[:n
-              "]g"
-              #(gitsigns.nav_hunk :next {:wrap false :preview true})
-              {:desc "[gitsigns] jump to next git hunk"}]
-             [:n
-              "[g"
-              #(gitsigns.nav_hunk :prev {:wrap false :preview true})
-              {:desc "[gitsigns] jump to previous git hunk"}]]
-        staging [[:n
-                  :<localleader>gs
-                  gitsigns.stage_hunk
-                  {:desc "[gitsigns] (g)it (s)tage hunk"}]
-                 [:n
-                  :<localleader>gu
-                  gitsigns.undo_stage_hunk
-                  {:desc "[gitsigns] (g)it (u)ndo staged hunk"}]
-                 [:n
-                  :<localleader>gr
-                  gitsigns.reset_hunk
-                  {:desc "(g)it (r)eset hunk"}]
-                 [:n
-                  :<localleader>gS
-                  gitsigns.stage_buffer
-                  {:desc "[gitsigns] (g)it (S)tage buffer"}]
-                 [:n
-                  :<localleader>gR
-                  gitsigns.reset_buffer
-                  {:desc "[gitsigns] (g)it (R)eset buffer"}]
-                 [:v
-                  :<localleader>gs
-                  #(gitsigns.stage_hunk {(vim.fn.line ".") (vim.fn.line :v)})
-                  {:desc "[gitsigns] (g)it (s)tage hunk"}]
-                 [:v
-                  :<localleader>gr
-                  #(gitsigns.reset_hunk {(vim.fn.line ".") (vim.fn.line :v)})
-                  {:desc "[gitsigns] (g)it (r)eset hunk"}]]
-        blame [[:n
-                :<localleader>gb
-                #(gitsigns.blame_line {:full true})
-                {:desc "[gitsigns] (g)it show line (b)lame"}]
-               [:n
-                :<localleader>gB
-                gitsigns.toggle_current_line_blame
-                {:desc "[gitsigns] (g)it toggle current line (B)lame"}]]
-        view [[:n
-               :<localleader>gp
-               gitsigns.preview_hunk
-               {:desc "[gitsigns] (g)it (p)review hunk"}]
-              [:n
-               :<localleader>gd
-               gitsigns.diffthis
-               {:desc "[gitsigns] (g)it show (d)iff"}]
-              [:n
-               :<localleader>gD
-               gitsigns.toggle_deleted
-               {:desc "[gitsigns] (g)it toggle (D)eleted hunks"}]]
-        list [[:n
-               :<localleader>gl
-               gitsigns.setloclist
-               {:desc "[gitsigns] show buffer (g)it hunks in (l)oclist"}]
-              [:n
-               :<localleader>gc
-               #(gitsigns.setqflist :all)
-               {:desc "[gitsigns] show all (g)it hunks in qui(c)kfix list"}]]]
-    (core.concat nav staging blame view list)))
+(local gitsigns-maps
+       (let [nav [[:n
+                   "]g"
+                   #(util.call :gitsigns :nav_hunk :next
+                               {:wrap false :preview true})
+                   {:desc "[gitsigns] jump to next git hunk"}]
+                  [:n
+                   "[g"
+                   #(util.call :gitsigns :nav_hunk :prev
+                               {:wrap false :preview true})
+                   {:desc "[gitsigns] jump to previous git hunk"}]]
+             staging [[:n
+                       :<localleader>gs
+                       #(util.call :gitsigns :stage_hunk)
+                       {:desc "[gitsigns] (g)it (s)tage hunk"}]
+                      [:n
+                       :<localleader>gu
+                       #(util.call :gitsigns :undo_stage_hunk)
+                       {:desc "[gitsigns] (g)it (u)ndo staged hunk"}]
+                      [:n
+                       :<localleader>gr
+                       #(util.call :gitsigns :reset_hunk)
+                       {:desc "(g)it (r)eset hunk"}]
+                      [:n
+                       :<localleader>gS
+                       #(util.call :gitsigns :stage_buffer)
+                       {:desc "[gitsigns] (g)it (S)tage buffer"}]
+                      [:n
+                       :<localleader>gR
+                       #(util.call :gitsigns :reset_buffer)
+                       {:desc "[gitsigns] (g)it (R)eset buffer"}]
+                      [:v
+                       :<localleader>gs
+                       #(#(util.call :gitsigns :stage_hunk
+                                     {(vim.fn.line ".") (vim.fn.line :v)}))
+                       {:desc "[gitsigns] (g)it (s)tage hunk"}]
+                      [:v
+                       :<localleader>gr
+                       #(util.call :gitsigns :reset_hunk
+                                   {(vim.fn.line ".") (vim.fn.line :v)})
+                       {:desc "[gitsigns] (g)it (r)eset hunk"}]]
+             blame [[:n
+                     :<localleader>gb
+                     #(util.call :gitsigns :blame_line {:full true})
+                     {:desc "[gitsigns] (g)it show line (b)lame"}]
+                    [:n
+                     :<localleader>gB
+                     #(util.call :gitsigns :toggle_current_line_blame)
+                     {:desc "[gitsigns] (g)it toggle current line (B)lame"}]]
+             view [[:n
+                    :<localleader>gp
+                    #(util.call :gitsigns :preview_hunk)
+                    {:desc "[gitsigns] (g)it (p)review hunk"}]
+                   [:n
+                    :<localleader>gd
+                    #(util.call :gitsigns :diffthis)
+                    {:desc "[gitsigns] (g)it show (d)iff"}]
+                   [:n
+                    :<localleader>gD
+                    #(util.call :gitsigns :toggle_deleted)
+                    {:desc "[gitsigns] (g)it toggle (D)eleted hunks"}]]
+             list [[:n
+                    :<localleader>gl
+                    #(util.call :gitsigns :setloclist)
+                    {:desc "[gitsigns] show buffer (g)it hunks in (l)oclist"}]
+                   [:n
+                    :<localleader>gc
+                    #(util.call :gitsigns :setqflist :all)
+                    {:desc "[gitsigns] show all (g)it hunks in qui(c)kfix list"}]]]
+         (core.concat nav staging blame view list)))
 
 (local dadbod-maps [[:n
                      "<localleader>d;"
@@ -301,36 +299,46 @@
                       :noremap true
                       :buffer true}]])
 
-(fn build-journal-maps []
-  (let [jtools (autoload :journal-tools)]
-    [[:n
-      :<localleader>w
-      jtools.insert-week
-      {:desc "[journal] insert current week as an h2 header"
-       :buffer (vim.api.nvim_get_current_buf)
-       :silent true}]
-     [:n
-      :<localleader>d
-      jtools.insert-day
-      {:desc "[journal] insert current date as an h3 header"
-       :buffer (vim.api.nvim_get_current_buf)
-       :silent true}]
-     [:n
-      :<localleader>t
-      jtools.insert-time
-      {:desc "[journal] insert current time as an h4 header"
-       :buffer (vim.api.nvim_get_current_buf)
-       :silent true}]
-     [:n
-      :<localleader>x
-      jtools.insert-task
-      {:desc "[journal] insert current time as an h4 header"
-       :buffer (vim.api.nvim_get_current_buf)
-       :silent true}]]))
+(local journal-maps [[:n
+                      :<localleader>w
+                      #(util.call :journal-tools :insert-week)
+                      {:desc "[journal] insert current week as an h2 header"
+                       :buffer true
+                       :silent true}]
+                     [:n
+                      :<localleader>d
+                      #(util.call :journal-tools :insert-day)
+                      {:desc "[journal] insert current date as an h3 header"
+                       :buffer true
+                       :silent true}]
+                     [:n
+                      :<localleader>t
+                      #(util.call :journal-tools :insert-time)
+                      {:desc "[journal] insert current time as an h4 header"
+                       :buffer true
+                       :silent true}]
+                     [:n
+                      :<localleader>x
+                      #(util.call :journal-tools :insert-task)
+                      {:desc "[journal] insert current time as an h4 header"
+                       :buffer true
+                       :silent true}]])
+
+(fn setup []
+  (let [mappings (core.concat general jumps undo-steps dates marks buffers tabs
+                              quickfix search-replace visual-indent plugins)]
+    (util.set-keys mappings)
+    (comment "select completion binding item")
+    (vim.cmd "inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")
+    (when vim.env.TMUX
+      (each [app mappings (pairs tmux-apps)]
+        (when (util.executable? app)
+          (util.set-keys mappings))))
+    (when vim.env.JOURNAL (util.set-keys journal-launchers))))
 
 {: setup
- : build-oil-maps
- : build-telescope-maps
- : build-gitsigns-maps
+ : oil-maps
+ : telescope-maps
+ : gitsigns-maps
  : dadbod-maps
- : build-journal-maps}
+ : journal-maps}

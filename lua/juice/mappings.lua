@@ -34,6 +34,105 @@ local function _5_()
 end
 journal_launchers = {{"n", "<leader>oj", _4_, {desc = "open journal in a new tab", silent = true}}, {"n", "<leader>ov", _5_, {desc = "open vim notes in a new tab", silent = true}}}
 local tmux_apps = {lazygit = {{"n", "<leader>og", ":!tmux neww lazygit<cr><cr>", {desc = "open lazygit in a new tmux window", silent = true}}}, lazydocker = {{"n", "<leader>od", ":!tmux neww lazydocker<cr><cr>", {desc = "open lazydocker in a new tmux window", silent = true}}}}
+local oil_maps
+local function _6_()
+  return util.call("oil", "open")
+end
+oil_maps = {{"n", "<leader>e", _6_, {desc = "[oil] explore files in current file's path", silent = true}}}
+local telescope_maps
+local function _7_()
+  return util.call("telescope.builtin", "find_files")
+end
+local function _8_()
+  return util.call("telescope.builtin", "oldfiles")
+end
+local function _9_()
+  return util.call("telescope.builtin", "git_files")
+end
+local function _10_()
+  return util.call("telescope.builtin", "keymaps")
+end
+telescope_maps = {{"n", "<leader>f", _7_, {desc = "[telescope] (f)iles"}}, {"n", "<leader>p", _8_, {desc = "[telescope] oldfiles"}}, {"n", "<leader>g", _9_, {desc = "[telescope] (g)it files"}}, {"n", "<leader>k", _10_, {desc = "[telescope] (k)eymaps"}}}
+local gitsigns_maps
+do
+  local nav
+  local function _11_()
+    return util.call("gitsigns", "nav_hunk", "next", {preview = true, wrap = false})
+  end
+  local function _12_()
+    return util.call("gitsigns", "nav_hunk", "prev", {preview = true, wrap = false})
+  end
+  nav = {{"n", "]g", _11_, {desc = "[gitsigns] jump to next git hunk"}}, {"n", "[g", _12_, {desc = "[gitsigns] jump to previous git hunk"}}}
+  local staging
+  local function _13_()
+    return util.call("gitsigns", "stage_hunk")
+  end
+  local function _14_()
+    return util.call("gitsigns", "undo_stage_hunk")
+  end
+  local function _15_()
+    return util.call("gitsigns", "reset_hunk")
+  end
+  local function _16_()
+    return util.call("gitsigns", "stage_buffer")
+  end
+  local function _17_()
+    return util.call("gitsigns", "reset_buffer")
+  end
+  local function _18_()
+    local function _19_()
+      return util.call("gitsigns", "stage_hunk", {[vim.fn.line(".")] = vim.fn.line("v")})
+    end
+    return _19_()
+  end
+  local function _20_()
+    return util.call("gitsigns", "reset_hunk", {[vim.fn.line(".")] = vim.fn.line("v")})
+  end
+  staging = {{"n", "<localleader>gs", _13_, {desc = "[gitsigns] (g)it (s)tage hunk"}}, {"n", "<localleader>gu", _14_, {desc = "[gitsigns] (g)it (u)ndo staged hunk"}}, {"n", "<localleader>gr", _15_, {desc = "(g)it (r)eset hunk"}}, {"n", "<localleader>gS", _16_, {desc = "[gitsigns] (g)it (S)tage buffer"}}, {"n", "<localleader>gR", _17_, {desc = "[gitsigns] (g)it (R)eset buffer"}}, {"v", "<localleader>gs", _18_, {desc = "[gitsigns] (g)it (s)tage hunk"}}, {"v", "<localleader>gr", _20_, {desc = "[gitsigns] (g)it (r)eset hunk"}}}
+  local blame
+  local function _21_()
+    return util.call("gitsigns", "blame_line", {full = true})
+  end
+  local function _22_()
+    return util.call("gitsigns", "toggle_current_line_blame")
+  end
+  blame = {{"n", "<localleader>gb", _21_, {desc = "[gitsigns] (g)it show line (b)lame"}}, {"n", "<localleader>gB", _22_, {desc = "[gitsigns] (g)it toggle current line (B)lame"}}}
+  local view
+  local function _23_()
+    return util.call("gitsigns", "preview_hunk")
+  end
+  local function _24_()
+    return util.call("gitsigns", "diffthis")
+  end
+  local function _25_()
+    return util.call("gitsigns", "toggle_deleted")
+  end
+  view = {{"n", "<localleader>gp", _23_, {desc = "[gitsigns] (g)it (p)review hunk"}}, {"n", "<localleader>gd", _24_, {desc = "[gitsigns] (g)it show (d)iff"}}, {"n", "<localleader>gD", _25_, {desc = "[gitsigns] (g)it toggle (D)eleted hunks"}}}
+  local list
+  local function _26_()
+    return util.call("gitsigns", "setloclist")
+  end
+  local function _27_()
+    return util.call("gitsigns", "setqflist", "all")
+  end
+  list = {{"n", "<localleader>gl", _26_, {desc = "[gitsigns] show buffer (g)it hunks in (l)oclist"}}, {"n", "<localleader>gc", _27_, {desc = "[gitsigns] show all (g)it hunks in qui(c)kfix list"}}}
+  gitsigns_maps = core.concat(nav, staging, blame, view, list)
+end
+local dadbod_maps = {{"n", "<localleader>d;", ":DB g:db ", {desc = "[dadbod] run an sql statement in command mode", noremap = true, buffer = true}}, {"n", "<localleader>dd", ":.DB g:db<cr>", {desc = "[dadbod] run line as an sql statement", noremap = true, buffer = true}}, {"n", "<localleader>dp", "vip:DB g:db<cr>", {desc = "[dadbod] run paragraph as an sql statement", noremap = true, buffer = true}}, {"n", "<localleader>db", ":%DB g:db<cr>", {desc = "[dadbod] run buffer as sql statements", noremap = true, buffer = true}}}
+local journal_maps
+local function _28_()
+  return util.call("journal-tools", "insert-week")
+end
+local function _29_()
+  return util.call("journal-tools", "insert-day")
+end
+local function _30_()
+  return util.call("journal-tools", "insert-time")
+end
+local function _31_()
+  return util.call("journal-tools", "insert-task")
+end
+journal_maps = {{"n", "<localleader>w", _28_, {desc = "[journal] insert current week as an h2 header", buffer = true, silent = true}}, {"n", "<localleader>d", _29_, {desc = "[journal] insert current date as an h3 header", buffer = true, silent = true}}, {"n", "<localleader>t", _30_, {desc = "[journal] insert current time as an h4 header", buffer = true, silent = true}}, {"n", "<localleader>x", _31_, {desc = "[journal] insert current time as an h4 header", buffer = true, silent = true}}}
 local function setup()
   do
     local mappings = core.concat(general, jumps, undo_steps, dates, marks, buffers, tabs, quickfix, search_replace, visual_indent, plugins)
@@ -58,48 +157,4 @@ local function setup()
     return nil
   end
 end
-local function build_oil_maps()
-  local oil = autoload("oil")
-  return {{"n", "<leader>e", oil.open, {desc = "[oil] explore files in current file's path", silent = true}}}
-end
-local function build_telescope_maps()
-  local builtin = autoload("telescope.builtin")
-  return {{"n", "<leader>f", builtin.find_files, {desc = "[telescope] (f)iles"}}, {"n", "<leader>p", builtin.oldfiles, {desc = "[telescope] oldfiles"}}, {"n", "<leader>g", builtin.git_files, {desc = "[telescope] (g)it files"}}, {"n", "<leader>k", builtin.keymaps, {desc = "[telescope] (k)eymaps"}}}
-end
-local function build_gitsigns_maps()
-  local gitsigns = autoload("gitsigns")
-  local nav
-  local function _9_()
-    return gitsigns.nav_hunk("next", {preview = true, wrap = false})
-  end
-  local function _10_()
-    return gitsigns.nav_hunk("prev", {preview = true, wrap = false})
-  end
-  nav = {{"n", "]g", _9_, {desc = "[gitsigns] jump to next git hunk"}}, {"n", "[g", _10_, {desc = "[gitsigns] jump to previous git hunk"}}}
-  local staging
-  local function _11_()
-    return gitsigns.stage_hunk({[vim.fn.line(".")] = vim.fn.line("v")})
-  end
-  local function _12_()
-    return gitsigns.reset_hunk({[vim.fn.line(".")] = vim.fn.line("v")})
-  end
-  staging = {{"n", "<localleader>gs", gitsigns.stage_hunk, {desc = "[gitsigns] (g)it (s)tage hunk"}}, {"n", "<localleader>gu", gitsigns.undo_stage_hunk, {desc = "[gitsigns] (g)it (u)ndo staged hunk"}}, {"n", "<localleader>gr", gitsigns.reset_hunk, {desc = "(g)it (r)eset hunk"}}, {"n", "<localleader>gS", gitsigns.stage_buffer, {desc = "[gitsigns] (g)it (S)tage buffer"}}, {"n", "<localleader>gR", gitsigns.reset_buffer, {desc = "[gitsigns] (g)it (R)eset buffer"}}, {"v", "<localleader>gs", _11_, {desc = "[gitsigns] (g)it (s)tage hunk"}}, {"v", "<localleader>gr", _12_, {desc = "[gitsigns] (g)it (r)eset hunk"}}}
-  local blame
-  local function _13_()
-    return gitsigns.blame_line({full = true})
-  end
-  blame = {{"n", "<localleader>gb", _13_, {desc = "[gitsigns] (g)it show line (b)lame"}}, {"n", "<localleader>gB", gitsigns.toggle_current_line_blame, {desc = "[gitsigns] (g)it toggle current line (B)lame"}}}
-  local view = {{"n", "<localleader>gp", gitsigns.preview_hunk, {desc = "[gitsigns] (g)it (p)review hunk"}}, {"n", "<localleader>gd", gitsigns.diffthis, {desc = "[gitsigns] (g)it show (d)iff"}}, {"n", "<localleader>gD", gitsigns.toggle_deleted, {desc = "[gitsigns] (g)it toggle (D)eleted hunks"}}}
-  local list
-  local function _14_()
-    return gitsigns.setqflist("all")
-  end
-  list = {{"n", "<localleader>gl", gitsigns.setloclist, {desc = "[gitsigns] show buffer (g)it hunks in (l)oclist"}}, {"n", "<localleader>gc", _14_, {desc = "[gitsigns] show all (g)it hunks in qui(c)kfix list"}}}
-  return core.concat(nav, staging, blame, view, list)
-end
-local dadbod_maps = {{"n", "<localleader>d;", ":DB g:db ", {desc = "[dadbod] run an sql statement in command mode", noremap = true, buffer = true}}, {"n", "<localleader>dd", ":.DB g:db<cr>", {desc = "[dadbod] run line as an sql statement", noremap = true, buffer = true}}, {"n", "<localleader>dp", "vip:DB g:db<cr>", {desc = "[dadbod] run paragraph as an sql statement", noremap = true, buffer = true}}, {"n", "<localleader>db", ":%DB g:db<cr>", {desc = "[dadbod] run buffer as sql statements", noremap = true, buffer = true}}}
-local function build_journal_maps()
-  local jtools = autoload("journal-tools")
-  return {{"n", "<localleader>w", jtools["insert-week"], {desc = "[journal] insert current week as an h2 header", buffer = vim.api.nvim_get_current_buf(), silent = true}}, {"n", "<localleader>d", jtools["insert-day"], {desc = "[journal] insert current date as an h3 header", buffer = vim.api.nvim_get_current_buf(), silent = true}}, {"n", "<localleader>t", jtools["insert-time"], {desc = "[journal] insert current time as an h4 header", buffer = vim.api.nvim_get_current_buf(), silent = true}}, {"n", "<localleader>x", jtools["insert-task"], {desc = "[journal] insert current time as an h4 header", buffer = vim.api.nvim_get_current_buf(), silent = true}}}
-end
-return {setup = setup, ["build-oil-maps"] = build_oil_maps, ["build-telescope-maps"] = build_telescope_maps, ["build-gitsigns-maps"] = build_gitsigns_maps, ["dadbod-maps"] = dadbod_maps, ["build-journal-maps"] = build_journal_maps}
+return {setup = setup, ["oil-maps"] = oil_maps, ["telescope-maps"] = telescope_maps, ["gitsigns-maps"] = gitsigns_maps, ["dadbod-maps"] = dadbod_maps, ["journal-maps"] = journal_maps}

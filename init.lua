@@ -4,6 +4,6 @@ local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local mappings = autoload("juice.mappings")
 local util = autoload("juice.util")
-util["auto-setup"]("juice.options", "juice.colorscheme", "juice.plugins", "juice.mappings", "git-info", "tmux-nav", "trim-whitespace")
+util["call-setup"]("juice.options", "juice.colorscheme", "juice.plugins", "juice.mappings", "git-info", "tmux-nav", "trim-whitespace")
 local journal_tools = autoload("journal-tools")
-return journal_tools.setup({maps = mappings["build-journal-maps"]()})
+return journal_tools.setup({maps = mappings["journal-maps"]})
