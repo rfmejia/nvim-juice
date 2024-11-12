@@ -10,4 +10,4 @@
                  :juice.mappings :git-info :tmux-nav :trim-whitespace)
 
 (let [journal-tools (autoload :journal-tools)]
-  (journal-tools.setup {:maps mappings.journal-maps}))
+  (journal-tools.setup {:maps (mappings.build-journal-maps)}))

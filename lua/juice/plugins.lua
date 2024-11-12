@@ -15,7 +15,7 @@ core_tools = {{"Olical/nfnl", ft = "fennel"}, {"nvim-treesitter/nvim-treesitter"
 local database_tools
 local function _3_()
   local function _4_()
-    return mappings["set-dadbod-maps"]()
+    return util["set-keys"](mappings["dadbod-maps"])
   end
   return vim.api.nvim_create_autocmd("FileType", {pattern = {"sql", "mysql"}, callback = _4_})
 end
@@ -43,21 +43,21 @@ local function _8_()
   local oil = autoload("oil")
   local opts = {default_file_explorer = true, delete_to_trash = true, skip_confirm_for_simple_edits = true, view_options = {show_hidden = true}}
   oil.setup(opts)
-  return mappings["set-oil-maps"]()
+  return util["set-keys"](mappings["build-oil-maps"]())
 end
 local function _9_()
   local telescope = autoload("telescope")
   local actions = autoload("telescope.actions")
   local opts = {defaults = {layout_config = {prompt_position = "bottom", height = 0.4}, layout_strategy = "bottom_pane", mappings = {i = {["<esc>"] = actions.close, ["<C-u>"] = false}}, path_display = {"truncate"}, prompt_prefix = "/", prompt_title = "test", border = false, preview = false}}
   telescope.setup(opts)
-  return mappings["set-telescope-maps"]()
+  return util["set-keys"](mappings["build-telescope-maps"]())
 end
 file_tools = {{"stevearc/oil.nvim", cmd = "Oil", keys = "<leader>e", config = _8_}, {"nvim-telescope/telescope.nvim", tag = "0.1.6", keys = {"<leader>f", "<leader>p", "<leader>g", "<leader>k"}, cmd = "Telescope", dependencies = {"nvim-lua/plenary.nvim"}, config = _9_}}
 local git_tools
 local function _10_()
   local gitsigns = autoload("gitsigns")
   gitsigns.setup()
-  return mappings["set-gitsigns-maps"]()
+  return util["set-keys"](mappings["build-gitsigns-maps"]())
 end
 git_tools = {{"lewis6991/gitsigns.nvim", event = {"BufReadPre", "BufNewFile"}, config = _10_}}
 local function setup()

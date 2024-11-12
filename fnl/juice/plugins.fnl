@@ -34,7 +34,7 @@
                         :config #(vim.api.nvim_create_autocmd :FileType
                                                               {:pattern [:sql
                                                                          :mysql]
-                                                               :callback #(mappings.set-dadbod-maps)})
+                                                               :callback #(util.set-keys mappings.dadbod-maps)})
                         :dependencies [{1 :kristijanhusak/vim-dadbod-completion
                                         :lazy true}]}])
 
@@ -79,7 +79,7 @@
                               :skip_confirm_for_simple_edits true
                               :view_options {:show_hidden true}}]
                     (oil.setup opts)
-                    (mappings.set-oil-maps))}
+                    (util.set-keys (mappings.build-oil-maps)))}
         {1 :nvim-telescope/telescope.nvim
          :tag :0.1.6
          :keys [:<leader>f :<leader>p :<leader>g :<leader>k]
@@ -98,13 +98,14 @@
                                          :prompt_prefix "/"
                                          :prompt_title :test}}]
                     (telescope.setup opts)
-                    (mappings.set-telescope-maps))}])
+                    (util.set-keys (mappings.build-telescope-maps)))}])
 
-(local git-tools [{1 :lewis6991/gitsigns.nvim
-                   :event [:BufReadPre :BufNewFile]
-                   :config #(let [gitsigns (autoload :gitsigns)]
-                              (gitsigns.setup)
-                              (mappings.set-gitsigns-maps))}])
+(local git-tools
+       [{1 :lewis6991/gitsigns.nvim
+         :event [:BufReadPre :BufNewFile]
+         :config #(let [gitsigns (autoload :gitsigns)]
+                    (gitsigns.setup)
+                    (util.set-keys (mappings.build-gitsigns-maps)))}])
 
 (fn setup []
   (let [lazy (autoload :lazy)
