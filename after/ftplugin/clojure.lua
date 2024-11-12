@@ -6,4 +6,4 @@ util["assoc-in"](vim.opt, {shiftwidth = 2, tabstop = 2, expandtab = true, textwi
 local function _2_()
   return vim.lsp.buf.format({async = false})
 end
-return vim.api.nvim_create_autocmd("BufWritePre", {callback = _2_, desc = "[clojure] call vim.lsp.buf.format on save", pattern = {"*.clj", "*.edn"}, group = vim.api.nvim_create_augroup("format_group", {clear = true})})
+return vim.api.nvim_create_autocmd("BufWritePre", {pattern = {"*.clj", "*.edn"}, callback = _2_, desc = "[clojure] call vim.lsp.buf.format on save", group = vim.api.nvim_create_augroup("format_group", {clear = true})})

@@ -134,23 +134,19 @@ local function _31_()
 end
 journal_maps = {{"n", "<localleader>w", _28_, {desc = "[journal] insert current week as an h2 header", buffer = true, silent = true}}, {"n", "<localleader>d", _29_, {desc = "[journal] insert current date as an h3 header", buffer = true, silent = true}}, {"n", "<localleader>t", _30_, {desc = "[journal] insert current time as an h4 header", buffer = true, silent = true}}, {"n", "<localleader>x", _31_, {desc = "[journal] insert current time as an h4 header", buffer = true, silent = true}}}
 local function setup()
-  do
-    local mappings = core.concat(general, jumps, undo_steps, dates, marks, buffers, tabs, quickfix, search_replace, visual_indent, plugins)
-    util["set-keys"](mappings)
-  end
+  local mappings = core.concat(general, jumps, undo_steps, dates, marks, buffers, tabs, quickfix, search_replace, visual_indent, plugins)
+  util["set-keys"](mappings)
   --[[ "select completion binding item" ]]
   vim.cmd("inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")
-  --[[ "---- TMUX ----" ]]
   if vim.env.TMUX then
-    for app, mappings in pairs(tmux_apps) do
+    for app, mappings0 in pairs(tmux_apps) do
       if util["executable?"](app) then
-        util["set-keys"](mappings)
+        util["set-keys"](mappings0)
       else
       end
     end
   else
   end
-  --[[ "---- JOURNAL ----" ]]
   if vim.env.JOURNAL then
     return util["set-keys"](journal_launchers)
   else

@@ -3,7 +3,10 @@
 (local util (autoload :juice.util))
 (local mappings (autoload :juice.mappings))
 
-(local core-tools [{1 :Olical/nfnl :ft :fennel}
+(local core-tools [{1 :Olical/nfnl
+                    :ft :fennel
+                    :config #(set vim.g.conjure#client#fennel#aniseed#deprecation_warning
+                                  false)}
                    {1 :nvim-treesitter/nvim-treesitter
                     :event [:BufReadPre :BufNewFile]
                     :build ":TSUpdate"

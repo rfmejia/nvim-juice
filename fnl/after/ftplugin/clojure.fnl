@@ -9,8 +9,8 @@
                         :commentstring ";; %s"})
 
 (vim.api.nvim_create_autocmd :BufWritePre
-                             {:callback #(vim.lsp.buf.format {:async false})
+                             {:pattern [:*.clj :*.edn]
+                              :callback #(vim.lsp.buf.format {:async false})
                               :desc "[clojure] call vim.lsp.buf.format on save"
-                              :pattern [:*.clj :*.edn]
                               :group (vim.api.nvim_create_augroup :format_group
                                                                   {:clear true})})
