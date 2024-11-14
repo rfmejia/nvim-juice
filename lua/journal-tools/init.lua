@@ -2,14 +2,13 @@
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local core = autoload("nfnl.core")
-local notify = autoload("nfnl.notify")
 local util = autoload("juice.util")
 local default_opts = {["day-format"] = "%a, %d %b %Y", ["time-format"] = "%H:%M", ["task-format"] = "* [ ] ", maps = nil}
 local function insert_week()
   local function find_day(dir, day, new_time)
-    _G.assert((nil ~= new_time), "Missing argument new-time on /home/rfmejia/.config/nvim/fnl/journal-tools/init.fnl:12")
-    _G.assert((nil ~= day), "Missing argument day on /home/rfmejia/.config/nvim/fnl/journal-tools/init.fnl:12")
-    _G.assert((nil ~= dir), "Missing argument dir on /home/rfmejia/.config/nvim/fnl/journal-tools/init.fnl:12")
+    _G.assert((nil ~= new_time), "Missing argument new-time on /home/rfmejia/.config/nvim/fnl/journal-tools/init.fnl:11")
+    _G.assert((nil ~= day), "Missing argument day on /home/rfmejia/.config/nvim/fnl/journal-tools/init.fnl:11")
+    _G.assert((nil ~= dir), "Missing argument dir on /home/rfmejia/.config/nvim/fnl/journal-tools/init.fnl:11")
     local new_day = vim.fn.strftime("%a", new_time)
     local secs_in_a_day = (60 * 60 * 24)
     if (day == new_day) then
@@ -67,7 +66,7 @@ local function load_journal_tools(user_opts)
   vim.api.nvim_create_autocmd("FileType", {pattern = "markdown", callback = _7_})
   vim.g.journal_tools = opts
   vim.api.nvim_del_user_command("JournalInit")
-  return notify.info("[journal-tools] Loaded tools")
+  return vim.notify("[journal-tools] Loaded tools")
 end
 local function setup(opts)
   local function _8_()

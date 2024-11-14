@@ -1,6 +1,3 @@
-(local {: autoload} (require :nfnl.module))
-(local notify (autoload :nfnl.notify))
-
 (fn set-file-status-global-var []
   "Updates the git flag(s) of the current file inside g:gitfile"
   (let [path (vim.fn.expand "%:p")
@@ -8,7 +5,8 @@
     (match (vim.fn.system git-cmd)
       status (set vim.g.git_file_status status)
       (nil err-msg)
-      (notify.error "[git-info] Could not get `git file-status`: " err-msg))))
+      (vim.notify (.. "[git-info] Could not get `git file-status`: " err-msg)
+                  vim.log.levels.ERROR))))
 
 (fn set-branch-global-var []
   "Set vim.g.git_branch of current working directory (if any)"
@@ -17,8 +15,9 @@
                     " branch --show-current --no-color 2> /dev/null | tr -d ' \\n'")]
     (match (vim.fn.system git-cmd)
       branch (set vim.g.git_branch branch)
-      (nil err-msg) (notify.error "[git-info] Could not get `git branch`: "
-                                  err-msg))))
+      (nil err-msg)
+      (vim.notify (.. "[git-info] Could not get `git branch`: " err-msg)
+                  vim.log.levels.ERROR))))
 
 (fn setup []
   (vim.api.nvim_create_autocmd [:BufEnter :BufWritePost]

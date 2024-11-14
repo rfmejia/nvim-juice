@@ -1,6 +1,5 @@
 (local {: autoload} (require :nfnl.module))
 (local core (autoload :nfnl.core))
-(local notify (autoload :nfnl.notify))
 (local util (autoload :juice.util))
 
 (local default-opts {:day-format "%a, %d %b %Y"
@@ -51,7 +50,7 @@
     ;; Set global plugin-specific variables
     (set vim.g.journal_tools opts)
     (vim.api.nvim_del_user_command :JournalInit)
-    (notify.info "[journal-tools] Loaded tools")))
+    (vim.notify "[journal-tools] Loaded tools")))
 
 (fn setup [opts]
   (vim.api.nvim_create_user_command :JournalInit #(load-journal-tools opts)

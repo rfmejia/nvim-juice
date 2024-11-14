@@ -10,7 +10,7 @@
          ":<C-r>\""
          {:desc "paste register 0 contents in command mode"}]
         [:n :<leader>w ":w<cr>" {:desc "write buffer" :silent true}]
-        [:n :<leader>R vim.cmd.registers {:desc "list registers"}]
+        [:n :<leader>r vim.cmd.registers {:desc "list registers"}]
         [:n :g? ":vert h<cr>" {:desc "open help" :silent true}]
         [:n
          :<F2>
@@ -44,36 +44,20 @@
                ":.!date '+\\%a, \\%d \\%b \\%Y' --date=''<left>"
                {:desc "prompt for date query"}]])
 
+;; TODO make this into the `marksman` plugin
 (local marks [[:n
                :<leader>mm
-               #(vim.cmd.marks :ARST)
-               {:desc "list file marks ARST"}]
-              [:n
-               :<leader>mc
-               (fn []
-                 (vim.cmd.delmarks :ARST)
-                 (notify.info "Cleared file marks"))
-               {:desc "clear special file marks"}]
-              [:n :<leader>a "`Azz" {:desc "jump to A mark"}]
-              [:n :<leader>r "`Rzz" {:desc "jump to R mark"}]
-              [:n :<leader>s "`Szz" {:desc "jump to S mark"}]
-              [:n :<leader>t "`Tzz" {:desc "jump to T mark"}]
-              [:n
-               :<leader>ma
-               "mA:echo 'Marked file A'<cr>"
-               {:desc "set A mark"}]
-              [:n
-               :<leader>mr
-               "mR:echo 'Marked file R'<cr>"
-               {:desc "set R mark"}]
-              [:n
-               :<leader>ms
-               "mS:echo 'Marked file S'<cr>"
-               {:desc "set S mark"}]
-              [:n
-               :<leader>mt
-               "mT:echo 'Marked file T'<cr>"
-               {:desc "set T mark"}]])
+               #(vim.cmd.marks :ARSTarst)
+               {:desc "list quick marks ARST"}]
+              ;; TODO Replace these with putting signs on the sign column
+              [:n :ma "ma:echo 'Quick marked a'<cr>"]
+              [:n :mr "mr:echo 'Quick marked r'<cr>"]
+              [:n :ms "ms:echo 'Quick marked s'<cr>"]
+              [:n :mt "mt:echo 'Quick marked t'<cr>"]
+              [:n :mA "mA:echo 'Quick marked A'<cr>"]
+              [:n :mR "mR:echo 'Quick marked R'<cr>"]
+              [:n :mS "mS:echo 'Quick marked S'<cr>"]
+              [:n :mT "mT:echo 'Quick marked T'<cr>"]])
 
 (local buffers [[:n :<leader>b ":buffers<cr>:buffer<Space>" {}]
                 [:n "[B" vim.cmd.bfirst {}]

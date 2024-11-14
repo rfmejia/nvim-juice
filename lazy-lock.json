@@ -1,6 +1,6 @@
 {
   "conjure": { "branch": "main", "commit": "bc8907e4ca572720a9f785660781450f8e79ef05" },
-  "gitsigns.nvim": { "branch": "main", "commit": "4daf7022f1481edf1e8fb9947df13bb07c18e89a" },
+  "gitsigns.nvim": { "branch": "main", "commit": "ac5aba6dce8c06ea22bea2c9016f51a2dbf90dc7" },
   "lazy.nvim": { "branch": "main", "commit": "7967abe55752aa90532e6bb4bd4663fe27a264cb" },
   "nfnl": { "branch": "main", "commit": "60b2ab7051cf2f631bc03274b56061136d1f9177" },
   "nvim-autopairs": { "branch": "master", "commit": "ee297f215e95a60b01fde33275cc3c820eddeebe" },
@@ -8,8 +8,8 @@
   "nvim-metals": { "branch": "main", "commit": "f861db9fda55939797ac1b05238c49b0dcdc3bdb" },
   "nvim-paredit": { "branch": "master", "commit": "0fadfa5cb14c4a2a8fc3e8fbd3cb72c7d5e16eda" },
   "nvim-surround": { "branch": "main", "commit": "dca2e998ff26681ee422b92c6ed39b3d2908d8a9" },
-  "nvim-treesitter": { "branch": "master", "commit": "7646c1c12a3121562aa87fd79aace48c728ac096" },
-  "oil.nvim": { "branch": "master", "commit": "8735d185b37457bd899cd4e47a4517b899407949" },
+  "nvim-treesitter": { "branch": "master", "commit": "6389ceb1758b8f62a15194e3b790e33268304cb8" },
+  "oil.nvim": { "branch": "master", "commit": "0472d9296ace2d57769eb3e022a918803f096ea4" },
   "plenary.nvim": { "branch": "master", "commit": "2d9b06177a975543726ce5c73fca176cedbffe9d" },
   "telescope.nvim": { "branch": "master", "commit": "6312868392331c9c0f22725041f1ec2bef57c751" },
   "undotree": { "branch": "master", "commit": "78b5241191852ffa9bb5da5ff2ee033160798c3b" },
