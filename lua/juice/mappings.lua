@@ -12,13 +12,13 @@ local marks
 local function _2_()
   return vim.cmd.marks("ARSTarst")
 end
-marks = {{"n", "<leader>mm", _2_, {desc = "list quick marks ARST"}}, {"n", "ma", "ma:echo 'Quick marked a'<cr>"}, {"n", "mr", "mr:echo 'Quick marked r'<cr>"}, {"n", "ms", "ms:echo 'Quick marked s'<cr>"}, {"n", "mt", "mt:echo 'Quick marked t'<cr>"}, {"n", "mA", "mA:echo 'Quick marked A'<cr>"}, {"n", "mR", "mR:echo 'Quick marked R'<cr>"}, {"n", "mS", "mS:echo 'Quick marked S'<cr>"}, {"n", "mT", "mT:echo 'Quick marked T'<cr>"}}
+marks = {{"n", "<leader>m", _2_, {desc = "list quick marks ARST"}}, {"n", "ma", "ma:echo 'Quick marked a'<cr>"}, {"n", "mr", "mr:echo 'Quick marked r'<cr>"}, {"n", "ms", "ms:echo 'Quick marked s'<cr>"}, {"n", "mt", "mt:echo 'Quick marked t'<cr>"}, {"n", "mA", "mA:echo 'Quick marked A'<cr>"}, {"n", "mR", "mR:echo 'Quick marked R'<cr>"}, {"n", "mS", "mS:echo 'Quick marked S'<cr>"}, {"n", "mT", "mT:echo 'Quick marked T'<cr>"}}
 local buffers = {{"n", "<leader>b", ":buffers<cr>:buffer<Space>", {}}, {"n", "[B", vim.cmd.bfirst, {}}, {"n", "]B", vim.cmd.blast, {}}, {"n", "[b", vim.cmd.bprevious, {}}, {"n", "]b", vim.cmd.bnext, {}}, {"n", "<leader>x", ":bp|bdelete #<cr>", {}}}
 local tabs = {{"n", "<leader>tn", vim.cmd.tabnew, {}}, {"n", "<leader>tc", vim.cmd.tabclose, {}}, {"n", "<leader>ts", ":tab split<cr>", {}}, {"n", "[t", vim.cmd.tabprevious, {}}, {"n", "]t", vim.cmd.tabnext, {}}, {"n", "[T", vim.cmd.tabfirst, {}}, {"n", "]T", vim.cmd.tablast, {}}}
-local quickfix = {{"n", "<leader>co", vim.cmd.copen, {desc = "open quickfix list"}}, {"n", "<leader>cc", vim.cmd.cclose, {desc = "close quickfix list"}}, {"n", "[c", vim.cmd.cprevious, {desc = "jump to previous entry in quickfix list"}}, {"n", "]c", vim.cmd.cnext, {desc = "jump to previous entry in quickfix list"}}, {"n", "[C", vim.cmd.cfirst, {desc = "jump to previous entry in quickfix list"}}, {"n", "]C", vim.cmd.clast, {desc = "jump to previous entry in quickfix list"}}, {"n", "<leader>lo", vim.cmd.lopen, {desc = "open loclist list"}}, {"n", "<leader>lc", vim.cmd.lclose, {desc = "close loclist list"}}, {"n", "[l", vim.cmd.lprevious, {desc = "jump to previous entry in loclist"}}, {"n", "]l", vim.cmd.lnext, {desc = "jump to next entry in loclist"}}, {"n", "[L", vim.cmd.lfirst, {desc = "jump to first entry in loclist"}}, {"n", "]L", vim.cmd.llast, {desc = "jump to last entry in loclist"}}}
+local quickfix = {{"n", "<leader>co", vim.cmd.copen, {desc = "open quickfix list"}}, {"n", "<leader>cc", vim.cmd.cclose, {desc = "close quickfix list"}}, {"n", "[c", vim.cmd.cprevious, {desc = "jump to the previous entry in the current quickfix list"}}, {"n", "]c", vim.cmd.cnext, {desc = "jump to the next entry in the current quickfix list"}}, {"n", "<leader>C", vim.cmd.chistory, {desc = "list quickfix history"}}, {"n", "[C", vim.cmd.colder, {desc = "jump to the previous quickfix list"}}, {"n", "]C", vim.cmd.cnewer, {desc = "jump to the newer quickfix list"}}}
+local loclist = {{"n", "<leader>lo", vim.cmd.lopen, {desc = "open loclist list"}}, {"n", "<leader>lc", vim.cmd.lclose, {desc = "close loclist list"}}, {"n", "[l", vim.cmd.lprevious, {desc = "jump to previous entry in the current loclist"}}, {"n", "]l", vim.cmd.lnext, {desc = "jump to next entry in the current loclist"}}, {"n", "<leader>L", vim.cmd.lhistory, {desc = "list loclist history"}}, {"n", "[L", vim.cmd.lolder, {desc = "jump to the previous loclist"}}, {"n", "]L", vim.cmd.lnewer, {desc = "jump to the newer loclist"}}}
 local search_replace = {{"n", "<leader>/s", ":s//g<left><left>", {desc = "prompt for line search"}}, {"n", "<leader>/S", ":%s//g<left><left>", {desc = "prompt for buffer search"}}, {"n", "<leader>/w", ":s/\\<<c-r><c-w>\\>//g<left><left>", {desc = "prompt for line search and replace"}}, {"n", "<leader>/W", ":%s/\\<<c-r><c-w>\\>//g<left><left>", {desc = "prompt for buffer search and replace"}}, {"n", "<leader>/v", ":vim // *<left><left><left>", {desc = "prompt for global search"}}}
 local visual_indent = {{"v", "<", "<gv", {}}, {"v", ">", ">gv", {}}}
-local plugins = {{"n", "<leader>L", ":Lazy<cr>", {silent = true}}, {"n", "<leader>u", ":UndotreeToggle<cr>", {desc = "(undotree) toggle", silent = true}}}
 local journal_launchers
 local function _3_()
   autoload("journal-tools")["load-journal-tools"]()
@@ -30,6 +30,7 @@ local function _4_()
 end
 journal_launchers = {{"n", "<leader>oj", _3_, {desc = "open journal in a new tab", silent = true}}, {"n", "<leader>ov", _4_, {desc = "open vim notes in a new tab", silent = true}}}
 local tmux_apps = {lazygit = {{"n", "<leader>og", ":!tmux neww lazygit<cr><cr>", {desc = "open lazygit in a new tmux window", silent = true}}}, lazydocker = {{"n", "<leader>od", ":!tmux neww lazydocker<cr><cr>", {desc = "open lazydocker in a new tmux window", silent = true}}}}
+--[[ "-- PLUGIN-SPECIFIC MAPPINGS --" ]]
 local oil_maps
 local function _5_()
   return util.call("oil", "open")
@@ -130,7 +131,7 @@ local function _30_()
 end
 journal_maps = {{"n", "<localleader>w", _27_, {desc = "[journal] insert current week as an h2 header", buffer = true, silent = true}}, {"n", "<localleader>d", _28_, {desc = "[journal] insert current date as an h3 header", buffer = true, silent = true}}, {"n", "<localleader>t", _29_, {desc = "[journal] insert current time as an h4 header", buffer = true, silent = true}}, {"n", "<localleader>x", _30_, {desc = "[journal] insert current time as an h4 header", buffer = true, silent = true}}}
 local function setup()
-  local mappings = core.concat(general, jumps, undo_steps, dates, marks, buffers, tabs, quickfix, search_replace, visual_indent, plugins)
+  local mappings = core.concat(general, jumps, undo_steps, dates, marks, buffers, tabs, quickfix, loclist, search_replace, visual_indent)
   util["set-keys"](mappings)
   --[[ "select completion binding item" ]]
   vim.cmd("inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")

@@ -46,7 +46,7 @@
 
 ;; TODO make this into the `marksman` plugin
 (local marks [[:n
-               :<leader>mm
+               :<leader>m
                #(vim.cmd.marks :ARSTarst)
                {:desc "list quick marks ARST"}]
               ;; TODO Replace these with putting signs on the sign column
@@ -79,37 +79,38 @@
                  [:n
                   "[c"
                   vim.cmd.cprevious
-                  {:desc "jump to previous entry in quickfix list"}]
+                  {:desc "jump to the previous entry in the current quickfix list"}]
                  [:n
                   "]c"
                   vim.cmd.cnext
-                  {:desc "jump to previous entry in quickfix list"}]
+                  {:desc "jump to the next entry in the current quickfix list"}]
+                 [:n
+                  :<leader>C
+                  vim.cmd.chistory
+                  {:desc "list quickfix history"}]
                  [:n
                   "[C"
-                  vim.cmd.cfirst
-                  {:desc "jump to previous entry in quickfix list"}]
+                  vim.cmd.colder
+                  {:desc "jump to the previous quickfix list"}]
                  [:n
                   "]C"
-                  vim.cmd.clast
-                  {:desc "jump to previous entry in quickfix list"}]
-                 [:n :<leader>lo vim.cmd.lopen {:desc "open loclist list"}]
-                 [:n :<leader>lc vim.cmd.lclose {:desc "close loclist list"}]
-                 [:n
-                  "[l"
-                  vim.cmd.lprevious
-                  {:desc "jump to previous entry in loclist"}]
-                 [:n
-                  "]l"
-                  vim.cmd.lnext
-                  {:desc "jump to next entry in loclist"}]
-                 [:n
-                  "[L"
-                  vim.cmd.lfirst
-                  {:desc "jump to first entry in loclist"}]
-                 [:n
-                  "]L"
-                  vim.cmd.llast
-                  {:desc "jump to last entry in loclist"}]])
+                  vim.cmd.cnewer
+                  {:desc "jump to the newer quickfix list"}]])
+
+(local loclist
+       [[:n :<leader>lo vim.cmd.lopen {:desc "open loclist list"}]
+        [:n :<leader>lc vim.cmd.lclose {:desc "close loclist list"}]
+        [:n
+         "[l"
+         vim.cmd.lprevious
+         {:desc "jump to previous entry in the current loclist"}]
+        [:n
+         "]l"
+         vim.cmd.lnext
+         {:desc "jump to next entry in the current loclist"}]
+        [:n :<leader>L vim.cmd.lhistory {:desc "list loclist history"}]
+        [:n "[L" vim.cmd.lolder {:desc "jump to the previous loclist"}]
+        [:n "]L" vim.cmd.lnewer {:desc "jump to the newer loclist"}]])
 
 (local search-replace
        [[:n :<leader>/s ":s//g<left><left>" {:desc "prompt for line search"}]
@@ -131,12 +132,6 @@
          {:desc "prompt for global search"}]])
 
 (local visual-indent [[:v "<" :<gv {}] [:v ">" :>gv {}]])
-
-(local plugins [[:n :<leader>L ":Lazy<cr>" {:silent true}]
-                [:n
-                 :<leader>u
-                 ":UndotreeToggle<cr>"
-                 {:desc "(undotree) toggle" :silent true}]])
 
 (local journal-launchers
        [[:n
@@ -163,6 +158,8 @@
                                 ":!tmux neww lazydocker<cr><cr>"
                                 {:desc "open lazydocker in a new tmux window"
                                  :silent true}]]})
+
+(comment "-- PLUGIN-SPECIFIC MAPPINGS --")
 
 (local oil-maps [[:n
                   :<leader>e
@@ -310,7 +307,7 @@
 
 (fn setup []
   (let [mappings (core.concat general jumps undo-steps dates marks buffers tabs
-                              quickfix search-replace visual-indent plugins)]
+                              quickfix loclist search-replace visual-indent)]
     (util.set-keys mappings)
     (comment "select completion binding item")
     (vim.cmd "inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")
