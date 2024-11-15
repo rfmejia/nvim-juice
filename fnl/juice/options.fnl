@@ -29,9 +29,9 @@
                  :undofile true})
 
 (local visual {; show line numbers
-               :number true
+               :number false
                ; show numbers relative to current line
-               :relativenumber true
+               :relativenumber false
                ; display line column
                :signcolumn "yes:1"
                ; highlight cursor position row

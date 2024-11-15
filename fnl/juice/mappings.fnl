@@ -15,6 +15,14 @@
                  {:desc "copy current file path to clipboard"}]
                 [:n :<F5> vim.cmd.make {:desc "trigger `make` in shell"}]
                 [:n
+                 :<leader>n
+                 #(let [is-enabled (and (: vim.opt.number :get)
+                                        (: vim.opt.relativenumber :get))]
+                    (util.assoc-in vim.opt
+                                   {:number (not is-enabled)
+                                    :relativenumber (not is-enabled)}))
+                 {:desc "toggle number and relativenumber options"}]
+                [:n
                  :<leader>ol
                  ":Lazy<cr>"
                  {:desc "open lazy.nvim" :silent true}]])
@@ -235,6 +243,10 @@
                      #(util.call :gitsigns :toggle_current_line_blame)
                      {:desc "[gitsigns] (g)it toggle current line (B)lame"}]]
              view [[:n
+                    :<localleader>gt
+                    #(util.call :gitsigns :toggle_signs)
+                    {:desc "[gitsigns] toggle sign visibility"}]
+                   [:n
                     :<localleader>gp
                     #(util.call :gitsigns :preview_hunk)
                     {:desc "[gitsigns] (g)it (p)review hunk"}]
