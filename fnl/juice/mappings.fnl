@@ -3,25 +3,27 @@
 (local notify (autoload :nfnl.notify))
 (local util (autoload :juice.util))
 
-(local general
-       [[:n :Y :y$ {:desc "yank until the end of the line"}]
-        [:n
-         "<leader>;"
-         ":<C-r>\""
-         {:desc "paste register 0 contents in command mode"}]
-        [:n :<leader>w ":w<cr>" {:desc "write buffer" :silent true}]
-        [:n :<leader>r vim.cmd.registers {:desc "list registers"}]
-        [:n :g? ":vert h<cr>" {:desc "open help" :silent true}]
-        [:n
-         :<F2>
-         "let @+ = getreg('%')"
-         {:desc "copy current file path to clipboard"}]
-        [:n :<F5> vim.cmd.make {:desc "trigger `make` in shell"}]])
+(local general [[:n :Y :y$ {:desc "yank until the end of the line"}]
+                [:n
+                 "<leader>;"
+                 ":<C-r>\""
+                 {:desc "paste register 0 contents in command mode"}]
+                [:n :<leader>w ":w<cr>" {:desc "write buffer" :silent true}]
+                [:n :<leader>r vim.cmd.registers {:desc "list registers"}]
+                [:n
+                 :<F2>
+                 "let @+ = getreg('%')"
+                 {:desc "copy current file path to clipboard"}]
+                [:n :<F5> vim.cmd.make {:desc "trigger `make` in shell"}]
+                [:n
+                 :<leader>ol
+                 ":Lazy<cr>"
+                 {:desc "open lazy.nvim" :silent true}]])
 
-(local jumps [[:n :<C-d> :<C-d>zz {:silent true}]
-              [:n :<C-u> :<C-u>zz {:silent true}]
-              [:n :<C-o> :<C-o>zz {:silent true}]
-              [:n :<C-i> :<C-i>zz {:silent true}]])
+(local jumps [[:n :<C-d> :<C-d>zz]
+              [:n :<C-u> :<C-u>zz]
+              [:n :<C-o> :<C-o>zz]
+              [:n :<C-i> :<C-i>zz]])
 
 ; Add undo step when typing sentences
 (local undo-steps [[:i "\"" "\"<C-g>u" {:silent true}]
@@ -48,31 +50,31 @@
 (local marks [[:n
                :<leader>m
                #(vim.cmd.marks :ARSTarst)
-               {:desc "list quick marks ARST"}]
+               {:desc "list quick marks (ARST and arst)"}]
               ;; TODO Replace these with putting signs on the sign column
-              [:n :ma "ma:echo 'Quick marked a'<cr>"]
-              [:n :mr "mr:echo 'Quick marked r'<cr>"]
-              [:n :ms "ms:echo 'Quick marked s'<cr>"]
-              [:n :mt "mt:echo 'Quick marked t'<cr>"]
-              [:n :mA "mA:echo 'Quick marked A'<cr>"]
-              [:n :mR "mR:echo 'Quick marked R'<cr>"]
-              [:n :mS "mS:echo 'Quick marked S'<cr>"]
-              [:n :mT "mT:echo 'Quick marked T'<cr>"]])
+              [:n :ma "ma:echo 'Marked a'<cr>"]
+              [:n :mr "mr:echo 'Marked r'<cr>"]
+              [:n :ms "ms:echo 'Marked s'<cr>"]
+              [:n :mt "mt:echo 'Marked t'<cr>"]
+              [:n :mA "mA:echo 'Marked A'<cr>"]
+              [:n :mR "mR:echo 'Marked R'<cr>"]
+              [:n :mS "mS:echo 'Marked S'<cr>"]
+              [:n :mT "mT:echo 'Marked T'<cr>"]])
 
-(local buffers [[:n :<leader>b ":buffers<cr>:buffer<Space>" {}]
-                [:n "[B" vim.cmd.bfirst {}]
-                [:n "]B" vim.cmd.blast {}]
-                [:n "[b" vim.cmd.bprevious {}]
-                [:n "]b" vim.cmd.bnext {}]
-                [:n :<leader>x ":bp|bdelete #<cr>" {}]])
+(local buffers [[:n :<leader>b ":buffers<cr>:buffer<Space>"]
+                [:n "[B" vim.cmd.bfirst]
+                [:n "]B" vim.cmd.blast]
+                [:n "[b" vim.cmd.bprevious]
+                [:n "]b" vim.cmd.bnext]
+                [:n :<leader>x ":bp|bdelete #<cr>"]])
 
-(local tabs [[:n :<leader>tn vim.cmd.tabnew {}]
-             [:n :<leader>tc vim.cmd.tabclose {}]
-             [:n :<leader>ts ":tab split<cr>" {}]
-             [:n "[t" vim.cmd.tabprevious {}]
-             [:n "]t" vim.cmd.tabnext {}]
-             [:n "[T" vim.cmd.tabfirst {}]
-             [:n "]T" vim.cmd.tablast {}]])
+(local tabs [[:n :<leader>tn vim.cmd.tabnew]
+             [:n :<leader>tc vim.cmd.tabclose]
+             [:n :<leader>ts ":tab split<cr>" {:silent true}]
+             [:n "[t" vim.cmd.tabprevious]
+             [:n "]t" vim.cmd.tabnext]
+             [:n "[T" vim.cmd.tabfirst]
+             [:n "]T" vim.cmd.tablast]])
 
 (local quickfix [[:n :<leader>co vim.cmd.copen {:desc "open quickfix list"}]
                  [:n :<leader>cc vim.cmd.cclose {:desc "close quickfix list"}]

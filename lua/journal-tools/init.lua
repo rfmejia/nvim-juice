@@ -65,13 +65,16 @@ local function load_journal_tools(user_opts)
   end
   vim.api.nvim_create_autocmd("FileType", {pattern = "markdown", callback = _7_})
   vim.g.journal_tools = opts
-  vim.api.nvim_del_user_command("JournalInit")
+  if (vim.fn.exists(":JournalInit") > 0) then
+    vim.api.nvim_del_user_command("JournalInit")
+  else
+  end
   return vim.notify("[journal-tools] Loaded tools")
 end
 local function setup(opts)
-  local function _8_()
+  local function _9_()
     return load_journal_tools(opts)
   end
-  return vim.api.nvim_create_user_command("JournalInit", _8_, {desc = "Load default mappings for journal tools"})
+  return vim.api.nvim_create_user_command("JournalInit", _9_, {desc = "Load default mappings for journal tools"})
 end
 return {setup = setup, ["insert-week"] = insert_week, ["insert-day"] = insert_day, ["insert-time"] = insert_time, ["insert-task"] = insert_task, ["load-journal-tools"] = load_journal_tools}
