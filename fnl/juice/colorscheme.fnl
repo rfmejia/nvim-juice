@@ -1,6 +1,5 @@
 (local {: autoload} (require :nfnl.module))
 (local core (autoload :nfnl.core))
-(local str (autoload :nfnl.string))
 
 (local general {:Comment {:fg :Gray :ctermfg :Gray :italic true}
                 :Constant {:fg :Green}

@@ -1,6 +1,5 @@
 (local {: autoload} (require :nfnl.module))
 (local core (autoload :nfnl.core))
-(local notify (autoload :nfnl.notify))
 (local util (autoload :juice.util))
 
 (local general [[:n :Y :y$ {:desc "yank until the end of the line"}]
@@ -314,9 +313,9 @@
     (comment "select completion binding item")
     (vim.cmd "inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")
     (when vim.env.TMUX
-      (each [app mappings (pairs tmux-apps)]
+      (each [app maps (pairs tmux-apps)]
         (when (util.executable? app)
-          (util.set-keys mappings))))
+          (util.set-keys maps))))
     (when vim.env.JOURNAL (util.set-keys journal-launchers))))
 
 {: setup

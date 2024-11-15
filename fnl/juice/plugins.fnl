@@ -65,12 +65,7 @@
        [{1 :kylechui/nvim-surround :keys [:cs :ds :ys] :config true}
         {1 :windwp/nvim-autopairs
          :event :InsertEnter
-         :opts {:enable_check_bracket_line false}}
-        {1 :mbbill/undotree
-         :cmd :UndotreeToggle
-         :config #(util.assoc-in vim.g
-                                 {:undotree_WindowLayout 4
-                                  :undotree_SetFocusWhenToggle 1})}])
+         :opts {:enable_check_bracket_line false}}])
 
 (local file-tools
        [{1 :stevearc/oil.nvim
