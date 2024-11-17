@@ -53,7 +53,7 @@ end
 local function _10_()
   return util.call("telescope.builtin", "keymaps")
 end
-telescope_maps = {{"n", "<leader>f", _7_, {desc = "[telescope] (f)iles"}}, {"n", "<leader>p", _8_, {desc = "[telescope] oldfiles"}}, {"n", "<leader>g", _9_, {desc = "[telescope] (g)it files"}}, {"n", "<leader>k", _10_, {desc = "[telescope] (k)eymaps"}}}
+telescope_maps = {{"n", "<leader>F", _7_, {desc = "[telescope] (f)iles"}}, {"n", "<leader>p", _8_, {desc = "[telescope] oldfiles"}}, {"n", "<leader>g", _9_, {desc = "[telescope] (g)it files"}}, {"n", "<leader>k", _10_, {desc = "[telescope] (k)eymaps"}}}
 local gitsigns_maps
 do
   local nav

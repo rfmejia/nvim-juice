@@ -65,6 +65,7 @@ local function load_journal_tools(user_opts)
   end
   vim.api.nvim_create_autocmd("FileType", {pattern = "markdown", callback = _7_})
   vim.g.journal_tools = opts
+  vim.opt.path:append("**")
   if (vim.fn.exists(":JournalInit") > 0) then
     vim.api.nvim_del_user_command("JournalInit")
   else

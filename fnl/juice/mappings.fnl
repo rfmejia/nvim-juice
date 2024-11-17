@@ -177,7 +177,7 @@
                    :silent true}]])
 
 (local telescope-maps [[:n
-                        :<leader>f
+                        :<leader>F
                         #(util.call :telescope.builtin :find_files)
                         {:desc "[telescope] (f)iles"}]
                        [:n

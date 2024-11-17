@@ -49,6 +49,7 @@
                                   :callback #(util.set-keys maps)})
     ;; Set global plugin-specific variables
     (set vim.g.journal_tools opts)
+    (: vim.opt.path :append "**")
     (when (> (vim.fn.exists ":JournalInit") 0)
       (vim.api.nvim_del_user_command :JournalInit))
     (vim.notify "[journal-tools] Loaded tools")))

@@ -11,3 +11,12 @@
 
 (let [journal-tools (autoload :journal-tools)]
   (journal-tools.setup {:maps mappings.journal-maps}))
+
+;; experimental: play around with vim-native file finding
+(do
+  (: vim.opt.path :append "**")
+  (vim.keymap.set :n :<leader>f ":find<space>" {:desc "pre-fill find command"}))
+
+;; TODO use vim-native plug management and implement a custom lazy loading solution (:h packadd)
+;; TODO Finish marksman plugin
+;; TODO Create your own auto-pairs plugins
