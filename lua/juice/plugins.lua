@@ -43,19 +43,13 @@ local function _8_()
   util.call("oil", "setup", opts)
   return util["set-keys"](mappings["oil-maps"])
 end
-local function _9_()
-  local actions = autoload("telescope.actions")
-  local opts = {defaults = {layout_config = {prompt_position = "bottom", height = 0.4}, layout_strategy = "bottom_pane", mappings = {i = {["<esc>"] = actions.close, ["<C-u>"] = false}}, path_display = {"truncate"}, prompt_prefix = "/", prompt_title = "test", border = false, preview = false}}
-  util.call("telescope", "setup", opts)
-  return util["set-keys"](mappings["telescope-maps"])
-end
-file_tools = {{"stevearc/oil.nvim", cmd = "Oil", keys = "<leader>e", config = _8_}, {"nvim-telescope/telescope.nvim", tag = "0.1.6", keys = {"<leader>f", "<leader>p", "<leader>g", "<leader>k"}, cmd = "Telescope", dependencies = {"nvim-lua/plenary.nvim"}, config = _9_}}
+file_tools = {{"stevearc/oil.nvim", cmd = "Oil", keys = "<leader>e", config = _8_}}
 local git_tools
-local function _10_()
+local function _9_()
   util["call-setup"]("gitsigns")
   return util["set-keys"](mappings["gitsigns-maps"])
 end
-git_tools = {{"lewis6991/gitsigns.nvim", event = {"BufReadPre", "BufNewFile"}, config = _10_}}
+git_tools = {{"lewis6991/gitsigns.nvim", event = {"BufReadPre", "BufNewFile"}, config = _9_}}
 local function setup()
   local plugins = core.concat(core_tools, database_tools, dev_tools, editing_tools, file_tools, git_tools, lisp_tools)
   local opts = {ui = {border = "rounded"}, performance = {rtp = {disabled_plugins = {"rplugin", "tohtml", "tutor", "vimball"}}}}

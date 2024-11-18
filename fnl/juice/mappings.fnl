@@ -5,8 +5,6 @@
 (local general [[:n :Y :y$ {:desc "yank until the end of the line"}]
                 [:n :<leader>w vim.cmd.w {:desc "write buffer" :silent true}]
                 [:n :<leader>r vim.cmd.registers {:desc "list registers"}]
-                ;; experimental: play around with vim-native file finding
-                [:n :<leader>f ":find<space>" {:desc "pre-fill find command"}]
                 [:n
                  :<F2>
                  "let @+ = getreg('%')"
@@ -24,6 +22,18 @@
                  :<leader>ol
                  ":Lazy<cr>"
                  {:desc "open lazy.nvim" :silent true}]])
+
+(local filters (let [repeat (fn [times value]
+                              (var acc "")
+                              (for [i 1 times]
+                                (set acc (.. acc value)))
+                              acc)
+                     filter-cmd (fn [cmd]
+                                  (.. ":filter '' " cmd
+                                      (repeat (+ 1 (length cmd)) :<left>)))]
+                 [[:n :<leader>f ":find " {:desc "pre-fill find command"}]
+                  [:n :<leader>p (filter-cmd "browse oldfiles")]
+                  [:n :<leader>k (filter-cmd :map)]]))
 
 (local jumps [[:n :<C-d> :<C-d>zz]
               [:n :<C-u> :<C-u>zz]
@@ -173,23 +183,6 @@
                   {:desc "[oil] explore files in current file's path"
                    :silent true}]])
 
-(local telescope-maps [;; [:n
-                       ;;  :<leader>F
-                       ;;  #(util.call :telescope.builtin :find_files)
-                       ;;  {:desc "[telescope] (f)iles"}]
-                       [:n
-                        :<leader>p
-                        #(util.call :telescope.builtin :oldfiles)
-                        {:desc "[telescope] oldfiles"}]
-                       [:n
-                        :<leader>g
-                        #(util.call :telescope.builtin :git_files)
-                        {:desc "[telescope] (g)it files"}]
-                       [:n
-                        :<leader>k
-                        #(util.call :telescope.builtin :keymaps)
-                        {:desc "[telescope] (k)eymaps"}]])
-
 (local gitsigns-maps
        (let [nav [[:n
                    "]g"
@@ -316,8 +309,9 @@
                        :silent true}]])
 
 (fn setup []
-  (let [mappings (core.concat general jumps undo-steps dates marks buffers tabs
-                              quickfix loclist search-replace visual-indent)]
+  (let [mappings (core.concat general filters jumps undo-steps dates marks
+                              buffers tabs quickfix loclist search-replace
+                              visual-indent)]
     (util.set-keys mappings)
     (comment "select completion binding item")
     (vim.cmd "inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")
@@ -327,9 +321,4 @@
           (util.set-keys maps))))
     (when vim.env.JOURNAL (util.set-keys journal-launchers))))
 
-{: setup
- : oil-maps
- : telescope-maps
- : gitsigns-maps
- : dadbod-maps
- : journal-maps}
+{: setup : oil-maps : gitsigns-maps : dadbod-maps : journal-maps}
