@@ -64,12 +64,14 @@
 (local completion {; remove imports, add spellchecker to completion sources
                    :complete ".,w,b,u,t,kspell"
                    :completeopt "menu,menuone,noselect,noinsert"
-                   ; search in current file's directory or pwd (do not use **)
-                   :path ".,,"
+                   ; search in current file's directory or pwd (do not use ** edit: experimenting)
+                   :path ".,,,**"
                    ; Set order of completion matches
                    :wildmode "lastused,longest,full"
                    ; ignore these files when searching
-                   :wildignore "*/.git/*,*/.ammonite/*,*/.bloop/*,*/.metals/*,*/node_modules/*,*/build/*,*/target/*,*.class"
+                   :wildignore (.. "*/.git/*," "*/.ammonite/*," "*/.bloop/*,"
+                                   "*/.metals/*," "*/node_modules/*,"
+                                   "*/build/*," "*/target/*," :*.class)
                    ; ignore case when filtering results
                    :wildignorecase true
                    ; use popup to show results

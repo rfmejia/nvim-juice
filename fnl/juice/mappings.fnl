@@ -3,12 +3,10 @@
 (local util (autoload :juice.util))
 
 (local general [[:n :Y :y$ {:desc "yank until the end of the line"}]
-                [:n
-                 "<leader>;"
-                 ":<C-r>\""
-                 {:desc "paste register 0 contents in command mode"}]
-                [:n :<leader>w ":w<cr>" {:desc "write buffer" :silent true}]
+                [:n :<leader>w vim.cmd.w {:desc "write buffer" :silent true}]
                 [:n :<leader>r vim.cmd.registers {:desc "list registers"}]
+                ;; experimental: play around with vim-native file finding
+                [:n :<leader>f ":find<space>" {:desc "pre-fill find command"}]
                 [:n
                  :<F2>
                  "let @+ = getreg('%')"
@@ -54,19 +52,18 @@
                {:desc "prompt for date query"}]])
 
 ;; TODO make this into the `marksman` plugin
-(local marks [[:n
-               :<leader>m
-               #(vim.cmd.marks :ARSTarst)
-               {:desc "list quick marks (ARST and arst)"}]
-              ;; TODO Replace these with putting signs on the sign column
-              [:n :ma "ma:echo 'Marked a'<cr>"]
-              [:n :mr "mr:echo 'Marked r'<cr>"]
-              [:n :ms "ms:echo 'Marked s'<cr>"]
-              [:n :mt "mt:echo 'Marked t'<cr>"]
-              [:n :mA "mA:echo 'Marked A'<cr>"]
-              [:n :mR "mR:echo 'Marked R'<cr>"]
-              [:n :mS "mS:echo 'Marked S'<cr>"]
-              [:n :mT "mT:echo 'Marked T'<cr>"]])
+;; TODO Replace these with putting signs on the sign column
+(local marks (let [marks [:A :R :S :T :z :x :c :d]
+                   create-mark #[:n
+                                 (.. :m (string.lower $1))
+                                 (.. :m $1 ":echo 'Marked " $1 "'<cr>")]
+                   jump-to-mark #[:n (.. "'" (string.lower $1)) (.. "`" $1)]]
+               (core.concat [[:n
+                              "''"
+                              #(vim.cmd.marks (.. (unpack marks)))
+                              {:desc "list quick marks (ARST and zxcd)"}]]
+                            (core.map #(create-mark $1) marks)
+                            (core.map #(jump-to-mark $1) marks))))
 
 (local buffers [[:n :<leader>b ":buffers<cr>:buffer<Space>"]
                 [:n "[B" vim.cmd.bfirst]
@@ -176,10 +173,10 @@
                   {:desc "[oil] explore files in current file's path"
                    :silent true}]])
 
-(local telescope-maps [[:n
-                        :<leader>F
-                        #(util.call :telescope.builtin :find_files)
-                        {:desc "[telescope] (f)iles"}]
+(local telescope-maps [;; [:n
+                       ;;  :<leader>F
+                       ;;  #(util.call :telescope.builtin :find_files)
+                       ;;  {:desc "[telescope] (f)iles"}]
                        [:n
                         :<leader>p
                         #(util.call :telescope.builtin :oldfiles)

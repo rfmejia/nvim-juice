@@ -5,7 +5,9 @@ local notify = autoload("nfnl.notify")
 local str = autoload("nfnl.string")
 local util = autoload("juice.util")
 util["assoc-in"](vim.opt, {shiftwidth = 2, tabstop = 2, expandtab = true, textwidth = 100, signcolumn = "yes:1"})
---[[ "FIXME This doesn't seem to be reflected" "indentkeys:remove" ["<>>"] ]]
+do
+  vim.opt.indentkeys:remove("<>>")
+end
 local function run_scalafmt(path)
   local filename
   if str["blank?"](path) then

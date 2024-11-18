@@ -9,7 +9,9 @@
                         :textwidth 100
                         :signcolumn "yes:1"})
 
-(comment "FIXME This doesn't seem to be reflected" "indentkeys:remove" ["<>>"])
+(do
+  ;; "FIXME This doesn't seem to be reflected"
+  (: vim.opt.indentkeys :remove "<>>"))
 
 (fn run-scalafmt [path]
   (let [filename (if (str.blank? path) (vim.fn.expand "%:p") path)
