@@ -7,6 +7,10 @@ local util = autoload("juice.util")
 local function starts_with_3f(str, prefix)
   return (prefix == str:sub(1, #prefix))
 end
+local function is_dir_3f(path)
+  _G.assert((nil ~= path), "Missing argument path on /home/rfmejia/.config/nvim/fnl/wildignore/init.fnl:9")
+  return (nil ~= vim.fs.dir(path)())
+end
 local function update_wildignore()
   local gitignore = core.slurp(".gitignore")
   if gitignore then
@@ -17,28 +21,32 @@ local function update_wildignore()
       return not (string["blank?"](_241) or starts_with_3f(_241, "#") or starts_with_3f(_241, "!"))
     end
     filtered = core.filter(_2_, items)
-    local prefixed
+    local suffixed
     local function _3_(_241)
+      if string["ends-with?"](_241, "/") then
+        return (_241 .. "*")
+      elseif is_dir_3f(_241) then
+        return (_241 .. "/*")
+      elseif "else" then
+        return _241
+      else
+        return nil
+      end
+    end
+    suffixed = core.map(_3_, filtered)
+    local prefixed
+    local function _5_(_241)
       if starts_with_3f(_241, "/") then
         return ("**" .. _241)
       else
         return ("**/" .. _241)
       end
     end
-    prefixed = core.map(_3_, filtered)
-    local suffixed
-    local function _5_(_241)
-      if string["ends-with?"](_241, "/") then
-        return (_241 .. "*")
-      else
-        return _241
-      end
-    end
-    suffixed = core.map(_5_, prefixed)
+    prefixed = core.map(_5_, suffixed)
     local function _7_(_241)
       return vim.opt.wildignore:append(_241)
     end
-    return core.map(_7_, suffixed)
+    return core.map(_7_, prefixed)
   else
     return nil
   end

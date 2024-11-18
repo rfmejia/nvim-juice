@@ -6,6 +6,10 @@
 (fn starts-with? [str prefix]
   (= prefix (: str :sub 1 (length prefix))))
 
+(lambda is-dir? [path]
+  "Checks if gitignore entry is a dir (will miss empty dirs)"
+  (not= nil ((vim.fs.dir path))))
+
 (fn update-wildignore []
   (local gitignore (core.slurp :.gitignore))
   (when gitignore
@@ -15,14 +19,15 @@
                                           (starts-with? $1 "#")
                                           (starts-with? $1 "!")))
                                 items)
+          suffixed (core.map #(if (string.ends-with? $1 "/") (.. $1 "*")
+                                  (is-dir? $1) (.. $1 "/*")
+                                  :else $1)
+                             filtered)
           prefixed (core.map #(if (starts-with? $1 "/")
                                   (.. "**" $1)
                                   (.. "**/" $1))
-                             filtered)
-          suffixed (core.map #(if (string.ends-with? $1 "/") (.. $1 "*") $1)
-                             prefixed)]
-      ;; (core.map vim.print suffixed)
-      (core.map #(: vim.opt.wildignore :append $1) suffixed))))
+                             suffixed)]
+      (core.map #(: vim.opt.wildignore :append $1) prefixed))))
 
 (fn setup []
   (vim.api.nvim_create_augroup :wildignore-group {:clear true})

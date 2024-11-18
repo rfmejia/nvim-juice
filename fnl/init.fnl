@@ -16,4 +16,4 @@
 ;; TODO use vim-native plug management and implement a custom lazy loading solution (:h packadd)
 ;; TODO Create your own auto-pairs plugins
 ;; TODO Finish marksman module
-;; TODO Create wildignore-gitignore module
+;; TODO Modify wildignore plugin to remove all dependencies
