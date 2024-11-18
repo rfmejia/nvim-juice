@@ -1,28 +1,27 @@
 (local {: autoload} (require :nfnl.module))
 (local core (autoload :nfnl.core))
 (local string (autoload :nfnl.string))
-(local util (autoload :juice.util))
 
 (fn starts-with? [str prefix]
   (= prefix (: str :sub 1 (length prefix))))
 
 (lambda is-dir? [path]
-  "Checks if gitignore entry is a dir (will miss empty dirs)"
+  "Checks if path is a dir (will miss empty or non-existent dirs)"
   (not= nil ((vim.fs.dir path))))
 
 (fn update-wildignore []
   (local gitignore (core.slurp :.gitignore))
   (when gitignore
     (set vim.opt.wildignore "")
-    (let [items (core.map string.trim (string.split gitignore "\n"))
-          filtered (core.filter #(not (or (string.blank? $1)
-                                          (starts-with? $1 "#")
-                                          (starts-with? $1 "!")))
-                                items)
+    (let [lines (core.map string.trim (string.split gitignore "\n"))
+          entries (core.filter #(not (or (string.blank? $1)
+                                         (starts-with? $1 "#")
+                                         (starts-with? $1 "!")))
+                               lines)
           suffixed (core.map #(if (string.ends-with? $1 "/") (.. $1 "*")
                                   (is-dir? $1) (.. $1 "/*")
                                   :else $1)
-                             filtered)
+                             entries)
           prefixed (core.map #(if (starts-with? $1 "/")
                                   (.. "**" $1)
                                   (.. "**/" $1))

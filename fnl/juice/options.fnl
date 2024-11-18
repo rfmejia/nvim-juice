@@ -62,20 +62,16 @@
 
 (comment "---- COMPLETION ----")
 (local completion {; remove imports, add spellchecker to completion sources
-                   :complete ".,w,b,u,t,kspell"
-                   :completeopt "menu,menuone,noselect,noinsert"
+                   :complete ["." :w :b :u :t :kspell]
+                   :completeopt [:menuone :popup :noinsert]
                    ; search in current file's directory or pwd (do not use ** edit: experimenting)
-                   :path ".,,,**"
+                   :path ["." "" "**"]
                    ; Set order of completion matches
-                   :wildmode "lastused,longest,full"
-                   ; ignore these files when searching
-                   ;; :wildignore (.. "*/.git/*," "*/.ammonite/*," "*/.bloop/*,"
-                   ;;                 "*/.metals/*," "*/node_modules/*,"
-                   ;;                 "*/build/*," "*/target/*," :*.class)
+                   :wildmode [:lastused :full]
                    ; ignore case when filtering results
                    :wildignorecase true
                    ; use popup to show results
-                   :wildoptions :pum})
+                   :wildoptions [:fuzzy :pum]})
 
 (comment "use ripgrep as grepprg if available")
 (local grep-options
