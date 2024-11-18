@@ -69,9 +69,9 @@
                    ; Set order of completion matches
                    :wildmode "lastused,longest,full"
                    ; ignore these files when searching
-                   :wildignore (.. "*/.git/*," "*/.ammonite/*," "*/.bloop/*,"
-                                   "*/.metals/*," "*/node_modules/*,"
-                                   "*/build/*," "*/target/*," :*.class)
+                   ;; :wildignore (.. "*/.git/*," "*/.ammonite/*," "*/.bloop/*,"
+                   ;;                 "*/.metals/*," "*/node_modules/*,"
+                   ;;                 "*/build/*," "*/target/*," :*.class)
                    ; ignore case when filtering results
                    :wildignorecase true
                    ; use popup to show results

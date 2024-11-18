@@ -10,7 +10,7 @@ local visual = {signcolumn = "yes:1", cursorline = true, splitbelow = true, spli
 --[[ "---- SEARCH OPTIONS ----" ]]
 local search = {hlsearch = true, incsearch = true, ignorecase = true, smartcase = true, wrapscan = false}
 --[[ "---- COMPLETION ----" ]]
-local completion = {complete = ".,w,b,u,t,kspell", completeopt = "menu,menuone,noselect,noinsert", path = ".,,,**", wildmode = "lastused,longest,full", wildignore = ("*/.git/*," .. "*/.ammonite/*," .. "*/.bloop/*," .. "*/.metals/*," .. "*/node_modules/*," .. "*/build/*," .. "*/target/*," .. "*.class"), wildignorecase = true, wildoptions = "pum"}
+local completion = {complete = ".,w,b,u,t,kspell", completeopt = "menu,menuone,noselect,noinsert", path = ".,,,**", wildmode = "lastused,longest,full", wildignorecase = true, wildoptions = "pum"}
 --[[ "use ripgrep as grepprg if available" ]]
 local grep_options
 if util["executable?"]("rg") then

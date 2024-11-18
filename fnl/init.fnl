@@ -7,7 +7,8 @@
 (local util (autoload :juice.util))
 
 (util.call-setup :juice.options :juice.colorscheme :juice.plugins
-                 :juice.mappings :git-info :tmux-nav :trim-whitespace)
+                 :juice.mappings :git-info :tmux-nav :trim-whitespace
+                 :wildignore)
 
 (let [journal-tools (autoload :journal-tools)]
   (journal-tools.setup {:maps mappings.journal-maps}))
