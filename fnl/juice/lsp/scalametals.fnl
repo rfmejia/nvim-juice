@@ -6,7 +6,6 @@
   (let [juice-lsp (autoload :juice.lsp)
         metals (autoload :metals)
         config (metals.bare_config)
-        telescope (autoload :telescope)
         tvp (autoload :metals.tvp)
         options {:signcolumn "yes:1"
                  :shortmess (.. vim.go.shortmess :c)
@@ -26,11 +25,6 @@
                         :<localleader>mw
                         #(metals.hover_worksheet {:border :rounded})
                         {:desc "[metals] show (m)etals (w)orksheet output in popup"
-                         :buffer bufnr}]
-                       [:n
-                        :<localleader>mc
-                        telescope.extensions.metals.commands
-                        {:desc "[metals] list (m)etals (c)commands"
                          :buffer bufnr}]
                        [:n
                         :<localleader>mt
@@ -55,11 +49,11 @@
            (juice-lsp.set-buffer-opts client bufnr)
            (util.set-keys (metals-maps bufnr))))
     (comment "Automatically attach Metals to all Scala filetypes (only triggered upon BufEnter)")
-    (vim.api.nvim_create_augroup :metals-group [])
     (vim.api.nvim_create_autocmd :FileType
-                                 {:group :metals-group
-                                  :pattern [:scala :sbt :java]
-                                  :callback #(metals.initialize_or_attach config)})
+                                 {:pattern [:scala :sbt :java]
+                                  :callback #(metals.initialize_or_attach config)
+                                  :group (vim.api.nvim_create_augroup :metals-group
+                                                                      {:clear true})})
     (vim.api.nvim_create_user_command :MetalsInit
                                       #(metals.initialize_or_attach config)
                                       {:desc "Start and connect to a Metals server"})

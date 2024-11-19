@@ -7,17 +7,16 @@ local function initialize_metals()
   local juice_lsp = autoload("juice.lsp")
   local metals = autoload("metals")
   local config = metals.bare_config()
-  local telescope = autoload("telescope")
   local tvp = autoload("metals.tvp")
   local options = {signcolumn = "yes:1", shortmess = (vim.go.shortmess .. "c"), statusline = statusline.build({"%{g:metals_status}", " \226\151\143"})}
   local metals_settings = {inlayHints = {hintsInPatternMatch = {enable = true}, implicitArguments = {enable = true}, implicitConversions = {enable = true}, inferredTypes = {enable = true}, typeParameters = {enable = true}}}
   local metals_maps
   local function _2_(bufnr)
-    _G.assert((nil ~= bufnr), "Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:19")
+    _G.assert((nil ~= bufnr), "Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:18")
     local function _3_()
       return metals.hover_worksheet({border = "rounded"})
     end
-    return {{"v", "K", metals.type_of_range, {desc = "[metals] show type of visual selection", buffer = bufnr}}, {"n", "<localleader>mw", _3_, {desc = "[metals] show (m)etals (w)orksheet output in popup", buffer = bufnr}}, {"n", "<localleader>mc", telescope.extensions.metals.commands, {desc = "[metals] list (m)etals (c)commands", buffer = bufnr}}, {"n", "<localleader>mt", tvp.toggle_tree_view, {desc = "[metals] (m)etals (t)oggle tree view", buffer = bufnr}}, {"n", "<localleader>mr", tvp.reveal_in_tree, {desc = "[metals] (m)etals (r)eveal current member in tree view", buffer = bufnr}}}
+    return {{"v", "K", metals.type_of_range, {desc = "[metals] show type of visual selection", buffer = bufnr}}, {"n", "<localleader>mw", _3_, {desc = "[metals] show (m)etals (w)orksheet output in popup", buffer = bufnr}}, {"n", "<localleader>mt", tvp.toggle_tree_view, {desc = "[metals] (m)etals (t)oggle tree view", buffer = bufnr}}, {"n", "<localleader>mr", tvp.reveal_in_tree, {desc = "[metals] (m)etals (r)eveal current member in tree view", buffer = bufnr}}}
   end
   metals_maps = _2_
   util["assoc-in"](vim.opt, options)
@@ -27,18 +26,17 @@ local function initialize_metals()
   config["tvp"] = {panel_alignment = "right", toggle_node_mapping = "<CR>", node_command_mapping = "r"}
   config.handlers = juice_lsp.handlers
   local function _4_(client, bufnr)
-    _G.assert((nil ~= bufnr), "Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:54")
-    _G.assert((nil ~= client), "Missing argument client on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:54")
+    _G.assert((nil ~= bufnr), "Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:48")
+    _G.assert((nil ~= client), "Missing argument client on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:48")
     juice_lsp["set-buffer-opts"](client, bufnr)
     return util["set-keys"](metals_maps(bufnr))
   end
   config.on_attach = _4_
   --[[ "Automatically attach Metals to all Scala filetypes (only triggered upon BufEnter)" ]]
-  vim.api.nvim_create_augroup("metals-group", {})
   local function _5_()
     return metals.initialize_or_attach(config)
   end
-  vim.api.nvim_create_autocmd("FileType", {group = "metals-group", pattern = {"scala", "sbt", "java"}, callback = _5_})
+  vim.api.nvim_create_autocmd("FileType", {pattern = {"scala", "sbt", "java"}, callback = _5_, group = vim.api.nvim_create_augroup("metals-group", {clear = true})})
   local function _6_()
     return metals.initialize_or_attach(config)
   end

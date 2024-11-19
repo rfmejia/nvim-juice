@@ -26,9 +26,6 @@
                    :StatusLineInfo {:fg :DarkCyan}
                    :StatusLineWarn {:fg :DarkYellow}})
 
-(local telescope {:TelescopeSelection {:fg :White}
-                  :TelescopeNormal {:fg :Gray}})
-
 (lambda set-hl [hi-options]
   (each [hi-group opts (pairs hi-options)]
     (if (core.sequential? hi-group)
@@ -40,6 +37,6 @@
 (fn setup []
   (vim.cmd.colorscheme :default)
   ;; (vim.cmd "set notermguicolors") FIXME termguicolors is not detected properly
-  (core.map set-hl [general diagnostic-virtual-text statusline telescope]))
+  (core.map set-hl [general diagnostic-virtual-text statusline]))
 
 {: setup}

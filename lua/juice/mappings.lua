@@ -9,7 +9,7 @@ local function _2_()
   return util["assoc-in"](vim.opt, {number = not is_enabled, relativenumber = not is_enabled})
 end
 general = {{"n", "Y", "y$", {desc = "yank until the end of the line"}}, {"n", "<leader>w", vim.cmd.w, {desc = "write buffer", silent = true}}, {"n", "<leader>r", vim.cmd.registers, {desc = "list registers"}}, {"n", "<F2>", "let @+ = getreg('%')", {desc = "copy current file path to clipboard"}}, {"n", "<F5>", vim.cmd.make, {desc = "trigger `make` in shell"}}, {"n", "<leader>n", _2_, {desc = "toggle number and relativenumber options"}}, {"n", "<leader>ol", ":Lazy<cr>", {desc = "open lazy.nvim", silent = true}}}
-local file_nav
+local filters
 do
   local _repeat
   local function _3_(times, value)
@@ -25,7 +25,7 @@ do
     return (":filter '' " .. cmd .. _repeat((1 + #cmd), "<left>"))
   end
   filter_cmd = _4_
-  file_nav = {{"n", "<leader>f", ":find<space>", {desc = "pre-fill find command"}}, {"n", "<leader>p", ":browse oldfiles<cr>"}, {"n", "<leader>P", filter_cmd("browse oldfiles")}, {"n", "<leader>k", filter_cmd("map")}}
+  filters = {{"n", "<leader>f", ":find ", {desc = "pre-fill find command"}}, {"n", "<leader>p", filter_cmd("browse oldfiles")}, {"n", "<leader>k", filter_cmd("map")}}
 end
 local jumps = {{"n", "<C-d>", "<C-d>zz"}, {"n", "<C-u>", "<C-u>zz"}, {"n", "<C-o>", "<C-o>zz"}, {"n", "<C-i>", "<C-i>zz"}}
 local undo_steps = {{"i", "\"", "\"<C-g>u", {silent = true}}, {"i", ".", ".<C-g>u", {silent = true}}, {"i", "!", "!<C-g>u", {silent = true}}, {"i", "?", "?<C-g>u", {silent = true}}, {"i", "(", "(<C-g>u", {silent = true}}, {"i", ")", ")<C-g>u", {silent = true}}, {"i", "{", "{<C-g>u", {silent = true}}, {"i", "}", "}<C-g>u", {silent = true}}, {"i", "[", "[<C-g>u", {silent = true}}, {"i", "]", "]<C-g>u", {silent = true}}}
@@ -161,7 +161,7 @@ local function _34_()
 end
 journal_maps = {{"n", "<localleader>w", _31_, {desc = "[journal] insert current week as an h2 header", buffer = true, silent = true}}, {"n", "<localleader>d", _32_, {desc = "[journal] insert current date as an h3 header", buffer = true, silent = true}}, {"n", "<localleader>t", _33_, {desc = "[journal] insert current time as an h4 header", buffer = true, silent = true}}, {"n", "<localleader>x", _34_, {desc = "[journal] insert current time as an h4 header", buffer = true, silent = true}}}
 local function setup()
-  local mappings = core.concat(general, file_nav, jumps, undo_steps, dates, marks, buffers, tabs, quickfix, loclist, search_replace, visual_indent)
+  local mappings = core.concat(general, filters, jumps, undo_steps, dates, marks, buffers, tabs, quickfix, loclist, search_replace, visual_indent)
   util["set-keys"](mappings)
   --[[ "select completion binding item" ]]
   vim.cmd("inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")

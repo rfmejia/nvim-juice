@@ -5,9 +5,8 @@ local core = autoload("nfnl.core")
 local general = {Comment = {fg = "Gray", ctermfg = "Gray", italic = true}, Constant = {fg = "Green"}, CursorLine = {bg = "NONE"}, [{"Delimiter", "Operator", "Special", "Statement"}] = {fg = "Gray"}, [{"LineNrAbove", "LineNrBelow"}] = {fg = "Gray"}, NonText = {fg = "Black"}, Normal = {bg = "NONE"}, SpellBad = {fg = "NvimLightRed", undercurl = true}, Title = {fg = "DarkCyan", bold = true}, Todo = {fg = "Yellow", bold = true}, Visual = {reverse = true}, WinSeparator = {fg = "Gray"}}
 local diagnostic_virtual_text = {DiagnosticVirtualTextError = {fg = "DarkRed", italic = true}, DiagnosticVirtualTextHint = {fg = "DarkBlue", italic = true}, DiagnosticVirtualTextInfo = {fg = "DarkCyan", italic = true}, DiagnosticVirtualTextOk = {fg = "DarkGreen", italic = true}, DiagnosticVirtualTextWarn = {fg = "DarkYellow", italic = true}}
 local statusline = {StatusLine = {fg = "Gray", bg = "NONE"}, StatusLineError = {fg = "DarkRed"}, StatusLineInfo = {fg = "DarkCyan"}, StatusLineWarn = {fg = "DarkYellow"}}
-local telescope = {TelescopeSelection = {fg = "White"}, TelescopeNormal = {fg = "Gray"}}
 local function set_hl(hi_options)
-  _G.assert((nil ~= hi_options), "Missing argument hi-options on /home/rfmejia/.config/nvim/fnl/juice/colorscheme.fnl:32")
+  _G.assert((nil ~= hi_options), "Missing argument hi-options on /home/rfmejia/.config/nvim/fnl/juice/colorscheme.fnl:29")
   for hi_group, opts in pairs(hi_options) do
     if core["sequential?"](hi_group) then
       for _, sub_group in ipairs(hi_group) do
@@ -22,6 +21,6 @@ local function set_hl(hi_options)
 end
 local function setup()
   vim.cmd.colorscheme("default")
-  return core.map(set_hl, {general, diagnostic_virtual_text, statusline, telescope})
+  return core.map(set_hl, {general, diagnostic_virtual_text, statusline})
 end
 return {setup = setup}
