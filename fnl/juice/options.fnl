@@ -81,7 +81,11 @@
 
 (comment "---- FILETYPES ----")
 (local filetypes
-       {:extension {:edn :clojure :sbt :scala :sc :scala :txt :text}
+       {:extension {:edn :clojure
+                    :mill :scala
+                    :sbt :scala
+                    :sc :scala
+                    :txt :text}
         :filename {:Jenkinsfile :groovy :tmux.conf :tmux}})
 
 (comment "---- AUTOCMDS ----")

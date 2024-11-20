@@ -45,7 +45,7 @@ end
 local function insert_task()
   return util["insert-lines"](vim.g.journal_tools["task-format"])
 end
-local function load_journal_tools(user_opts)
+local function setup(user_opts)
   local maps
   local _5_
   do
@@ -72,10 +72,4 @@ local function load_journal_tools(user_opts)
   end
   return vim.notify("[journal-tools] Loaded tools")
 end
-local function setup(opts)
-  local function _9_()
-    return load_journal_tools(opts)
-  end
-  return vim.api.nvim_create_user_command("JournalInit", _9_, {desc = "Load default mappings for journal tools"})
-end
-return {setup = setup, ["insert-week"] = insert_week, ["insert-day"] = insert_day, ["insert-time"] = insert_time, ["insert-task"] = insert_task, ["load-journal-tools"] = load_journal_tools}
+return {setup = setup, ["insert-week"] = insert_week, ["insert-day"] = insert_day, ["insert-time"] = insert_time, ["insert-task"] = insert_task}

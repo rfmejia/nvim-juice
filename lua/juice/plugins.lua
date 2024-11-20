@@ -34,7 +34,7 @@ do
   local function _7_()
     return util["assoc-in"](vim.g, {["conjure#result#register"] = "*", ["conjure#mapping#doc_word"] = "gk", ["conjure#log#botright"] = true})
   end
-  lisp_tools = {{"Olical/conjure", branch = "main", ft = languages, config = _7_}, {"julienvincent/nvim-paredit", ft = languages, opts = {use_default_keys = true, indent = {enabled = true}}}}
+  lisp_tools = {{"Olical/conjure", branch = "main", ft = languages, config = _7_}, {"julienvincent/nvim-paredit", ft = languages, opts = {use_default_keys = true, indent = {enabled = true}}, dependencies = {{"nvim-treesitter/nvim-treesitter"}}}}
 end
 local editing_tools = {{"kylechui/nvim-surround", keys = {"cs", "ds", "ys"}, config = true}, {"windwp/nvim-autopairs", event = "InsertEnter", opts = {enable_check_bracket_line = false}}}
 local file_tools

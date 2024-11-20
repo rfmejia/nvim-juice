@@ -23,17 +23,21 @@
                  ":Lazy<cr>"
                  {:desc "open lazy.nvim" :silent true}]])
 
-(local filters (let [repeat (fn [times value]
-                              (var acc "")
-                              (for [i 1 times]
-                                (set acc (.. acc value)))
-                              acc)
-                     filter-cmd (fn [cmd]
-                                  (.. ":filter '' " cmd
-                                      (repeat (+ 1 (length cmd)) :<left>)))]
-                 [[:n :<leader>f ":find " {:desc "pre-fill find command"}]
-                  [:n :<leader>p (filter-cmd "browse oldfiles")]
-                  [:n :<leader>k (filter-cmd :map)]]))
+(local filters
+       (let [repeat (fn [times value]
+                      (var acc "")
+                      (for [i 1 times]
+                        (set acc (.. acc value)))
+                      acc)
+             filter-cmd (fn [cmd]
+                          (.. ":filter '' " cmd
+                              (repeat (+ 2 (length cmd)) :<left>)))]
+         [[:n :<leader>f ":find " {:desc "pre-fill find command"}]
+          [:n
+           :<leader>p
+           (filter-cmd "browse oldfiles")
+           {:desc "filter and select from oldfiles"}]
+          [:n :<leader>k (filter-cmd :map) {:desc "filter keymaps"}]]))
 
 (local jumps [[:n :<C-d> :<C-d>zz]
               [:n :<C-u> :<C-u>zz]
@@ -76,11 +80,20 @@
                             (core.map #(jump-to-mark $1) marks))))
 
 (local buffers [[:n :<leader>b ":buffers<cr>:buffer<Space>"]
-                [:n "[B" vim.cmd.bfirst]
-                [:n "]B" vim.cmd.blast]
-                [:n "[b" vim.cmd.bprevious]
-                [:n "]b" vim.cmd.bnext]
-                [:n :<leader>x ":bp|bdelete #<cr>"]])
+                [:n
+                 "[B"
+                 vim.cmd.bfirst
+                 {:desc "[buffer] jump to first in list"}]
+                [:n "]B" vim.cmd.blast {:desc "[buffer] jump to last in list"}]
+                [:n
+                 "[b"
+                 vim.cmd.bprevious
+                 {:desc "[buffer] go to previous in list"}]
+                [:n "]b" vim.cmd.bnext {:desc "[buffer] go to next in list"}]
+                [:n
+                 :<leader>x
+                 ":bp|bdelete #<cr>"
+                 {:desc "[buffer] close buffer"}]])
 
 (local tabs [[:n :<leader>tn vim.cmd.tabnew]
              [:n :<leader>tc vim.cmd.tabclose]

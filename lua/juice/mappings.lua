@@ -22,10 +22,10 @@ do
   _repeat = _3_
   local filter_cmd
   local function _4_(cmd)
-    return (":filter '' " .. cmd .. _repeat((1 + #cmd), "<left>"))
+    return (":filter '' " .. cmd .. _repeat((2 + #cmd), "<left>"))
   end
   filter_cmd = _4_
-  filters = {{"n", "<leader>f", ":find ", {desc = "pre-fill find command"}}, {"n", "<leader>p", filter_cmd("browse oldfiles")}, {"n", "<leader>k", filter_cmd("map")}}
+  filters = {{"n", "<leader>f", ":find ", {desc = "pre-fill find command"}}, {"n", "<leader>p", filter_cmd("browse oldfiles"), {desc = "filter and select from oldfiles"}}, {"n", "<leader>k", filter_cmd("map"), {desc = "filter keymaps"}}}
 end
 local jumps = {{"n", "<C-d>", "<C-d>zz"}, {"n", "<C-u>", "<C-u>zz"}, {"n", "<C-o>", "<C-o>zz"}, {"n", "<C-i>", "<C-i>zz"}}
 local undo_steps = {{"i", "\"", "\"<C-g>u", {silent = true}}, {"i", ".", ".<C-g>u", {silent = true}}, {"i", "!", "!<C-g>u", {silent = true}}, {"i", "?", "?<C-g>u", {silent = true}}, {"i", "(", "(<C-g>u", {silent = true}}, {"i", ")", ")<C-g>u", {silent = true}}, {"i", "{", "{<C-g>u", {silent = true}}, {"i", "}", "}<C-g>u", {silent = true}}, {"i", "[", "[<C-g>u", {silent = true}}, {"i", "]", "]<C-g>u", {silent = true}}}
@@ -54,7 +54,7 @@ do
   end
   marks = core.concat({{"n", "''", _7_, {desc = "list quick marks (ARST and zxcd)"}}}, core.map(_8_, marks0), core.map(_9_, marks0))
 end
-local buffers = {{"n", "<leader>b", ":buffers<cr>:buffer<Space>"}, {"n", "[B", vim.cmd.bfirst}, {"n", "]B", vim.cmd.blast}, {"n", "[b", vim.cmd.bprevious}, {"n", "]b", vim.cmd.bnext}, {"n", "<leader>x", ":bp|bdelete #<cr>"}}
+local buffers = {{"n", "<leader>b", ":buffers<cr>:buffer<Space>"}, {"n", "[B", vim.cmd.bfirst, {desc = "[buffer] jump to first in list"}}, {"n", "]B", vim.cmd.blast, {desc = "[buffer] jump to last in list"}}, {"n", "[b", vim.cmd.bprevious, {desc = "[buffer] go to previous in list"}}, {"n", "]b", vim.cmd.bnext, {desc = "[buffer] go to next in list"}}, {"n", "<leader>x", ":bp|bdelete #<cr>", {desc = "[buffer] close buffer"}}}
 local tabs = {{"n", "<leader>tn", vim.cmd.tabnew}, {"n", "<leader>tc", vim.cmd.tabclose}, {"n", "<leader>ts", ":tab split<cr>", {silent = true}}, {"n", "[t", vim.cmd.tabprevious}, {"n", "]t", vim.cmd.tabnext}, {"n", "[T", vim.cmd.tabfirst}, {"n", "]T", vim.cmd.tablast}}
 local quickfix = {{"n", "<leader>co", vim.cmd.copen, {desc = "open quickfix list"}}, {"n", "<leader>cc", vim.cmd.cclose, {desc = "close quickfix list"}}, {"n", "[c", vim.cmd.cprevious, {desc = "jump to the previous entry in the current quickfix list"}}, {"n", "]c", vim.cmd.cnext, {desc = "jump to the next entry in the current quickfix list"}}, {"n", "<leader>C", vim.cmd.chistory, {desc = "list quickfix history"}}, {"n", "[C", vim.cmd.colder, {desc = "jump to the previous quickfix list"}}, {"n", "]C", vim.cmd.cnewer, {desc = "jump to the newer quickfix list"}}}
 local loclist = {{"n", "<leader>lo", vim.cmd.lopen, {desc = "open loclist list"}}, {"n", "<leader>lc", vim.cmd.lclose, {desc = "close loclist list"}}, {"n", "[l", vim.cmd.lprevious, {desc = "jump to previous entry in the current loclist"}}, {"n", "]l", vim.cmd.lnext, {desc = "jump to next entry in the current loclist"}}, {"n", "<leader>L", vim.cmd.lhistory, {desc = "list loclist history"}}, {"n", "[L", vim.cmd.lolder, {desc = "jump to the previous loclist"}}, {"n", "]L", vim.cmd.lnewer, {desc = "jump to the newer loclist"}}}
