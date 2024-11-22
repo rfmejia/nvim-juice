@@ -52,8 +52,8 @@ local function update_wildignore()
 end
 local function setup()
   vim.api.nvim_create_augroup("wildignore-group", {clear = true})
+  vim.api.nvim_create_autocmd("VimEnter", {group = "wildignore-group", pattern = "*", callback = update_wildignore})
   vim.api.nvim_create_autocmd("DirChanged", {group = "wildignore-group", pattern = "global", callback = update_wildignore})
-  vim.api.nvim_create_autocmd("FileWritePost", {group = "wildignore-group", pattern = ".gitignore", callback = update_wildignore})
-  return update_wildignore()
+  return vim.api.nvim_create_autocmd("FileWritePost", {group = "wildignore-group", pattern = ".gitignore", callback = update_wildignore})
 end
 return {setup = setup}

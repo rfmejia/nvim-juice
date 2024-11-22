@@ -30,6 +30,10 @@
 
 (fn setup []
   (vim.api.nvim_create_augroup :wildignore-group {:clear true})
+  (vim.api.nvim_create_autocmd :VimEnter
+                               {:group :wildignore-group
+                                :pattern "*"
+                                :callback update-wildignore})
   (vim.api.nvim_create_autocmd :DirChanged
                                {:group :wildignore-group
                                 :pattern :global
@@ -37,7 +41,6 @@
   (vim.api.nvim_create_autocmd :FileWritePost
                                {:group :wildignore-group
                                 :pattern :.gitignore
-                                :callback update-wildignore})
-  (update-wildignore))
+                                :callback update-wildignore}))
 
 {: setup}
