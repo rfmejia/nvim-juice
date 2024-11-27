@@ -4,13 +4,14 @@
 (local hash-command :md5sum)
 (local hash-file-path (.. vim.env.XDG_STATE_HOME :/nvim/autoload.json))
 
+(comment "TODO Create function to read only chmod 600 files")
+
 (lambda load-hashes [path]
   (vim.json.decode (core.slurp path) {}))
 
 (lambda save-hashes [path obj]
   (let [now (os.time)]
     (tset obj :updated now)
-    (core.println path now obj)
     (core.spit path (vim.json.encode obj))))
 
 (fn init-hash-file []
@@ -24,24 +25,25 @@
                   :wait)]
     (if (= (. result :code) 0) (. (vim.fn.split (. result :stdout) " ") 1)
         (do
-          (vim.notify vim.log.levels.ERROR
-                      (.. "Could not compute hash" (. result :stderr)))
+          (vim.notify (.. "Could not compute hash" (. result :stderr))
+                      vim.log.levels.ERROR)
           nil))))
 
 (lambda hash-valid? [lookup-table key-hash source-hash]
   (let [hash-info (. lookup-table key-hash)]
     (if (= nil hash-info) {:error :missing}
         (not= source-hash (. hash-info :source)) {:error :mismatch}
-        (not (. hash-info :allowed)) {:error :rejected}
+        (not (. hash-info :allowed)) {:error :disallowed}
         :else nil)))
 
 (assert (assert (= :missing (. (hash-valid? {} :a :1234) :error)))
         (assert (= :mismatch (. (hash-valid? {:a {:source :1234 :allowed true}}
                                              :a :12345)
                                 :error)))
-        (assert (= :rejected (. (hash-valid? {:a {:source :1234 :allowed false}}
-                                             :a :1234)
-                                :error)))
+        (assert (= :disallowed (. (hash-valid? {:a {:source :1234
+                                                    :allowed false}}
+                                               :a :1234)
+                                  :error)))
         (assert (= nil
                    (hash-valid? {:a {:source :1234 :allowed true}} :a :1234))))
 
@@ -53,8 +55,6 @@
   (when (and source (> (length source) 0))
     {: path : source}))
 
-(lambda load-source? [source])
-
 (lambda allow-project-source [path source allowed]
   (let [key-hash (compute-hash path)
         source-hash (compute-hash source)
@@ -63,19 +63,23 @@
     (tset valid-hashes key-hash entry)
     (save-hashes hash-file-path valid-hashes)))
 
-(lambda allow-source [allowed]
+(lambda allow-project [allowed]
   (local project (get-lua-project))
   (when project
     (allow-project-source project.path project.source allowed)))
 
-(comment "FIXME Do not use `tset`, update table without mutating")
+(lambda ask-allow-project [prompt]
+  (vim.ui.input {:prompt (.. prompt "; Allow source? (y/N) ")}
+                #(let [answer (or (= $1 :y) (= $1 :Y))]
+                   (allow-project answer)
+                   (if answer
+                       (vim.notify "Project allowed" vim.log.levels.INFO)
+                       (vim.notify "Project disallowed" vim.log.levels.INFO)))))
 
-(comment (init-hash-file)
-  (load-hashes hash-file-path)
-  (allow-source (.. (vim.fs.root 0 :.nvim) :/.nvim/project.lua) true)
-  (autoload-project-fnl))
+(comment "FIXME Do not use `tset`, update table without mutating"
+  (init-hash-file))
 
-(fn autoload-project-fnl []
+(fn load-project []
   (local project (get-lua-project))
   (when project
     (let [key-hash (compute-hash project.path)
@@ -85,24 +89,22 @@
       (if (= nil errors)
           (do
             (vim.cmd.source project.path)
-            (vim.notify "Project file valid, loaded" vim.log.levels.DEBUG))
-          (= :rejected (. errors :error))
-          (vim.notify "Project file is rejected" vim.log.levels.DEBUG)
+            (vim.notify "Project file loaded" vim.log.levels.INFO))
+          (= :disallowed (. errors :error))
+          (comment "do nothing")
           (= :mismatch (. errors :error))
-          (vim.notify "Project file was changed but has not been approved or rejected"
-                      vim.log.levels.DEBUG)
+          (ask-allow-project "Project file was changed")
           :else
-          (vim.notify "A new project file exists but has not been approved or rejected"
-                      vim.log.levels.DEBUG)))))
+          (ask-allow-project "New project file found")))))
 
 (fn setup []
   (vim.api.nvim_create_autocmd :VimEnter
                                {:group :wildignore-group
                                 :pattern "*"
-                                :callback autoload-project-fnl})
+                                :callback load-project})
   (vim.api.nvim_create_autocmd :DirChanged
                                {:group :wildignore-group
                                 :pattern :global
-                                :callback autoload-project-fnl}))
+                                :callback load-project}))
 
-{: setup : allow-source}
+{: setup : load-project : ask-allow-project}
