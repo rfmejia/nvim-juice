@@ -4,7 +4,7 @@
   "lazy.nvim": { "branch": "main", "commit": "56ead98e05bb37a4ec28930a54d836d033cf00f2" },
   "nfnl": { "branch": "main", "commit": "dc3d2772b60df2ce96816c5a3de84c116028cf31" },
   "nvim-autopairs": { "branch": "master", "commit": "b464658e9b880f463b9f7e6ccddd93fb0013f559" },
-  "nvim-lspconfig": { "branch": "master", "commit": "16008a64f6ab9309641f30b8a7c9a432f1649b9a" },
+  "nvim-lspconfig": { "branch": "master", "commit": "65f02d8e4b66db9ec99618c43233963545b70298" },
   "nvim-metals": { "branch": "main", "commit": "f861db9fda55939797ac1b05238c49b0dcdc3bdb" },
   "nvim-paredit": { "branch": "master", "commit": "0fadfa5cb14c4a2a8fc3e8fbd3cb72c7d5e16eda" },
   "nvim-surround": { "branch": "main", "commit": "dca2e998ff26681ee422b92c6ed39b3d2908d8a9" },

@@ -4,7 +4,14 @@
 (local hash-command :md5sum)
 (local hash-file-path (.. vim.env.XDG_STATE_HOME :/nvim/projectify.json))
 
-(comment "TODO Create function to read only chmod 600 files")
+(comment {:TODO ["If allowed by asking, also source project"
+                 "Find ergonomic way to initialize project"
+                 "Create init hash only if file does not exist"
+                 "Create function to read only chmod 600 init-hash and project files"
+                 "Move effectful functions to the edges"
+                 "Add ex command equivalents"]
+          :FIXME ["Do not use `tset`, update table without mutating"]}
+  (init-hash-file))
 
 (lambda load-hashes [path]
   (vim.json.decode (core.slurp path) {}))
@@ -15,7 +22,6 @@
     (core.spit path (vim.json.encode obj))))
 
 (fn init-hash-file []
-  (comment "TODO Create only if file does not exist")
   (let [now (os.time)]
     (save-hashes hash-file-path {:created (os.time)})))
 
@@ -35,17 +41,6 @@
         (not= source-hash (. hash-info :source)) {:error :mismatch}
         (not (. hash-info :allowed)) {:error :disallowed}
         :else nil)))
-
-(assert (assert (= :missing (. (hash-valid? {} :a :1234) :error)))
-        (assert (= :mismatch (. (hash-valid? {:a {:source :1234 :allowed true}}
-                                             :a :12345)
-                                :error)))
-        (assert (= :disallowed (. (hash-valid? {:a {:source :1234
-                                                    :allowed false}}
-                                               :a :1234)
-                                  :error)))
-        (assert (= nil
-                   (hash-valid? {:a {:source :1234 :allowed true}} :a :1234))))
 
 (fn get-lua-project []
   (local path (-?> (vim.fs.root 0 :.nvim)
@@ -76,9 +71,6 @@
                        (vim.notify "Project allowed" vim.log.levels.INFO)
                        (vim.notify "Project disallowed" vim.log.levels.INFO)))))
 
-(comment "FIXME Do not use `tset`, update table without mutating"
-  (init-hash-file))
-
 (fn load-project []
   (local project (get-lua-project))
   (when project
@@ -106,5 +98,18 @@
                                {:group :wildignore-group
                                 :pattern :global
                                 :callback load-project}))
+
+(comment :Tests
+  (assert (assert (= :missing (. (hash-valid? {} :a :1234) :error)))
+          (assert (= :mismatch (. (hash-valid? {:a {:source :1234
+                                                    :allowed true}}
+                                               :a :12345)
+                                  :error)))
+          (assert (= :disallowed (. (hash-valid? {:a {:source :1234
+                                                      :allowed false}}
+                                                 :a :1234)
+                                    :error)))
+          (assert (= nil (hash-valid? {:a {:source :1234 :allowed true}} :a
+                                      :1234)))))
 
 {: setup : load-project : ask-allow-project}
