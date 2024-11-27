@@ -2,7 +2,7 @@
 (local core (autoload :nfnl.core))
 
 (local hash-command :md5sum)
-(local hash-file-path (.. vim.env.XDG_STATE_HOME :/nvim/autoload.json))
+(local hash-file-path (.. vim.env.XDG_STATE_HOME :/nvim/projectify.json))
 
 (comment "TODO Create function to read only chmod 600 files")
 

@@ -8,7 +8,7 @@
 
 (util.call-setup :juice.options :juice.colorscheme :juice.plugins
                  :juice.mappings :git-info :tmux-nav :trim-whitespace
-                 :wildignore :autoload)
+                 :wildignore :projectify)
 
 (let [journal-tools (autoload :journal-tools)
       opts {:maps mappings.journal-maps}]

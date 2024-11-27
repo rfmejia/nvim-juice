@@ -1,16 +1,17 @@
--- [nfnl] Compiled from fnl/autoload/init.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] Compiled from fnl/projectify/init.fnl by https://github.com/Olical/nfnl, do not edit.
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local core = autoload("nfnl.core")
 local hash_command = "md5sum"
-local hash_file_path = (vim.env.XDG_STATE_HOME .. "/nvim/autoload.json")
+local hash_file_path = (vim.env.XDG_STATE_HOME .. "/nvim/projectify.json")
+--[[ "TODO Create function to read only chmod 600 files" ]]
 local function load_hashes(path)
-  _G.assert((nil ~= path), "Missing argument path on /home/rfmejia/.config/nvim/fnl/autoload/init.fnl:7")
+  _G.assert((nil ~= path), "Missing argument path on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:9")
   return vim.json.decode(core.slurp(path), {})
 end
 local function save_hashes(path, obj)
-  _G.assert((nil ~= obj), "Missing argument obj on /home/rfmejia/.config/nvim/fnl/autoload/init.fnl:10")
-  _G.assert((nil ~= path), "Missing argument path on /home/rfmejia/.config/nvim/fnl/autoload/init.fnl:10")
+  _G.assert((nil ~= obj), "Missing argument obj on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:12")
+  _G.assert((nil ~= path), "Missing argument path on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:12")
   local now = os.time()
   obj["updated"] = now
   return core.spit(path, vim.json.encode(obj))
@@ -21,7 +22,7 @@ local function init_hash_file()
   return save_hashes(hash_file_path, {created = os.time()})
 end
 local function compute_hash(input_string)
-  _G.assert((nil ~= input_string), "Missing argument input-string on /home/rfmejia/.config/nvim/fnl/autoload/init.fnl:20")
+  _G.assert((nil ~= input_string), "Missing argument input-string on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:22")
   local result = vim.system({hash_command}, {text = true, stdin = {input_string}}):wait()
   if (result.code == 0) then
     return vim.fn.split(result.stdout, " ")[1]
@@ -31,9 +32,9 @@ local function compute_hash(input_string)
   end
 end
 local function hash_valid_3f(lookup_table, key_hash, source_hash)
-  _G.assert((nil ~= source_hash), "Missing argument source-hash on /home/rfmejia/.config/nvim/fnl/autoload/init.fnl:30")
-  _G.assert((nil ~= key_hash), "Missing argument key-hash on /home/rfmejia/.config/nvim/fnl/autoload/init.fnl:30")
-  _G.assert((nil ~= lookup_table), "Missing argument lookup-table on /home/rfmejia/.config/nvim/fnl/autoload/init.fnl:30")
+  _G.assert((nil ~= source_hash), "Missing argument source-hash on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:32")
+  _G.assert((nil ~= key_hash), "Missing argument key-hash on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:32")
+  _G.assert((nil ~= lookup_table), "Missing argument lookup-table on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:32")
   local hash_info = lookup_table[key_hash]
   if (nil == hash_info) then
     return {error = "missing"}
@@ -71,9 +72,9 @@ local function get_lua_project()
   end
 end
 local function allow_project_source(path, source, allowed)
-  _G.assert((nil ~= allowed), "Missing argument allowed on /home/rfmejia/.config/nvim/fnl/autoload/init.fnl:56")
-  _G.assert((nil ~= source), "Missing argument source on /home/rfmejia/.config/nvim/fnl/autoload/init.fnl:56")
-  _G.assert((nil ~= path), "Missing argument path on /home/rfmejia/.config/nvim/fnl/autoload/init.fnl:56")
+  _G.assert((nil ~= allowed), "Missing argument allowed on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:58")
+  _G.assert((nil ~= source), "Missing argument source on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:58")
+  _G.assert((nil ~= path), "Missing argument path on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:58")
   local key_hash = compute_hash(path)
   local source_hash = compute_hash(source)
   local valid_hashes = load_hashes(hash_file_path)
@@ -82,7 +83,7 @@ local function allow_project_source(path, source, allowed)
   return save_hashes(hash_file_path, valid_hashes)
 end
 local function allow_project(allowed)
-  _G.assert((nil ~= allowed), "Missing argument allowed on /home/rfmejia/.config/nvim/fnl/autoload/init.fnl:64")
+  _G.assert((nil ~= allowed), "Missing argument allowed on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:66")
   local project = get_lua_project()
   if project then
     return allow_project_source(project.path, project.source, allowed)
@@ -91,7 +92,7 @@ local function allow_project(allowed)
   end
 end
 local function ask_allow_project(prompt)
-  _G.assert((nil ~= prompt), "Missing argument prompt on /home/rfmejia/.config/nvim/fnl/autoload/init.fnl:69")
+  _G.assert((nil ~= prompt), "Missing argument prompt on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:71")
   local function _8_(_241)
     local answer = ((_241 == "y") or (_241 == "Y"))
     allow_project(answer)
