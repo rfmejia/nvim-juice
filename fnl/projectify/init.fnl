@@ -4,12 +4,10 @@
 (local hash-command :md5sum)
 (local hash-file-path (.. vim.env.XDG_STATE_HOME :/nvim/projectify.json))
 
-(comment {:TODO ["If allowed by asking, also source project"
-                 "Find ergonomic way to initialize project"
+(comment {:TODO ["Find ergonomic way to initialize project"
                  "Create init hash only if file does not exist"
                  "Create function to read only chmod 600 init-hash and project files"
-                 "Move effectful functions to the edges"
-                 "Add ex command equivalents"]
+                 "Move effectful functions to the edges"]
           :FIXME ["Do not use `tset`, update table without mutating"]}
   (init-hash-file))
 
@@ -35,7 +33,7 @@
                       vim.log.levels.ERROR)
           nil))))
 
-(fn get-lua-project []
+(fn read-local-project-file []
   (local path (-?> (vim.fs.root 0 :.nvim)
                    (.. :/.nvim/project.lua)))
   (local source (-?> path
@@ -60,20 +58,20 @@
         valid-hashes (load-hashes hash-file-path)
         entry {:source source-hash : allowed}]
     (tset valid-hashes key-hash entry)
-    (save-hashes hash-file-path valid-hashes)))
+    (save-hashes hash-file-path valid-hashes)
+    (vim.cmd.source path)))
 
-(lambda ask-allow-project [project prompt]
-  (vim.ui.input {:prompt (.. prompt "; Allow source? (y/N) ")}
+(lambda ask-allow-project [project ?prompt]
+  (local prompt (.. (if ?prompt (.. ?prompt "; ") "") "Allow source? (y/N) "))
+  (vim.ui.input {: prompt}
                 #(let [answer (or (= $1 :y) (= $1 :Y))]
                    (allow-project project answer)
                    (if answer
-                       (do
-                         (vim.cmd.source project.path)
-                         (vim.notify "Project allowed and loaded"
-                                     vim.log.levels.INFO))
+                       (vim.notify "Project allowed and loaded"
+                                   vim.log.levels.INFO)
                        (vim.notify "Project disallowed" vim.log.levels.INFO)))))
 
-(fn load-project-source [project]
+(fn load-project [project]
   (let [errors (project-allowed? project)]
     (if (= nil errors)
         (do
@@ -87,18 +85,36 @@
         :else
         (ask-allow-project project "New project file found"))))
 
-(fn load-project []
-  (load-project-source (get-lua-project)))
+(fn load-local-project []
+  (load-project (read-local-project-file)))
 
 (fn setup []
   (vim.api.nvim_create_autocmd :VimEnter
                                {:group :wildignore-group
                                 :pattern "*"
-                                :callback load-project})
+                                :callback load-local-project})
   (vim.api.nvim_create_autocmd :DirChanged
                                {:group :wildignore-group
                                 :pattern :global
-                                :callback load-project}))
+                                :callback load-local-project})
+  (vim.api.nvim_create_user_command :ProjectifyInitHash init-hash-file
+                                    {:desc "[projectify] Initialize hash file"})
+  (vim.api.nvim_create_user_command :ProjectifyLoad load-local-project
+                                    {:desc "[projectify] Load project file"})
+  (vim.api.nvim_create_user_command :ProjectifyAllow
+                                    #(do
+                                       (allow-project (read-local-project-file)
+                                                      true)
+                                       (vim.notify "Project allowed and loaded"
+                                                   vim.log.levels.INFO))
+                                    {:desc "[projectify] Allow and load project file"})
+  (vim.api.nvim_create_user_command :ProjectifyDisallow
+                                    #(do
+                                       (allow-project (read-local-project-file)
+                                                      false)
+                                       (vim.notify "Project disallowed"
+                                                   vim.log.levels.INFO))
+                                    {:desc "[projectify] Disallow project file"}))
 
 (comment :Tests
   (assert (assert (= :missing (. (hash-valid? {} :a :1234) :error)))
@@ -113,4 +129,4 @@
           (assert (= nil (hash-valid? {:a {:source :1234 :allowed true}} :a
                                       :1234)))))
 
-{: setup : load-project : ask-allow-project}
+{: setup : load-local-project : ask-allow-project}
