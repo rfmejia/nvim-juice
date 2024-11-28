@@ -35,13 +35,6 @@
                       vim.log.levels.ERROR)
           nil))))
 
-(lambda hash-valid? [lookup-table key-hash source-hash]
-  (let [hash-info (. lookup-table key-hash)]
-    (if (= nil hash-info) {:error :missing}
-        (not= source-hash (. hash-info :source)) {:error :mismatch}
-        (not (. hash-info :allowed)) {:error :disallowed}
-        :else nil)))
-
 (fn get-lua-project []
   (local path (-?> (vim.fs.root 0 :.nvim)
                    (.. :/.nvim/project.lua)))
@@ -50,7 +43,18 @@
   (when (and source (> (length source) 0))
     {: path : source}))
 
-(lambda allow-project-source [path source allowed]
+(fn project-allowed? [project]
+  (if (not (and project project.path project.source)) {:error :nil-project}
+      (let [key-hash (compute-hash project.path)
+            source-hash (compute-hash project.source)
+            hash-lookup (load-hashes hash-file-path)
+            valid-hash (. hash-lookup key-hash)]
+        (if (= nil valid-hash) {:error :missing}
+            (not= source-hash (. valid-hash :source)) {:error :mismatch}
+            (not (. valid-hash :allowed)) {:error :disallowed}
+            :else nil))))
+
+(lambda allow-project [{: path : source} allowed]
   (let [key-hash (compute-hash path)
         source-hash (compute-hash source)
         valid-hashes (load-hashes hash-file-path)
@@ -58,36 +62,33 @@
     (tset valid-hashes key-hash entry)
     (save-hashes hash-file-path valid-hashes)))
 
-(lambda allow-project [allowed]
-  (local project (get-lua-project))
-  (when project
-    (allow-project-source project.path project.source allowed)))
-
-(lambda ask-allow-project [prompt]
+(lambda ask-allow-project [project prompt]
   (vim.ui.input {:prompt (.. prompt "; Allow source? (y/N) ")}
                 #(let [answer (or (= $1 :y) (= $1 :Y))]
-                   (allow-project answer)
+                   (allow-project project answer)
                    (if answer
-                       (vim.notify "Project allowed" vim.log.levels.INFO)
+                       (do
+                         (vim.cmd.source project.path)
+                         (vim.notify "Project allowed and loaded"
+                                     vim.log.levels.INFO))
                        (vim.notify "Project disallowed" vim.log.levels.INFO)))))
 
+(fn load-project-source [project]
+  (let [errors (project-allowed? project)]
+    (if (= nil errors)
+        (do
+          (vim.cmd.source project.path)
+          (vim.notify "Project file loaded" vim.log.levels.INFO))
+        (or (= :nil-project (. errors :error))
+            (= :disallowed (. errors :error)))
+        (comment "do nothing")
+        (= :mismatch (. errors :error))
+        (ask-allow-project project "Project file was updated")
+        :else
+        (ask-allow-project project "New project file found"))))
+
 (fn load-project []
-  (local project (get-lua-project))
-  (when project
-    (let [key-hash (compute-hash project.path)
-          source-hash (compute-hash project.source)
-          valid-hashes (load-hashes hash-file-path)
-          errors (hash-valid? valid-hashes key-hash source-hash)]
-      (if (= nil errors)
-          (do
-            (vim.cmd.source project.path)
-            (vim.notify "Project file loaded" vim.log.levels.INFO))
-          (= :disallowed (. errors :error))
-          (comment "do nothing")
-          (= :mismatch (. errors :error))
-          (ask-allow-project "Project file was changed")
-          :else
-          (ask-allow-project "New project file found")))))
+  (load-project-source (get-lua-project)))
 
 (fn setup []
   (vim.api.nvim_create_autocmd :VimEnter

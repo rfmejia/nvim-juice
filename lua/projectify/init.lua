@@ -30,23 +30,6 @@ local function compute_hash(input_string)
     return nil
   end
 end
-local function hash_valid_3f(lookup_table, key_hash, source_hash)
-  _G.assert((nil ~= source_hash), "Missing argument source-hash on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:38")
-  _G.assert((nil ~= key_hash), "Missing argument key-hash on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:38")
-  _G.assert((nil ~= lookup_table), "Missing argument lookup-table on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:38")
-  local hash_info = lookup_table[key_hash]
-  if (nil == hash_info) then
-    return {error = "missing"}
-  elseif (source_hash ~= hash_info.source) then
-    return {error = "mismatch"}
-  elseif not hash_info.allowed then
-    return {error = "disallowed"}
-  elseif "else" then
-    return nil
-  else
-    return nil
-  end
-end
 local function get_lua_project()
   local path
   do
@@ -69,10 +52,33 @@ local function get_lua_project()
     return nil
   end
 end
-local function allow_project_source(path, source, allowed)
-  _G.assert((nil ~= allowed), "Missing argument allowed on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:53")
-  _G.assert((nil ~= source), "Missing argument source on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:53")
-  _G.assert((nil ~= path), "Missing argument path on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:53")
+local function project_allowed_3f(project)
+  if not (project and project.path and project.source) then
+    return {error = "nil-project"}
+  else
+    local key_hash = compute_hash(project.path)
+    local source_hash = compute_hash(project.source)
+    local hash_lookup = load_hashes(hash_file_path)
+    local valid_hash = hash_lookup[key_hash]
+    if (nil == valid_hash) then
+      return {error = "missing"}
+    elseif (source_hash ~= valid_hash.source) then
+      return {error = "mismatch"}
+    elseif not valid_hash.allowed then
+      return {error = "disallowed"}
+    elseif "else" then
+      return nil
+    else
+      return nil
+    end
+  end
+end
+local function allow_project(_8_, allowed)
+  local path = _8_["path"]
+  local source = _8_["source"]
+  _G.assert((nil ~= allowed), "Missing argument allowed on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:57")
+  _G.assert((nil ~= source), "Missing argument source on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:57")
+  _G.assert((nil ~= path), "Missing argument path on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:57")
   local key_hash = compute_hash(path)
   local source_hash = compute_hash(source)
   local valid_hashes = load_hashes(hash_file_path)
@@ -80,51 +86,39 @@ local function allow_project_source(path, source, allowed)
   valid_hashes[key_hash] = entry
   return save_hashes(hash_file_path, valid_hashes)
 end
-local function allow_project(allowed)
-  _G.assert((nil ~= allowed), "Missing argument allowed on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:61")
-  local project = get_lua_project()
-  if project then
-    return allow_project_source(project.path, project.source, allowed)
-  else
-    return nil
-  end
-end
-local function ask_allow_project(prompt)
-  _G.assert((nil ~= prompt), "Missing argument prompt on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:66")
-  local function _8_(_241)
+local function ask_allow_project(project, prompt)
+  _G.assert((nil ~= prompt), "Missing argument prompt on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:65")
+  _G.assert((nil ~= project), "Missing argument project on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:65")
+  local function _9_(_241)
     local answer = ((_241 == "y") or (_241 == "Y"))
-    allow_project(answer)
+    allow_project(project, answer)
     if answer then
-      return vim.notify("Project allowed", vim.log.levels.INFO)
+      vim.cmd.source(project.path)
+      return vim.notify("Project allowed and loaded", vim.log.levels.INFO)
     else
       return vim.notify("Project disallowed", vim.log.levels.INFO)
     end
   end
-  return vim.ui.input({prompt = (prompt .. "; Allow source? (y/N) ")}, _8_)
+  return vim.ui.input({prompt = (prompt .. "; Allow source? (y/N) ")}, _9_)
 end
-local function load_project()
-  local project = get_lua_project()
-  if project then
-    local key_hash = compute_hash(project.path)
-    local source_hash = compute_hash(project.source)
-    local valid_hashes = load_hashes(hash_file_path)
-    local errors = hash_valid_3f(valid_hashes, key_hash, source_hash)
-    if (nil == errors) then
-      vim.cmd.source(project.path)
-      return vim.notify("Project file loaded", vim.log.levels.INFO)
-    elseif ("disallowed" == errors.error) then
-      --[[ "do nothing" ]]
-      return nil
-    elseif ("mismatch" == errors.error) then
-      return ask_allow_project("Project file was changed")
-    elseif "else" then
-      return ask_allow_project("New project file found")
-    else
-      return nil
-    end
+local function load_project_source(project)
+  local errors = project_allowed_3f(project)
+  if (nil == errors) then
+    vim.cmd.source(project.path)
+    return vim.notify("Project file loaded", vim.log.levels.INFO)
+  elseif (("nil-project" == errors.error) or ("disallowed" == errors.error)) then
+    --[[ "do nothing" ]]
+    return nil
+  elseif ("mismatch" == errors.error) then
+    return ask_allow_project(project, "Project file was updated")
+  elseif "else" then
+    return ask_allow_project(project, "New project file found")
   else
     return nil
   end
+end
+local function load_project()
+  return load_project_source(get_lua_project())
 end
 local function setup()
   vim.api.nvim_create_autocmd("VimEnter", {group = "wildignore-group", pattern = "*", callback = load_project})
