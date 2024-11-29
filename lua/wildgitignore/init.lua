@@ -1,4 +1,4 @@
--- [nfnl] Compiled from fnl/wildignore/init.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] Compiled from fnl/wildgitignore/init.fnl by https://github.com/Olical/nfnl, do not edit.
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local core = autoload("nfnl.core")
@@ -7,7 +7,7 @@ local function starts_with_3f(str, prefix)
   return (prefix == str:sub(1, #prefix))
 end
 local function is_dir_3f(path)
-  _G.assert((nil ~= path), "Missing argument path on /home/rfmejia/.config/nvim/fnl/wildignore/init.fnl:8")
+  _G.assert((nil ~= path), "Missing argument path on /home/rfmejia/.config/nvim/fnl/wildgitignore/init.fnl:8")
   return (nil ~= vim.fs.dir(path)())
 end
 local function update_wildignore()

@@ -4,14 +4,14 @@ local autoload = _local_1_["autoload"]
 local core = autoload("nfnl.core")
 local hash_command = "md5sum"
 local hash_file_path = (vim.env.XDG_STATE_HOME .. "/nvim/projectify.json")
---[[ {:FIXME ["Do not use `tset`, update table without mutating"] :TODO ["Find ergonomic way to initialize project" "Create init hash only if file does not exist" "Create function to read only chmod 600 init-hash and project files" "Move effectful functions to the edges" "Add ex command equivalents"]} (init-hash-file) ]]
+--[[ {:FIXME ["Do not use `tset`, update table without mutating"] :TODO ["Find ergonomic way to initialize project" "Create init hash only if file does not exist" "Create function to read only chmod 600 init-hash and project files" "Move effectful functions to the edges"]} (init-hash-file) ]]
 local function load_hashes(path)
-  _G.assert((nil ~= path), "Missing argument path on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:15")
+  _G.assert((nil ~= path), "Missing argument path on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:14")
   return vim.json.decode(core.slurp(path), {})
 end
 local function save_hashes(path, obj)
-  _G.assert((nil ~= obj), "Missing argument obj on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:18")
-  _G.assert((nil ~= path), "Missing argument path on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:18")
+  _G.assert((nil ~= obj), "Missing argument obj on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:17")
+  _G.assert((nil ~= path), "Missing argument path on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:17")
   local now = os.time()
   obj["updated"] = now
   return core.spit(path, vim.json.encode(obj))
@@ -21,7 +21,7 @@ local function init_hash_file()
   return save_hashes(hash_file_path, {created = os.time()})
 end
 local function compute_hash(input_string)
-  _G.assert((nil ~= input_string), "Missing argument input-string on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:27")
+  _G.assert((nil ~= input_string), "Missing argument input-string on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:26")
   local result = vim.system({hash_command}, {text = true, stdin = {input_string}}):wait()
   if (result.code == 0) then
     return vim.fn.split(result.stdout, " ")[1]
@@ -76,9 +76,9 @@ end
 local function allow_project(_8_, allowed)
   local path = _8_["path"]
   local source = _8_["source"]
-  _G.assert((nil ~= allowed), "Missing argument allowed on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:56")
-  _G.assert((nil ~= source), "Missing argument source on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:56")
-  _G.assert((nil ~= path), "Missing argument path on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:56")
+  _G.assert((nil ~= allowed), "Missing argument allowed on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:55")
+  _G.assert((nil ~= source), "Missing argument source on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:55")
+  _G.assert((nil ~= path), "Missing argument path on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:55")
   local key_hash = compute_hash(path)
   local source_hash = compute_hash(source)
   local valid_hashes = load_hashes(hash_file_path)
@@ -88,7 +88,7 @@ local function allow_project(_8_, allowed)
   return vim.cmd.source(path)
 end
 local function ask_allow_project(project, _3fprompt)
-  _G.assert((nil ~= project), "Missing argument project on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:65")
+  _G.assert((nil ~= project), "Missing argument project on /home/rfmejia/.config/nvim/fnl/projectify/init.fnl:64")
   local prompt
   local _9_
   if _3fprompt then

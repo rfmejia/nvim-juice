@@ -1,2 +1,6 @@
+(local {: autoload} (require :nfnl.module))
+(local util (autoload :juice.util))
+
 (set vim.opt.commentstring "-- %s")
-(set vim.opt.equalprg "sqlformat -r -k upper -")
+(when (executable? :sqlformat)
+ (set vim.opt.equalprg "sqlformat -r -k upper -"))
