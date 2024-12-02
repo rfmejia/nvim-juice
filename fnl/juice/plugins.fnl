@@ -39,14 +39,14 @@
                     (util.call :oil :setup opts)
                     (util.set-keys mappings.oil-maps))}])
 
-(local database-tools [{1 :tpope/vim-dadbod
-                        :ft [:sql :mysql]
-                        :config #(vim.api.nvim_create_autocmd :FileType
-                                                              {:pattern [:sql
-                                                                         :mysql]
-                                                               :callback #(util.set-keys mappings.dadbod-maps)})
-                        :dependencies [{1 :kristijanhusak/vim-dadbod-completion
-                                        :lazy true}]}])
+(local database-tools [(let [sql-filetypes [:sql :mysql :pgsql]]
+                         {1 :tpope/vim-dadbod
+                          :ft sql-filetypes
+                          :config #(vim.api.nvim_create_autocmd :FileType
+                                                                {:pattern sql-filetypes
+                                                                 :callback #(util.set-keys mappings.dadbod-maps)})
+                          :dependencies [{1 :kristijanhusak/vim-dadbod-completion
+                                          :lazy true}]})])
 
 (local dev-tools [{1 :neovim/nvim-lspconfig
                    :ft [:clojure :java :go :scala]

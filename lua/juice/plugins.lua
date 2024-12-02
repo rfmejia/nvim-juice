@@ -21,33 +21,37 @@ local function _4_()
 end
 core_tools = {{"Olical/nfnl", ft = "fennel", config = _2_}, {"nvim-treesitter/nvim-treesitter", event = {"BufReadPre", "BufNewFile"}, build = ":TSUpdate", config = _3_}, {"stevearc/oil.nvim", config = _4_}}
 local database_tools
-local function _5_()
+local function _5_(...)
+  local sql_filetypes = {"sql", "mysql", "pgsql"}
   local function _6_()
-    return util["set-keys"](mappings["dadbod-maps"])
+    local function _7_()
+      return util["set-keys"](mappings["dadbod-maps"])
+    end
+    return vim.api.nvim_create_autocmd("FileType", {pattern = sql_filetypes, callback = _7_})
   end
-  return vim.api.nvim_create_autocmd("FileType", {pattern = {"sql", "mysql"}, callback = _6_})
+  return {"tpope/vim-dadbod", ft = sql_filetypes, config = _6_, dependencies = {{"kristijanhusak/vim-dadbod-completion", lazy = true}}}
 end
-database_tools = {{"tpope/vim-dadbod", ft = {"sql", "mysql"}, config = _5_, dependencies = {{"kristijanhusak/vim-dadbod-completion", lazy = true}}}}
+database_tools = {_5_(...)}
 local dev_tools
-local function _7_()
+local function _8_()
   return util["call-setup"]("juice.lsp")
 end
-dev_tools = {{"neovim/nvim-lspconfig", ft = {"clojure", "java", "go", "scala"}, config = _7_}, {"scalameta/nvim-metals", cmd = "MetalsInit", dependencies = {"nvim-lua/plenary.nvim"}}}
+dev_tools = {{"neovim/nvim-lspconfig", ft = {"clojure", "java", "go", "scala"}, config = _8_}, {"scalameta/nvim-metals", cmd = "MetalsInit", dependencies = {"nvim-lua/plenary.nvim"}}}
 local lisp_tools
 do
   local languages = {"clojure", "fennel"}
-  local function _8_()
+  local function _9_()
     return util["assoc-in"](vim.g, {["conjure#result#register"] = "*", ["conjure#mapping#doc_word"] = "gk", ["conjure#log#botright"] = true})
   end
-  lisp_tools = {{"Olical/conjure", branch = "main", ft = languages, config = _8_}, {"julienvincent/nvim-paredit", ft = languages, opts = {use_default_keys = true, indent = {enabled = true}}, dependencies = {{"nvim-treesitter/nvim-treesitter"}}}}
+  lisp_tools = {{"Olical/conjure", branch = "main", ft = languages, config = _9_}, {"julienvincent/nvim-paredit", ft = languages, opts = {use_default_keys = true, indent = {enabled = true}}, dependencies = {{"nvim-treesitter/nvim-treesitter"}}}}
 end
 local editing_tools = {{"kylechui/nvim-surround", keys = {"cs", "ds", "ys"}, config = true}, {"windwp/nvim-autopairs", event = "InsertEnter", opts = {enable_check_bracket_line = false}}}
 local git_tools
-local function _9_()
+local function _10_()
   util["call-setup"]("gitsigns")
   return util["set-keys"](mappings["gitsigns-maps"])
 end
-git_tools = {{"lewis6991/gitsigns.nvim", event = {"BufReadPre", "BufNewFile"}, config = _9_}}
+git_tools = {{"lewis6991/gitsigns.nvim", event = {"BufReadPre", "BufNewFile"}, config = _10_}}
 local function setup()
   local plugins = core.concat(core_tools, database_tools, dev_tools, editing_tools, git_tools, lisp_tools)
   local opts = {ui = {border = "rounded"}, performance = {rtp = {disabled_plugins = {"rplugin", "tohtml", "tutor", "vimball"}}}}
