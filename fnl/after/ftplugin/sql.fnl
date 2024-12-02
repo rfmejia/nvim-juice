@@ -2,5 +2,5 @@
 (local util (autoload :juice.util))
 
 (set vim.opt.commentstring "-- %s")
-(when (executable? :sqlformat)
- (set vim.opt.equalprg "sqlformat -r -k upper -"))
+(when (util.executable? :sqlformat)
+  (set vim.opt.equalprg "sqlformat -r -k upper -"))
