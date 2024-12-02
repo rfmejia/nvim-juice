@@ -3,34 +3,41 @@
 (local util (autoload :juice.util))
 (local mappings (autoload :juice.mappings))
 
-(local core-tools [{1 :Olical/nfnl
-                    :ft :fennel
-                    :config #(set vim.g.conjure#client#fennel#aniseed#deprecation_warning
-                                  false)}
-                   {1 :nvim-treesitter/nvim-treesitter
-                    :event [:BufReadPre :BufNewFile]
-                    :build ":TSUpdate"
-                    :config #(let [languages [:bash
-                                              :clojure
-                                              :fennel
-                                              :gitcommit
-                                              :go
-                                              :hocon
-                                              :java
-                                              :json
-                                              :lua
-                                              :markdown
-                                              :scala
-                                              :sql
-                                              :vimdoc
-                                              :yaml]
-                                   config {:ensure_installed languages
-                                           :highlight {:enable true}
-                                           :indent {:enable true}}]
-                               ;; Note: We cannot use `opts` loading for lazy.nvim because
-                               ;; we need to call `nvim-treesitter.configs.setup`
-                               (util.call :nvim-treesitter.configs :setup
-                                          config))}])
+(local core-tools
+       [{1 :Olical/nfnl
+         :ft :fennel
+         :config #(set vim.g.conjure#client#fennel#aniseed#deprecation_warning
+                       false)}
+        {1 :nvim-treesitter/nvim-treesitter
+         :event [:BufReadPre :BufNewFile]
+         :build ":TSUpdate"
+         :config #(let [languages [:bash
+                                   :clojure
+                                   :fennel
+                                   :gitcommit
+                                   :go
+                                   :hocon
+                                   :java
+                                   :json
+                                   :lua
+                                   :markdown
+                                   :scala
+                                   :sql
+                                   :vimdoc
+                                   :yaml]
+                        config {:ensure_installed languages
+                                :highlight {:enable true}
+                                :indent {:enable true}}]
+                    ;; Note: We cannot use `opts` loading for lazy.nvim because
+                    ;; we need to call `nvim-treesitter.configs.setup`
+                    (util.call :nvim-treesitter.configs :setup config))}
+        {1 :stevearc/oil.nvim
+         :config #(let [opts {:default_file_explorer true
+                              :delete_to_trash true
+                              :skip_confirm_for_simple_edits true
+                              :view_options {:show_hidden true}}]
+                    (util.call :oil :setup opts)
+                    (util.set-keys mappings.oil-maps))}])
 
 (local database-tools [{1 :tpope/vim-dadbod
                         :ft [:sql :mysql]
@@ -68,17 +75,6 @@
          :event :InsertEnter
          :opts {:enable_check_bracket_line false}}])
 
-(local file-tools
-       [{1 :stevearc/oil.nvim
-         :cmd :Oil
-         :keys :<leader>e
-         :config #(let [opts {:default_file_explorer true
-                              :delete_to_trash true
-                              :skip_confirm_for_simple_edits true
-                              :view_options {:show_hidden true}}]
-                    (util.call :oil :setup opts)
-                    (util.set-keys mappings.oil-maps))}])
-
 (local git-tools
        [{1 :lewis6991/gitsigns.nvim
          :event [:BufReadPre :BufNewFile]
@@ -88,7 +84,7 @@
 
 (fn setup []
   (let [plugins (core.concat core-tools database-tools dev-tools editing-tools
-                             file-tools git-tools lisp-tools)
+                             git-tools lisp-tools)
         opts {:ui {:border :rounded}
               :performance {:rtp {:disabled_plugins [:rplugin
                                                      :tohtml
