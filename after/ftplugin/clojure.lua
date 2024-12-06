@@ -2,7 +2,7 @@
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local util = autoload("juice.util")
-util["assoc-in"](vim.opt, {shiftwidth = 2, tabstop = 2, expandtab = true, textwidth = 100, commentstring = ";; %s", spell = false})
+util["assoc-in"](vim.opt_local, {shiftwidth = 2, tabstop = 2, expandtab = true, textwidth = 100, commentstring = ";; %s", spell = false})
 local function _2_()
   return vim.lsp.buf.format({async = false})
 end

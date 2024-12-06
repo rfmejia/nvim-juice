@@ -3,13 +3,13 @@ local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local notify = autoload("nfnl.notify")
 local util = autoload("juice.util")
-util["assoc-in"](vim.opt, {shiftwidth = 2, tabstop = 2, expandtab = true, textwidth = 100, commentstring = ";; %s"})
+util["assoc-in"](vim.opt_local, {shiftwidth = 4, tabstop = 2, expandtab = true, textwidth = 100, commentstring = ";; %s"})
 local function buffer_is_modified(buf_num)
-  _G.assert((nil ~= buf_num), "Missing argument buf-num on /home/rfmejia/.config/nvim/fnl/after/ftplugin/fennel.fnl:11")
+  _G.assert((nil ~= buf_num), "Missing argument buf-num on /home/rfmejia/.config/nvim/fnl/after/ftplugin/fennel.fnl:12")
   return vim.api.nvim_buf_get_option(buf_num, "modified")
 end
 local function format_fennel(path)
-  _G.assert((nil ~= path), "Missing argument path on /home/rfmejia/.config/nvim/fnl/after/ftplugin/fennel.fnl:14")
+  _G.assert((nil ~= path), "Missing argument path on /home/rfmejia/.config/nvim/fnl/after/ftplugin/fennel.fnl:15")
   local modified = buffer_is_modified(vim.api.nvim_get_current_buf())
   local fnlfmt_cmd = {"fnlfmt", "--fix", path}
   if not modified then
@@ -30,7 +30,7 @@ end
 local function _6_()
   return format_fennel(vim.fn.expand("%:p"))
 end
-vim.keymap.set("n", "<localleader>cf", _6_, {desc = "[fennel] (c)ode (f)ormat"})
+vim.keymap.set("n", "<localleader>cf", _6_, {desc = "[fennel] (c)ode (f)ormat", buffer = true})
 local function _7_()
   return format_fennel(vim.fn.expand("%:p"))
 end

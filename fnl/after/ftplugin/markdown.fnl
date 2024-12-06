@@ -1,12 +1,12 @@
 (local {: autoload} (require :nfnl.module))
 (local util (autoload :juice.util))
 
-(util.assoc-in vim.opt {:shiftwidth 2
-                        :tabstop 2
-                        :textwidth 100
-                        :wrap true
-                        :spell true
-                        :spelllang :en_us})
+(util.assoc-in vim.opt_local {:shiftwidth 2
+                              :tabstop 2
+                              :textwidth 100
+                              :wrap true
+                              :spell true
+                              :spelllang :en_us})
 
 (fn render-markdown-to-html []
   (let [current-file (vim.fn.expand "%:p")
@@ -36,11 +36,11 @@
                  :<localleader>m
                  insert-yaml-metadata
                  {:desc "[markdown] insert metadata as a YAML header"
-                  :buffer (vim.api.nvim_get_current_buf)
+                  :buffer true
                   :silent true}]
                 [:n
                  :<localleader>v
                  render-markdown-to-html
                  {:desc "[markdown] convert to HTML and show preview in browser"
-                  :buffer (vim.api.nvim_get_current_buf)
+                  :buffer true
                   :silent true}]])

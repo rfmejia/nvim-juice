@@ -1,12 +1,13 @@
 (local {: autoload} (require :nfnl.module))
 (local util (autoload :juice.util))
 
-(util.assoc-in vim.opt {:shiftwidth 2
-                        :tabstop 2
-                        :expandtab true
-                        :textwidth 100
-                        :spell false
-                        :commentstring ";; %s"})
+(util.assoc-in vim.opt_local
+               {:shiftwidth 2
+                :tabstop 2
+                :expandtab true
+                :textwidth 100
+                :spell false
+                :commentstring ";; %s"})
 
 (vim.api.nvim_create_autocmd :BufWritePre
                              {:pattern [:*.clj :*.edn]

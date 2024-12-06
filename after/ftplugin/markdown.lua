@@ -2,7 +2,7 @@
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local util = autoload("juice.util")
-util["assoc-in"](vim.opt, {shiftwidth = 2, tabstop = 2, textwidth = 100, wrap = true, spell = true, spelllang = "en_us"})
+util["assoc-in"](vim.opt_local, {shiftwidth = 2, tabstop = 2, textwidth = 100, wrap = true, spell = true, spelllang = "en_us"})
 local function render_markdown_to_html()
   local current_file = vim.fn.expand("%:p")
   local tmp_file = vim.fn.system({"mktemp", "--suffix=.html"})
@@ -15,4 +15,4 @@ local function insert_yaml_metadata()
   local now = vim.fn.strftime("%FT%T%z", vim.fn.localtime())
   return util["insert-lines"]("---", ("title: " .. filename), ("created: " .. now), "tags: []", "---", "")
 end
-return util["set-keys"]({{"n", "<localleader>m", insert_yaml_metadata, {desc = "[markdown] insert metadata as a YAML header", buffer = vim.api.nvim_get_current_buf(), silent = true}}, {"n", "<localleader>v", render_markdown_to_html, {desc = "[markdown] convert to HTML and show preview in browser", buffer = vim.api.nvim_get_current_buf(), silent = true}}})
+return util["set-keys"]({{"n", "<localleader>m", insert_yaml_metadata, {desc = "[markdown] insert metadata as a YAML header", buffer = true, silent = true}}, {"n", "<localleader>v", render_markdown_to_html, {desc = "[markdown] convert to HTML and show preview in browser", buffer = true, silent = true}}})

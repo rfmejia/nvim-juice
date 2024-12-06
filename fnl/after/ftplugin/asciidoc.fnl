@@ -2,12 +2,12 @@
 (local notify (autoload :nfnl.notify))
 (local util (autoload :juice.util))
 
-(util.assoc-in vim.opt {:shiftwidth 2
-                        :tabstop 2
-                        :textwidth 80
-                        :wrap true
-                        :spell true
-                        :spelllang :en_us})
+(util.assoc-in vim.opt_local {:shiftwidth 2
+                              :tabstop 2
+                              :textwidth 80
+                              :wrap true
+                              :spell true
+                              :spelllang :en_us})
 
 (fn insert-lines [text]
   "Insert text at the current cursor position"
@@ -50,7 +50,8 @@
   (if (util.executable? :asciidoctor)
       (match (vim.fn.system [:asciidoctor :-o out in])
         ok (vim.fn.system [browser-cmd out])
-        (nil err-msg) (notify.error (.. "[asciidoc] Could not run asciidoctor: " err-msg)))))
+        (nil err-msg)
+        (notify.error (.. "[asciidoc] Could not run asciidoctor: " err-msg)))))
 
 (when vim.env.BROWSER
   (let [in (vim.fn.expand "%:p")
@@ -58,30 +59,28 @@
     (vim.keymap.set :n :<localleader>p
                     #(preview-in-browser in out vim.env.BROWSER)
                     {:desc "convert to HTML and show preview in browser"
-                     :buffer (vim.api.nvim_get_current_buf)})))
+                     :buffer true})))
 
 (util.set-keys [[:n
                  :<localleader>w
                  insert-week
                  {:desc "insert current week as an h2 header"
-                  :buffer (vim.api.nvim_get_current_buf)
+                  :buffer true
                   :silent true}]
                 [:n
                  :<localleader>d
                  ":r!date '+\\%a, \\%d \\%b \\%Y' | xargs -0 printf '\\n== \\%s\\n\\n'<cr>k"
                  {:desc "insert current date as an h2 header"
-                  :buffer (vim.api.nvim_get_current_buf)
+                  :buffer true
                   :silent true}]
                 [:n
                  :<localleader>t
                  insert-time
                  ;; ":r!date '+\\%H:\\%M' | xargs -0 printf '=== \\%s ' | tr -d '\\n'<cr>A"
                  {:desc "insert current time as an h3 header"
-                  :buffer (vim.api.nvim_get_current_buf)
+                  :buffer true
                   :silent true}]
                 [:n
                  :<localleader>x
                  insert-task
-                 {:desc "insert asciidoc checkbox"
-                  :buffer (vim.api.nvim_get_current_buf)
-                  :silent true}]])
+                 {:desc "insert asciidoc checkbox" :buffer true :silent true}]])

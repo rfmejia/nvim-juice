@@ -19,7 +19,7 @@ local function initialize_metals()
     return {{"v", "K", metals.type_of_range, {desc = "[metals] show type of visual selection", buffer = bufnr}}, {"n", "<localleader>mw", _3_, {desc = "[metals] show (m)etals (w)orksheet output in popup", buffer = bufnr}}, {"n", "<localleader>mt", tvp.toggle_tree_view, {desc = "[metals] (m)etals (t)oggle tree view", buffer = bufnr}}, {"n", "<localleader>mr", tvp.reveal_in_tree, {desc = "[metals] (m)etals (r)eveal current member in tree view", buffer = bufnr}}}
   end
   metals_maps = _2_
-  util["assoc-in"](vim.opt, options)
+  util["assoc-in"](vim.opt_local, options)
   config.settings = metals_settings
   config.init_options.statusBarProvider = "on"
   config.capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -40,7 +40,7 @@ local function initialize_metals()
   local function _6_()
     return metals.initialize_or_attach(config)
   end
-  vim.api.nvim_create_user_command("MetalsInit", _6_, {desc = "Start and connect to a Metals server"})
+  vim.api.nvim_create_user_command("MetalsInit", _6_, {desc = "Re-attach to a Metals server"})
   --[[ "Initialize Metals for the first time" ]]
   vim.g["metals_status"] = "Initializing Metals..."
   return metals.initialize_or_attach(config)

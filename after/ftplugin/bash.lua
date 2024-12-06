@@ -2,4 +2,4 @@
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local util = autoload("juice.util")
-return util["assoc-in"](vim.opt, {makeprg = "/usr/bin/env bash %", signcolumn = "no", textwidth = 80})
+return util["assoc-in"](vim.opt_local, {makeprg = "/usr/bin/env bash %", signcolumn = "no", textwidth = 80})

@@ -3,14 +3,14 @@
 (local str (autoload :nfnl.string))
 (local util (autoload :juice.util))
 
-(util.assoc-in vim.opt {:shiftwidth 2
-                        :tabstop 2
-                        :expandtab true
-                        :textwidth 100
-                        :signcolumn "yes:1"})
+(util.assoc-in vim.opt_local {:shiftwidth 2
+                              :tabstop 2
+                              :expandtab true
+                              :textwidth 100
+                              :signcolumn "yes:1"})
 
 (do
-  ;; "FIXME This doesn't seem to be reflected"
+  (comment "FIXME This doesn't seem to work")
   (: vim.opt.indentkeys :remove "<>>"))
 
 (fn run-scalafmt [path]
@@ -33,25 +33,25 @@
 (comment "Make sure we respect lsp if it's enabled"
   (vim.keymap.set :n :<localleader>cf #(run-scalafmt (vim.fn.expand "%:p"))
                   {:desc "[scala] run scalafmt on buffer"
-                   :buffer (vim.api.nvim_get_current_buf)
+                   :buffer true
                    :nowait true
                    :silent true}))
 
 (vim.keymap.set :n :<localleader>s "vip:sort<cr>"
                 {:desc "[scala] sort in paragraph"
                  :nowait true
-                 :buffer (vim.api.nvim_get_current_buf)
+                 :buffer true
                  :silent true})
 
 (when (util.executable? :sbtn)
   (vim.keymap.set :n :<leader>os ":!tmux split-window -v -l 30\\% sbtn<cr><cr>"
                   {:desc "[scala] open sbtn in a tmux split"
-                   :buffer (vim.api.nvim_get_current_buf)
+                   :buffer true
                    :silent true}))
 
 (when (util.executable? :scala-cli)
   (vim.keymap.set :n :<leader>oc
                   ":!tmux split-window -v -l 30\\% scala-cli console %<cr><cr>"
                   {:desc "[scala] open scala-cli in a tmux split"
-                   :buffer (vim.api.nvim_get_current_buf)
+                   :buffer true
                    :silent true}))

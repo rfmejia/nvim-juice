@@ -3,7 +3,7 @@ local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local notify = autoload("nfnl.notify")
 local util = autoload("juice.util")
-util["assoc-in"](vim.opt, {shiftwidth = 2, tabstop = 2, textwidth = 80, wrap = true, spell = true, spelllang = "en_us"})
+util["assoc-in"](vim.opt_local, {shiftwidth = 2, tabstop = 2, textwidth = 80, wrap = true, spell = true, spelllang = "en_us"})
 local function insert_lines(text)
   local buf = vim.api.nvim_get_current_buf()
   local row, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -75,7 +75,7 @@ if vim.env.BROWSER then
   local function _8_()
     return preview_in_browser(_in, out, vim.env.BROWSER)
   end
-  vim.keymap.set("n", "<localleader>p", _8_, {desc = "convert to HTML and show preview in browser", buffer = vim.api.nvim_get_current_buf()})
+  vim.keymap.set("n", "<localleader>p", _8_, {desc = "convert to HTML and show preview in browser", buffer = true})
 else
 end
-return util["set-keys"]({{"n", "<localleader>w", insert_week, {desc = "insert current week as an h2 header", buffer = vim.api.nvim_get_current_buf(), silent = true}}, {"n", "<localleader>d", ":r!date '+\\%a, \\%d \\%b \\%Y' | xargs -0 printf '\\n== \\%s\\n\\n'<cr>k", {desc = "insert current date as an h2 header", buffer = vim.api.nvim_get_current_buf(), silent = true}}, {"n", "<localleader>t", insert_time, {desc = "insert current time as an h3 header", buffer = vim.api.nvim_get_current_buf(), silent = true}}, {"n", "<localleader>x", insert_task, {desc = "insert asciidoc checkbox", buffer = vim.api.nvim_get_current_buf(), silent = true}}})
+return util["set-keys"]({{"n", "<localleader>w", insert_week, {desc = "insert current week as an h2 header", buffer = true, silent = true}}, {"n", "<localleader>d", ":r!date '+\\%a, \\%d \\%b \\%Y' | xargs -0 printf '\\n== \\%s\\n\\n'<cr>k", {desc = "insert current date as an h2 header", buffer = true, silent = true}}, {"n", "<localleader>t", insert_time, {desc = "insert current time as an h3 header", buffer = true, silent = true}}, {"n", "<localleader>x", insert_task, {desc = "insert asciidoc checkbox", buffer = true, silent = true}}})

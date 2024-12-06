@@ -36,7 +36,7 @@
                         tvp.reveal_in_tree
                         {:desc "[metals] (m)etals (r)eveal current member in tree view"
                          :buffer bufnr}]])]
-    (util.assoc-in vim.opt options)
+    (util.assoc-in vim.opt_local options)
     (set config.settings metals-settings)
     (set config.init_options.statusBarProvider :on)
     (set config.capabilities (vim.lsp.protocol.make_client_capabilities))
@@ -56,7 +56,7 @@
                                                                       {:clear true})})
     (vim.api.nvim_create_user_command :MetalsInit
                                       #(metals.initialize_or_attach config)
-                                      {:desc "Start and connect to a Metals server"})
+                                      {:desc "Re-attach to a Metals server"})
     (comment "Initialize Metals for the first time")
     (tset vim.g :metals_status "Initializing Metals...")
     (metals.initialize_or_attach config)))

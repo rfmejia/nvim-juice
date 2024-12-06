@@ -1,1 +1,1 @@
-(set vim.opt.signcolumn "yes:1")
+(set vim.opt_local.signcolumn "yes:1")
