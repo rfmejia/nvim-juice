@@ -9,9 +9,10 @@
                               :textwidth 100
                               :signcolumn "yes:1"})
 
-(do
-  (comment "FIXME This doesn't seem to work")
-  (: vim.opt.indentkeys :remove "<>>"))
+(vim.api.nvim_create_autocmd :FileType
+                             {:pattern :scala
+                              :callback #(: vim.opt_local.indentkeys :remove
+                                            "<>>")})
 
 (fn run-scalafmt [path]
   (let [filename (if (str.blank? path) (vim.fn.expand "%:p") path)

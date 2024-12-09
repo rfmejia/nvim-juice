@@ -5,10 +5,10 @@ local notify = autoload("nfnl.notify")
 local str = autoload("nfnl.string")
 local util = autoload("juice.util")
 util["assoc-in"](vim.opt_local, {shiftwidth = 2, tabstop = 2, expandtab = true, textwidth = 100, signcolumn = "yes:1"})
-do
-  --[[ "FIXME This doesn't seem to work" ]]
-  vim.opt.indentkeys:remove("<>>")
+local function _2_()
+  return vim.opt_local.indentkeys:remove("<>>")
 end
+vim.api.nvim_create_autocmd("FileType", {pattern = "scala", callback = _2_})
 local function run_scalafmt(path)
   local filename
   if str["blank?"](path) then
@@ -17,21 +17,21 @@ local function run_scalafmt(path)
     filename = path
   end
   local scalafmt_cmd = {"scalafmt", "--mode", "changed", "--config", ".scalafmt.conf", filename, filename}
-  local _3_, _4_ = vim.fn.system(scalafmt_cmd)
-  if (nil ~= _3_) then
-    local ok = _3_
+  local _4_, _5_ = vim.fn.system(scalafmt_cmd)
+  if (nil ~= _4_) then
+    local ok = _4_
     return vim.cmd("e!")
-  elseif ((_3_ == nil) and (nil ~= _4_)) then
-    local err_msg = _4_
+  elseif ((_4_ == nil) and (nil ~= _5_)) then
+    local err_msg = _5_
     return notify.error("[scala] Could not run `scalafmt`: ", err_msg)
   else
     return nil
   end
 end
-local function _6_()
+local function _7_()
   return run_scalafmt()
 end
-vim.api.nvim_buf_create_user_command(vim.api.nvim_get_current_buf(), "ScalafmtApply", _6_, {bang = true})
+vim.api.nvim_buf_create_user_command(vim.api.nvim_get_current_buf(), "ScalafmtApply", _7_, {bang = true})
 --[[ "Make sure we respect lsp if it's enabled" (vim.keymap.set "n" "<localleader>cf" (hashfn (run-scalafmt (vim.fn.expand "%:p"))) {:buffer true :desc "[scala] run scalafmt on buffer" :nowait true :silent true}) ]]
 vim.keymap.set("n", "<localleader>s", "vip:sort<cr>", {desc = "[scala] sort in paragraph", nowait = true, buffer = true, silent = true})
 if util["executable?"]("sbtn") then

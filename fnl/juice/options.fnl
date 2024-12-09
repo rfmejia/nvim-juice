@@ -83,6 +83,7 @@
 (local filetypes
        {:extension {:edn :clojure
                     :mill :scala
+                    :mysql :sql
                     :pgsql :sql
                     :sbt :scala
                     :sc :scala

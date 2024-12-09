@@ -19,7 +19,7 @@ else
   grep_options = nil
 end
 --[[ "---- FILETYPES ----" ]]
-local filetypes = {extension = {edn = "clojure", mill = "scala", pgsql = "sql", sbt = "scala", sc = "scala", txt = "text"}, filename = {Jenkinsfile = "groovy", ["tmux.conf"] = "tmux"}}
+local filetypes = {extension = {edn = "clojure", mill = "scala", mysql = "sql", pgsql = "sql", sbt = "scala", sc = "scala", txt = "text"}, filename = {Jenkinsfile = "groovy", ["tmux.conf"] = "tmux"}}
 --[[ "---- AUTOCMDS ----" ]]
 local function set_autocmds()
   --[[ "Remember the cursor position of the last editing" ]]
