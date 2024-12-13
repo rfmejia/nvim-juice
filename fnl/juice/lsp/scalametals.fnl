@@ -36,7 +36,6 @@
                         tvp.reveal_in_tree
                         {:desc "[metals] (m)etals (r)eveal current member in tree view"
                          :buffer bufnr}]])]
-    (util.assoc-in vim.opt_local options)
     (set config.settings metals-settings)
     (set config.init_options.statusBarProvider :on)
     (set config.capabilities (vim.lsp.protocol.make_client_capabilities))
@@ -47,10 +46,11 @@
     (set config.on_attach
          (lambda [client bufnr]
            (juice-lsp.set-buffer-opts client bufnr)
-           (util.set-keys (metals-maps bufnr))))
+           (util.set-keys (metals-maps bufnr))
+           (util.assoc-in vim.opt_local options)))
     (comment "Automatically attach Metals to all Scala filetypes (only triggered upon BufEnter)")
     (vim.api.nvim_create_autocmd :FileType
-                                 {:pattern [:scala :sbt :java]
+                                 {:pattern [:scala :java]
                                   :callback #(metals.initialize_or_attach config)
                                   :group (vim.api.nvim_create_augroup :metals-group
                                                                       {:clear true})})
