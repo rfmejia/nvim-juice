@@ -8,7 +8,7 @@ util["assoc-in"](vim.opt_local, {shiftwidth = 2, tabstop = 2, expandtab = true, 
 local function _2_()
   return vim.opt_local.indentkeys:remove("<>>")
 end
-vim.api.nvim_create_autocmd("FileType", {pattern = "scala", callback = _2_})
+vim.api.nvim_create_autocmd("FileType", {buffer = 0, callback = _2_})
 local function run_scalafmt(path)
   local filename
   if str["blank?"](path) then
@@ -35,7 +35,18 @@ vim.api.nvim_buf_create_user_command(vim.api.nvim_get_current_buf(), "ScalafmtAp
 --[[ "Make sure we respect lsp if it's enabled" (vim.keymap.set "n" "<localleader>cf" (hashfn (run-scalafmt (vim.fn.expand "%:p"))) {:buffer true :desc "[scala] run scalafmt on buffer" :nowait true :silent true}) ]]
 vim.keymap.set("n", "<localleader>s", "vip:sort<cr>", {desc = "[scala] sort in paragraph", nowait = true, buffer = true, silent = true})
 if util["executable?"]("sbtn") then
-  vim.keymap.set("n", "<leader>os", ":!tmux split-window -v -l 30\\% sbtn<cr><cr>", {desc = "[scala] open sbtn in a tmux split", buffer = true, silent = true})
+  local function _8_()
+    vim.cmd.split("term://sbtn")
+    vim.api.nvim_win_set_height(0, 15)
+    --[[ "TODO Start terminal in insert mode" ]]
+    local function _9_()
+      return vim.cmd.startinsert()
+    end
+    vim.api.nvim_create_autocmd({"BufWinEnter", "WinEnter"}, {buffer = vim.api.nvim_get_current_buf(), callback = _9_})
+    return vim.cmd.startinsert()
+  end
+  vim.keymap.set("n", "<leader>os", _8_)
+  vim.keymap.set("n", "<leader>oa", ":!tmux split-window -v -l 30\\% sbtn<cr><cr>", {desc = "[scala] open sbtn in a tmux split", buffer = true, silent = true})
 else
 end
 if util["executable?"]("scala-cli") then
