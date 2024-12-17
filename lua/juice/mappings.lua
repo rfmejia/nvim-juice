@@ -8,7 +8,7 @@ local function _2_()
   local is_enabled = (vim.opt.number:get() and vim.opt.relativenumber:get())
   return util["assoc-in"](vim.opt, {number = not is_enabled, relativenumber = not is_enabled})
 end
-general = {{"n", "Y", "y$", {desc = "yank until the end of the line"}}, {"n", "<leader>w", vim.cmd.w, {desc = "write buffer", silent = true}}, {"n", "<leader>r", vim.cmd.registers, {desc = "list registers"}}, {"n", "<F2>", "let @+ = getreg('%')", {desc = "copy current file path to clipboard"}}, {"n", "<F5>", vim.cmd.make, {desc = "trigger `make` in shell"}}, {"n", "<leader>n", _2_, {desc = "toggle number and relativenumber options"}}, {"n", "<leader>ol", ":Lazy<cr>", {desc = "open lazy.nvim", silent = true}}}
+general = {{"n", "Y", "y$", {desc = "yank until the end of the line"}}, {"n", "<leader>w", vim.cmd.w, {desc = "write buffer", silent = true}}, {"n", "<leader>r", vim.cmd.registers, {desc = "list registers"}}, {"n", "<F2>", "let @+ = getreg('%')", {desc = "copy current file path to clipboard"}}, {"n", "<F5>", vim.cmd.make, {desc = "trigger `make` in shell"}}, {"n", "]<space>", "o<esc>k"}, {"n", "[<space>", "O<esc>j"}, {"n", "<leader>n", _2_, {desc = "toggle number and relativenumber options"}}, {"n", "<leader>ol", ":Lazy<cr>", {desc = "open lazy.nvim", silent = true}}}
 local filters
 do
   local _repeat

@@ -10,6 +10,8 @@
                  "let @+ = getreg('%')"
                  {:desc "copy current file path to clipboard"}]
                 [:n :<F5> vim.cmd.make {:desc "trigger `make` in shell"}]
+                [:n "]<space>" :o<esc>k]
+                [:n "[<space>" :O<esc>j]
                 [:n
                  :<leader>n
                  #(let [is-enabled (and (: vim.opt.number :get)
