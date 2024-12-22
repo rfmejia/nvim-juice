@@ -80,15 +80,16 @@
             :grepformat "%f:%l:%c:%m,%f:%l:%m"}))
 
 (comment "---- FILETYPES ----")
-(local filetypes
-       {:extension {:edn :clojure
-                    :mill :scala
-                    :mysql :sql
-                    :pgsql :sql
-                    :sbt :scala
-                    :sc :scala
-                    :txt :text}
-        :filename {:Jenkinsfile :groovy :tmux.conf :tmux}})
+(local filetypes {:extension {:edn :clojure
+                              :mill :scala
+                              :mysql :sql
+                              :pgsql :sql
+                              :sbt :scala
+                              :sc :scala
+                              :txt :text}
+                  :filename {:.envrc :bash
+                             :Jenkinsfile :groovy
+                             :tmux.conf :tmux}})
 
 (comment "---- AUTOCMDS ----")
 (fn set-autocmds []
