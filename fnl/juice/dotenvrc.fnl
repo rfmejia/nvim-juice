@@ -1,4 +1,5 @@
 (local {: autoload} (require :nfnl.module))
+(local core (autoload :nfnl.core))
 (local string (autoload :nfnl.string))
 (local util (autoload :juice.util))
 
@@ -12,15 +13,14 @@
    :keywordprg vim.env.NVIM_KEYWORDPRG
    :formatprg vim.env.NVIM_FORMATPRG})
 
-(lambda set-path-list [path-list]
-  (let [paths (string.split path-list ":")]
-    (set vim.opt.path ["." ""])
-    (each [_ path (ipairs paths)]
-      (: vim.opt.path :append path))))
+(lambda read-path-list []
+  "Returns a list of paths from the NVIM_PATH_LIST env variable iff the env variable is not null"
+  (if vim.env.NVIM_PATH_LIST
+      (core.concat ["." ""] (string.split vim.env.NVIM_PATH_LIST ":"))))
 
 (fn setup []
   (util.assoc-in vim.opt (read-env-pairs))
-  (when vim.env.NVIM_PATH_LIST
-    (set-path-list vim.env.NVIM_PATH_LIST)))
+  (-?>> (read-path-list)
+        (set vim.opt.path)))
 
-{: setup}
+{: setup : read-path-list}
