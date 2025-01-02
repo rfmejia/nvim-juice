@@ -7,10 +7,9 @@
   (string.format "%%{luaeval(\"%s\")}" command))
 
 (lambda show-diagnostic-count [?buf-num severity]
-  (let [count (lsp.count-diagnostic ?buf-num severity)
-        formatted (if (= count 0) ""
-                      (.. count "! "))]
-    formatted))
+  (case (lsp.count-diagnostic ?buf-num severity)
+    0 ""
+    count (.. count "! ")))
 
 (fn build [widgets]
   "Creates a vim statusline string, inserting optional widgets defined as a list of strings"

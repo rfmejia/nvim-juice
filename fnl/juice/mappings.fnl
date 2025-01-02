@@ -2,28 +2,34 @@
 (local core (autoload :nfnl.core))
 (local util (autoload :juice.util))
 
-(local general [[:n :Y :y$ {:desc "yank until the end of the line"}]
-                [:n :<leader>w vim.cmd.w {:desc "write buffer" :silent true}]
-                [:n :<leader>r vim.cmd.registers {:desc "list registers"}]
-                [:n
-                 :<F2>
-                 "let @+ = getreg('%')"
-                 {:desc "copy current file path to clipboard"}]
-                [:n :<F5> vim.cmd.make {:desc "trigger `make` in shell"}]
-                [:n "]<space>" :o<esc>k]
-                [:n "[<space>" :O<esc>j]
-                [:n
-                 :<leader>n
-                 #(let [is-enabled (and (: vim.opt.number :get)
-                                        (: vim.opt.relativenumber :get))]
-                    (util.assoc-in vim.opt
-                                   {:number (not is-enabled)
-                                    :relativenumber (not is-enabled)}))
-                 {:desc "toggle number and relativenumber options"}]
-                [:n
-                 :<leader>ol
-                 ":Lazy<cr>"
-                 {:desc "open lazy.nvim" :silent true}]])
+(local general
+       [[:n :Y :y$ {:desc "yank until the end of the line"}]
+        [:n :<leader>w vim.cmd.w {:desc "write buffer" :silent true}]
+        [:n :<leader>r vim.cmd.registers {:desc "list registers"}]
+        [:n
+         :<F2>
+         "let @+ = getreg('%')"
+         {:desc "copy current file path to clipboard"}]
+        [:n :<F5> vim.cmd.make {:desc "trigger `make` in shell"}]
+        [:n "]<space>" :o<esc>k]
+        [:n "[<space>" :O<esc>j]
+        [:n
+         :<leader>n
+         #(let [is-enabled (and (: vim.opt.number :get)
+                                (: vim.opt.relativenumber :get))]
+            (util.assoc-in vim.opt
+                           {:number (not is-enabled)
+                            :relativenumber (not is-enabled)}))
+         {:desc "toggle number and relativenumber options"}]
+        [:n :<leader>ol ":Lazy<cr>" {:desc "open lazy.nvim" :silent true}]
+        [:n
+         :<leader>on
+         #(let [config-path (.. vim.env.XDG_CONFIG_HOME :/nvim)]
+            (vim.cmd (.. ":$tabnew" config-path))
+            (vim.cmd.tcd config-path)
+            (comment -?>> (util.call :juice.dotenvrc :read-path-list)
+             (set vim.opt_local.path)))
+         {:desc "open nvim config in a new tab" :silent true}]])
 
 (local filters
        (let [repeat (fn [times value]
@@ -166,7 +172,7 @@
        [[:n
          :<leader>oj
          (fn []
-           ((. (autoload :journal-tools) :load-journal-tools))
+           (util.call :journal-tools :setup)
            (vim.cmd (.. ":$tabnew" :$JOURNAL/journal.md)))
          {:desc "open journal in a new tab" :silent true}]
         [:n

@@ -13,14 +13,11 @@
   (vim.api.nvim_buf_get_option buf-num :modified))
 
 (lambda format-fennel [path]
-  (let [modified (buffer-is-modified (vim.api.nvim_get_current_buf))
-        fnlfmt-cmd [:fnlfmt :--fix path]]
-    (if (not modified)
-        (match (vim.fn.system fnlfmt-cmd)
-          _ (vim.cmd :e!)
-          (nil err-msg) (notify.error "[fennel] Could not run `fnlfmt`: "
-                                      err-msg))
-        (notify.error "fnlfmt: cannot format a modified buffer"))))
+  (if (buffer-is-modified (vim.api.nvim_get_current_buf))
+      (notify.error "fnlfmt: cannot format a modified buffer")
+      (match (vim.fn.system [:fnlfmt :--fix path])
+        _ (vim.cmd :e!)
+        (nil err-msg) (notify.error "[fennel] Could not run `fnlfmt`: " err-msg))))
 
 (vim.keymap.set :n :<localleader>cf #(format-fennel (vim.fn.expand "%:p"))
                 {:desc "[fennel] (c)ode (f)ormat" :buffer true})

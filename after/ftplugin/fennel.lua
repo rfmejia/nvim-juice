@@ -10,10 +10,10 @@ local function buffer_is_modified(buf_num)
 end
 local function format_fennel(path)
   _G.assert((nil ~= path), "Missing argument path on /home/rfmejia/.config/nvim/fnl/after/ftplugin/fennel.fnl:15")
-  local modified = buffer_is_modified(vim.api.nvim_get_current_buf())
-  local fnlfmt_cmd = {"fnlfmt", "--fix", path}
-  if not modified then
-    local _2_, _3_ = vim.fn.system(fnlfmt_cmd)
+  if buffer_is_modified(vim.api.nvim_get_current_buf()) then
+    return notify.error("fnlfmt: cannot format a modified buffer")
+  else
+    local _2_, _3_ = vim.fn.system({"fnlfmt", "--fix", path})
     if true then
       local _ = _2_
       return vim.cmd("e!")
@@ -23,8 +23,6 @@ local function format_fennel(path)
     else
       return nil
     end
-  else
-    return notify.error("fnlfmt: cannot format a modified buffer")
   end
 end
 local function _6_()

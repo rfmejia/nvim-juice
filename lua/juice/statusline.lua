@@ -9,14 +9,15 @@ local function wrap_luaeval(command)
 end
 local function show_diagnostic_count(_3fbuf_num, severity)
   _G.assert((nil ~= severity), "Missing argument severity on /home/rfmejia/.config/nvim/fnl/juice/statusline.fnl:9")
-  local count = lsp["count-diagnostic"](_3fbuf_num, severity)
-  local formatted
-  if (count == 0) then
-    formatted = ""
+  local _2_ = lsp["count-diagnostic"](_3fbuf_num, severity)
+  if (_2_ == 0) then
+    return ""
+  elseif (nil ~= _2_) then
+    local count = _2_
+    return (count .. "! ")
   else
-    formatted = (count .. "! ")
+    return nil
   end
-  return formatted
 end
 local function build(widgets)
   local filename = "%f"
