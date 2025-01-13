@@ -28,7 +28,7 @@
             (vim.cmd (.. ":$tabnew" config-path))
             (vim.cmd.tcd config-path)
             (comment -?>> (util.call :juice.dotenvrc :read-path-list)
-             (set vim.opt_local.path)))
+              (set vim.opt_local.path)))
          {:desc "open nvim config in a new tab" :silent true}]])
 
 (local filters
@@ -327,10 +327,16 @@
                        :buffer true
                        :silent true}]])
 
+(local terminal-maps [[:t :<C-o> "<C-\\><C-n>"]
+                      [:n :<leader>otc #(vim.cmd.tabnew "term://bash")]
+                      [:n :<leader>ots #(vim.cmd.split "term://bash")]
+                      [:n :<leader>otv #(vim.cmd.vsplit "term://bash")]
+                      [:n :<leader>ott ":tabnew term://"]])
+
 (fn setup []
   (let [mappings (core.concat general filters jumps undo-steps dates marks
                               buffers tabs quickfix loclist search-replace
-                              visual-indent)]
+                              visual-indent terminal-maps)]
     (util.set-keys mappings)
     (comment "select completion binding item")
     (vim.cmd "inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")

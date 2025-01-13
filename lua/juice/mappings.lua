@@ -167,8 +167,19 @@ local function _35_()
   return util.call("journal-tools", "insert-task")
 end
 journal_maps = {{"n", "<localleader>w", _32_, {desc = "[journal] insert current week as an h2 header", buffer = true, silent = true}}, {"n", "<localleader>d", _33_, {desc = "[journal] insert current date as an h3 header", buffer = true, silent = true}}, {"n", "<localleader>t", _34_, {desc = "[journal] insert current time as an h4 header", buffer = true, silent = true}}, {"n", "<localleader>x", _35_, {desc = "[journal] insert current time as an h4 header", buffer = true, silent = true}}}
+local terminal_maps
+local function _36_()
+  return vim.cmd.tabnew("term://bash")
+end
+local function _37_()
+  return vim.cmd.split("term://bash")
+end
+local function _38_()
+  return vim.cmd.vsplit("term://bash")
+end
+terminal_maps = {{"t", "<C-o>", "<C-\\><C-n>"}, {"n", "<leader>otc", _36_}, {"n", "<leader>ots", _37_}, {"n", "<leader>otv", _38_}, {"n", "<leader>ott", ":tabnew term://"}}
 local function setup()
-  local mappings = core.concat(general, filters, jumps, undo_steps, dates, marks, buffers, tabs, quickfix, loclist, search_replace, visual_indent)
+  local mappings = core.concat(general, filters, jumps, undo_steps, dates, marks, buffers, tabs, quickfix, loclist, search_replace, visual_indent, terminal_maps)
   util["set-keys"](mappings)
   --[[ "select completion binding item" ]]
   vim.cmd("inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")
