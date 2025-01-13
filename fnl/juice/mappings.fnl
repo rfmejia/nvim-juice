@@ -182,12 +182,16 @@
            (vim.cmd (.. ":$tabnew" :$JOURNAL/linux/vim.adoc)))
          {:desc "open vim notes in a new tab" :silent true}]])
 
-(local tmux-apps {:lazygit [[:n
-                             :<leader>og
-                             ":!tmux neww lazygit<cr><cr>"
-                             {:desc "open lazygit in a new tmux window"
-                              :silent true}]]
-                  ;; Add editor context-specific apps here, lazydocker is not a good example
+(local lazygit-launcher [[:n
+                          :<leader>og
+                          (if vim.env.TMUX ":!tmux neww lazygit<cr><cr>"
+                              (fn []
+                                (vim.cmd.tabnew "term://lazygit")
+                                (vim.cmd.startinsert)))
+                          {:desc "open lazygit in a new tab or tmux window"
+                           :silent true}]])
+
+(local tmux-apps {;; Add editor context-specific apps here, lazydocker is not a good example
                   :lazydocker [[:n
                                 :<leader>od
                                 ":!tmux neww lazydocker<cr><cr>"
@@ -336,7 +340,7 @@
 (fn setup []
   (let [mappings (core.concat general filters jumps undo-steps dates marks
                               buffers tabs quickfix loclist search-replace
-                              visual-indent terminal-maps)]
+                              lazygit-launcher visual-indent terminal-maps)]
     (util.set-keys mappings)
     (comment "select completion binding item")
     (vim.cmd "inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")
