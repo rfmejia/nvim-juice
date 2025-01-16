@@ -331,7 +331,7 @@
                        :buffer true
                        :silent true}]])
 
-(local terminal-maps [[:t :<C-o> "<C-\\><C-n>"]
+(local terminal-maps [[:t :<C-o><C-o> "<C-\\><C-n>"]
                       [:n :<leader>otc #(vim.cmd.tabnew "term://bash")]
                       [:n :<leader>ots #(vim.cmd.split "term://bash")]
                       [:n :<leader>otv #(vim.cmd.vsplit "term://bash")]
