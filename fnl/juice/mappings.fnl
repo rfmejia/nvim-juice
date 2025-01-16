@@ -335,7 +335,12 @@
                       [:n :<leader>otc #(vim.cmd.tabnew "term://bash")]
                       [:n :<leader>ots #(vim.cmd.split "term://bash")]
                       [:n :<leader>otv #(vim.cmd.vsplit "term://bash")]
-                      [:n :<leader>ott ":tabnew term://"]])
+                      [:n :<leader>ott ":tabnew term://"]
+                      [:n
+                       :<leader>otd
+                       (fn []
+                         (vim.cmd.tabnew "term://w3m duckduckgo.com")
+                         (vim.cmd.startinsert))]])
 
 (fn setup []
   (let [mappings (core.concat general filters jumps undo-steps dates marks

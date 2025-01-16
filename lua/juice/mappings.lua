@@ -189,7 +189,11 @@ end
 local function _41_()
   return vim.cmd.vsplit("term://bash")
 end
-terminal_maps = {{"t", "<C-o>", "<C-\\><C-n>"}, {"n", "<leader>otc", _39_}, {"n", "<leader>ots", _40_}, {"n", "<leader>otv", _41_}, {"n", "<leader>ott", ":tabnew term://"}}
+local function _42_()
+  vim.cmd.tabnew("term://w3m duckduckgo.com")
+  return vim.cmd.startinsert()
+end
+terminal_maps = {{"t", "<C-o>", "<C-\\><C-n>"}, {"n", "<leader>otc", _39_}, {"n", "<leader>ots", _40_}, {"n", "<leader>otv", _41_}, {"n", "<leader>ott", ":tabnew term://"}, {"n", "<leader>otd", _42_}}
 local function setup()
   local mappings = core.concat(general, filters, jumps, undo_steps, dates, marks, buffers, tabs, quickfix, loclist, search_replace, lazygit_launcher, visual_indent, terminal_maps)
   util["set-keys"](mappings)
