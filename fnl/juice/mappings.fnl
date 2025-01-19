@@ -168,35 +168,16 @@
 
 (local visual-indent [[:v "<" :<gv {}] [:v ">" :>gv {}]])
 
-(local journal-launchers
-       [[:n
-         :<leader>oj
-         (fn []
-           (util.call :journal-tools :setup)
-           (vim.cmd (.. ":$tabnew" :$JOURNAL/journal.md)))
-         {:desc "open journal in a new tab" :silent true}]
-        [:n
-         :<leader>ov
-         (fn []
-           ((. (autoload :journal-tools) :load-journal-tools))
-           (vim.cmd (.. ":$tabnew" :$JOURNAL/linux/vim.adoc)))
-         {:desc "open vim notes in a new tab" :silent true}]])
-
-(local lazygit-launcher [[:n
-                          :<leader>og
-                          (if vim.env.TMUX ":!tmux neww lazygit<cr><cr>"
-                              (fn []
-                                (vim.cmd.edit "term://lazygit")
-                                (vim.cmd.startinsert)))
-                          {:desc "open lazygit in a new tab or tmux window"
-                           :silent true}]])
-
-(local tmux-apps {;; Add editor context-specific apps here, lazydocker is not a good example
-                  :lazydocker [[:n
-                                :<leader>od
-                                ":!tmux neww lazydocker<cr><cr>"
-                                {:desc "open lazydocker in a new tmux window"
-                                 :silent true}]]})
+(local terminal-maps [[:t :<C-o><C-o> "<C-\\><C-n>"]
+                      [:n :<leader>otc #(vim.cmd.tabnew "term://bash")]
+                      [:n :<leader>ots #(vim.cmd.split "term://bash")]
+                      [:n :<leader>otv #(vim.cmd.vsplit "term://bash")]
+                      [:n :<leader>ott ":tabnew term://"]
+                      [:n
+                       :<leader>otd
+                       (fn []
+                         (vim.cmd.tabnew "term://w3m duckduckgo.com")
+                         (vim.cmd.startinsert))]])
 
 (comment "-- PLUGIN-SPECIFIC MAPPINGS --")
 
@@ -331,28 +312,50 @@
                        :buffer true
                        :silent true}]])
 
-(local terminal-maps [[:t :<C-o><C-o> "<C-\\><C-n>"]
-                      [:n :<leader>otc #(vim.cmd.tabnew "term://bash")]
-                      [:n :<leader>ots #(vim.cmd.split "term://bash")]
-                      [:n :<leader>otv #(vim.cmd.vsplit "term://bash")]
-                      [:n :<leader>ott ":tabnew term://"]
-                      [:n
-                       :<leader>otd
-                       (fn []
-                         (vim.cmd.tabnew "term://w3m duckduckgo.com")
-                         (vim.cmd.startinsert))]])
+(comment "-- OPEN OTHER FILES AND PROGRAMS  --")
+
+(local journal-launchers
+       [[:n
+         :<leader>oj
+         (fn []
+           (util.call :journal-tools :setup)
+           (vim.cmd (.. ":$tabnew" :$JOURNAL/journal.md)))
+         {:desc "open journal in a new tab" :silent true}]
+        [:n
+         :<leader>ov
+         (fn []
+           ((. (autoload :journal-tools) :load-journal-tools))
+           (vim.cmd (.. ":$tabnew" :$JOURNAL/linux/vim.adoc)))
+         {:desc "open vim notes in a new tab" :silent true}]])
+
+(local lazygit-launcher [[:n
+                          :<leader>og
+                          (if vim.env.TMUX ":!tmux neww lazygit<cr><cr>"
+                              (fn []
+                                (vim.cmd.edit "term://lazygit")
+                                (vim.cmd.startinsert)))
+                          {:desc "open lazygit in a new tab or tmux window"
+                           :silent true}]])
+
+(local tmux-apps {;; Add editor context-specific apps here, lazydocker is not a good example
+                  :lazydocker [[:n
+                                :<leader>od
+                                ":!tmux neww lazydocker<cr><cr>"
+                                {:desc "open lazydocker in a new tmux window"
+                                 :silent true}]]})
 
 (fn setup []
   (let [mappings (core.concat general filters jumps undo-steps dates marks
                               buffers tabs quickfix loclist search-replace
-                              lazygit-launcher visual-indent terminal-maps)]
+                              visual-indent terminal-maps)]
     (util.set-keys mappings)
     (comment "select completion binding item")
     (vim.cmd "inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")
+    (when (util.executable? :lazygit) (util.set-keys lazygit-launcher))
+    (when vim.env.JOURNAL (util.set-keys journal-launchers))
     (when vim.env.TMUX
       (each [app maps (pairs tmux-apps)]
         (when (util.executable? app)
-          (util.set-keys maps))))
-    (when vim.env.JOURNAL (util.set-keys journal-launchers))))
+          (util.set-keys maps))))))
 
 {: setup : oil-maps : gitsigns-maps : dadbod-maps : journal-maps}
