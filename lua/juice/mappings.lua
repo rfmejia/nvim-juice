@@ -83,7 +83,7 @@ if vim.env.TMUX then
   _13_ = ":!tmux neww lazygit<cr><cr>"
 else
   local function _14_()
-    vim.cmd.tabnew("term://lazygit")
+    vim.cmd.edit("term://lazygit")
     return vim.cmd.startinsert()
   end
   _13_ = _14_

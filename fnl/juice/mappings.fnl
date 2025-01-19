@@ -186,7 +186,7 @@
                           :<leader>og
                           (if vim.env.TMUX ":!tmux neww lazygit<cr><cr>"
                               (fn []
-                                (vim.cmd.tabnew "term://lazygit")
+                                (vim.cmd.edit "term://lazygit")
                                 (vim.cmd.startinsert)))
                           {:desc "open lazygit in a new tab or tmux window"
                            :silent true}]])
