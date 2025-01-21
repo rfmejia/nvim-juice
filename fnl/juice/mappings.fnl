@@ -203,10 +203,6 @@
                        #(util.call :gitsigns :stage_hunk)
                        {:desc "[gitsigns] (g)it (s)tage hunk"}]
                       [:n
-                       :<localleader>gu
-                       #(util.call :gitsigns :undo_stage_hunk)
-                       {:desc "[gitsigns] (g)it (u)ndo staged hunk"}]
-                      [:n
                        :<localleader>gr
                        #(util.call :gitsigns :reset_hunk)
                        {:desc "(g)it (r)eset hunk"}]
@@ -245,13 +241,13 @@
                     #(util.call :gitsigns :preview_hunk)
                     {:desc "[gitsigns] (g)it (p)review hunk"}]
                    [:n
+                    :<localleader>gi
+                    #(util.call :gitsigns :preview_hunk_inline)
+                    {:desc "[gitsigns] (g)it toggle (D)eleted hunks"}]
+                   [:n
                     :<localleader>gd
                     #(util.call :gitsigns :diffthis)
-                    {:desc "[gitsigns] (g)it show (d)iff"}]
-                   [:n
-                    :<localleader>gD
-                    #(util.call :gitsigns :toggle_deleted)
-                    {:desc "[gitsigns] (g)it toggle (D)eleted hunks"}]]
+                    {:desc "[gitsigns] (g)it show (d)iff"}]]
              list [[:n
                     :<localleader>gl
                     #(util.call :gitsigns :setloclist)
