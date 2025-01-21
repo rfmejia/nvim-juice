@@ -14,7 +14,8 @@
                                       :implicitArguments {:enable true}
                                       :implicitConversions {:enable true}
                                       :inferredTypes {:enable true}
-                                      :typeParameters {:enable true}}}
+                                      :typeParameters {:enable true}}
+                         :serverVersion :1.4.2+78-7d63333b-SNAPSHOT}
         metals-maps (lambda [bufnr]
                       [[:v
                         :K
@@ -62,6 +63,10 @@
     (metals.initialize_or_attach config)))
 
 (fn register-init-command []
+  (comment :TODO
+    (when (not-running :sbt)
+      (when (ask-to-launch)
+        (vim.fn.system [:sbtn :exit]))))
   (vim.api.nvim_create_user_command :MetalsInit #(initialize-metals)
                                     {:desc "Start and connect to a Metals server"}))
 
