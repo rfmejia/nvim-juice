@@ -9,7 +9,7 @@ local function initialize_metals()
   local config = metals.bare_config()
   local tvp = autoload("metals.tvp")
   local options = {signcolumn = "yes:1", shortmess = (vim.go.shortmess .. "c"), statusline = statusline.build({"%{g:metals_status}", " \226\151\143"})}
-  local metals_settings = {inlayHints = {hintsInPatternMatch = {enable = true}, implicitArguments = {enable = true}, implicitConversions = {enable = true}, inferredTypes = {enable = true}, typeParameters = {enable = true}}, serverVersion = "1.4.2+78-7d63333b-SNAPSHOT"}
+  local metals_settings = {inlayHints = {hintsInPatternMatch = {enable = true}, implicitArguments = {enable = true}, implicitConversions = {enable = true}, inferredTypes = {enable = true}, typeParameters = {enable = true}}, serverVersion = "1.5.0"}
   local metals_maps
   local function _2_(bufnr)
     _G.assert((nil ~= bufnr), "Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:19")

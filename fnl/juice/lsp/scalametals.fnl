@@ -15,7 +15,7 @@
                                       :implicitConversions {:enable true}
                                       :inferredTypes {:enable true}
                                       :typeParameters {:enable true}}
-                         :serverVersion :1.4.2+78-7d63333b-SNAPSHOT}
+                         :serverVersion :1.5.0}
         metals-maps (lambda [bufnr]
                       [[:v
                         :K
