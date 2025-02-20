@@ -49,9 +49,10 @@ local editing_tools = {{"kylechui/nvim-surround", keys = {"cs", "ds", "ys"}, con
 local git_tools
 local function _10_()
   util["call-setup"]("gitsigns")
-  return util["set-keys"](mappings["gitsigns-maps"])
+  util["set-keys"](mappings["gitsigns-maps"])
+  return util.call("gitsigns", "toggle_signs")
 end
-git_tools = {{"lewis6991/gitsigns.nvim", event = {"BufReadPre", "BufNewFile"}, config = _10_}}
+git_tools = {{"lewis6991/gitsigns.nvim", keys = "<localleader>gt", config = _10_}}
 local function setup()
   local plugins = core.concat(core_tools, database_tools, dev_tools, editing_tools, git_tools, lisp_tools)
   local opts = {ui = {border = "rounded"}, performance = {rtp = {disabled_plugins = {"rplugin", "tohtml", "tutor", "vimball"}}}}

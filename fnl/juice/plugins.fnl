@@ -77,10 +77,13 @@
 
 (local git-tools
        [{1 :lewis6991/gitsigns.nvim
-         :event [:BufReadPre :BufNewFile]
+         :keys :<localleader>gt
          :config (fn []
                    (util.call-setup :gitsigns)
-                   (util.set-keys mappings.gitsigns-maps))}])
+                   (util.set-keys mappings.gitsigns-maps)
+                   ;; switch gitsigns off now so it will be switched on after this loading function
+                   ;; is finished and the keymap is passed down
+                   (util.call :gitsigns :toggle_signs))}])
 
 (fn setup []
   (let [plugins (core.concat core-tools database-tools dev-tools editing-tools
