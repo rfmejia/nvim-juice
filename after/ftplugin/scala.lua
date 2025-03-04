@@ -38,7 +38,6 @@ if util["executable?"]("sbtn") then
   local function _8_()
     vim.cmd.split("term://sbtn")
     vim.api.nvim_win_set_height(0, 15)
-    --[[ "TODO Start terminal in insert mode" ]]
     local function _9_()
       return vim.cmd.startinsert()
     end
