@@ -20,3 +20,5 @@
 ;; TODO Create your own surround plugins
 ;; TODO Finish marksman module
 ;; TODO Modify wildignore plugin to remove all dependencies
+
+;; FIXME When highlighting TODO/FIXME/NOTE the highlight is enabled only when moving from a split

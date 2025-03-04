@@ -49,7 +49,6 @@
                   (fn []
                     (vim.cmd.split "term://sbtn")
                     (vim.api.nvim_win_set_height 0 15)
-                    (comment "TODO Start terminal in insert mode")
                     (vim.api.nvim_create_autocmd [:BufWinEnter :WinEnter]
                                                  {:buffer (vim.api.nvim_get_current_buf)
                                                   :callback #(vim.cmd.startinsert)})
