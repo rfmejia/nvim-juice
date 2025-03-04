@@ -3,17 +3,17 @@
      (. :setup)))
 
 (local {: autoload} (require :nfnl.module))
-(local mappings (autoload :juice.mappings))
 (local util (autoload :juice.util))
 
 (util.call-setup :juice.options :juice.colorscheme :juice.plugins
                  :juice.mappings :juice.dotenvrc :git-info :tmux-nav
                  :trim-whitespace :wildgitignore :projectify)
 
-(let [journal-tools (autoload :journal-tools)
-      opts {:maps mappings.journal-maps}]
-  (vim.api.nvim_create_user_command :JournalInit #(journal-tools.setup opts)
-                                    {:desc "Load default mappings for journal tools"}))
+(vim.api.nvim_create_user_command :JournalInit
+                                  #(let [mappings (autoload :juice.mappings)]
+                                     (util.call :journal-tools :setup
+                                                {:maps mappings.journal-maps}))
+                                  {:desc "Load default mappings for journal tools"})
 
 ;; TODO use vim-native plug management and implement a custom lazy loading solution (:h packadd)
 ;; TODO Create your own auto-pairs plugins
