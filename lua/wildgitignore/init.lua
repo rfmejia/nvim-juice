@@ -11,17 +11,17 @@ local function is_dir_3f(path)
   return (nil ~= vim.fs.dir(path)())
 end
 local function update_wildignore()
-  local gitignore = core.slurp(".gitignore")
-  if gitignore then
-    vim.opt.wildignore = ""
+  local _2_ = core.slurp(".gitignore")
+  if (nil ~= _2_) then
+    local gitignore = _2_
     local lines = core.map(string.trim, string.split(gitignore, "\n"))
     local entries
-    local function _2_(_241)
+    local function _3_(_241)
       return not (string["blank?"](_241) or starts_with_3f(_241, "#") or starts_with_3f(_241, "!"))
     end
-    entries = core.filter(_2_, lines)
+    entries = core.filter(_3_, lines)
     local suffixed
-    local function _3_(_241)
+    local function _4_(_241)
       if string["ends-with?"](_241, "/") then
         return (_241 .. "*")
       elseif is_dir_3f(_241) then
@@ -32,20 +32,21 @@ local function update_wildignore()
         return nil
       end
     end
-    suffixed = core.map(_3_, entries)
+    suffixed = core.map(_4_, entries)
     local prefixed
-    local function _5_(_241)
+    local function _6_(_241)
       if starts_with_3f(_241, "/") then
         return ("**" .. _241)
       else
         return ("**/" .. _241)
       end
     end
-    prefixed = core.map(_5_, suffixed)
-    local function _7_(_241)
+    prefixed = core.map(_6_, suffixed)
+    vim.opt.wildignore = ""
+    local function _8_(_241)
       return vim.opt.wildignore:append(_241)
     end
-    return core.map(_7_, prefixed)
+    return core.map(_8_, prefixed)
   else
     return nil
   end
