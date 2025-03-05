@@ -8,8 +8,8 @@
   "nvim-metals": { "branch": "main", "commit": "344b74b2109f3bd3771cb8dee5274dcd9042aab5" },
   "nvim-paredit": { "branch": "master", "commit": "a7b22f211cd96fc8a4bb2c40eff5eeb04ce332ea" },
   "nvim-surround": { "branch": "main", "commit": "ae298105122c87bbe0a36b1ad20b06d417c0433e" },
-  "nvim-treesitter": { "branch": "master", "commit": "2b0760dca2354fecf48ea35fdf1d753a232e3de2" },
-  "oil.nvim": { "branch": "master", "commit": "d7c61c70849ec99f005615c4175118986f200e4f" },
+  "nvim-treesitter": { "branch": "master", "commit": "55c5c762fee2e813b4e43bbfaf5b91d182bd2875" },
+  "oil.nvim": { "branch": "master", "commit": "548587d68b55e632d8a69c92cefd981f360634fa" },
   "plenary.nvim": { "branch": "master", "commit": "857c5ac632080dba10aae49dba902ce3abf91b35" },
   "vim-dadbod": { "branch": "master", "commit": "9f0ca8bcef704659820a95c3bbd2c262583a66a1" },
   "vim-dadbod-completion": { "branch": "master", "commit": "3f5783c12e184e4b6f05dfcbd7c1a6da05b4d66e" }
