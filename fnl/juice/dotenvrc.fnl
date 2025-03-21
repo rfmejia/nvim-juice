@@ -15,8 +15,8 @@
 
 (lambda read-path-list []
   "Returns a list of paths from the NVIM_PATH_LIST env variable iff the env variable is not null"
-  (if vim.env.NVIM_PATH_LIST
-      (core.concat ["." ""] (string.split vim.env.NVIM_PATH_LIST ":"))))
+  (when vim.env.NVIM_PATH_LIST
+    (core.concat ["." ""] (string.split vim.env.NVIM_PATH_LIST ":"))))
 
 (fn setup []
   (util.assoc-in vim.opt (read-env-pairs))

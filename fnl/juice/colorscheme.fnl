@@ -1,7 +1,10 @@
 (local {: autoload} (require :nfnl.module))
 (local core (autoload :nfnl.core))
 
-(local general {:Comment {:fg :Gray :ctermfg :Gray :italic true}
+(comment "Set italic in graphical terminals")
+(local is-gui (not= vim.env.WAYLAND_DISPLAY nil))
+
+(local general {:Comment {:fg :DarkYellow :ctermfg :DarkYellow :italic is-gui}
                 :Constant {:fg :Green}
                 :CursorLine {:bg :NONE}
                 [:Delimiter :Operator :Special :Statement] {:fg :Gray}
@@ -15,11 +18,11 @@
                 :WinSeparator {:fg :Gray}})
 
 (local diagnostic-virtual-text
-       {:DiagnosticVirtualTextError {:fg :DarkRed :italic true}
-        :DiagnosticVirtualTextHint {:fg :DarkBlue :italic true}
-        :DiagnosticVirtualTextInfo {:fg :DarkCyan :italic true}
-        :DiagnosticVirtualTextOk {:fg :DarkGreen :italic true}
-        :DiagnosticVirtualTextWarn {:fg :DarkYellow :italic true}})
+       {:DiagnosticVirtualTextError {:fg :DarkRed :italic is-gui}
+        :DiagnosticVirtualTextHint {:fg :DarkBlue :italic is-gui}
+        :DiagnosticVirtualTextInfo {:fg :DarkCyan :italic is-gui}
+        :DiagnosticVirtualTextOk {:fg :DarkGreen :italic is-gui}
+        :DiagnosticVirtualTextWarn {:fg :DarkYellow :italic is-gui}})
 
 (local statusline {:StatusLine {:fg :Gray :bg :NONE}
                    :StatusLineError {:fg :DarkRed}
