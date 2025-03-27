@@ -11,8 +11,6 @@
          "let @+ = getreg('%')"
          {:desc "copy current file path to clipboard"}]
         [:n :<F5> vim.cmd.make {:desc "trigger `make` in shell"}]
-        [:n "]<space>" :o<esc>k]
-        [:n "[<space>" :O<esc>j]
         [:n
          :<leader>n
          #(let [is-enabled (and (: vim.opt.number :get)
@@ -112,11 +110,11 @@
 (local quickfix [[:n :<leader>co vim.cmd.copen {:desc "open quickfix list"}]
                  [:n :<leader>cc vim.cmd.cclose {:desc "close quickfix list"}]
                  [:n
-                  "[c"
+                  "[q"
                   vim.cmd.cprevious
                   {:desc "jump to the previous entry in the current quickfix list"}]
                  [:n
-                  "]c"
+                  "]q"
                   vim.cmd.cnext
                   {:desc "jump to the next entry in the current quickfix list"}]
                  [:n
