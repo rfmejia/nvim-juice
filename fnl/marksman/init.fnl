@@ -1,3 +1,6 @@
+(local {: autoload} (require :nfnl.module))
+(local core (autoload :nfnl.core))
+
 (comment (let [id 1
                group :marksman]
            (vim.fn.sign_getdefined)
@@ -12,8 +15,6 @@
                                "echon get(function('s:set_opfunc'), 'name')")]
          (vim.fn (vim.api.nvim_exec2 viml-fn true))))
 
-;; vim.g.marksman {:id }
-
 (fn toggle-mark [marker line-num]
   "Sets or removes `marker` on the sign column at a given line number"
   "'Route' by:"
@@ -21,8 +22,12 @@
   "  2. If marker exists and is on a new location, delete marker+sign and recur to add"
   "  3. If marker does not exist, add marker+sign")
 
+(lambda init-store []
+  (set (. vim.g :marksman-marks) {})
+  (set (. vim.g :marksman-opts) {}))
+
 (lambda get-mark [mark]
-  (?. vim.g.marksman :marks :a))
+  (?. vim.g.marksman :marks mark))
 
 (lambda set-mark [mark lnum buf?]
   "Add new or update existing mark at the specified line number and (optional) buffer")
@@ -63,13 +68,11 @@
                        {:name :marksman-y :text :y :texthl :Comment}
                        {:name :marksman-z :text :z :texthl :Comment}]))
 
-(vim.fn.sign_getplaced 0)
+(comment (vim.fn.sign_getplaced 0)
+  (vim.fn.sign_place 1 :marksman :marksman-a 4 {:lnum 21})
+  (vim.fn.sign_unplace :marksman {:buffer 4 :id 1})
+  (vim.fn.sign_unplace "*"))
 
-(vim.fn.sign_place 1 :marksman :marksman-a 4 {:lnum 21})
-(vim.fn.sign_unplace :marksman {:buffer 4 :id 1})
-(vim.fn.sign_unplace "*")
-
-(print nil)
 ;; local set_opfunc = vim.fn[vim.api.nvim_exec([[
 ;;   func s:set_opfunc(val)
 ;;     let &opfunc = a:val
@@ -78,13 +81,17 @@
 ;; ]], true)]
 
 (fn setup []
-  (set (. vim.g :marksman) nil)
-  (set (. vim.g :marksman) {:marks {} :opts {}})
-  (table.insert (. vim.g :marksman :marks :a) 1)
-  (set vim.g.marksman.a 1)
-  ;; (tset vim.g.marksman.marks.a 1)
-  ;; (tset vim.g.marksman.marks.a {1 2})
+  (set (. vim.g :marksman-marks :a) {:sign-id 1 :buf-num 1})
   (print vim.g.marksman.marks.a)
-  (?. vim.g :marksman))
+  (init-store)
+  (?. vim.g :marksman-marks :a))
+
+(fn test []
+  (core.assoc-in vim.g [:marksman] {:marks {}})
+  (table.insert vim.g.marksman.marks.a :test)
+  (core.nil? (?. vim.g :marksman))
+  (core.nil? (?. vim.g :marksman :marks))
+  (core.nil? (?. vim.g :marksman :marks :a))
+  (core.assoc-in vim.g [:marksman :marks :a] {:sign-id 1 :buf-num 1}))
 
 {: set-opfunc}

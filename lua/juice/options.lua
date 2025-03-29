@@ -3,6 +3,7 @@ local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local statusline = autoload("juice.statusline")
 local util = autoload("juice.util")
+local core = autoload("nfnl.core")
 --[[ "---- GENERAL OPTIONS ----" ]]
 local map_leaders = {mapleader = " ", maplocalleader = ","}
 local behavior = {clipboard = "unnamedplus", smartindent = true, shiftwidth = 2, tabstop = 2, softtabstop = 2, expandtab = true, mouse = "", shortmess = "filnxtToOF", undolevels = 5000, undofile = true, foldenable = false}
@@ -37,8 +38,8 @@ local function set_autocmds()
   return vim.api.nvim_create_autocmd("TermOpen", {group = "terminal-group", pattern = "*", command = "set signcolumn=no"})
 end
 local function setup()
-  util["assoc-in"](vim.g, map_leaders)
-  util["assoc-in"](vim.opt, behavior, visual, search, completion, grep_options)
+  core["merge!"](vim.g, map_leaders)
+  core["merge!"](vim.opt, behavior, visual, search, completion, grep_options)
   vim.filetype.add(filetypes)
   return set_autocmds()
 end

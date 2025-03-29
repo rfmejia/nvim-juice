@@ -1,6 +1,7 @@
 (local {: autoload} (require :nfnl.module))
 (local statusline (autoload :juice.statusline))
 (local util (autoload :juice.util))
+(local core (autoload :nfnl.core))
 
 (comment "---- GENERAL OPTIONS ----")
 (local map-leaders {:mapleader " " :maplocalleader ","})
@@ -117,8 +118,8 @@
                                 :command "set signcolumn=no"}))
 
 (fn setup []
-  (util.assoc-in vim.g map-leaders)
-  (util.assoc-in vim.opt behavior visual search completion grep-options)
+  (core.merge! vim.g map-leaders)
+  (core.merge! vim.opt behavior visual search completion grep-options)
   (vim.filetype.add filetypes)
   (set-autocmds))
 
