@@ -22,29 +22,27 @@
         goto-maps [[:n
                     :gd
                     vim.lsp.buf.definition
-                    {:desc "(g)oto (d)efinition" :nowait true :buffer bufnr}]
+                    {:desc "goto definition" :nowait true :buffer bufnr}]
                    [:n
                     :gt
                     vim.lsp.buf.type_definition
-                    {:desc "(g)oto (t)ype definition"
-                     :nowait true
-                     :buffer bufnr}]
+                    {:desc "goto type definition" :nowait true :buffer bufnr}]
+                   (comment [:n
+                             :gri
+                             vim.lsp.buf.implementation
+                             {:desc "goto implementation" :buffer bufnr}])
+                   (comment [:n
+                             :grr
+                             vim.lsp.buf.references
+                             {:desc "goto references" :buffer bufnr}])
+                   (comment [:n
+                             :gO
+                             vim.lsp.buf.document_symbol
+                             {:desc "goto symbol" :buffer bufnr}])
                    [:n
-                    :gi
-                    vim.lsp.buf.implementation
-                    {:desc "(g)oto (i)mplementation" :buffer bufnr}]
-                   [:n
-                    :gr
-                    vim.lsp.buf.references
-                    {:desc "(g)oto (r)eferences" :buffer bufnr}]
-                   [:n
-                    :gs
-                    vim.lsp.buf.document_symbol
-                    {:desc "(g)oto (s)ymbol" :buffer bufnr}]
-                   [:n
-                    :gS
+                    :gW
                     vim.lsp.buf.workspace_symbol
-                    {:desc "(g)oto workspace (S)ymbol" :buffer bufnr}]]
+                    {:desc "(g)oto (W)orkspace symbol" :buffer bufnr}]]
         diagnostic-maps [[:n
                           :<localleader>de
                           #(vim.diagnostic.setqflist {:severity vim.diagnostic.severity.ERROR})
@@ -60,30 +58,32 @@
                           vim.diagnostic.setloclist
                           {:desc "show (d)iagnostics of the (b)uffer in local list"
                            :buffer bufnr}]
-                         [:n
-                          "[d"
-                          #(vim.diagnostic.goto_prev {:wrap false})
-                          {:desc "goto next diagnostic" :buffer bufnr}]
-                         [:n
-                          "]d"
-                          #(vim.diagnostic.goto_next {:wrap false})
-                          {:desc "goto previous diagnostic" :buffer bufnr}]]
-        code-action-maps [[:n
-                           :<localleader>ca
-                           vim.lsp.buf.code_action
-                           {:desc "(c)ode (a)ctions" :buffer bufnr}]
-                          [:n
-                           :<localleader>cs
-                           vim.lsp.buf.signature_help
-                           {:desc "(c)ode (s)ignature" :buffer bufnr}]
-                          [:n
-                           :<localleader>cr
-                           vim.lsp.buf.rename
-                           {:desc "(c)ode identifier (r)ename" :buffer bufnr}]
+                         (comment [:n
+                                   "[d"
+                                   #(vim.diagnostic.goto_prev {:wrap false})
+                                   {:desc "goto next diagnostic" :buffer bufnr}])
+                         (comment [:n
+                                   "]d"
+                                   #(vim.diagnostic.goto_next {:wrap false})
+                                   {:desc "goto previous diagnostic"
+                                    :buffer bufnr}])]
+        code-action-maps [(comment [[:n :v]
+                                    :gra
+                                    vim.lsp.buf.code_action
+                                    {:desc "code actions" :buffer bufnr}])
+                          (comment [:n
+                                    :<C-s>
+                                    vim.lsp.buf.signature_help
+                                    {:desc "code signature" :buffer bufnr}])
+                          (comment [:n
+                                    :grn
+                                    vim.lsp.buf.rename
+                                    {:desc "code identifier rename"
+                                     :buffer bufnr}])
                           [:n
                            :<localleader>cf
                            #(vim.lsp.buf.format {:async true})
-                           {:desc "(c)ode (f)ormat" :buffer bufnr}]]
+                           {:desc "code format" :buffer bufnr}]]
         mappings (core.concat omnifunc-map goto-maps diagnostic-maps
                               code-action-maps)]
     (util.set-keys mappings)))
@@ -96,7 +96,9 @@
 
 (fn setup []
   (let [scalametals (autoload :juice.lsp.scalametals)
+        diagnostic-config {:virtual_text true}
         go-settings {:gopls {:analyses {:unusedparams true} :staticcheck true}}]
+    (comment vim.diagnostic.config diagnostic-config)
     (scalametals.register-init-command)
     (lspconfig.ts_ls.setup {:on_attach set-buffer-opts : handlers})
     (lspconfig.jdtls.setup {:on_attach set-buffer-opts : handlers})

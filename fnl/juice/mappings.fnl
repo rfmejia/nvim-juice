@@ -86,16 +86,22 @@
                             (core.map #(jump-to-mark $1) marks))))
 
 (local buffers [[:n :<leader>b ":buffers<cr>:buffer<Space>"]
-                [:n
-                 "[B"
-                 vim.cmd.bfirst
-                 {:desc "[buffer] jump to first in list"}]
-                [:n "]B" vim.cmd.blast {:desc "[buffer] jump to last in list"}]
-                [:n
-                 "[b"
-                 vim.cmd.bprevious
-                 {:desc "[buffer] go to previous in list"}]
-                [:n "]b" vim.cmd.bnext {:desc "[buffer] go to next in list"}]
+                (comment [:n
+                          "[B"
+                          vim.cmd.bfirst
+                          {:desc "[buffer] jump to first in list"}])
+                (comment [:n
+                          "]B"
+                          vim.cmd.blast
+                          {:desc "[buffer] jump to last in list"}])
+                (comment [:n
+                          "[b"
+                          vim.cmd.bprevious
+                          {:desc "[buffer] go to previous in list"}])
+                (comment [:n
+                          "]b"
+                          vim.cmd.bnext
+                          {:desc "[buffer] go to next in list"}])
                 [:n
                  :<leader>x
                  ":bp|bdelete #<cr>"
