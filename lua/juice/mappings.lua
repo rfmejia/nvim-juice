@@ -61,12 +61,7 @@ do
   end
   marks = core.concat({{"n", "''", _8_, {desc = "list quick marks (ARST and zxcd)"}}}, core.map(_9_, marks0), core.map(_10_, marks0))
 end
-local buffers
---[[ ["n" "[B" vim.cmd.bfirst {:desc "[buffer] jump to first in list"}] ]]
---[[ ["n" "]B" vim.cmd.blast {:desc "[buffer] jump to last in list"}] ]]
---[[ ["n" "[b" vim.cmd.bprevious {:desc "[buffer] go to previous in list"}] ]]
---[[ ["n" "]b" vim.cmd.bnext {:desc "[buffer] go to next in list"}] ]]
-buffers = {{"n", "<leader>b", ":buffers<cr>:buffer<Space>"}, nil, nil, nil, nil, {"n", "<leader>x", ":bp|bdelete #<cr>", {desc = "[buffer] close buffer"}}}
+local buffers = {{"n", "<leader>b", ":buffers<cr>:buffer<Space>"}, {"n", "<leader>x", ":bp|bdelete #<cr>", {desc = "[buffer] close buffer"}}}
 local tabs = {{"n", "<leader>ts", ":tab split<cr>", {silent = true}}, {"n", "[t", vim.cmd.tabprevious}, {"n", "]t", vim.cmd.tabnext}, {"n", "[T", vim.cmd.tabfirst}, {"n", "]T", vim.cmd.tablast}}
 local quickfix = {{"n", "<leader>co", vim.cmd.copen, {desc = "open quickfix list"}}, {"n", "<leader>cc", vim.cmd.cclose, {desc = "close quickfix list"}}, {"n", "[q", vim.cmd.cprevious, {desc = "jump to the previous entry in the current quickfix list"}}, {"n", "]q", vim.cmd.cnext, {desc = "jump to the next entry in the current quickfix list"}}, {"n", "<leader>C", vim.cmd.chistory, {desc = "list quickfix history"}}, {"n", "[C", vim.cmd.colder, {desc = "jump to the previous quickfix list"}}, {"n", "]C", vim.cmd.cnewer, {desc = "jump to the newer quickfix list"}}}
 local loclist = {{"n", "<leader>lo", vim.cmd.lopen, {desc = "open loclist list"}}, {"n", "<leader>lc", vim.cmd.lclose, {desc = "close loclist list"}}, {"n", "[l", vim.cmd.lprevious, {desc = "jump to previous entry in the current loclist"}}, {"n", "]l", vim.cmd.lnext, {desc = "jump to next entry in the current loclist"}}, {"n", "<leader>L", vim.cmd.lhistory, {desc = "list loclist history"}}, {"n", "[L", vim.cmd.lolder, {desc = "jump to the previous loclist"}}, {"n", "]L", vim.cmd.lnewer, {desc = "jump to the newer loclist"}}}
