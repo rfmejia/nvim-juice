@@ -42,7 +42,7 @@
     (tset config :tvp {:panel_alignment :right
                        :toggle_node_mapping :<CR>
                        :node_command_mapping :r})
-    (set config.handlers juice-lsp.handlers)
+    ;; (set config.handlers juice-lsp.handlers)
     (set config.on_attach
          (lambda [client bufnr]
            (juice-lsp.set-buffer-opts client bufnr)
