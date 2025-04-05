@@ -1,14 +1,13 @@
 (local {: autoload} (require :nfnl.module))
 (local lspconfig (autoload :lspconfig))
-(local util (autoload :juice.util))
+(local core (autoload :nfnl.core))
 
-(util.assoc-in vim.opt_local
-               {:shiftwidth 2
-                :tabstop 2
-                :expandtab true
-                :textwidth 100
-                :spell false
-                :commentstring ";; %s"})
+(core.merge! vim.opt_local {:shiftwidth 2
+                            :tabstop 2
+                            :expandtab true
+                            :textwidth 100
+                            :spell false
+                            :commentstring ";; %s"})
 
 (vim.api.nvim_create_autocmd :BufWritePre
                              {:pattern [:*.clj :*.edn]

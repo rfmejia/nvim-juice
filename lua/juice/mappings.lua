@@ -6,7 +6,7 @@ local util = autoload("juice.util")
 local general
 local function _2_()
   local is_enabled = (vim.opt.number:get() and vim.opt.relativenumber:get())
-  return util["assoc-in"](vim.opt, {number = not is_enabled, relativenumber = not is_enabled})
+  return core["merge!"](vim.opt, {number = not is_enabled, relativenumber = not is_enabled})
 end
 local function _3_()
   local config_path = (vim.env.XDG_CONFIG_HOME .. "/nvim")

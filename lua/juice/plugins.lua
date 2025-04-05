@@ -41,7 +41,7 @@ local lisp_tools
 do
   local languages = {"clojure", "fennel"}
   local function _9_()
-    return util["assoc-in"](vim.g, {["conjure#result#register"] = "*", ["conjure#mapping#doc_word"] = "gk", ["conjure#log#botright"] = true})
+    return core["merge!"](vim.g, {["conjure#result#register"] = "*", ["conjure#mapping#doc_word"] = "gk", ["conjure#log#botright"] = true})
   end
   lisp_tools = {{"Olical/conjure", branch = "main", ft = languages, config = _9_}, {"julienvincent/nvim-paredit", ft = languages, opts = {use_default_keys = true, indent = {enabled = true}}, dependencies = {{"nvim-treesitter/nvim-treesitter"}}}}
 end

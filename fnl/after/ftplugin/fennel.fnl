@@ -1,13 +1,12 @@
 (local {: autoload} (require :nfnl.module))
 (local notify (autoload :nfnl.notify))
-(local util (autoload :juice.util))
+(local core (autoload :nfnl.core))
 
-(util.assoc-in vim.opt_local
-               {:shiftwidth 4
-                :tabstop 2
-                :expandtab true
-                :textwidth 100
-                :commentstring ";; %s"})
+(core.merge! vim.opt_local {:shiftwidth 4
+                            :tabstop 2
+                            :expandtab true
+                            :textwidth 100
+                            :commentstring ";; %s"})
 
 (lambda buffer-is-modified [buf-num]
   (vim.api.nvim_buf_get_option buf-num :modified))
@@ -15,7 +14,7 @@
 (lambda format-fennel [path]
   (if (buffer-is-modified (vim.api.nvim_get_current_buf))
       (notify.error "fnlfmt: cannot format a modified buffer")
-      (match (vim.fn.system [:fnlfmt :--fix path])
+      (case (vim.fn.system [:fnlfmt :--fix path])
         _ (vim.cmd :e!)
         (nil err-msg) (notify.error "[fennel] Could not run `fnlfmt`: " err-msg))))
 

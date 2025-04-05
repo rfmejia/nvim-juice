@@ -1,13 +1,14 @@
 (local {: autoload} (require :nfnl.module))
+(local core (autoload :nfnl.core))
 (local notify (autoload :nfnl.notify))
 (local util (autoload :juice.util))
 
-(util.assoc-in vim.opt_local {:shiftwidth 2
-                              :tabstop 2
-                              :textwidth 80
-                              :wrap true
-                              :spell true
-                              :spelllang :en_us})
+(core.merge! vim.opt_local {:shiftwidth 2
+                            :tabstop 2
+                            :textwidth 80
+                            :wrap true
+                            :spell true
+                            :spelllang :en_us})
 
 (fn insert-lines [text]
   "Insert text at the current cursor position"
@@ -48,7 +49,7 @@
 
 (lambda preview-in-browser [in out browser-cmd]
   (if (util.executable? :asciidoctor)
-      (match (vim.fn.system [:asciidoctor :-o out in])
+      (case (vim.fn.system [:asciidoctor :-o out in])
         ok (vim.fn.system [browser-cmd out])
         (nil err-msg)
         (notify.error (.. "[asciidoc] Could not run asciidoctor: " err-msg)))))

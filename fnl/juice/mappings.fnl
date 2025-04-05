@@ -15,9 +15,9 @@
          :<leader>n
          #(let [is-enabled (and (vim.opt.number:get)
                                 (vim.opt.relativenumber:get))]
-            (util.assoc-in vim.opt
-                           {:number (not is-enabled)
-                            :relativenumber (not is-enabled)}))
+            (core.merge! vim.opt
+                         {:number (not is-enabled)
+                          :relativenumber (not is-enabled)}))
          {:desc "toggle number and relativenumber options"}]
         [:n :<leader>ol ":Lazy<cr>" {:desc "open lazy.nvim" :silent true}]
         [:n

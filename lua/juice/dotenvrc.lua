@@ -3,7 +3,6 @@ local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local core = autoload("nfnl.core")
 local string = autoload("nfnl.string")
-local util = autoload("juice.util")
 --[[ "TODO" ["split to sbtn or scala-cli" "dadbod"] ]]
 local function read_env_pairs()
   return {makeprg = vim.env.NVIM_MAKEPRG, errorformat = vim.env.NVIM_ERRORFORMAT, keywordprg = vim.env.NVIM_KEYWORDPRG, formatprg = vim.env.NVIM_FORMATPRG}
@@ -16,7 +15,7 @@ local function read_path_list()
   end
 end
 local function setup()
-  util["assoc-in"](vim.opt, read_env_pairs())
+  core["merge!"](vim.opt, read_env_pairs())
   local tmp_6_auto = read_path_list()
   if (tmp_6_auto ~= nil) then
     vim.opt.path = tmp_6_auto

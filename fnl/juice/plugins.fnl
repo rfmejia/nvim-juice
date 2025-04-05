@@ -60,10 +60,10 @@
          [{1 :Olical/conjure
            :branch :main
            :ft languages
-           :config #(util.assoc-in vim.g
-                                   {"conjure#result#register" "*"
-                                    "conjure#mapping#doc_word" :gk
-                                    "conjure#log#botright" true})}
+           :config #(core.merge! vim.g
+                                 {"conjure#result#register" "*"
+                                  "conjure#mapping#doc_word" :gk
+                                  "conjure#log#botright" true})}
           {1 :julienvincent/nvim-paredit
            :ft languages
            :opts {:use_default_keys true :indent {:enabled true}}

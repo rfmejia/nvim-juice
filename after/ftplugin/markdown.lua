@@ -1,8 +1,9 @@
 -- [nfnl] Compiled from fnl/after/ftplugin/markdown.fnl by https://github.com/Olical/nfnl, do not edit.
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
+local core = autoload("nfnl.core")
 local util = autoload("juice.util")
-util["assoc-in"](vim.opt_local, {shiftwidth = 2, tabstop = 2, textwidth = 100, wrap = true, spell = true, spelllang = "en_us"})
+core["merge!"](vim.opt_local, {shiftwidth = 2, tabstop = 2, textwidth = 100, wrap = true, spell = true, spelllang = "en_us"})
 local function render_markdown_to_html()
   local current_file = vim.fn.expand("%:p")
   local tmp_file = vim.fn.system({"mktemp", "--suffix=.html"})

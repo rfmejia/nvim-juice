@@ -1,5 +1,6 @@
 (local {: autoload} (require :nfnl.module))
 (local statusline (autoload :juice.statusline))
+(local core (autoload :nfnl.core))
 (local util (autoload :juice.util))
 
 (fn initialize-metals []
@@ -44,7 +45,7 @@
     (set config.on_attach
          (lambda [client bufnr]
            (util.set-keys (metals-maps bufnr))
-           (util.assoc-in vim.opt_local options)))
+           (core.merge! vim.opt_local options)))
     (comment "Automatically attach Metals to all Scala filetypes (only triggered upon BufEnter)")
     (vim.api.nvim_create_autocmd :FileType
                                  {:pattern [:scala :java]

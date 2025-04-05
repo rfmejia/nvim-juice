@@ -1,7 +1,6 @@
 (local {: autoload} (require :nfnl.module))
 (local core (autoload :nfnl.core))
 (local string (autoload :nfnl.string))
-(local util (autoload :juice.util))
 
 (comment :TODO
   ["split to sbtn or scala-cli" :dadbod])
@@ -19,7 +18,7 @@
     (core.concat ["." ""] (string.split vim.env.NVIM_PATH_LIST ":"))))
 
 (fn setup []
-  (util.assoc-in vim.opt (read-env-pairs))
+  (core.merge! vim.opt (read-env-pairs))
   (-?>> (read-path-list)
         (set vim.opt.path)))
 

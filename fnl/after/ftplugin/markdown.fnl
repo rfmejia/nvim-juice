@@ -1,12 +1,13 @@
 (local {: autoload} (require :nfnl.module))
+(local core (autoload :nfnl.core))
 (local util (autoload :juice.util))
 
-(util.assoc-in vim.opt_local {:shiftwidth 2
-                              :tabstop 2
-                              :textwidth 100
-                              :wrap true
-                              :spell true
-                              :spelllang :en_us})
+(core.merge! vim.opt_local {:shiftwidth 2
+                            :tabstop 2
+                            :textwidth 100
+                            :wrap true
+                            :spell true
+                            :spelllang :en_us})
 
 (fn render-markdown-to-html []
   (let [current-file (vim.fn.expand "%:p")

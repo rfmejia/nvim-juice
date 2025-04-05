@@ -2,8 +2,8 @@
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local lspconfig = autoload("lspconfig")
-local util = autoload("juice.util")
-util["assoc-in"](vim.opt_local, {shiftwidth = 2, tabstop = 2, expandtab = true, textwidth = 100, commentstring = ";; %s", spell = false})
+local core = autoload("nfnl.core")
+core["merge!"](vim.opt_local, {shiftwidth = 2, tabstop = 2, expandtab = true, textwidth = 100, commentstring = ";; %s", spell = false})
 local function _2_()
   return vim.lsp.buf.format({async = false})
 end

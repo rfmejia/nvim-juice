@@ -1,4 +1,4 @@
 (local {: autoload} (require :nfnl.module))
-(local util (autoload :juice.util))
+(local core (autoload :nfnl.core))
 
-(util.assoc-in vim.opt_local {:makeprg "sh %" :signcolumn :no :textwidth 80})
+(core.merge! vim.opt_local {:makeprg "sh %" :signcolumn :no :textwidth 80})

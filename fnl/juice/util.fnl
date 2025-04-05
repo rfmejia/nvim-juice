@@ -15,13 +15,6 @@
   (each [_ mapping (ipairs mappings)]
     (vim.keymap.set (unpack mapping))))
 
-(lambda assoc-in [t ...]
-  "Given one or more tables of options, set each entry in the table as `<t>.<key> = <value>`"
-  (each [_ options (ipairs [...])]
-    (when (core.table? options)
-      (each [k v (pairs options)]
-        (core.assoc t k v)))))
-
 (lambda call [plugin func ...]
   "Autoload and call a plugin function with optional args"
   ((. (autoload plugin) func) ...))
@@ -37,11 +30,4 @@
         _row (- row 1)]
     (vim.api.nvim_buf_set_lines buf _row (+ _row 1) false [...])))
 
-{: lua-cmd
- : executable?
- : has?
- : set-keys
- : assoc-in
- : call
- : call-setup
- : insert-lines}
+{: lua-cmd : executable? : has? : set-keys : call : call-setup : insert-lines}

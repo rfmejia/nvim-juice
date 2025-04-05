@@ -21,21 +21,9 @@ local function set_keys(mappings)
   end
   return nil
 end
-local function assoc_in(t, ...)
-  _G.assert((nil ~= t), "Missing argument t on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:18")
-  for _, options in ipairs({...}) do
-    if core["table?"](options) then
-      for k, v in pairs(options) do
-        core.assoc(t, k, v)
-      end
-    else
-    end
-  end
-  return nil
-end
 local function call(plugin, func, ...)
-  _G.assert((nil ~= func), "Missing argument func on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:25")
-  _G.assert((nil ~= plugin), "Missing argument plugin on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:25")
+  _G.assert((nil ~= func), "Missing argument func on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:18")
+  _G.assert((nil ~= plugin), "Missing argument plugin on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:18")
   return autoload(plugin)[func](...)
 end
 local function call_setup(...)
@@ -50,4 +38,4 @@ local function insert_lines(...)
   local _row = (row - 1)
   return vim.api.nvim_buf_set_lines(buf, _row, (_row + 1), false, {...})
 end
-return {["lua-cmd"] = lua_cmd, ["executable?"] = executable_3f, ["has?"] = has_3f, ["set-keys"] = set_keys, ["assoc-in"] = assoc_in, call = call, ["call-setup"] = call_setup, ["insert-lines"] = insert_lines}
+return {["lua-cmd"] = lua_cmd, ["executable?"] = executable_3f, ["has?"] = has_3f, ["set-keys"] = set_keys, call = call, ["call-setup"] = call_setup, ["insert-lines"] = insert_lines}

@@ -19,6 +19,5 @@
 ;; TODO Create your own auto-pairs plugins
 ;; TODO Create your own surround plugins
 ;; TODO Finish marksman module
-;; TODO Change `util.assoc-in` => `core.merge!`
 
 ;; FIXME When highlighting TODO/FIXME/NOTE the highlight is enabled only when moving from a split

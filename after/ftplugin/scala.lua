@@ -4,8 +4,9 @@ local autoload = _local_1_["autoload"]
 local notify = autoload("nfnl.notify")
 local scalametals = autoload("juice.lsp.scalametals")
 local str = autoload("nfnl.string")
+local core = autoload("nfnl.core")
 local util = autoload("juice.util")
-util["assoc-in"](vim.opt_local, {shiftwidth = 2, tabstop = 2, expandtab = true, textwidth = 100, signcolumn = "yes:1"})
+core["merge!"](vim.opt_local, {shiftwidth = 2, tabstop = 2, expandtab = true, textwidth = 100, signcolumn = "yes:1"})
 local function _2_()
   return vim.opt_local.indentkeys:remove("<>>")
 end

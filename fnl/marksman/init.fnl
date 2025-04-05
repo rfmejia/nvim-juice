@@ -10,9 +10,8 @@
            (vim.fn.sign_unplace "" {:id 1})))
 
 (local set-opfunc
-       (let [viml-fn (mkstring "\n" "func s:set_opfunc(val)"
-                               "let &opfunc = a:val" :endfunc
-                               "echon get(function('s:set_opfunc'), 'name')")]
+       (let [viml-fn (.. "\n" "func s:set_opfunc(val)" "let &opfunc = a:val"
+                         :endfunc "echon get(function('s:set_opfunc'), 'name')")]
          (vim.fn (vim.api.nvim_exec2 viml-fn true))))
 
 (fn toggle-mark [marker line-num]
