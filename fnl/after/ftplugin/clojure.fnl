@@ -1,4 +1,5 @@
 (local {: autoload} (require :nfnl.module))
+(local lspconfig (autoload :lspconfig))
 (local util (autoload :juice.util))
 
 (util.assoc-in vim.opt_local
@@ -15,3 +16,5 @@
                               :desc "[clojure] call vim.lsp.buf.format on save"
                               :group (vim.api.nvim_create_augroup :format_group
                                                                   {:clear true})})
+
+(lspconfig.clojure_lsp.setup {})
