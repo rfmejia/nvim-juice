@@ -28,7 +28,7 @@ end
 local function _6_()
   return format_fennel(vim.fn.expand("%:p"))
 end
-vim.keymap.set("n", "<localleader>cf", _6_, {desc = "[fennel] (c)ode (f)ormat", buffer = true})
+vim.keymap.set("n", "grf", _6_, {desc = "[fennel] (c)ode (f)ormat", buffer = true})
 local function _7_()
   return format_fennel(vim.fn.expand("%:p"))
 end
@@ -36,4 +36,6 @@ vim.api.nvim_buf_create_user_command(0, "FnlFmt", _7_, {bang = true})
 local function _8_()
   return format_fennel(vim.fn.expand("%:p"))
 end
-return vim.api.nvim_create_autocmd("BufWritePost", {callback = _8_, buffer = vim.api.nvim_get_current_buf(), desc = "format on buffer write", group = vim.api.nvim_create_augroup("format_group", {clear = true})})
+vim.api.nvim_create_autocmd("BufWritePost", {callback = _8_, buffer = vim.api.nvim_get_current_buf(), desc = "format on buffer write", group = vim.api.nvim_create_augroup("format_group", {clear = true})})
+local lspconfig = autoload("lspconfig")
+return lspconfig.fennel_ls.setup({})

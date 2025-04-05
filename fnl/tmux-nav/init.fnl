@@ -20,7 +20,7 @@
   (let [socket (get-tmux-socket)
         pane (tmux-direction direction)
         tmux-cmd [:tmux :-S socket :select-pane pane]]
-    (match (vim.fn.system tmux-cmd)
+    (case (vim.fn.system tmux-cmd)
       ok nil
       (nil err-msg) (notify.error "[tmux-nav] Could not run `tmux`: " err-msg))))
 

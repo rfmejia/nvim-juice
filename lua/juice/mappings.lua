@@ -51,7 +51,7 @@ do
   end
   jump_to_mark = _7_
   local function _8_()
-    return vim.cmd.marks(unpack(marks0))
+    return vim.cmd.marks(table.concat(marks0))
   end
   local function _9_(_241)
     return create_mark(_241)

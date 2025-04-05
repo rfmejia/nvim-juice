@@ -13,8 +13,8 @@
         [:n :<F5> vim.cmd.make {:desc "trigger `make` in shell"}]
         [:n
          :<leader>n
-         #(let [is-enabled (and (: vim.opt.number :get)
-                                (: vim.opt.relativenumber :get))]
+         #(let [is-enabled (and (vim.opt.number:get)
+                                (vim.opt.relativenumber:get))]
             (util.assoc-in vim.opt
                            {:number (not is-enabled)
                             :relativenumber (not is-enabled)}))
@@ -80,7 +80,7 @@
                    jump-to-mark #[:n (.. "'" (string.lower $1)) (.. "`" $1)]]
                (core.concat [[:n
                               "''"
-                              #(vim.cmd.marks (.. (unpack marks)))
+                              #(vim.cmd.marks (table.concat marks))
                               {:desc "list quick marks (ARST and zxcd)"}]]
                             (core.map #(create-mark $1) marks)
                             (core.map #(jump-to-mark $1) marks))))

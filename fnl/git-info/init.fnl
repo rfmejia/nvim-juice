@@ -2,7 +2,7 @@
   "Updates the git flag(s) of the current file inside g:gitfile"
   (let [path (vim.fn.expand "%:p")
         git-cmd (.. "git file-status " path " | tr -d ' \\n'")]
-    (match (vim.fn.system git-cmd)
+    (case (vim.fn.system git-cmd)
       status (set vim.g.git_file_status status)
       (nil err-msg)
       (vim.notify (.. "[git-info] Could not get `git file-status`: " err-msg)
@@ -13,7 +13,7 @@
   (let [path (vim.fn.expand "%:h")
         git-cmd (.. "git -C " path
                     " branch --show-current --no-color 2> /dev/null | tr -d ' \\n'")]
-    (match (vim.fn.system git-cmd)
+    (case (vim.fn.system git-cmd)
       branch (set vim.g.git_branch branch)
       (nil err-msg)
       (vim.notify (.. "[git-info] Could not get `git branch`: " err-msg)

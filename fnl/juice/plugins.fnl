@@ -49,7 +49,7 @@
                                           :lazy true}]})])
 
 (local dev-tools [{1 :neovim/nvim-lspconfig
-                   :ft [:clojure :java :go :scala :javascript :typescript]
+                   :ft [:clojure :fennel :java :go :scala]
                    :config #(util.call-setup :juice.lsp)}
                   {1 :scalameta/nvim-metals
                    :cmd :MetalsInit

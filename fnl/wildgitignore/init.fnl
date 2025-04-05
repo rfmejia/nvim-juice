@@ -3,7 +3,7 @@
 (local string (autoload :nfnl.string))
 
 (fn starts-with? [str prefix]
-  (= prefix (: str :sub 1 (length prefix))))
+  (= prefix (str:sub 1 (length prefix))))
 
 (lambda is-dir? [path]
   "Checks if path is a dir (will miss empty or non-existent dirs)"
@@ -28,7 +28,7 @@
                                             (.. "**/" $1))
                                        suffixed)]
                 (set vim.opt.wildignore "")
-                (core.map #(: vim.opt.wildignore :append $1) prefixed))))
+                (core.map #(vim.opt.wildignore:append $1) prefixed))))
 
 (fn setup []
   (vim.api.nvim_create_augroup :wildignore-group {:clear true})

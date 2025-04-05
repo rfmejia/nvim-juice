@@ -19,7 +19,7 @@
         _ (vim.cmd :e!)
         (nil err-msg) (notify.error "[fennel] Could not run `fnlfmt`: " err-msg))))
 
-(vim.keymap.set :n :<localleader>cf #(format-fennel (vim.fn.expand "%:p"))
+(vim.keymap.set :n :grf #(format-fennel (vim.fn.expand "%:p"))
                 {:desc "[fennel] (c)ode (f)ormat" :buffer true})
 
 (vim.api.nvim_buf_create_user_command 0 :FnlFmt
@@ -32,3 +32,6 @@
                               :desc "format on buffer write"
                               :group (vim.api.nvim_create_augroup :format_group
                                                                   {:clear true})})
+
+(local lspconfig (autoload :lspconfig))
+(lspconfig.fennel_ls.setup {})
