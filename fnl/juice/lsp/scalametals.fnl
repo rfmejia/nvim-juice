@@ -3,8 +3,7 @@
 (local util (autoload :juice.util))
 
 (fn initialize-metals []
-  (let [juice-lsp (autoload :juice.lsp)
-        metals (autoload :metals)
+  (let [metals (autoload :metals)
         config (metals.bare_config)
         tvp (autoload :metals.tvp)
         options {:signcolumn "yes:1"
@@ -42,10 +41,8 @@
     (tset config :tvp {:panel_alignment :right
                        :toggle_node_mapping :<CR>
                        :node_command_mapping :r})
-    ;; (set config.handlers juice-lsp.handlers)
     (set config.on_attach
          (lambda [client bufnr]
-           (juice-lsp.set-buffer-opts client bufnr)
            (util.set-keys (metals-maps bufnr))
            (util.assoc-in vim.opt_local options)))
     (comment "Automatically attach Metals to all Scala filetypes (only triggered upon BufEnter)")

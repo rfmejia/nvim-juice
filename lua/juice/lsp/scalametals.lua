@@ -4,7 +4,6 @@ local autoload = _local_1_["autoload"]
 local statusline = autoload("juice.statusline")
 local util = autoload("juice.util")
 local function initialize_metals()
-  local juice_lsp = autoload("juice.lsp")
   local metals = autoload("metals")
   local config = metals.bare_config()
   local tvp = autoload("metals.tvp")
@@ -12,7 +11,7 @@ local function initialize_metals()
   local metals_settings = {inlayHints = {hintsInPatternMatch = {enable = true}, implicitArguments = {enable = true}, implicitConversions = {enable = true}, inferredTypes = {enable = true}, typeParameters = {enable = true}}}
   local metals_maps
   local function _2_(bufnr)
-    _G.assert((nil ~= bufnr), "Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:18")
+    _G.assert((nil ~= bufnr), "Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:17")
     local function _3_()
       return metals.hover_worksheet({border = "rounded"})
     end
@@ -24,9 +23,8 @@ local function initialize_metals()
   config.capabilities = vim.lsp.protocol.make_client_capabilities()
   config["tvp"] = {panel_alignment = "right", toggle_node_mapping = "<CR>", node_command_mapping = "r"}
   local function _4_(client, bufnr)
-    _G.assert((nil ~= bufnr), "Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:47")
-    _G.assert((nil ~= client), "Missing argument client on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:47")
-    juice_lsp["set-buffer-opts"](client, bufnr)
+    _G.assert((nil ~= bufnr), "Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:45")
+    _G.assert((nil ~= client), "Missing argument client on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:45")
     util["set-keys"](metals_maps(bufnr))
     return util["assoc-in"](vim.opt_local, options)
   end
