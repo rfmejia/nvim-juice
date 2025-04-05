@@ -2,6 +2,7 @@
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local notify = autoload("nfnl.notify")
+local scalametals = autoload("juice.lsp.scalametals")
 local str = autoload("nfnl.string")
 local util = autoload("juice.util")
 util["assoc-in"](vim.opt_local, {shiftwidth = 2, tabstop = 2, expandtab = true, textwidth = 100, signcolumn = "yes:1"})
@@ -32,7 +33,8 @@ local function _7_()
   return run_scalafmt()
 end
 vim.api.nvim_buf_create_user_command(vim.api.nvim_get_current_buf(), "ScalafmtApply", _7_, {bang = true})
---[[ "Make sure we respect lsp if it's enabled" (vim.keymap.set "n" "<localleader>cf" (hashfn (run-scalafmt (vim.fn.expand "%:p"))) {:buffer true :desc "[scala] run scalafmt on buffer" :nowait true :silent true}) ]]
+vim.api.nvim_buf_create_user_command(vim.api.nvim_get_current_buf(), "MetalsInit", scalametals["initialize-metals"], {desc = "Start and connect to a Metals server"})
+--[[ "Make sure we respect lsp if it's enabled" (vim.keymap.set "n" "grf" (hashfn (run-scalafmt (vim.fn.expand "%:p"))) {:buffer true :desc "[scala] run scalafmt on buffer" :nowait true :silent true}) ]]
 vim.keymap.set("n", "<localleader>s", "vip:sort<cr>", {desc = "[scala] sort in paragraph", nowait = true, buffer = true, silent = true})
 if util["executable?"]("sbtn") then
   local function _8_()

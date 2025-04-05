@@ -61,12 +61,4 @@
     (tset vim.g :metals_status "Initializing Metals...")
     (metals.initialize_or_attach config)))
 
-(fn register-init-command []
-  (comment :TODO
-    (when (not-running :sbt)
-      (when (ask-to-launch)
-        (vim.fn.system [:sbtn :exit]))))
-  (vim.api.nvim_create_user_command :MetalsInit #(initialize-metals)
-                                    {:desc "Start and connect to a Metals server"}))
-
-{: register-init-command}
+{: initialize-metals}

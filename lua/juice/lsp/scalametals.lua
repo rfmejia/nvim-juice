@@ -44,11 +44,4 @@ local function initialize_metals()
   vim.g["metals_status"] = "Initializing Metals..."
   return metals.initialize_or_attach(config)
 end
-local function register_init_command()
-  --[[ "TODO" (when (not-running "sbt") (when (ask-to-launch) (vim.fn.system ["sbtn" "exit"]))) ]]
-  local function _7_()
-    return initialize_metals()
-  end
-  return vim.api.nvim_create_user_command("MetalsInit", _7_, {desc = "Start and connect to a Metals server"})
-end
-return {["register-init-command"] = register_init_command}
+return {["initialize-metals"] = initialize_metals}

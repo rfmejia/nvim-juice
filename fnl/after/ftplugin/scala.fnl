@@ -1,5 +1,6 @@
 (local {: autoload} (require :nfnl.module))
 (local notify (autoload :nfnl.notify))
+(local scalametals (autoload :juice.lsp.scalametals))
 (local str (autoload :nfnl.string))
 (local util (autoload :juice.util))
 
@@ -31,8 +32,12 @@
                                       :ScalafmtApply #(run-scalafmt)
                                       {:bang true})
 
+(vim.api.nvim_buf_create_user_command (vim.api.nvim_get_current_buf)
+                                      :MetalsInit scalametals.initialize-metals
+                                      {:desc "Start and connect to a Metals server"})
+
 (comment "Make sure we respect lsp if it's enabled"
-  (vim.keymap.set :n :<localleader>cf #(run-scalafmt (vim.fn.expand "%:p"))
+  (vim.keymap.set :n :grf #(run-scalafmt (vim.fn.expand "%:p"))
                   {:desc "[scala] run scalafmt on buffer"
                    :buffer true
                    :nowait true
