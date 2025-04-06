@@ -41,7 +41,7 @@
   (let [maps (core.merge (?. user-opts :maps) (. default-opts :maps))
         opts (core.merge default-opts user-opts)]
     ;; Clear maps from opts
-    (tset opts :maps nil)
+    (set (. opts :maps) nil)
     ;; Load mappings the first time, then add in FileType autocmd
     (util.set-keys maps)
     (vim.api.nvim_create_autocmd :FileType

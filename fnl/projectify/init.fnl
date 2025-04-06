@@ -16,7 +16,7 @@
 
 (lambda save-hashes [path obj]
   (let [now (os.time)]
-    (tset obj :updated now)
+    (set (. obj :updated) now)
     (core.spit path (vim.json.encode obj))))
 
 (fn init-hash-file []
