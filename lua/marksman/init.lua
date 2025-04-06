@@ -5,7 +5,7 @@ local core = autoload("nfnl.core")
 --[[ (let [id 1 group "marksman"] (vim.fn.sign_getdefined) (vim.fn.sign_getplaced) (vim.fn.sign_define "test" {:text ">" :texthl "WarningMsg"}) (vim.fn.sign_place 1 "" "test" 0 {:lnum 2}) (vim.fn.sign_unplace "" {:id 1})) ]]
 local set_opfunc
 do
-  local viml_fn = mkstring("\n", "func s:set_opfunc(val)", "let &opfunc = a:val", "endfunc", "echon get(function('s:set_opfunc'), 'name')")
+  local viml_fn = ("\n" .. "func s:set_opfunc(val)" .. "let &opfunc = a:val" .. "endfunc" .. "echon get(function('s:set_opfunc'), 'name')")
   set_opfunc = vim.fn(vim.api.nvim_exec2(viml_fn, true))
 end
 local function toggle_mark(marker, line_num)
@@ -17,7 +17,7 @@ local function init_store()
   return nil
 end
 local function get_mark(mark)
-  _G.assert((nil ~= mark), "Missing argument mark on /home/rfmejia/.config/nvim/fnl/marksman/init.fnl:29")
+  _G.assert((nil ~= mark), "Missing argument mark on /home/rfmejia/.config/nvim/fnl/marksman/init.fnl:28")
   local t_2_ = vim.g.marksman
   if (nil ~= t_2_) then
     t_2_ = t_2_.marks
@@ -30,13 +30,13 @@ local function get_mark(mark)
   return t_2_
 end
 local function set_mark(mark, lnum, buf_3f)
-  _G.assert((nil ~= buf_3f), "Missing argument buf? on /home/rfmejia/.config/nvim/fnl/marksman/init.fnl:32")
-  _G.assert((nil ~= lnum), "Missing argument lnum on /home/rfmejia/.config/nvim/fnl/marksman/init.fnl:32")
-  _G.assert((nil ~= mark), "Missing argument mark on /home/rfmejia/.config/nvim/fnl/marksman/init.fnl:32")
+  _G.assert((nil ~= buf_3f), "Missing argument buf? on /home/rfmejia/.config/nvim/fnl/marksman/init.fnl:31")
+  _G.assert((nil ~= lnum), "Missing argument lnum on /home/rfmejia/.config/nvim/fnl/marksman/init.fnl:31")
+  _G.assert((nil ~= mark), "Missing argument mark on /home/rfmejia/.config/nvim/fnl/marksman/init.fnl:31")
   return "Add new or update existing mark at the specified line number and (optional) buffer"
 end
 local function del_mark(mark)
-  _G.assert((nil ~= mark), "Missing argument mark on /home/rfmejia/.config/nvim/fnl/marksman/init.fnl:35")
+  _G.assert((nil ~= mark), "Missing argument mark on /home/rfmejia/.config/nvim/fnl/marksman/init.fnl:34")
   return "Delete a mark"
 end
 local function sync_vimmarks()

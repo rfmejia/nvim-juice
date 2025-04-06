@@ -33,9 +33,9 @@ end
 local function read_local_project_file()
   local path
   do
-    local tmp_3_auto = vim.fs.root(0, ".nvim")
-    if (nil ~= tmp_3_auto) then
-      path = (tmp_3_auto .. "/.nvim/project.lua")
+    local tmp_91_auto = vim.fs.root(0, ".nvim")
+    if (nil ~= tmp_91_auto) then
+      path = (tmp_91_auto .. "/.nvim/project.lua")
     else
       path = nil
     end
