@@ -37,7 +37,7 @@
   (->> (. vim.g.journal_tools :task-format)
        (util.insert-lines)))
 
-(fn setup [user-opts]
+(fn register-tools [user-opts]
   (let [maps (core.merge (?. user-opts :maps) (. default-opts :maps))
         opts (core.merge default-opts user-opts)]
     ;; Clear maps from opts
@@ -52,5 +52,11 @@
     (when (> (vim.fn.exists ":JournalInit") 0)
       (vim.api.nvim_del_user_command :JournalInit))
     (vim.notify "[journal-tools] Loaded tools")))
+
+(fn setup [user-opts]
+  (vim.api.nvim_create_user_command :JournalInit
+                                    #(let [mappings (autoload :juice.mappings)]
+                                       (register-tools {:maps mappings.journal-maps}))
+                                    {:desc "Load default mappings for journal tools"}))
 
 {: setup : insert-week : insert-day : insert-time : insert-task}

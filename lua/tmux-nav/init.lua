@@ -36,11 +36,11 @@ local function vim_navigate(direction)
   return vim.cmd(("wincmd" .. " " .. vim_direction(direction)))
 end
 local function get_tmux_socket()
-  local tmp_91_auto = vim.env.TMUX
-  if (nil ~= tmp_91_auto) then
-    local tmp_91_auto0 = vim.fn.split(tmp_91_auto, ",")
-    if (nil ~= tmp_91_auto0) then
-      local t_8_ = tmp_91_auto0
+  local tmp_3_auto = vim.env.TMUX
+  if (nil ~= tmp_3_auto) then
+    local tmp_3_auto0 = vim.fn.split(tmp_3_auto, ",")
+    if (nil ~= tmp_3_auto0) then
+      local t_8_ = tmp_3_auto0
       if (nil ~= t_8_) then
         t_8_ = t_8_[1]
       else

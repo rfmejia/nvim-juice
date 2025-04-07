@@ -16,9 +16,9 @@ local function read_path_list()
 end
 local function setup()
   core["merge!"](vim.opt, read_env_pairs())
-  local tmp_94_auto = read_path_list()
-  if (tmp_94_auto ~= nil) then
-    vim.opt.path = tmp_94_auto
+  local tmp_6_auto = read_path_list()
+  if (tmp_6_auto ~= nil) then
+    vim.opt.path = tmp_6_auto
     return nil
   else
     return nil

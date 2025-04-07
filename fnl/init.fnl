@@ -6,14 +6,8 @@
 (local util (autoload :juice.util))
 
 (util.call-setup :juice.options :juice.colorscheme :juice.plugins
-                 :juice.mappings :juice.dotenvrc :git-info :tmux-nav
-                 :trim-whitespace :wildgitignore :projectify)
-
-(vim.api.nvim_create_user_command :JournalInit
-                                  #(let [mappings (autoload :juice.mappings)]
-                                     (util.call :journal-tools :setup
-                                                {:maps mappings.journal-maps}))
-                                  {:desc "Load default mappings for journal tools"})
+                 :juice.mappings :juice.dotenvrc :journal-tools :git-info
+                 :tmux-nav :trim-whitespace :wildgitignore :projectify)
 
 ;; TODO use vim-native plug management and implement a custom lazy loading solution (:h packadd)
 ;; TODO Create your own auto-pairs plugins
