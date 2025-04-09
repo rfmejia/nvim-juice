@@ -84,9 +84,11 @@
                    ;; is finished and the keymap is passed down
                    (util.call :gitsigns :toggle_signs))}])
 
+(local llm-tools [{1 :github/copilot.vim :cmd :Copilot :keys :<Tab>}])
+
 (fn setup []
   (let [plugins (core.concat core-tools database-tools dev-tools editing-tools
-                             git-tools lisp-tools)
+                             git-tools lisp-tools llm-tools)
         opts {:ui {:border :rounded}
               :performance {:rtp {:disabled_plugins [:rplugin
                                                      :tohtml
