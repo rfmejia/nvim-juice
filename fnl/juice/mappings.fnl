@@ -35,10 +35,12 @@
                       (for [i 1 times]
                         (set acc (.. acc value)))
                       acc)
+             vimgrep-cmd (.. ":vimgrep // **/*" (repeat 6 :<left>))
              filter-cmd (fn [cmd]
                           (.. ":filter '' " cmd
                               (repeat (+ 2 (length cmd)) :<left>)))]
          [[:n :<leader>f ":find " {:desc "pre-fill find command"}]
+          [:n :<leader>v vimgrep-cmd {:desc "pre-fill vimgrep command"}]
           [:n
            :<leader>p
            (filter-cmd "browse oldfiles")
