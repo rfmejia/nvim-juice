@@ -19,23 +19,27 @@
         week-start (find-day :back :Mon (vim.fn.localtime))
         week-end (find-day :fwd :Sun (vim.fn.localtime))
         text (.. "## Week " week-num " (" week-start " to " week-end ")")]
-    (util.insert-lines "----" "" text "")))
+    (util.insert-lines "----" "" text "" "" "")
+    (vim.cmd.normal :4j)))
 
 (fn insert-day []
   (let [day-format (. vim.g.journal_tools :day-format)
         curr-day (vim.fn.strftime day-format)
         text (.. "### " curr-day)]
-    (util.insert-lines text)))
+    (util.insert-lines text "" "")
+    (vim.cmd.normal :2j)))
 
 (fn insert-time []
   (let [time-format (. vim.g.journal_tools :time-format)
         curr-time (vim.fn.strftime time-format)
         text (.. "#### " curr-time " ")]
-    (util.insert-lines text)))
+    (util.insert-lines text "" "")
+    (vim.cmd.normal :2j)))
 
 (fn insert-task []
   (->> (. vim.g.journal_tools :task-format)
-       (util.insert-lines)))
+       (util.insert-lines))
+  (vim.cmd :startinsert!))
 
 (fn register-tools [user-opts]
   (let [maps (core.merge (?. user-opts :maps) (. default-opts :maps))

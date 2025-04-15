@@ -28,22 +28,26 @@ local function insert_week()
   local week_start = find_day("back", "Mon", vim.fn.localtime())
   local week_end = find_day("fwd", "Sun", vim.fn.localtime())
   local text = ("## Week " .. week_num .. " (" .. week_start .. " to " .. week_end .. ")")
-  return util["insert-lines"]("----", "", text, "")
+  util["insert-lines"]("----", "", text, "", "", "")
+  return vim.cmd.normal("4j")
 end
 local function insert_day()
   local day_format = vim.g.journal_tools["day-format"]
   local curr_day = vim.fn.strftime(day_format)
   local text = ("### " .. curr_day)
-  return util["insert-lines"](text)
+  util["insert-lines"](text, "", "")
+  return vim.cmd.normal("2j")
 end
 local function insert_time()
   local time_format = vim.g.journal_tools["time-format"]
   local curr_time = vim.fn.strftime(time_format)
   local text = ("#### " .. curr_time .. " ")
-  return util["insert-lines"](text)
+  util["insert-lines"](text, "", "")
+  return vim.cmd.normal("2j")
 end
 local function insert_task()
-  return util["insert-lines"](vim.g.journal_tools["task-format"])
+  util["insert-lines"](vim.g.journal_tools["task-format"])
+  return vim.cmd("startinsert!")
 end
 local function register_tools(user_opts)
   local maps
