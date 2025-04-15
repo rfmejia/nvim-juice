@@ -80,10 +80,11 @@
         (assert (= :123 (mkstring nil 1 2 3) (mkstring "" 1 2 3)))
         (assert (= :a-b-c (mkstring "-" :a :b :c))))
 
-(fn merge! [...])
+(fn merge! [...]
+  "merge one or more tables by mutating the first table")
 
 (fn merge [...]
-  "merge one or more tables")
+  "merge one or more tables into a new table")
 
 (fn concat [...]
   "concatenate one or more sequences")

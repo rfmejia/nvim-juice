@@ -50,17 +50,17 @@ local function keys(tbl)
   if (empty_3f(tbl) or not table_3f(tbl)) then
     return {}
   else
-    local tbl_21_auto = {}
-    local i_22_auto = 0
+    local tbl_109_auto = {}
+    local i_110_auto = 0
     for k, _ in pairs(tbl) do
-      local val_23_auto = k
-      if (nil ~= val_23_auto) then
-        i_22_auto = (i_22_auto + 1)
-        tbl_21_auto[i_22_auto] = val_23_auto
+      local val_111_auto = k
+      if (nil ~= val_111_auto) then
+        i_110_auto = (i_110_auto + 1)
+        tbl_109_auto[i_110_auto] = val_111_auto
       else
       end
     end
-    return tbl_21_auto
+    return tbl_109_auto
   end
 end
 local function _3dtable(...)
@@ -127,9 +127,10 @@ local _16_ = mkstring()
 local _17_ = mkstring(nil, 1, 2, 3)
 assert(assert((("" == _16_) and (_16_ == mkstring(nil)))), assert((("123" == _17_) and (_17_ == mkstring("", 1, 2, 3)))), assert(("a-b-c" == mkstring("-", "a", "b", "c"))))
 local function merge_21(...)
+  return "merge one or more tables by mutating the first table"
 end
 local function merge(...)
-  return "merge one or more tables"
+  return "merge one or more tables into a new table"
 end
 local function concat(...)
   return "concatenate one or more sequences"
