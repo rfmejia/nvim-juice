@@ -53,7 +53,7 @@ local function _10_()
   return util.call("gitsigns", "toggle_signs")
 end
 git_tools = {{"lewis6991/gitsigns.nvim", keys = "<localleader>gt", config = _10_}}
-local llm_tools = {{"github/copilot.vim", cmd = "Copilot", keys = "<Tab>"}}
+local llm_tools = {{"github/copilot.vim", cmd = "Copilot"}}
 local function setup()
   local plugins = core.concat(core_tools, database_tools, dev_tools, editing_tools, git_tools, lisp_tools, llm_tools)
   local opts = {ui = {border = "rounded"}, performance = {rtp = {disabled_plugins = {"rplugin", "tohtml", "tutor", "vimball"}}}}
