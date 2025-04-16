@@ -59,7 +59,7 @@
 
 (fn configure-diagnostics []
   (vim.diagnostic.config {:underline false
-                          :virtual_text {:source true}
+                          :virtual_text {:source :if_many}
                           :signs false
                           :float {:border :rounded}
                           :update_in_insert true

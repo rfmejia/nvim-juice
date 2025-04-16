@@ -34,7 +34,7 @@ local function set_mappings(bufnr)
   return util["set-keys"](mappings)
 end
 local function configure_diagnostics()
-  return vim.diagnostic.config({virtual_text = {source = true}, float = {border = "rounded"}, update_in_insert = true, severity_sort = true, signs = false, underline = false})
+  return vim.diagnostic.config({virtual_text = {source = "if_many"}, float = {border = "rounded"}, update_in_insert = true, severity_sort = true, signs = false, underline = false})
 end
 local function configure_completion(client, bufnr)
   _G.assert((nil ~= bufnr), "Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/init.fnl:68")
