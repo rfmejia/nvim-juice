@@ -1,5 +1,7 @@
 AWS
 Ansible
+CodeArtifact
+Coursier
 Deduplication
 EEW
 FCM
@@ -13,12 +15,15 @@ JVMs
 Kanban
 MGRS
 MariaDB
+MyShake
 PDL
 Redis
 Rollout
+ShakeAlert
 TODO
 USGS
 VisualVM
+WebPush
 ZIO
 akka
 asciidoc
@@ -32,7 +37,6 @@ homebase
 iOS
 kafka
 myshake
-MyShake
 profiler
 profilers
 pseudocode
@@ -44,4 +48,3 @@ timestamp
 timestamps
 webpush
 zio
-WebPush
