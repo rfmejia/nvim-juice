@@ -42,8 +42,8 @@ local function insert_time()
   local time_format = vim.g.journal_tools["time-format"]
   local curr_time = vim.fn.strftime(time_format)
   local text = ("#### " .. curr_time .. " ")
-  util["insert-lines"](text, "", "")
-  return vim.cmd.normal("2j")
+  util["insert-lines"](text)
+  return vim.cmd("startinsert!")
 end
 local function insert_task()
   util["insert-lines"](vim.g.journal_tools["task-format"])

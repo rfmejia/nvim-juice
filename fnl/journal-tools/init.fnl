@@ -33,8 +33,8 @@
   (let [time-format (. vim.g.journal_tools :time-format)
         curr-time (vim.fn.strftime time-format)
         text (.. "#### " curr-time " ")]
-    (util.insert-lines text "" "")
-    (vim.cmd.normal :2j)))
+    (util.insert-lines text)
+    (vim.cmd :startinsert!)))
 
 (fn insert-task []
   (->> (. vim.g.journal_tools :task-format)
