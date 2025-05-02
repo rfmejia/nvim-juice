@@ -1,4 +1,4 @@
--- [nfnl] Compiled from fnl/git-info/init.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] fnl/git-info/init.fnl
 local function set_file_status_global_var()
   local path = vim.fn.expand("%:p")
   local git_cmd = ("git file-status " .. path .. " | tr -d ' \\n'")

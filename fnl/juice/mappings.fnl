@@ -3,7 +3,8 @@
 (local util (autoload :juice.util))
 
 (local general
-       [[:n :Y :y$ {:desc "yank until the end of the line"}]
+       [[:i :<C-e> :<esc> {:noremap true}]
+        [:n :Y :y$ {:desc "yank until the end of the line"}]
         [:n :<leader>w vim.cmd.w {:desc "write buffer" :silent true}]
         [:n :<leader>r vim.cmd.registers {:desc "list registers"}]
         [:n

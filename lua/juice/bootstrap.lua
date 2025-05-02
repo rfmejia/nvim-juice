@@ -1,4 +1,4 @@
--- [nfnl] Compiled from fnl/juice/bootstrap.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] fnl/juice/bootstrap.fnl
 local function ensure_installed(user, repo, branch)
   _G.assert((nil ~= branch), "Missing argument branch on /home/rfmejia/.config/nvim/fnl/juice/bootstrap.fnl:1")
   _G.assert((nil ~= repo), "Missing argument repo on /home/rfmejia/.config/nvim/fnl/juice/bootstrap.fnl:1")

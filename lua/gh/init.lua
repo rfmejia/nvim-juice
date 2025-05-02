@@ -1,4 +1,4 @@
--- [nfnl] Compiled from fnl/gh/init.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] fnl/gh/init.fnl
 local callback
 local function _1_(output)
   return vim.print("output", output)

@@ -1,4 +1,4 @@
--- [nfnl] Compiled from fnl/lib.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] fnl/lib.fnl
 local function nil_3f(elem)
   return (nil == elem)
 end
@@ -50,17 +50,17 @@ local function keys(tbl)
   if (empty_3f(tbl) or not table_3f(tbl)) then
     return {}
   else
-    local tbl_21_auto = {}
-    local i_22_auto = 0
+    local tbl_21_ = {}
+    local i_22_ = 0
     for k, _ in pairs(tbl) do
-      local val_23_auto = k
-      if (nil ~= val_23_auto) then
-        i_22_auto = (i_22_auto + 1)
-        tbl_21_auto[i_22_auto] = val_23_auto
+      local val_23_ = k
+      if (nil ~= val_23_) then
+        i_22_ = (i_22_ + 1)
+        tbl_21_[i_22_] = val_23_
       else
       end
     end
-    return tbl_21_auto
+    return tbl_21_
   end
 end
 local function _3dtable(...)

@@ -1,4 +1,4 @@
--- [nfnl] Compiled from fnl/trim-whitespace/init.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] fnl/trim-whitespace/init.fnl
 local function setup()
   local hi_cmd = "hi ExtraWhitespace cterm=undercurl ctermfg=red"
   local match_all_cmd = "match ExtraWhitespace /\\s\\+$/"

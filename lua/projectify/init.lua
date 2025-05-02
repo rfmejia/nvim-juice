@@ -1,4 +1,4 @@
--- [nfnl] Compiled from fnl/projectify/init.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] fnl/projectify/init.fnl
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local core = autoload("nfnl.core")
@@ -33,9 +33,9 @@ end
 local function read_local_project_file()
   local path
   do
-    local tmp_3_auto = vim.fs.root(0, ".nvim")
-    if (nil ~= tmp_3_auto) then
-      path = (tmp_3_auto .. "/.nvim/project.lua")
+    local tmp_3_ = vim.fs.root(0, ".nvim")
+    if (nil ~= tmp_3_) then
+      path = (tmp_3_ .. "/.nvim/project.lua")
     else
       path = nil
     end

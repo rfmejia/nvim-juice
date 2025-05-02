@@ -1,4 +1,4 @@
--- [nfnl] Compiled from fnl/after/ftplugin/sql.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] fnl/after/ftplugin/sql.fnl
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local util = autoload("juice.util")

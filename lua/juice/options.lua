@@ -1,4 +1,4 @@
--- [nfnl] Compiled from fnl/juice/options.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] fnl/juice/options.fnl
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local statusline = autoload("juice.statusline")

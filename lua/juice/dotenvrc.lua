@@ -1,4 +1,4 @@
--- [nfnl] Compiled from fnl/juice/dotenvrc.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] fnl/juice/dotenvrc.fnl
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local core = autoload("nfnl.core")
@@ -16,9 +16,9 @@ local function read_path_list()
 end
 local function setup()
   core["merge!"](vim.opt, read_env_pairs())
-  local tmp_6_auto = read_path_list()
-  if (tmp_6_auto ~= nil) then
-    vim.opt.path = tmp_6_auto
+  local tmp_6_ = read_path_list()
+  if (tmp_6_ ~= nil) then
+    vim.opt.path = tmp_6_
     return nil
   else
     return nil

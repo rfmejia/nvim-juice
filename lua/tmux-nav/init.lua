@@ -1,4 +1,4 @@
--- [nfnl] Compiled from fnl/tmux-nav/init.fnl by https://github.com/Olical/nfnl, do not edit.
+-- [nfnl] fnl/tmux-nav/init.fnl
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local core = autoload("nfnl.core")
@@ -36,11 +36,11 @@ local function vim_navigate(direction)
   return vim.cmd(("wincmd" .. " " .. vim_direction(direction)))
 end
 local function get_tmux_socket()
-  local tmp_3_auto = vim.env.TMUX
-  if (nil ~= tmp_3_auto) then
-    local tmp_3_auto0 = vim.fn.split(tmp_3_auto, ",")
-    if (nil ~= tmp_3_auto0) then
-      local t_8_ = tmp_3_auto0
+  local tmp_3_ = vim.env.TMUX
+  if (nil ~= tmp_3_) then
+    local tmp_3_0 = vim.fn.split(tmp_3_, ",")
+    if (nil ~= tmp_3_0) then
+      local t_8_ = tmp_3_0
       if (nil ~= t_8_) then
         t_8_ = t_8_[1]
       else
