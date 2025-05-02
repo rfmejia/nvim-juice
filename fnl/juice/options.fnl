@@ -64,7 +64,7 @@
 (comment "---- COMPLETION ----")
 (local completion {; remove imports, add spellchecker to completion sources
                    :complete ["." :w :b :u :t :kspell]
-                   :completeopt [:menuone :popup :noinsert]
+                   :completeopt [:fuzzy :menuone :popup :noinsert]
                    ; search in current file's directory or pwd (do not use ** edit: experimenting)
                    :path ["." "" "**"]
                    ; Set order of completion matches

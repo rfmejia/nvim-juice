@@ -11,7 +11,7 @@ local visual = {signcolumn = "yes:1", cursorline = true, splitbelow = true, spli
 --[[ "---- SEARCH OPTIONS ----" ]]
 local search = {hlsearch = true, incsearch = true, ignorecase = true, smartcase = true, wrapscan = false}
 --[[ "---- COMPLETION ----" ]]
-local completion = {complete = {".", "w", "b", "u", "t", "kspell"}, completeopt = {"menuone", "popup", "noinsert"}, path = {".", "", "**"}, wildmode = {"lastused", "full"}, wildignorecase = true, wildoptions = {"fuzzy", "pum"}}
+local completion = {complete = {".", "w", "b", "u", "t", "kspell"}, completeopt = {"fuzzy", "menuone", "popup", "noinsert"}, path = {".", "", "**"}, wildmode = {"lastused", "full"}, wildignorecase = true, wildoptions = {"fuzzy", "pum"}}
 --[[ "use ripgrep as grepprg if available" ]]
 local grep_options
 if util["executable?"]("rg") then
