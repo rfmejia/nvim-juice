@@ -9,10 +9,10 @@ local function initialize_metals()
   local config = metals.bare_config()
   local tvp = autoload("metals.tvp")
   local options = {signcolumn = "yes:1", shortmess = (vim.go.shortmess .. "c"), statusline = statusline.build({"%{g:metals_status}", " \226\151\143"})}
-  local metals_settings = {inlayHints = {hintsInPatternMatch = {enable = true}, implicitArguments = {enable = true}, implicitConversions = {enable = true}, inferredTypes = {enable = true}, typeParameters = {enable = true}}}
+  local metals_settings = {disabledMode = true, inlayHints = {byNameParameters = {enable = true}, hintsInPatternMatch = {enable = true}, implicitArguments = {enable = true}, implicitConversions = {enable = true}, inferredTypes = {enable = true}, typeParameters = {enable = true}}}
   local metals_maps
   local function _2_(bufnr)
-    _G.assert((nil ~= bufnr), "Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:18")
+    _G.assert((nil ~= bufnr), "Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:20")
     local function _3_()
       return metals.hover_worksheet({border = "rounded"})
     end
@@ -24,8 +24,8 @@ local function initialize_metals()
   config.capabilities = vim.lsp.protocol.make_client_capabilities()
   config["tvp"] = {panel_alignment = "right", toggle_node_mapping = "<CR>", node_command_mapping = "r"}
   local function _4_(client, bufnr)
-    _G.assert((nil ~= bufnr), "Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:46")
-    _G.assert((nil ~= client), "Missing argument client on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:46")
+    _G.assert((nil ~= bufnr), "Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:48")
+    _G.assert((nil ~= client), "Missing argument client on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:48")
     util["set-keys"](metals_maps(bufnr))
     return core["merge!"](vim.opt_local, options)
   end
@@ -35,10 +35,6 @@ local function initialize_metals()
     return metals.initialize_or_attach(config)
   end
   vim.api.nvim_create_autocmd("FileType", {pattern = {"scala", "java"}, callback = _5_, group = vim.api.nvim_create_augroup("metals-group", {clear = true})})
-  local function _6_()
-    return metals.initialize_or_attach(config)
-  end
-  vim.api.nvim_create_user_command("MetalsInit", _6_, {desc = "Re-attach to a Metals server"})
   --[[ "Initialize Metals for the first time" ]]
   vim.g["metals_status"] = "Initializing Metals..."
   return metals.initialize_or_attach(config)

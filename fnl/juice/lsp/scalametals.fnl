@@ -10,7 +10,9 @@
         options {:signcolumn "yes:1"
                  :shortmess (.. vim.go.shortmess :c)
                  :statusline (statusline.build ["%{g:metals_status}" " ●"])}
-        metals-settings {:inlayHints {:hintsInPatternMatch {:enable true}
+        metals-settings {:disabledMode true
+                         :inlayHints {:byNameParameters {:enable true}
+                                      :hintsInPatternMatch {:enable true}
                                       :implicitArguments {:enable true}
                                       :implicitConversions {:enable true}
                                       :inferredTypes {:enable true}
@@ -52,9 +54,6 @@
                                   :callback #(metals.initialize_or_attach config)
                                   :group (vim.api.nvim_create_augroup :metals-group
                                                                       {:clear true})})
-    (vim.api.nvim_create_user_command :MetalsInit
-                                      #(metals.initialize_or_attach config)
-                                      {:desc "Re-attach to a Metals server"})
     (comment "Initialize Metals for the first time")
     (tset vim.g :metals_status "Initializing Metals...")
     (metals.initialize_or_attach config)))

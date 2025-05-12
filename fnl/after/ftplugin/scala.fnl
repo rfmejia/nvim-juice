@@ -33,10 +33,6 @@
                                       :ScalafmtApply #(run-scalafmt)
                                       {:bang true})
 
-(vim.api.nvim_buf_create_user_command (vim.api.nvim_get_current_buf)
-                                      :MetalsInit scalametals.initialize-metals
-                                      {:desc "Start and connect to a Metals server"})
-
 (comment "Make sure we respect lsp if it's enabled"
   (vim.keymap.set :n :grf #(run-scalafmt (vim.fn.expand "%:p"))
                   {:desc "[scala] run scalafmt on buffer"
@@ -70,3 +66,5 @@
                   {:desc "[scala] open scala-cli in a tmux split"
                    :buffer true
                    :silent true}))
+
+(scalametals.initialize-metals)
