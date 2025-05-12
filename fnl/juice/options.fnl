@@ -90,7 +90,9 @@
                               :txt :text}
                   :filename {:.envrc :bash
                              :Jenkinsfile :groovy
-                             :tmux.conf :tmux}})
+                             :tmux.conf :tmux}
+                  :pattern {"openapi.*%.yaml" :yaml.openapi
+                            "openapi.*%.json" :json.openapi}})
 
 (comment "---- AUTOCMDS ----")
 (fn set-autocmds []
