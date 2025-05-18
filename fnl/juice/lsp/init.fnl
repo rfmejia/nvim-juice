@@ -67,7 +67,7 @@
 
 (lambda configure-completion [client bufnr]
   (when (client:supports_method :textDocument/completion)
-    (vim.lsp.completion.enable true (. client :id) bufnr {:autotrigger true})))
+    (vim.lsp.completion.enable true (. client :id) bufnr {:autotrigger false})))
 
 (fn setup []
   (vim.api.nvim_create_autocmd :LspAttach

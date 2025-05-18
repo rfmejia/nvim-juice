@@ -40,7 +40,7 @@ local function configure_completion(client, bufnr)
   _G.assert((nil ~= bufnr), "Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/init.fnl:68")
   _G.assert((nil ~= client), "Missing argument client on /home/rfmejia/.config/nvim/fnl/juice/lsp/init.fnl:68")
   if client:supports_method("textDocument/completion") then
-    return vim.lsp.completion.enable(true, client.id, bufnr, {autotrigger = true})
+    return vim.lsp.completion.enable(true, client.id, bufnr, {autotrigger = false})
   else
     return nil
   end
