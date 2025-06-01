@@ -87,7 +87,11 @@
 (local llm-tools
        [{1 :github/copilot.vim
          :cmd :Copilot
-         :config #(util.set-keys mappings.copilot-maps)}])
+         :config (fn []
+                   (util.set-keys mappings.copilot-maps)
+                   (set vim.g.copilot_workspace_folders
+                        (core.distinct (core.concat vim.g.copilot_workspace_folders
+                                                    [(vim.fn.getcwd)]))))}])
 
 (fn setup []
   (let [plugins (core.concat core-tools database-tools dev-tools editing-tools

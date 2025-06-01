@@ -26,6 +26,9 @@
   (core.merge! vim.opt (read-env-pairs))
   (-?>> (read-path-list)
         (set vim.opt.path))
-  (set vim.g.copilot_workspace_folders (read-copilot-workspaces)))
+  (case (read-copilot-workspaces)
+    workspaces (set vim.g.copilot_workspace_folders
+                    (core.distinct (core.concat vim.g.copilot_workspace_folders
+                                                workspaces)))))
 
 {: setup : read-path-list}

@@ -55,7 +55,9 @@ end
 git_tools = {{"lewis6991/gitsigns.nvim", keys = "<localleader>gt", config = _10_}}
 local llm_tools
 local function _11_()
-  return util["set-keys"](mappings["copilot-maps"])
+  util["set-keys"](mappings["copilot-maps"])
+  vim.g.copilot_workspace_folders = core.distinct(core.concat(vim.g.copilot_workspace_folders, {vim.fn.getcwd()}))
+  return nil
 end
 llm_tools = {{"github/copilot.vim", cmd = "Copilot", config = _11_}}
 local function setup()

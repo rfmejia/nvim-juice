@@ -30,7 +30,13 @@ local function setup()
     else
     end
   end
-  vim.g.copilot_workspace_folders = read_copilot_workspaces()
-  return nil
+  local _5_ = read_copilot_workspaces()
+  if (nil ~= _5_) then
+    local workspaces = _5_
+    vim.g.copilot_workspace_folders = core.distinct(core.concat(vim.g.copilot_workspace_folders, workspaces))
+    return nil
+  else
+    return nil
+  end
 end
 return {setup = setup, ["read-path-list"] = read_path_list}
