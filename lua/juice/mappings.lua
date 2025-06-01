@@ -15,7 +15,7 @@ local function _3_()
   --[[ -?>> (util.call "juice.dotenvrc" "read-path-list") (set vim.opt_local.path) ]]
   return nil
 end
-general = {{"i", "<C-e>", "<esc>", {noremap = true}}, {"n", "Y", "y$", {desc = "yank until the end of the line"}}, {"n", "<leader>w", vim.cmd.w, {desc = "write buffer", silent = true}}, {"n", "<leader>r", vim.cmd.registers, {desc = "list registers"}}, {"n", "<F2>", "let @+ = getreg('%')", {desc = "copy current file path to clipboard"}}, {"n", "<F5>", vim.cmd.make, {desc = "trigger `make` in shell"}}, {"n", "<leader>n", _2_, {desc = "toggle number and relativenumber options"}}, {"n", "<leader>ol", ":Lazy<cr>", {desc = "open lazy.nvim", silent = true}}, {"n", "<leader>on", _3_, {desc = "open nvim config in a new tab", silent = true}}}
+general = {{"n", "Y", "y$", {desc = "yank until the end of the line"}}, {"n", "<leader>w", vim.cmd.w, {desc = "write buffer", silent = true}}, {"n", "<leader>r", vim.cmd.registers, {desc = "list registers"}}, {"n", "<F2>", "let @+ = getreg('%')", {desc = "copy current file path to clipboard"}}, {"n", "<F5>", vim.cmd.make, {desc = "trigger `make` in shell"}}, {"n", "<leader>n", _2_, {desc = "toggle number and relativenumber options"}}, {"n", "<leader>ol", ":Lazy<cr>", {desc = "open lazy.nvim", silent = true}}, {"n", "<leader>on", _3_, {desc = "open nvim config in a new tab", silent = true}}}
 local filters
 do
   local _repeat
@@ -154,6 +154,7 @@ do
   list = {{"n", "<localleader>gl", _31_, {desc = "[gitsigns] show buffer (g)it hunks in (l)oclist"}}, {"n", "<localleader>gc", _32_, {desc = "[gitsigns] show all (g)it hunks in qui(c)kfix list"}}}
   gitsigns_maps = core.concat(nav, staging, blame, view, list)
 end
+local copilot_maps = {{"i", "<C-j>", "<Plug>(copilot-next)", {desc = "[copilot] next suggestion"}}, {"i", "<C-k>", "<Plug>(copilot-previous)", {desc = "[copilot] previous suggestion"}}, {"i", "<C-l>", "<Plug>(copilot-accept-word)", {desc = "[copilot] accept word suggestion"}}, {"i", "<C-h>", "<Plug>(copilot-dismiss)", {desc = "[copilot] dismiss suggestion"}}}
 local dadbod_maps = {{"n", "<localleader>d;", ":DB g:db ", {desc = "[dadbod] run an sql statement in command mode", noremap = true, buffer = true}}, {"n", "<localleader>dd", ":.DB g:db<cr>", {desc = "[dadbod] run line as an sql statement", noremap = true, buffer = true}}, {"n", "<localleader>dp", "vip:DB g:db<cr>", {desc = "[dadbod] run paragraph as an sql statement", noremap = true, buffer = true}}, {"n", "<localleader>db", ":%DB g:db<cr>", {desc = "[dadbod] run buffer as sql statements", noremap = true, buffer = true}}}
 local journal_maps
 local function _33_()
@@ -218,4 +219,4 @@ local function setup()
     return nil
   end
 end
-return {setup = setup, ["oil-maps"] = oil_maps, ["gitsigns-maps"] = gitsigns_maps, ["dadbod-maps"] = dadbod_maps, ["journal-maps"] = journal_maps}
+return {setup = setup, ["oil-maps"] = oil_maps, ["gitsigns-maps"] = gitsigns_maps, ["copilot-maps"] = copilot_maps, ["dadbod-maps"] = dadbod_maps, ["journal-maps"] = journal_maps}

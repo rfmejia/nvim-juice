@@ -3,8 +3,7 @@
 (local util (autoload :juice.util))
 
 (local general
-       [[:i :<C-e> :<esc> {:noremap true}]
-        [:n :Y :y$ {:desc "yank until the end of the line"}]
+       [[:n :Y :y$ {:desc "yank until the end of the line"}]
         [:n :<leader>w vim.cmd.w {:desc "write buffer" :silent true}]
         [:n :<leader>r vim.cmd.registers {:desc "list registers"}]
         [:n
@@ -249,6 +248,21 @@
                     {:desc "[gitsigns] show all (g)it hunks in qui(c)kfix list"}]]]
          (core.concat nav staging blame view list)))
 
+(local copilot-maps
+       [[:i :<C-j> "<Plug>(copilot-next)" {:desc "[copilot] next suggestion"}]
+        [:i
+         :<C-k>
+         "<Plug>(copilot-previous)"
+         {:desc "[copilot] previous suggestion"}]
+        [:i
+         :<C-l>
+         "<Plug>(copilot-accept-word)"
+         {:desc "[copilot] accept word suggestion"}]
+        [:i
+         :<C-h>
+         "<Plug>(copilot-dismiss)"
+         {:desc "[copilot] dismiss suggestion"}]])
+
 (local dadbod-maps [[:n
                      "<localleader>d;"
                      ":DB g:db "
@@ -345,4 +359,9 @@
         (when (util.executable? app)
           (util.set-keys maps))))))
 
-{: setup : oil-maps : gitsigns-maps : dadbod-maps : journal-maps}
+{: setup
+ : oil-maps
+ : gitsigns-maps
+ : copilot-maps
+ : dadbod-maps
+ : journal-maps}

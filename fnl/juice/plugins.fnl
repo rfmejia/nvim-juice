@@ -84,7 +84,10 @@
                    ;; is finished and the keymap is passed down
                    (util.call :gitsigns :toggle_signs))}])
 
-(local llm-tools [{1 :github/copilot.vim :cmd :Copilot}])
+(local llm-tools
+       [{1 :github/copilot.vim
+         :cmd :Copilot
+         :config #(util.set-keys mappings.copilot-maps)}])
 
 (fn setup []
   (let [plugins (core.concat core-tools database-tools dev-tools editing-tools
