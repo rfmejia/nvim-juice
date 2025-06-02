@@ -91,7 +91,11 @@
                    (util.set-keys mappings.copilot-maps)
                    (set vim.g.copilot_workspace_folders
                         (core.distinct (core.concat vim.g.copilot_workspace_folders
-                                                    [(vim.fn.getcwd)]))))}])
+                                                    [(vim.fn.getcwd)]))))}
+        {1 :olimorris/codecompanion.nvim
+         :opts {}
+         :dependencies [:nvim-lua/plenary.nvim
+                        :nvim-treesitter/nvim-treesitter]}])
 
 (fn setup []
   (let [plugins (core.concat core-tools database-tools dev-tools editing-tools

@@ -59,7 +59,7 @@ local function _11_()
   vim.g.copilot_workspace_folders = core.distinct(core.concat(vim.g.copilot_workspace_folders, {vim.fn.getcwd()}))
   return nil
 end
-llm_tools = {{"github/copilot.vim", cmd = "Copilot", config = _11_}}
+llm_tools = {{"github/copilot.vim", cmd = "Copilot", config = _11_}, {"olimorris/codecompanion.nvim", opts = {}, dependencies = {"nvim-lua/plenary.nvim", "nvim-treesitter/nvim-treesitter"}}}
 local function setup()
   local plugins = core.concat(core_tools, database_tools, dev_tools, editing_tools, git_tools, lisp_tools, llm_tools)
   local opts = {ui = {border = "rounded"}, performance = {rtp = {disabled_plugins = {"rplugin", "tohtml", "tutor", "vimball"}}}}
