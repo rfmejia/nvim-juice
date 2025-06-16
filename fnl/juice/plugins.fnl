@@ -95,7 +95,18 @@
         {1 :olimorris/codecompanion.nvim
          :opts {}
          :dependencies [:nvim-lua/plenary.nvim
-                        :nvim-treesitter/nvim-treesitter]}])
+                        :nvim-treesitter/nvim-treesitter
+                        {1 :ravitemer/mcphub.nvim
+                         :build "npm install -g mcp-hub@latest"
+                         :config #(util.call-setup :mcphub)}]
+         :config #(let [extensions {:mcphub {:callback :mcphub.extensions.codecompanion
+                                             :opts {; Show mcp tool results in chat
+                                                    :show_result_in_chat true
+                                                    ; Convert resources to #variables
+                                                    :make_vars true
+                                                    ; Add prompts as /slash commands
+                                                    :make_slash_commands true}}}]
+                    (util.call :codecompanion :setup {: extensions}))}])
 
 (fn setup []
   (let [plugins (core.concat core-tools database-tools dev-tools editing-tools

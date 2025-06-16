@@ -59,7 +59,14 @@ local function _11_()
   vim.g.copilot_workspace_folders = core.distinct(core.concat(vim.g.copilot_workspace_folders, {vim.fn.getcwd()}))
   return nil
 end
-llm_tools = {{"github/copilot.vim", cmd = "Copilot", config = _11_}, {"olimorris/codecompanion.nvim", opts = {}, dependencies = {"nvim-lua/plenary.nvim", "nvim-treesitter/nvim-treesitter"}}}
+local function _12_()
+  return util["call-setup"]("mcphub")
+end
+local function _13_()
+  local extensions = {mcphub = {callback = "mcphub.extensions.codecompanion", opts = {show_result_in_chat = true, make_vars = true, make_slash_commands = true}}}
+  return util.call("codecompanion", "setup", {extensions = extensions})
+end
+llm_tools = {{"github/copilot.vim", cmd = "Copilot", config = _11_}, {"olimorris/codecompanion.nvim", opts = {}, dependencies = {"nvim-lua/plenary.nvim", "nvim-treesitter/nvim-treesitter", {"ravitemer/mcphub.nvim", build = "npm install -g mcp-hub@latest", config = _12_}}, config = _13_}}
 local function setup()
   local plugins = core.concat(core_tools, database_tools, dev_tools, editing_tools, git_tools, lisp_tools, llm_tools)
   local opts = {ui = {border = "rounded"}, performance = {rtp = {disabled_plugins = {"rplugin", "tohtml", "tutor", "vimball"}}}}
