@@ -67,7 +67,7 @@ local function _13_()
   --[[ "Temporarily disable mcphub" util.call "codecompanion" "setup" {:extensions extensions} ]]
   return nil
 end
-llm_tools = {{"github/copilot.vim", cmd = "Copilot", config = _11_}, {"olimorris/codecompanion.nvim", opts = {}, dependencies = {"nvim-lua/plenary.nvim", "nvim-treesitter/nvim-treesitter", {"ravitemer/mcphub.nvim", build = "npm install -g mcp-hub@latest", config = _12_, enabled = false}}, config = _13_}}
+llm_tools = {{"github/copilot.vim", cmd = "Copilot", config = _11_}, {"olimorris/codecompanion.nvim", cmd = {"CodeCompanion", "CodeCompanionCmd", "CodeCompanionChat", "CodeCompanionActions"}, opts = {}, dependencies = {"nvim-lua/plenary.nvim", "nvim-treesitter/nvim-treesitter", {"ravitemer/mcphub.nvim", build = "npm install -g mcp-hub@latest", config = _12_, enabled = false}}, config = _13_}}
 local function setup()
   local plugins = core.concat(core_tools, database_tools, dev_tools, editing_tools, git_tools, lisp_tools, llm_tools)
   local opts = {ui = {border = "rounded"}, performance = {rtp = {disabled_plugins = {"rplugin", "tohtml", "tutor", "vimball"}}}}

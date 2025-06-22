@@ -77,6 +77,7 @@
                                   (core.distinct (core.concat vim.g.copilot_workspace_folders
                                                               [(vim.fn.getcwd)]))))}
                   {1 :olimorris/codecompanion.nvim
+                   :cmd [:CodeCompanion :CodeCompanionCmd :CodeCompanionChat :CodeCompanionActions]
                    :opts {}
                    :dependencies [:nvim-lua/plenary.nvim
                                   :nvim-treesitter/nvim-treesitter
