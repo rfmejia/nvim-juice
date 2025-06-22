@@ -10,8 +10,7 @@ local function _2_()
   return nil
 end
 local function _3_()
-  local languages = {"bash", "clojure", "fennel", "gitcommit", "go", "hocon", "java", "json", "lua", "markdown", "scala", "sql", "vimdoc", "yaml"}
-  local config = {ensure_installed = languages, highlight = {enable = true}, indent = {enable = true}}
+  local config = {highlight = {enable = true}, indent = {enable = true}}
   return util.call("nvim-treesitter.configs", "setup", config)
 end
 local function _4_()

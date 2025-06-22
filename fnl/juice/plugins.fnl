@@ -11,22 +11,7 @@
         {1 :nvim-treesitter/nvim-treesitter
          :event [:BufReadPre :BufNewFile]
          :build ":TSUpdate"
-         :config #(let [languages [:bash
-                                   :clojure
-                                   :fennel
-                                   :gitcommit
-                                   :go
-                                   :hocon
-                                   :java
-                                   :json
-                                   :lua
-                                   :markdown
-                                   :scala
-                                   :sql
-                                   :vimdoc
-                                   :yaml]
-                        config {:ensure_installed languages
-                                :highlight {:enable true}
+         :config #(let [config {:highlight {:enable true}
                                 :indent {:enable true}}]
                     ;; Note: We cannot use `opts` loading for lazy.nvim because
                     ;; we need to call `nvim-treesitter.configs.setup`
