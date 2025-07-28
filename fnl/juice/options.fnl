@@ -81,7 +81,8 @@
             :grepformat "%f:%l:%c:%m,%f:%l:%m"}))
 
 (comment "---- FILETYPES ----")
-(local filetypes {:extension {:edn :clojure
+(local filetypes {:extension {:avsc :json
+                              :edn :clojure
                               :mill :scala
                               :mysql :sql
                               :pgsql :sql

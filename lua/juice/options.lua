@@ -20,7 +20,7 @@ else
   grep_options = nil
 end
 --[[ "---- FILETYPES ----" ]]
-local filetypes = {extension = {edn = "clojure", mill = "scala", mysql = "sql", pgsql = "sql", sbt = "scala", sc = "scala", txt = "text"}, filename = {[".envrc"] = "bash", Jenkinsfile = "groovy", ["tmux.conf"] = "tmux"}, pattern = {["openapi.*%.yaml"] = "yaml.openapi", ["openapi.*%.json"] = "json.openapi"}}
+local filetypes = {extension = {avsc = "json", edn = "clojure", mill = "scala", mysql = "sql", pgsql = "sql", sbt = "scala", sc = "scala", txt = "text"}, filename = {[".envrc"] = "bash", Jenkinsfile = "groovy", ["tmux.conf"] = "tmux"}, pattern = {["openapi.*%.yaml"] = "yaml.openapi", ["openapi.*%.json"] = "json.openapi"}}
 --[[ "---- AUTOCMDS ----" ]]
 local function set_autocmds()
   --[[ "Remember the cursor position of the last editing" ]]
