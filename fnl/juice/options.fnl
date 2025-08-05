@@ -88,6 +88,7 @@
                               :pgsql :sql
                               :sbt :scala
                               :sc :scala
+                              :tofu :hcl
                               :txt :text}
                   :filename {:.envrc :bash
                              :Jenkinsfile :groovy

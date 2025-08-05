@@ -35,7 +35,7 @@ local dev_tools
 local function _8_()
   return util["call-setup"]("juice.lsp")
 end
-dev_tools = {{"neovim/nvim-lspconfig", config = _8_}, {"scalameta/nvim-metals", cmd = "MetalsInit", dependencies = {"nvim-lua/plenary.nvim"}}}
+dev_tools = {{"neovim/nvim-lspconfig", config = _8_}, {"scalameta/nvim-metals", cmd = "MetalsInit"}}
 local lisp_tools
 do
   local languages = {"clojure", "fennel"}

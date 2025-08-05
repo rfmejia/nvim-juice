@@ -1,6 +1,8 @@
 (local {: autoload} (require :nfnl.module))
 (local notify (autoload :nfnl.notify))
 (local core (autoload :nfnl.core))
+(local lspconfig (autoload :lspconfig))
+(local util (autoload :juice.util))
 
 (core.merge! vim.opt_local {:shiftwidth 4
                             :tabstop 2
@@ -32,5 +34,4 @@
                               :group (vim.api.nvim_create_augroup :format_group
                                                                   {:clear true})})
 
-(local lspconfig (autoload :lspconfig))
 (lspconfig.fennel_ls.setup {})
