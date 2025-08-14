@@ -11,12 +11,15 @@
                  :shortmess (.. vim.go.shortmess :c)
                  :statusline (statusline.build ["%{g:metals_status}" " ●"])}
         metals-settings {:disabledMode true
+                         :defaultBspToBuildTool true
+                         :enableSemanticHighlighting true
                          :inlayHints {:byNameParameters {:enable true}
                                       :hintsInPatternMatch {:enable true}
                                       :implicitArguments {:enable true}
                                       :implicitConversions {:enable true}
                                       :inferredTypes {:enable true}
-                                      :typeParameters {:enable true}}}
+                                      :typeParameters {:enable true}}
+                         :startMcpServer true}
         metals-maps (lambda [bufnr]
                       [[:v
                         :K
