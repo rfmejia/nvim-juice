@@ -37,8 +37,6 @@
                    :config #(util.call-setup :juice.lsp)}
                   {1 :scalameta/nvim-metals :cmd :MetalsInit}])
 
-;; :dependencies [:nvim-lua/plenary.nvim]
-
 (local lisp-tools
        (let [languages [:clojure :fennel]]
          [{1 :Olical/conjure

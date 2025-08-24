@@ -11,34 +11,7 @@
                             :textwidth 100
                             :signcolumn "yes:1"})
 
-(vim.api.nvim_create_autocmd :FileType
-                             {:buffer 0
-                              :callback #(: vim.opt_local.indentkeys :remove
-                                            "<>>")})
-
-(fn run-scalafmt [path]
-  (let [filename (if (str.blank? path) (vim.fn.expand "%:p") path)
-        scalafmt-cmd [:scalafmt
-                      :--mode
-                      :changed
-                      :--config
-                      :.scalafmt.conf
-                      filename
-                      filename]]
-    (match (vim.fn.system scalafmt-cmd)
-      ok (vim.cmd :e!)
-      (nil err-msg) (notify.error "[scala] Could not run `scalafmt`: " err-msg))))
-
-(vim.api.nvim_buf_create_user_command (vim.api.nvim_get_current_buf)
-                                      :ScalafmtApply #(run-scalafmt)
-                                      {:bang true})
-
-(comment "Make sure we respect lsp if it's enabled"
-  (vim.keymap.set :n :grf #(run-scalafmt (vim.fn.expand "%:p"))
-                  {:desc "[scala] run scalafmt on buffer"
-                   :buffer true
-                   :nowait true
-                   :silent true}))
+(vim.opt_local.indentkeys:remove "<>>")
 
 (vim.keymap.set :n :<localleader>s "vip:sort<cr>"
                 {:desc "[scala] sort in paragraph"
@@ -68,3 +41,46 @@
                    :silent true}))
 
 (scalametals.initialize-metals)
+
+(fn metals-lsp-started? []
+  (accumulate [has-metals? false _ client (ipairs (vim.lsp.get_clients))]
+    (or has-metals? (= :metals (?. client :name)))))
+
+(fn run-scalafmt [path]
+  (let [filename (if (str.blank? path) (vim.fn.expand "%:p") path)
+        scalafmt-cmd [:scalafmt
+                      :--mode
+                      :changed
+                      :--config
+                      :.scalafmt.conf
+                      filename
+                      filename]]
+    (match (vim.fn.system scalafmt-cmd)
+      ok (vim.cmd :e!)
+      (nil err-msg) (notify.error "[scala] Could not run `scalafmt`: " err-msg))))
+
+(vim.api.nvim_buf_create_user_command (vim.api.nvim_get_current_buf)
+                                      :ScalafmtApply #(run-scalafmt)
+                                      {:bang true})
+
+(if (metals-lsp-started?)
+      (util.set-keys [[:n
+                       :grf
+                       #(run-scalafmt (vim.fn.expand "%:p"))
+                       {:desc "[scala] run scalafmt on buffer"
+                        :buffer true
+                        :nowait true
+                        :silent true}]
+                      [:n
+                       :<localleader>m
+                       ":Metals<C-d>"
+                       {:desc "[metals] show all commands" :buffer true}]])
+      (vim.keymap.set :n :<localleader>m
+                      (fn []
+                        (util.call :metals :start_server)
+                        (vim.keymap.set :n :<localleader>m ":Metals<C-d>"
+                                        {:desc "[metals] show all commands"
+                                         :buffer true}))
+                      {:desc "[metals] show all commands"
+                       :buffer true
+                       :silent false}))

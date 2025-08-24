@@ -7,10 +7,47 @@ local str = autoload("nfnl.string")
 local core = autoload("nfnl.core")
 local util = autoload("juice.util")
 core["merge!"](vim.opt_local, {shiftwidth = 2, tabstop = 2, expandtab = true, textwidth = 100, signcolumn = "yes:1"})
-local function _2_()
-  return vim.opt_local.indentkeys:remove("<>>")
+vim.opt_local.indentkeys:remove("<>>")
+vim.keymap.set("n", "<localleader>s", "vip:sort<cr>", {desc = "[scala] sort in paragraph", nowait = true, buffer = true, silent = true})
+if util["executable?"]("sbtn") then
+  local function _2_()
+    vim.cmd.split("term://sbtn")
+    vim.api.nvim_win_set_height(0, 15)
+    local function _3_()
+      return vim.cmd.startinsert()
+    end
+    vim.api.nvim_create_autocmd({"BufWinEnter", "WinEnter"}, {buffer = vim.api.nvim_get_current_buf(), callback = _3_})
+    return vim.cmd.startinsert()
+  end
+  vim.keymap.set("n", "<leader>os", _2_)
+  vim.keymap.set("n", "<leader>oa", ":!tmux split-window -v -l 30\\% sbtn<cr><cr>", {desc = "[scala] open sbtn in a tmux split", buffer = true, silent = true})
+else
 end
-vim.api.nvim_create_autocmd("FileType", {buffer = 0, callback = _2_})
+if util["executable?"]("scala-cli") then
+  vim.keymap.set("n", "<leader>oc", ":!tmux split-window -v -l 30\\% scala-cli console %<cr><cr>", {desc = "[scala] open scala-cli in a tmux split", buffer = true, silent = true})
+else
+end
+scalametals["initialize-metals"]()
+local function metals_lsp_started_3f()
+  local has_metals_3f = false
+  for _, client in ipairs(vim.lsp.get_clients()) do
+    local or_6_ = has_metals_3f
+    if not or_6_ then
+      local _8_
+      do
+        local t_7_ = client
+        if (nil ~= t_7_) then
+          t_7_ = t_7_.name
+        else
+        end
+        _8_ = t_7_
+      end
+      or_6_ = ("metals" == _8_)
+    end
+    has_metals_3f = or_6_
+  end
+  return has_metals_3f
+end
 local function run_scalafmt(path)
   local filename
   if str["blank?"](path) then
@@ -19,39 +56,30 @@ local function run_scalafmt(path)
     filename = path
   end
   local scalafmt_cmd = {"scalafmt", "--mode", "changed", "--config", ".scalafmt.conf", filename, filename}
-  local _4_, _5_ = vim.fn.system(scalafmt_cmd)
-  if (nil ~= _4_) then
-    local ok = _4_
+  local _11_, _12_ = vim.fn.system(scalafmt_cmd)
+  if (nil ~= _11_) then
+    local ok = _11_
     return vim.cmd("e!")
-  elseif ((_4_ == nil) and (nil ~= _5_)) then
-    local err_msg = _5_
+  elseif ((_11_ == nil) and (nil ~= _12_)) then
+    local err_msg = _12_
     return notify.error("[scala] Could not run `scalafmt`: ", err_msg)
   else
     return nil
   end
 end
-local function _7_()
+local function _14_()
   return run_scalafmt()
 end
-vim.api.nvim_buf_create_user_command(vim.api.nvim_get_current_buf(), "ScalafmtApply", _7_, {bang = true})
---[[ "Make sure we respect lsp if it's enabled" (vim.keymap.set "n" "grf" (hashfn (run-scalafmt (vim.fn.expand "%:p"))) {:buffer true :desc "[scala] run scalafmt on buffer" :nowait true :silent true}) ]]
-vim.keymap.set("n", "<localleader>s", "vip:sort<cr>", {desc = "[scala] sort in paragraph", nowait = true, buffer = true, silent = true})
-if util["executable?"]("sbtn") then
-  local function _8_()
-    vim.cmd.split("term://sbtn")
-    vim.api.nvim_win_set_height(0, 15)
-    local function _9_()
-      return vim.cmd.startinsert()
-    end
-    vim.api.nvim_create_autocmd({"BufWinEnter", "WinEnter"}, {buffer = vim.api.nvim_get_current_buf(), callback = _9_})
-    return vim.cmd.startinsert()
+vim.api.nvim_buf_create_user_command(vim.api.nvim_get_current_buf(), "ScalafmtApply", _14_, {bang = true})
+if metals_lsp_started_3f() then
+  local function _15_()
+    return run_scalafmt(vim.fn.expand("%:p"))
   end
-  vim.keymap.set("n", "<leader>os", _8_)
-  vim.keymap.set("n", "<leader>oa", ":!tmux split-window -v -l 30\\% sbtn<cr><cr>", {desc = "[scala] open sbtn in a tmux split", buffer = true, silent = true})
+  return util["set-keys"]({{"n", "grf", _15_, {desc = "[scala] run scalafmt on buffer", buffer = true, nowait = true, silent = true}}, {"n", "<localleader>m", ":Metals<C-d>", {desc = "[metals] show all commands", buffer = true}}})
 else
+  local function _16_()
+    util.call("metals", "start_server")
+    return vim.keymap.set("n", "<localleader>m", ":Metals<C-d>", {desc = "[metals] show all commands", buffer = true})
+  end
+  return vim.keymap.set("n", "<localleader>m", _16_, {desc = "[metals] show all commands", buffer = true, silent = false})
 end
-if util["executable?"]("scala-cli") then
-  vim.keymap.set("n", "<leader>oc", ":!tmux split-window -v -l 30\\% scala-cli console %<cr><cr>", {desc = "[scala] open scala-cli in a tmux split", buffer = true, silent = true})
-else
-end
-return scalametals["initialize-metals"]()
