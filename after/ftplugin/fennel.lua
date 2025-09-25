@@ -3,15 +3,14 @@ local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local notify = autoload("nfnl.notify")
 local core = autoload("nfnl.core")
-local lspconfig = autoload("lspconfig")
 local util = autoload("juice.util")
 core["merge!"](vim.opt_local, {shiftwidth = 4, tabstop = 2, expandtab = true, textwidth = 100, commentstring = ";; %s"})
 local function buffer_is_modified(buf_num)
-  _G.assert((nil ~= buf_num), "Missing argument buf-num on /home/rfmejia/.config/nvim/fnl/after/ftplugin/fennel.fnl:13")
+  _G.assert((nil ~= buf_num), "Missing argument buf-num on /home/rfmejia/.config/nvim/fnl/after/ftplugin/fennel.fnl:12")
   return vim.api.nvim_buf_get_option(buf_num, "modified")
 end
 local function format_fennel(path)
-  _G.assert((nil ~= path), "Missing argument path on /home/rfmejia/.config/nvim/fnl/after/ftplugin/fennel.fnl:16")
+  _G.assert((nil ~= path), "Missing argument path on /home/rfmejia/.config/nvim/fnl/after/ftplugin/fennel.fnl:15")
   if buffer_is_modified(vim.api.nvim_get_current_buf()) then
     return notify.error("fnlfmt: cannot format a modified buffer")
   else
@@ -39,4 +38,4 @@ local function _8_()
   return format_fennel(vim.fn.expand("%:p"))
 end
 vim.api.nvim_create_autocmd("BufWritePost", {callback = _8_, buffer = vim.api.nvim_get_current_buf(), desc = "format on buffer write", group = vim.api.nvim_create_augroup("format_group", {clear = true})})
-return lspconfig.fennel_ls.setup({})
+return vim.lsp.enable("fennel_ls")
