@@ -31,42 +31,38 @@ local function _5_(...)
   return {"tpope/vim-dadbod", ft = sql_filetypes, config = _6_, dependencies = {{"kristijanhusak/vim-dadbod-completion", lazy = true}}}
 end
 database_tools = {_5_(...)}
-local dev_tools
-local function _8_()
-  return util["call-setup"]("juice.lsp")
-end
-dev_tools = {{"neovim/nvim-lspconfig", config = _8_}, {"scalameta/nvim-metals", cmd = "MetalsInit"}}
+local dev_tools = {{"scalameta/nvim-metals", cmd = "MetalsInit"}}
 local lisp_tools
 do
   local languages = {"clojure", "fennel"}
-  local function _9_()
+  local function _8_()
     return core["merge!"](vim.g, {["conjure#result#register"] = "*", ["conjure#mapping#doc_word"] = "gk", ["conjure#log#botright"] = true})
   end
-  lisp_tools = {{"Olical/conjure", branch = "main", ft = languages, config = _9_}, {"julienvincent/nvim-paredit", ft = languages, opts = {use_default_keys = true, indent = {enabled = true}}, dependencies = {{"nvim-treesitter/nvim-treesitter"}}}}
+  lisp_tools = {{"Olical/conjure", branch = "main", ft = languages, config = _8_}, {"julienvincent/nvim-paredit", ft = languages, opts = {use_default_keys = true, indent = {enabled = true}}, dependencies = {{"nvim-treesitter/nvim-treesitter"}}}}
 end
 local editing_tools = {{"kylechui/nvim-surround", keys = {"cs", "ds", "ys"}, config = true}, {"windwp/nvim-autopairs", event = "InsertEnter", opts = {enable_check_bracket_line = false}}}
 local git_tools
-local function _10_()
+local function _9_()
   util["call-setup"]("gitsigns")
   util["set-keys"](mappings["gitsigns-maps"])
   return util.call("gitsigns", "toggle_signs")
 end
-git_tools = {{"lewis6991/gitsigns.nvim", keys = "<localleader>gt", config = _10_}}
+git_tools = {{"lewis6991/gitsigns.nvim", keys = "<localleader>gt", config = _9_}}
 local llm_tools
-local function _11_()
+local function _10_()
   util["set-keys"](mappings["copilot-maps"])
   vim.g.copilot_workspace_folders = core.distinct(core.concat(vim.g.copilot_workspace_folders, {vim.fn.getcwd()}))
   return nil
 end
-local function _12_()
+local function _11_()
   return util["call-setup"]("mcphub")
 end
-local function _13_()
+local function _12_()
   local extensions = {mcphub = {callback = "mcphub.extensions.codecompanion", opts = {show_result_in_chat = true, make_vars = true, make_slash_commands = true}}}
   util["call-setup"]("codecompanion")
   return util.call("codecompanion", "setup", {extensions = extensions})
 end
-llm_tools = {{"github/copilot.vim", cmd = "Copilot", config = _11_}, {"olimorris/codecompanion.nvim", cmd = {"CodeCompanion", "CodeCompanionCmd", "CodeCompanionChat", "CodeCompanionActions"}, opts = {}, dependencies = {"nvim-lua/plenary.nvim", "nvim-treesitter/nvim-treesitter", {"ravitemer/mcphub.nvim", build = "npm install -g mcp-hub@latest", config = _12_}}, config = _13_}}
+llm_tools = {{"github/copilot.vim", cmd = "Copilot", config = _10_}, {"olimorris/codecompanion.nvim", cmd = {"CodeCompanion", "CodeCompanionCmd", "CodeCompanionChat", "CodeCompanionActions"}, opts = {}, dependencies = {"nvim-lua/plenary.nvim", "nvim-treesitter/nvim-treesitter", {"ravitemer/mcphub.nvim", build = "npm install -g mcp-hub@latest", config = _11_}}, config = _12_}}
 local function setup()
   local plugins = core.concat(core_tools, database_tools, dev_tools, editing_tools, git_tools, lisp_tools, llm_tools)
   local opts = {ui = {border = "rounded"}, performance = {rtp = {disabled_plugins = {"rplugin", "tohtml", "tutor", "vimball"}}}}

@@ -33,9 +33,7 @@
                           :dependencies [{1 :kristijanhusak/vim-dadbod-completion
                                           :lazy true}]})])
 
-(local dev-tools [{1 :neovim/nvim-lspconfig
-                   :config #(util.call-setup :juice.lsp)}
-                  {1 :scalameta/nvim-metals :cmd :MetalsInit}])
+(local dev-tools [{1 :scalameta/nvim-metals :cmd :MetalsInit}])
 
 (local lisp-tools
        (let [languages [:clojure :fennel]]
