@@ -59,7 +59,4 @@
         mappings (core.map make-mapping [:left :right :up :down])]
     (util.set-keys mappings)))
 
-(lambda setup []
-  (setup-default-mapping vim.env.TMUX))
-
-{: setup}
+{:setup #(setup-default-mapping vim.env.TMUX)}

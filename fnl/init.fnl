@@ -6,8 +6,9 @@
 (local util (autoload :juice.util))
 
 (util.call-setup :juice.options :juice.colorscheme :juice.plugins
-                 :juice.mappings :juice.lsp :juice.dotenvrc :journal-tools
-                 :git-info :tmux-nav :trim-whitespace :wildgitignore)
+                 :juice.mappings :juice.commands :juice.lsp :juice.dotenvrc
+                 :journal-tools :git-info :tmux-nav :trim-whitespace
+                 :wildgitignore)
 
 ;; TODO use vim-native plug management and implement a custom lazy loading solution (:h packadd)
 ;; TODO Create your own auto-pairs plugins

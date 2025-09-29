@@ -46,9 +46,7 @@ local function configure_completion(client, bufnr)
   end
 end
 local function setup()
-  for server, conf in pairs(require("juice.lsp.config")) do
-    vim.lsp.config(server, conf)
-  end
+  util["call-setup"]("juice.lsp.config")
   local function _8_(event)
     local _9_ = vim.lsp.get_client_by_id(event.data.client_id)
     if (nil ~= _9_) then

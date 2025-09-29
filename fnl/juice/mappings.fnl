@@ -6,10 +6,6 @@
        [[:n :Y :y$ {:desc "yank until the end of the line"}]
         [:n :<leader>w vim.cmd.w {:desc "write buffer" :silent true}]
         [:n :<leader>r vim.cmd.registers {:desc "list registers"}]
-        [:n
-         :<F2>
-         "let @+ = getreg('%')"
-         {:desc "copy current file path to clipboard"}]
         [:n :<F5> vim.cmd.make {:desc "trigger `make` in shell"}]
         [:n
          :<leader>n

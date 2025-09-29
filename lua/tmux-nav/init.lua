@@ -118,7 +118,7 @@ local function setup_default_mapping(in_tmux_3f)
   local mappings = core.map(make_mapping, {"left", "right", "up", "down"})
   return util["set-keys"](mappings)
 end
-local function setup()
+local function _23_()
   return setup_default_mapping(vim.env.TMUX)
 end
-return {setup = setup}
+return {setup = _23_}
