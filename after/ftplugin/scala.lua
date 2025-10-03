@@ -72,14 +72,14 @@ local function _14_()
 end
 vim.api.nvim_buf_create_user_command(vim.api.nvim_get_current_buf(), "ScalafmtApply", _14_, {bang = true})
 if metals_lsp_started_3f() then
+  return vim.keymap.set("n", "<localleader>m", ":Metals<C-d>", {desc = "[metals] show all commands", buffer = true})
+else
   local function _15_()
     return run_scalafmt(vim.fn.expand("%:p"))
   end
-  return util["set-keys"]({{"n", "grf", _15_, {desc = "[scala] run scalafmt on buffer", buffer = true, nowait = true, silent = true}}, {"n", "<localleader>m", ":Metals<C-d>", {desc = "[metals] show all commands", buffer = true}}})
-else
   local function _16_()
     util.call("metals", "start_server")
     return vim.keymap.set("n", "<localleader>m", ":Metals<C-d>", {desc = "[metals] show all commands", buffer = true})
   end
-  return vim.keymap.set("n", "<localleader>m", _16_, {desc = "[metals] show all commands", buffer = true, silent = false})
+  return util["set-keys"]({{"n", "grf", _15_, {desc = "[scala] run scalafmt on buffer", buffer = true, nowait = true, silent = true}}, {"n", "<localleader>m", _16_, {desc = "[metals] show all commands", buffer = true, silent = false}}})
 end

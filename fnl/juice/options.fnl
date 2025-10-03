@@ -88,6 +88,7 @@
                               :pgsql :sql
                               :sbt :scala
                               :sc :scala
+                              :service :systemd
                               :tofu :hcl
                               :txt :text}
                   :filename {:.envrc :bash

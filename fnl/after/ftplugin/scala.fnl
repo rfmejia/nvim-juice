@@ -64,23 +64,22 @@
                                       {:bang true})
 
 (if (metals-lsp-started?)
-      (util.set-keys [[:n
-                       :grf
-                       #(run-scalafmt (vim.fn.expand "%:p"))
-                       {:desc "[scala] run scalafmt on buffer"
-                        :buffer true
-                        :nowait true
-                        :silent true}]
-                      [:n
-                       :<localleader>m
-                       ":Metals<C-d>"
-                       {:desc "[metals] show all commands" :buffer true}]])
-      (vim.keymap.set :n :<localleader>m
-                      (fn []
-                        (util.call :metals :start_server)
-                        (vim.keymap.set :n :<localleader>m ":Metals<C-d>"
-                                        {:desc "[metals] show all commands"
-                                         :buffer true}))
-                      {:desc "[metals] show all commands"
-                       :buffer true
-                       :silent false}))
+    (vim.keymap.set :n :<localleader>m ":Metals<C-d>"
+                    {:desc "[metals] show all commands" :buffer true})
+    (util.set-keys [[:n
+                     :grf
+                     #(run-scalafmt (vim.fn.expand "%:p"))
+                     {:desc "[scala] run scalafmt on buffer"
+                      :buffer true
+                      :nowait true
+                      :silent true}]
+                    [:n
+                     :<localleader>m
+                     (fn []
+                       (util.call :metals :start_server)
+                       (vim.keymap.set :n :<localleader>m ":Metals<C-d>"
+                                       {:desc "[metals] show all commands"
+                                        :buffer true}))
+                     {:desc "[metals] show all commands"
+                      :buffer true
+                      :silent false}]]))
