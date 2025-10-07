@@ -31,14 +31,13 @@ local function _5_(...)
   return {"tpope/vim-dadbod", ft = sql_filetypes, config = _6_, dependencies = {{"kristijanhusak/vim-dadbod-completion", lazy = true}}}
 end
 database_tools = {_5_(...)}
-local dev_tools = {{"scalameta/nvim-metals", cmd = "MetalsInit"}}
-local lisp_tools
+local dev_tools
 do
-  local languages = {"clojure", "fennel"}
+  local lisp_languages = {"clojure", "fennel"}
   local function _8_()
     return core["merge!"](vim.g, {["conjure#result#register"] = "*", ["conjure#mapping#doc_word"] = "gk", ["conjure#log#botright"] = true})
   end
-  lisp_tools = {{"Olical/conjure", branch = "main", ft = languages, config = _8_}, {"julienvincent/nvim-paredit", ft = languages, opts = {use_default_keys = true, indent = {enabled = true}}, dependencies = {{"nvim-treesitter/nvim-treesitter"}}}}
+  dev_tools = {{"scalameta/nvim-metals", ft = "scala"}, {"Olical/conjure", branch = "main", ft = lisp_languages, config = _8_}, {"julienvincent/nvim-paredit", ft = lisp_languages, opts = {use_default_keys = true, indent = {enabled = true}}, dependencies = {{"nvim-treesitter/nvim-treesitter"}}}}
 end
 local editing_tools = {{"kylechui/nvim-surround", keys = {"cs", "ds", "ys"}, config = true}, {"windwp/nvim-autopairs", event = "InsertEnter", opts = {enable_check_bracket_line = false}}}
 local git_tools
@@ -64,7 +63,7 @@ local function _12_()
 end
 llm_tools = {{"github/copilot.vim", cmd = "Copilot", config = _10_}, {"olimorris/codecompanion.nvim", cmd = {"CodeCompanion", "CodeCompanionCmd", "CodeCompanionChat", "CodeCompanionActions"}, opts = {}, dependencies = {"nvim-lua/plenary.nvim", "nvim-treesitter/nvim-treesitter", {"ravitemer/mcphub.nvim", build = "npm install -g mcp-hub@latest", config = _11_}}, config = _12_}}
 local function setup()
-  local plugins = core.concat(core_tools, database_tools, dev_tools, editing_tools, git_tools, lisp_tools, llm_tools)
+  local plugins = core.concat(core_tools, database_tools, dev_tools, editing_tools, git_tools, llm_tools)
   local opts = {ui = {border = "rounded"}, performance = {rtp = {disabled_plugins = {"rplugin", "tohtml", "tutor", "vimball"}}}}
   return util.call("lazy", "setup", plugins, opts)
 end

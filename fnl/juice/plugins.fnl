@@ -24,28 +24,27 @@
                     (util.call :oil :setup opts)
                     (util.set-keys mappings.oil-maps))}])
 
-(local database-tools [(let [sql-filetypes [:sql :mysql :pgsql]]
-                         {1 :tpope/vim-dadbod
+(local database-tools (let [sql-filetypes [:sql :mysql :pgsql]]
+                        [{1 :tpope/vim-dadbod
                           :ft sql-filetypes
                           :config #(vim.api.nvim_create_autocmd :FileType
                                                                 {:pattern sql-filetypes
                                                                  :callback #(util.set-keys mappings.dadbod-maps)})
                           :dependencies [{1 :kristijanhusak/vim-dadbod-completion
-                                          :lazy true}]})])
+                                          :lazy true}]}]))
 
-(local dev-tools [{1 :scalameta/nvim-metals :cmd :MetalsInit}])
-
-(local lisp-tools
-       (let [languages [:clojure :fennel]]
-         [{1 :Olical/conjure
+(local dev-tools
+       (let [lisp-languages [:clojure :fennel]]
+         [{1 :scalameta/nvim-metals :ft :scala}
+          {1 :Olical/conjure
            :branch :main
-           :ft languages
+           :ft lisp-languages
            :config #(core.merge! vim.g
                                  {"conjure#result#register" "*"
                                   "conjure#mapping#doc_word" :gk
                                   "conjure#log#botright" true})}
           {1 :julienvincent/nvim-paredit
-           :ft languages
+           :ft lisp-languages
            :opts {:use_default_keys true :indent {:enabled true}}
            :dependencies [{1 :nvim-treesitter/nvim-treesitter}]}]))
 
@@ -96,7 +95,7 @@
 
 (fn setup []
   (let [plugins (core.concat core-tools database-tools dev-tools editing-tools
-                             git-tools lisp-tools llm-tools)
+                             git-tools llm-tools)
         opts {:ui {:border :rounded}
               :performance {:rtp {:disabled_plugins [:rplugin
                                                      :tohtml
