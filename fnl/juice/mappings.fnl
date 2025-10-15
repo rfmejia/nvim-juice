@@ -146,11 +146,7 @@
         [:n
          :<leader>/W
          ":%s/\\<<c-r><c-w>\\>//g<left><left>"
-         {:desc "prompt for buffer search and replace"}]
-        [:n
-         :<leader>/v
-         ":vim // *<left><left><left>"
-         {:desc "prompt for global search"}]])
+         {:desc "prompt for buffer search and replace"}]])
 
 (local visual-indent [[:v "<" :<gv {}] [:v ">" :>gv {}]])
 
