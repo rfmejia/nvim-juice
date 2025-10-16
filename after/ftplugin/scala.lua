@@ -79,6 +79,7 @@ else
   end
   local function _16_()
     util.call("metals", "start_server")
+    core.println("Starting Metals server")
     return vim.keymap.set("n", "<localleader>m", ":Metals<C-d>", {desc = "[metals] show all commands", buffer = true})
   end
   return util["set-keys"]({{"n", "grf", _15_, {desc = "[scala] run scalafmt on buffer", buffer = true, nowait = true, silent = true}}, {"n", "<localleader>m", _16_, {desc = "[metals] show all commands", buffer = true, silent = false}}})

@@ -77,6 +77,7 @@
                      :<localleader>m
                      (fn []
                        (util.call :metals :start_server)
+                       (core.println "Starting Metals server")
                        (vim.keymap.set :n :<localleader>m ":Metals<C-d>"
                                        {:desc "[metals] show all commands"
                                         :buffer true}))
