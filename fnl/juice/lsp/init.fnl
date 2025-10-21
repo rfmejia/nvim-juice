@@ -2,12 +2,6 @@
 (local core (autoload :nfnl.core))
 (local util (autoload :juice.util))
 
-(lambda count-diagnostic [?bufnr severity]
-  "Returns 'n! ' where n is the number of diagnostic messages, otherwise an empty string"
-  (-> ?bufnr
-      (vim.diagnostic.get {: severity})
-      (core.count)))
-
 (lambda set-mappings [bufnr]
   (let [omnifunc-map [[:i :<C-space> :<C-x><C-o> {:buffer bufnr}]]
         goto-maps [[:n
@@ -80,4 +74,4 @@
                                                                              event.buf)
                                                        (configure-diagnostics))))}))
 
-{: count-diagnostic : setup}
+{: setup}

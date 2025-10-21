@@ -1,15 +1,26 @@
 (local {: autoload} (require :nfnl.module))
+(local core (autoload :nfnl.core))
 (local str (autoload :nfnl.string))
-(local lsp (autoload :juice.lsp))
 
 (lambda wrap-luaeval [command]
   "Wraps a Lua command string in vim statusline string"
   (string.format "%%{luaeval(\"%s\")}" command))
 
-(lambda show-diagnostic-count [?buf-num severity]
-  (case (lsp.count-diagnostic ?buf-num severity)
+(lambda count-diagnostic [?bufnr severity]
+  (core.count (vim.diagnostic.get ?bufnr {: severity})))
+
+(lambda count-warnings []
+  (case (count-diagnostic 0 vim.diagnostic.severity.WARN)
     0 ""
-    count (.. count "! ")))
+    count (..  "W:" count " ")))
+
+(lambda count-errors []
+  (let [severity vim.diagnostic.severity.ERROR
+        ws-err (count-diagnostic nil severity)
+        buf-err (count-diagnostic 0 severity)]
+   (case ws-err
+     0 ""
+     _ (.. "E:" buf-err "/" ws-err " "))))
 
 (fn build [widgets]
   "Creates a vim statusline string, inserting optional widgets defined as a list of strings"
@@ -19,8 +30,8 @@
         git-status " %{g:git_file_status}"
         git-branch " %{g:git_branch}"
         align-right "%="
-        buf-errors (wrap-luaeval "require('juice.statusline')['show-diagnostic-count'](vim.api.nvim_get_current_buf(), vim.diagnostic.severity.ERROR)")
-        buf-warnings (wrap-luaeval "require('juice.statusline')['show-diagnostic-count'](vim.api.nvim_get_current_buf(), vim.diagnostic.severity.WARN)")
+        buf-warnings (wrap-luaeval "require('juice.statusline')['count-warnings'](vim.api.nvim_get_current_buf())")
+        ws-errors (wrap-luaeval "require('juice.statusline')['count-errors']()")
         ruler "%l:%c"
         widget-str (.. " " (str.join widgets) " ")
         default-color "%#StatusLine#"
@@ -37,7 +48,7 @@
                   info-color
                   widget-str
                   error-color
-                  buf-errors
+                  ws-errors
                   warn-color
                   buf-warnings
                   info-color
@@ -47,4 +58,4 @@
                   ruler]]
     (str.join template)))
 
-{: build : show-diagnostic-count}
+{: build : count-warnings : count-errors}

@@ -1,22 +1,36 @@
 -- [nfnl] fnl/juice/statusline.fnl
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
+local core = autoload("nfnl.core")
 local str = autoload("nfnl.string")
-local lsp = autoload("juice.lsp")
 local function wrap_luaeval(command)
   _G.assert((nil ~= command), "Missing argument command on /home/rfmejia/.config/nvim/fnl/juice/statusline.fnl:5")
   return string.format("%%{luaeval(\"%s\")}", command)
 end
-local function show_diagnostic_count(_3fbuf_num, severity)
+local function count_diagnostic(_3fbufnr, severity)
   _G.assert((nil ~= severity), "Missing argument severity on /home/rfmejia/.config/nvim/fnl/juice/statusline.fnl:9")
-  local _2_ = lsp["count-diagnostic"](_3fbuf_num, severity)
+  return core.count(vim.diagnostic.get(_3fbufnr, {severity = severity}))
+end
+local function count_warnings()
+  local _2_ = count_diagnostic(0, vim.diagnostic.severity.WARN)
   if (_2_ == 0) then
     return ""
   elseif (nil ~= _2_) then
     local count = _2_
-    return (count .. "! ")
+    return ("W:" .. count .. " ")
   else
     return nil
+  end
+end
+local function count_errors()
+  local severity = vim.diagnostic.severity.ERROR
+  local ws_err = count_diagnostic(nil, severity)
+  local buf_err = count_diagnostic(0, severity)
+  if (ws_err == 0) then
+    return ""
+  else
+    local _ = ws_err
+    return ("E:" .. buf_err .. "/" .. ws_err .. " ")
   end
 end
 local function build(widgets)
@@ -26,15 +40,15 @@ local function build(widgets)
   local git_status = " %{g:git_file_status}"
   local git_branch = " %{g:git_branch}"
   local align_right = "%="
-  local buf_errors = wrap_luaeval("require('juice.statusline')['show-diagnostic-count'](vim.api.nvim_get_current_buf(), vim.diagnostic.severity.ERROR)")
-  local buf_warnings = wrap_luaeval("require('juice.statusline')['show-diagnostic-count'](vim.api.nvim_get_current_buf(), vim.diagnostic.severity.WARN)")
+  local buf_warnings = wrap_luaeval("require('juice.statusline')['count-warnings'](vim.api.nvim_get_current_buf())")
+  local ws_errors = wrap_luaeval("require('juice.statusline')['count-errors']()")
   local ruler = "%l:%c"
   local widget_str = (" " .. str.join(widgets) .. " ")
   local default_color = "%#StatusLine#"
   local info_color = "%#StatusLineInfo#"
   local error_color = "%#StatusLineError#"
   local warn_color = "%#StatusLineWarn#"
-  local template = {filename, buffer_modified_flags, info_color, git_status, default_color, buffer_type_flags, align_right, info_color, widget_str, error_color, buf_errors, warn_color, buf_warnings, info_color, git_branch, default_color, " ", ruler}
+  local template = {filename, buffer_modified_flags, info_color, git_status, default_color, buffer_type_flags, align_right, info_color, widget_str, error_color, ws_errors, warn_color, buf_warnings, info_color, git_branch, default_color, " ", ruler}
   return str.join(template)
 end
-return {build = build, ["show-diagnostic-count"] = show_diagnostic_count}
+return {build = build, ["count-warnings"] = count_warnings, ["count-errors"] = count_errors}
