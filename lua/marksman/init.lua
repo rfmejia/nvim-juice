@@ -1,6 +1,6 @@
 -- [nfnl] fnl/marksman/init.fnl
 local _local_1_ = require("nfnl.module")
-local autoload = _local_1_["autoload"]
+local autoload = _local_1_.autoload
 local core = autoload("nfnl.core")
 --[[ (let [id 1 group "marksman"] (vim.fn.sign_getdefined) (vim.fn.sign_getplaced) (vim.fn.sign_define "test" {:text ">" :texthl "WarningMsg"}) (vim.fn.sign_place 1 "" "test" 0 {:lnum 2}) (vim.fn.sign_unplace "" {:id 1})) ]]
 local set_opfunc
@@ -17,26 +17,41 @@ local function init_store()
   return nil
 end
 local function get_mark(mark)
-  _G.assert((nil ~= mark), "Missing argument mark on /home/rfmejia/.config/nvim/fnl/marksman/init.fnl:28")
-  local t_2_ = vim.g.marksman
-  if (nil ~= t_2_) then
-    t_2_ = t_2_.marks
+  if (nil == mark) then
+    _G.error("Missing argument mark on /home/rfmejia/.config/nvim/fnl/marksman/init.fnl:28", 2)
   else
   end
-  if (nil ~= t_2_) then
-    t_2_ = t_2_[mark]
+  local t_3_ = vim.g.marksman
+  if (nil ~= t_3_) then
+    t_3_ = t_3_.marks
   else
   end
-  return t_2_
+  if (nil ~= t_3_) then
+    t_3_ = t_3_[mark]
+  else
+  end
+  return t_3_
 end
 local function set_mark(mark, lnum, buf_3f)
-  _G.assert((nil ~= buf_3f), "Missing argument buf? on /home/rfmejia/.config/nvim/fnl/marksman/init.fnl:31")
-  _G.assert((nil ~= lnum), "Missing argument lnum on /home/rfmejia/.config/nvim/fnl/marksman/init.fnl:31")
-  _G.assert((nil ~= mark), "Missing argument mark on /home/rfmejia/.config/nvim/fnl/marksman/init.fnl:31")
+  if (nil == buf_3f) then
+    _G.error("Missing argument buf? on /home/rfmejia/.config/nvim/fnl/marksman/init.fnl:31", 2)
+  else
+  end
+  if (nil == lnum) then
+    _G.error("Missing argument lnum on /home/rfmejia/.config/nvim/fnl/marksman/init.fnl:31", 2)
+  else
+  end
+  if (nil == mark) then
+    _G.error("Missing argument mark on /home/rfmejia/.config/nvim/fnl/marksman/init.fnl:31", 2)
+  else
+  end
   return "Add new or update existing mark at the specified line number and (optional) buffer"
 end
 local function del_mark(mark)
-  _G.assert((nil ~= mark), "Missing argument mark on /home/rfmejia/.config/nvim/fnl/marksman/init.fnl:34")
+  if (nil == mark) then
+    _G.error("Missing argument mark on /home/rfmejia/.config/nvim/fnl/marksman/init.fnl:34", 2)
+  else
+  end
   return "Delete a mark"
 end
 local function sync_vimmarks()
@@ -51,59 +66,59 @@ local function setup()
   vim.g["marksman-marks"]["a"] = {["sign-id"] = 1, ["buf-num"] = 1}
   print(vim.g.marksman.marks.a)
   init_store()
-  local t_5_ = vim.g
-  if (nil ~= t_5_) then
-    t_5_ = t_5_["marksman-marks"]
+  local t_10_ = vim.g
+  if (nil ~= t_10_) then
+    t_10_ = t_10_["marksman-marks"]
   else
   end
-  if (nil ~= t_5_) then
-    t_5_ = t_5_.a
+  if (nil ~= t_10_) then
+    t_10_ = t_10_.a
   else
   end
-  return t_5_
+  return t_10_
 end
 local function test()
   core["assoc-in"](vim.g, {"marksman"}, {marks = {}})
   table.insert(vim.g.marksman.marks.a, "test")
-  local function _9_()
-    local t_8_ = vim.g
-    if (nil ~= t_8_) then
-      t_8_ = t_8_.marksman
+  local function _14_()
+    local t_13_ = vim.g
+    if (nil ~= t_13_) then
+      t_13_ = t_13_.marksman
     else
     end
-    return t_8_
+    return t_13_
   end
-  core["nil?"](_9_())
-  local function _12_()
-    local t_11_ = vim.g
-    if (nil ~= t_11_) then
-      t_11_ = t_11_.marksman
+  core["nil?"](_14_())
+  local function _17_()
+    local t_16_ = vim.g
+    if (nil ~= t_16_) then
+      t_16_ = t_16_.marksman
     else
     end
-    if (nil ~= t_11_) then
-      t_11_ = t_11_.marks
+    if (nil ~= t_16_) then
+      t_16_ = t_16_.marks
     else
     end
-    return t_11_
+    return t_16_
   end
-  core["nil?"](_12_())
-  local function _16_()
-    local t_15_ = vim.g
-    if (nil ~= t_15_) then
-      t_15_ = t_15_.marksman
+  core["nil?"](_17_())
+  local function _21_()
+    local t_20_ = vim.g
+    if (nil ~= t_20_) then
+      t_20_ = t_20_.marksman
     else
     end
-    if (nil ~= t_15_) then
-      t_15_ = t_15_.marks
+    if (nil ~= t_20_) then
+      t_20_ = t_20_.marks
     else
     end
-    if (nil ~= t_15_) then
-      t_15_ = t_15_.a
+    if (nil ~= t_20_) then
+      t_20_ = t_20_.a
     else
     end
-    return t_15_
+    return t_20_
   end
-  core["nil?"](_16_())
+  core["nil?"](_21_())
   return core["assoc-in"](vim.g, {"marksman", "marks", "a"}, {["sign-id"] = 1, ["buf-num"] = 1})
 end
 return {["set-opfunc"] = set_opfunc}

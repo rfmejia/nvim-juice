@@ -1,8 +1,17 @@
 -- [nfnl] fnl/juice/bootstrap.fnl
 local function ensure_installed(user, repo, branch)
-  _G.assert((nil ~= branch), "Missing argument branch on /home/rfmejia/.config/nvim/fnl/juice/bootstrap.fnl:1")
-  _G.assert((nil ~= repo), "Missing argument repo on /home/rfmejia/.config/nvim/fnl/juice/bootstrap.fnl:1")
-  _G.assert((nil ~= user), "Missing argument user on /home/rfmejia/.config/nvim/fnl/juice/bootstrap.fnl:1")
+  if (nil == branch) then
+    _G.error("Missing argument branch on /home/rfmejia/.config/nvim/fnl/juice/bootstrap.fnl:1", 2)
+  else
+  end
+  if (nil == repo) then
+    _G.error("Missing argument repo on /home/rfmejia/.config/nvim/fnl/juice/bootstrap.fnl:1", 2)
+  else
+  end
+  if (nil == user) then
+    _G.error("Missing argument user on /home/rfmejia/.config/nvim/fnl/juice/bootstrap.fnl:1", 2)
+  else
+  end
   local base_path = (vim.fn.stdpath("data") .. "/lazy")
   local install_path = string.format("%s/%s", base_path, repo)
   local path_exists_3f = (vim.uv or vim.loop).fs_stat(install_path)

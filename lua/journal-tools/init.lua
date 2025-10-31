@@ -1,27 +1,36 @@
 -- [nfnl] fnl/journal-tools/init.fnl
 local _local_1_ = require("nfnl.module")
-local autoload = _local_1_["autoload"]
+local autoload = _local_1_.autoload
 local core = autoload("nfnl.core")
 local util = autoload("juice.util")
 local default_opts = {["day-format"] = "%a, %d %b %Y", ["time-format"] = "%H:%M", ["task-format"] = "* [ ] ", maps = nil}
 local function insert_week()
   local function find_day(dir, day, new_time)
-    _G.assert((nil ~= new_time), "Missing argument new-time on /home/rfmejia/.config/nvim/fnl/journal-tools/init.fnl:11")
-    _G.assert((nil ~= day), "Missing argument day on /home/rfmejia/.config/nvim/fnl/journal-tools/init.fnl:11")
-    _G.assert((nil ~= dir), "Missing argument dir on /home/rfmejia/.config/nvim/fnl/journal-tools/init.fnl:11")
+    if (nil == new_time) then
+      _G.error("Missing argument new-time on /home/rfmejia/.config/nvim/fnl/journal-tools/init.fnl:11", 2)
+    else
+    end
+    if (nil == day) then
+      _G.error("Missing argument day on /home/rfmejia/.config/nvim/fnl/journal-tools/init.fnl:11", 2)
+    else
+    end
+    if (nil == dir) then
+      _G.error("Missing argument dir on /home/rfmejia/.config/nvim/fnl/journal-tools/init.fnl:11", 2)
+    else
+    end
     local new_day = vim.fn.strftime("%a", new_time)
     local secs_in_a_day = (60 * 60 * 24)
     if (day == new_day) then
       return vim.fn.strftime("%b %d", new_time)
     else
-      local function _2_()
+      local function _5_()
         if (dir == "fwd") then
           return (new_time + secs_in_a_day)
         else
           return (new_time - secs_in_a_day)
         end
       end
-      return find_day(dir, day, _2_())
+      return find_day(dir, day, _5_())
     end
   end
   local week_num = vim.fn.strftime("%U")
@@ -51,23 +60,23 @@ local function insert_task()
 end
 local function register_tools(user_opts)
   local maps
-  local _5_
+  local _8_
   do
-    local t_4_ = user_opts
-    if (nil ~= t_4_) then
-      t_4_ = t_4_.maps
+    local t_7_ = user_opts
+    if (nil ~= t_7_) then
+      t_7_ = t_7_.maps
     else
     end
-    _5_ = t_4_
+    _8_ = t_7_
   end
-  maps = core.merge(_5_, default_opts.maps)
+  maps = core.merge(_8_, default_opts.maps)
   local opts = core.merge(default_opts, user_opts)
   opts["maps"] = nil
   util["set-keys"](maps)
-  local function _7_()
+  local function _10_()
     return util["set-keys"](maps)
   end
-  vim.api.nvim_create_autocmd("FileType", {pattern = "markdown", callback = _7_})
+  vim.api.nvim_create_autocmd("FileType", {pattern = "markdown", callback = _10_})
   vim.g.journal_tools = opts
   if (vim.fn.exists(":JournalInit") > 0) then
     vim.api.nvim_del_user_command("JournalInit")
@@ -76,10 +85,10 @@ local function register_tools(user_opts)
   return vim.notify("[journal-tools] Loaded tools")
 end
 local function setup(user_opts)
-  local function _9_()
+  local function _12_()
     local mappings = autoload("juice.mappings")
     return register_tools({maps = mappings["journal-maps"]})
   end
-  return vim.api.nvim_create_user_command("JournalInit", _9_, {desc = "Load default mappings for journal tools"})
+  return vim.api.nvim_create_user_command("JournalInit", _12_, {desc = "Load default mappings for journal tools"})
 end
 return {setup = setup, ["insert-week"] = insert_week, ["insert-day"] = insert_day, ["insert-time"] = insert_time, ["insert-task"] = insert_task}

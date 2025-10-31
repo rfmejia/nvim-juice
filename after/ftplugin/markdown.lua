@@ -1,6 +1,6 @@
 -- [nfnl] fnl/after/ftplugin/markdown.fnl
 local _local_1_ = require("nfnl.module")
-local autoload = _local_1_["autoload"]
+local autoload = _local_1_.autoload
 local core = autoload("nfnl.core")
 local util = autoload("juice.util")
 core["merge!"](vim.opt_local, {shiftwidth = 2, tabstop = 2, textwidth = 100, wrap = true, spell = true, spelllang = "en_us"})

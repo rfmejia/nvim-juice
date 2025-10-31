@@ -1,6 +1,6 @@
 -- [nfnl] fnl/after/ftplugin/scala.fnl
 local _local_1_ = require("nfnl.module")
-local autoload = _local_1_["autoload"]
+local autoload = _local_1_.autoload
 local notify = autoload("nfnl.notify")
 local scalametals = autoload("juice.lsp.scalametals")
 local str = autoload("nfnl.string")
@@ -56,12 +56,12 @@ local function run_scalafmt(path)
     filename = path
   end
   local scalafmt_cmd = {"scalafmt", "--mode", "changed", "--config", ".scalafmt.conf", filename, filename}
-  local _11_, _12_ = vim.fn.system(scalafmt_cmd)
-  if (nil ~= _11_) then
-    local ok = _11_
+  local case_11_, case_12_ = vim.fn.system(scalafmt_cmd)
+  if (nil ~= case_11_) then
+    local ok = case_11_
     return vim.cmd("e!")
-  elseif ((_11_ == nil) and (nil ~= _12_)) then
-    local err_msg = _12_
+  elseif ((case_11_ == nil) and (nil ~= case_12_)) then
+    local err_msg = case_12_
     return notify.error("[scala] Could not run `scalafmt`: ", err_msg)
   else
     return nil

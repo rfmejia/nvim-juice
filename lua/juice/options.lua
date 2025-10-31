@@ -1,6 +1,6 @@
 -- [nfnl] fnl/juice/options.fnl
 local _local_1_ = require("nfnl.module")
-local autoload = _local_1_["autoload"]
+local autoload = _local_1_.autoload
 local statusline = autoload("juice.statusline")
 local util = autoload("juice.util")
 local core = autoload("nfnl.core")

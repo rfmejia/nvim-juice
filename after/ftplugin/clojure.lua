@@ -1,6 +1,6 @@
 -- [nfnl] fnl/after/ftplugin/clojure.fnl
 local _local_1_ = require("nfnl.module")
-local autoload = _local_1_["autoload"]
+local autoload = _local_1_.autoload
 local core = autoload("nfnl.core")
 core["merge!"](vim.opt_local, {shiftwidth = 2, tabstop = 2, expandtab = true, textwidth = 100, spell = true, spellfile = "clj.en.utf-8.add", commentstring = ";; %s"})
 local function _2_()

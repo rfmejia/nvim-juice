@@ -50,17 +50,17 @@ local function keys(tbl)
   if (empty_3f(tbl) or not table_3f(tbl)) then
     return {}
   else
-    local tbl_21_ = {}
-    local i_22_ = 0
+    local tbl_26_ = {}
+    local i_27_ = 0
     for k, _ in pairs(tbl) do
-      local val_23_ = k
-      if (nil ~= val_23_) then
-        i_22_ = (i_22_ + 1)
-        tbl_21_[i_22_] = val_23_
+      local val_28_ = k
+      if (nil ~= val_28_) then
+        i_27_ = (i_27_ + 1)
+        tbl_26_[i_27_] = val_28_
       else
       end
     end
-    return tbl_21_
+    return tbl_26_
   end
 end
 local function _3dtable(...)

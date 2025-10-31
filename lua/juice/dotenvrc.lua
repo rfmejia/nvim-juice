@@ -1,6 +1,6 @@
 -- [nfnl] fnl/juice/dotenvrc.fnl
 local _local_1_ = require("nfnl.module")
-local autoload = _local_1_["autoload"]
+local autoload = _local_1_.autoload
 local core = autoload("nfnl.core")
 local string = autoload("nfnl.string")
 --[[ "TODO" "Load the following special envs" ["split to sbtn or scala-cli" "dadbod"] ]]
@@ -30,9 +30,9 @@ local function load_env()
     else
     end
   end
-  local _5_ = read_copilot_workspaces()
-  if (nil ~= _5_) then
-    local workspaces = _5_
+  local case_5_ = read_copilot_workspaces()
+  if (nil ~= case_5_) then
+    local workspaces = case_5_
     vim.g.copilot_workspace_folders = core.distinct(core.concat(vim.g.copilot_workspace_folders, workspaces))
     return nil
   else

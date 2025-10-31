@@ -1,22 +1,28 @@
 -- [nfnl] fnl/juice/statusline.fnl
 local _local_1_ = require("nfnl.module")
-local autoload = _local_1_["autoload"]
+local autoload = _local_1_.autoload
 local core = autoload("nfnl.core")
 local str = autoload("nfnl.string")
 local function wrap_luaeval(command)
-  _G.assert((nil ~= command), "Missing argument command on /home/rfmejia/.config/nvim/fnl/juice/statusline.fnl:5")
+  if (nil == command) then
+    _G.error("Missing argument command on /home/rfmejia/.config/nvim/fnl/juice/statusline.fnl:5", 2)
+  else
+  end
   return string.format("%%{luaeval(\"%s\")}", command)
 end
 local function count_diagnostic(_3fbufnr, severity)
-  _G.assert((nil ~= severity), "Missing argument severity on /home/rfmejia/.config/nvim/fnl/juice/statusline.fnl:9")
+  if (nil == severity) then
+    _G.error("Missing argument severity on /home/rfmejia/.config/nvim/fnl/juice/statusline.fnl:9", 2)
+  else
+  end
   return core.count(vim.diagnostic.get(_3fbufnr, {severity = severity}))
 end
 local function count_warnings()
-  local _2_ = count_diagnostic(0, vim.diagnostic.severity.WARN)
-  if (_2_ == 0) then
+  local case_4_ = count_diagnostic(0, vim.diagnostic.severity.WARN)
+  if (case_4_ == 0) then
     return ""
-  elseif (nil ~= _2_) then
-    local count = _2_
+  elseif (nil ~= case_4_) then
+    local count = case_4_
     return ("W:" .. count .. " ")
   else
     return nil

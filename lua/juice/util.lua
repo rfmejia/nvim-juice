@@ -1,29 +1,47 @@
 -- [nfnl] fnl/juice/util.fnl
 local _local_1_ = require("nfnl.module")
-local autoload = _local_1_["autoload"]
+local autoload = _local_1_.autoload
 local core = autoload("nfnl.core")
 local function lua_cmd(str)
-  _G.assert((nil ~= str), "Missing argument str on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:4")
+  if (nil == str) then
+    _G.error("Missing argument str on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:4", 2)
+  else
+  end
   return string.format("<cmd>lua %s<cr>", str)
 end
 local function executable_3f(cmd)
-  _G.assert((nil ~= cmd), "Missing argument cmd on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:8")
+  if (nil == cmd) then
+    _G.error("Missing argument cmd on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:8", 2)
+  else
+  end
   return (vim.fn.executable(cmd) == 1)
 end
 local function has_3f(cmd)
-  _G.assert((nil ~= cmd), "Missing argument cmd on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:11")
+  if (nil == cmd) then
+    _G.error("Missing argument cmd on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:11", 2)
+  else
+  end
   return (vim.fn.has(cmd) == 1)
 end
 local function set_keys(mappings)
-  _G.assert((nil ~= mappings), "Missing argument mappings on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:14")
+  if (nil == mappings) then
+    _G.error("Missing argument mappings on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:14", 2)
+  else
+  end
   for _, mapping in ipairs(mappings) do
     vim.keymap.set(unpack(mapping))
   end
   return nil
 end
 local function call(plugin, func, ...)
-  _G.assert((nil ~= func), "Missing argument func on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:18")
-  _G.assert((nil ~= plugin), "Missing argument plugin on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:18")
+  if (nil == func) then
+    _G.error("Missing argument func on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:18", 2)
+  else
+  end
+  if (nil == plugin) then
+    _G.error("Missing argument plugin on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:18", 2)
+  else
+  end
   return autoload(plugin)[func](...)
 end
 local function call_setup(...)

@@ -1,6 +1,6 @@
 -- [nfnl] fnl/juice/colorscheme.fnl
 local _local_1_ = require("nfnl.module")
-local autoload = _local_1_["autoload"]
+local autoload = _local_1_.autoload
 local core = autoload("nfnl.core")
 --[[ "Set italic in graphical terminals" ]]
 local is_gui = (vim.env.WAYLAND_DISPLAY ~= nil)
@@ -8,7 +8,10 @@ local general = {Comment = {fg = "DarkYellow", ctermfg = "DarkYellow", italic = 
 local diagnostic_virtual_text = {DiagnosticVirtualTextError = {fg = "DarkRed", italic = is_gui}, DiagnosticVirtualTextHint = {fg = "DarkBlue", italic = is_gui}, DiagnosticVirtualTextInfo = {fg = "DarkCyan", italic = is_gui}, DiagnosticVirtualTextOk = {fg = "DarkGreen", italic = is_gui}, DiagnosticVirtualTextWarn = {fg = "DarkYellow", italic = is_gui}}
 local statusline = {StatusLine = {fg = "Gray", bg = "NONE"}, StatusLineError = {fg = "DarkRed"}, StatusLineInfo = {fg = "DarkCyan"}, StatusLineWarn = {fg = "DarkYellow"}}
 local function set_hl(hi_options)
-  _G.assert((nil ~= hi_options), "Missing argument hi-options on /home/rfmejia/.config/nvim/fnl/juice/colorscheme.fnl:32")
+  if (nil == hi_options) then
+    _G.error("Missing argument hi-options on /home/rfmejia/.config/nvim/fnl/juice/colorscheme.fnl:32", 2)
+  else
+  end
   for hi_group, opts in pairs(hi_options) do
     if core["sequential?"](hi_group) then
       for _, sub_group in ipairs(hi_group) do

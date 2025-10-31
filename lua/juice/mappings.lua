@@ -1,6 +1,6 @@
 -- [nfnl] fnl/juice/mappings.fnl
 local _local_1_ = require("nfnl.module")
-local autoload = _local_1_["autoload"]
+local autoload = _local_1_.autoload
 local core = autoload("nfnl.core")
 local util = autoload("juice.util")
 local general
