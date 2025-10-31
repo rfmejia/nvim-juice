@@ -46,23 +46,9 @@ local function _8_()
   return util.call("gitsigns", "toggle_signs")
 end
 git_tools = {{"lewis6991/gitsigns.nvim", keys = "<localleader>gt", config = _8_}}
-local llm_tools
-local function _9_()
-  util["set-keys"](mappings["copilot-maps"])
-  vim.g.copilot_workspace_folders = core.distinct(core.concat(vim.g.copilot_workspace_folders, {vim.fn.getcwd()}))
-  return nil
-end
-local function _10_()
-  return util["call-setup"]("mcphub")
-end
-local function _11_()
-  local extensions = {mcphub = {callback = "mcphub.extensions.codecompanion", opts = {show_result_in_chat = true, make_vars = true, make_slash_commands = true}}}
-  util["call-setup"]("codecompanion")
-  return util.call("codecompanion", "setup", {extensions = extensions})
-end
-llm_tools = {{"github/copilot.vim", cmd = "Copilot", config = _9_}, {"olimorris/codecompanion.nvim", cmd = {"CodeCompanion", "CodeCompanionCmd", "CodeCompanionChat", "CodeCompanionActions"}, opts = {}, dependencies = {"nvim-lua/plenary.nvim", "nvim-treesitter/nvim-treesitter", {"ravitemer/mcphub.nvim", build = "npm install -g mcp-hub@latest", config = _10_}}, config = _11_}}
+--[[ let llm-tools [{1 "github/copilot.vim" :cmd "Copilot" :config (fn [] (util.set-keys mappings.copilot-maps) (set vim.g.copilot_workspace_folders (core.distinct (core.concat vim.g.copilot_workspace_folders [(vim.fn.getcwd)]))))} {1 "olimorris/codecompanion.nvim" :cmd ["CodeCompanion" "CodeCompanionCmd" "CodeCompanionChat" "CodeCompanionActions"] :config (hashfn (let [extensions {:mcphub {:callback "mcphub.extensions.codecompanion" :opts {:make_slash_commands true :make_vars true :show_result_in_chat true}}}] (util.call-setup "codecompanion") (util.call "codecompanion" "setup" {:extensions extensions}))) :dependencies ["nvim-lua/plenary.nvim" "nvim-treesitter/nvim-treesitter" {1 "ravitemer/mcphub.nvim" :build "npm install -g mcp-hub@latest" :config (hashfn (util.call-setup "mcphub"))}] :opts {}}] ]]
 local function setup()
-  local plugins = core.concat(core_tools, database_tools, dev_tools, editing_tools, git_tools, llm_tools)
+  local plugins = core.concat(core_tools, database_tools, dev_tools, editing_tools, git_tools)
   local opts = {ui = {border = "rounded"}, performance = {rtp = {disabled_plugins = {"rplugin", "tohtml", "tutor", "vimball"}}}}
   return util.call("lazy", "setup", plugins, opts)
 end

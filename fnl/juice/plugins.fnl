@@ -64,38 +64,39 @@
                    ;; is finished and the keymap is passed down
                    (util.call :gitsigns :toggle_signs))}])
 
-(local llm-tools
-       [{1 :github/copilot.vim
-         :cmd :Copilot
-         :config (fn []
-                   (util.set-keys mappings.copilot-maps)
-                   (set vim.g.copilot_workspace_folders
-                        (core.distinct (core.concat vim.g.copilot_workspace_folders
-                                                    [(vim.fn.getcwd)]))))}
-        {1 :olimorris/codecompanion.nvim
-         :cmd [:CodeCompanion
-               :CodeCompanionCmd
-               :CodeCompanionChat
-               :CodeCompanionActions]
-         :opts {}
-         :dependencies [:nvim-lua/plenary.nvim
-                        :nvim-treesitter/nvim-treesitter
-                        {1 :ravitemer/mcphub.nvim
-                         :build "npm install -g mcp-hub@latest"
-                         :config #(util.call-setup :mcphub)}]
-         :config #(let [extensions {:mcphub {:callback :mcphub.extensions.codecompanion
-                                             :opts {; Show mcp tool results in chat
-                                                    :show_result_in_chat true
-                                                    ; Convert resources to #variables
-                                                    :make_vars true
-                                                    ; Add prompts as /slash commands
-                                                    :make_slash_commands true}}}]
-                    (util.call-setup :codecompanion)
-                    (util.call :codecompanion :setup {: extensions}))}])
+(comment let
+  llm-tools
+  [{1 :github/copilot.vim
+    :cmd :Copilot
+    :config (fn []
+              (util.set-keys mappings.copilot-maps)
+              (set vim.g.copilot_workspace_folders
+                   (core.distinct (core.concat vim.g.copilot_workspace_folders
+                                               [(vim.fn.getcwd)]))))}
+   {1 :olimorris/codecompanion.nvim
+    :cmd [:CodeCompanion
+          :CodeCompanionCmd
+          :CodeCompanionChat
+          :CodeCompanionActions]
+    :opts {}
+    :dependencies [:nvim-lua/plenary.nvim
+                   :nvim-treesitter/nvim-treesitter
+                   {1 :ravitemer/mcphub.nvim
+                    :build "npm install -g mcp-hub@latest"
+                    :config #(util.call-setup :mcphub)}]
+    :config #(let [extensions {:mcphub {:callback :mcphub.extensions.codecompanion
+                                        :opts {; Show mcp tool results in chat
+                                               :show_result_in_chat true
+                                               ; Convert resources to #variables
+                                               :make_vars true
+                                               ; Add prompts as /slash commands
+                                               :make_slash_commands true}}}]
+               (util.call-setup :codecompanion)
+               (util.call :codecompanion :setup {: extensions}))}])
 
 (fn setup []
   (let [plugins (core.concat core-tools database-tools dev-tools editing-tools
-                             git-tools llm-tools)
+                             git-tools)
         opts {:ui {:border :rounded}
               :performance {:rtp {:disabled_plugins [:rplugin
                                                      :tohtml
