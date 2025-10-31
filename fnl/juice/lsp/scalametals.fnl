@@ -44,9 +44,9 @@
     (set config.settings metals-settings)
     (set config.init_options.statusBarProvider :on)
     (set config.capabilities (vim.lsp.protocol.make_client_capabilities))
-    (tset config :tvp {:panel_alignment :right
-                       :toggle_node_mapping :<CR>
-                       :node_command_mapping :r})
+    (set config.tvp {:panel_alignment :right
+                     :toggle_node_mapping :<CR>
+                     :node_command_mapping :r})
     (set config.on_attach
          (lambda [client bufnr]
            (util.set-keys (metals-maps bufnr))
@@ -58,7 +58,7 @@
                                   :group (vim.api.nvim_create_augroup :metals-group
                                                                       {:clear true})})
     (comment "Initialize Metals for the first time")
-    (tset vim.g :metals_status "Initializing Metals...")
+    (set vim.g.metals_status "Initializing Metals...")
     (metals.initialize_or_attach config)))
 
 {: initialize-metals}

@@ -25,7 +25,7 @@ local function initialize_metals()
   config.settings = metals_settings
   config.init_options.statusBarProvider = "on"
   config.capabilities = vim.lsp.protocol.make_client_capabilities()
-  config["tvp"] = {panel_alignment = "right", toggle_node_mapping = "<CR>", node_command_mapping = "r"}
+  config.tvp = {panel_alignment = "right", toggle_node_mapping = "<CR>", node_command_mapping = "r"}
   local function _5_(client, bufnr)
     if (nil == bufnr) then
       _G.error("Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:51", 2)
@@ -45,7 +45,7 @@ local function initialize_metals()
   end
   vim.api.nvim_create_autocmd("FileType", {pattern = {"scala", "java"}, callback = _8_, group = vim.api.nvim_create_augroup("metals-group", {clear = true})})
   --[[ "Initialize Metals for the first time" ]]
-  vim.g["metals_status"] = "Initializing Metals..."
+  vim.g.metals_status = "Initializing Metals..."
   return metals.initialize_or_attach(config)
 end
 return {["initialize-metals"] = initialize_metals}
