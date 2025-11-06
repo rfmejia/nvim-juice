@@ -330,6 +330,16 @@
                           {:desc "open lazygit in a new tab or tmux window"
                            :silent true}]])
 
+(local opencode-launcher [[:n
+                           :<leader>oo
+                           (if vim.env.TMUX
+                               ":!tmux split-window -l 40\\% opencode<cr><cr>"
+                               (fn []
+                                 (vim.cmd.vsplit "term://opencode")
+                                 (vim.cmd.startinsert)))
+                           {:desc "open opencode in a new tab or tmux window"
+                            :silent true}]])
+
 (local tmux-apps {;; Add editor context-specific apps here, lazydocker is not a good example
                   :lazydocker [[:n
                                 :<leader>od
@@ -345,6 +355,7 @@
     (comment "select completion binding item")
     (vim.cmd "inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")
     (when (util.executable? :lazygit) (util.set-keys lazygit-launcher))
+    (when (util.executable? :opencode) (util.set-keys opencode-launcher))
     (when vim.env.JOURNAL (util.set-keys journal-launchers))
     (when vim.env.TMUX
       (each [app maps (pairs tmux-apps)]

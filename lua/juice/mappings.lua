@@ -193,6 +193,18 @@ else
   _39_ = _40_
 end
 lazygit_launcher = {{"n", "<leader>og", _39_, {desc = "open lazygit in a new tab or tmux window", silent = true}}}
+local opencode_launcher
+local _42_
+if vim.env.TMUX then
+  _42_ = ":!tmux split-window -l 40\\% opencode<cr><cr>"
+else
+  local function _43_()
+    vim.cmd.vsplit("term://opencode")
+    return vim.cmd.startinsert()
+  end
+  _42_ = _43_
+end
+opencode_launcher = {{"n", "<leader>oo", _42_, {desc = "open opencode in a new tab or tmux window", silent = true}}}
 local tmux_apps = {lazydocker = {{"n", "<leader>od", ":!tmux neww lazydocker<cr><cr>", {desc = "open lazydocker in a new tmux window", silent = true}}}}
 local function setup()
   local mappings = core.concat(general, filters, jumps, undo_steps, dates, marks, buffers, tabs, quickfix, loclist, search_replace, visual_indent, terminal_maps)
@@ -201,6 +213,10 @@ local function setup()
   vim.cmd("inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")
   if util["executable?"]("lazygit") then
     util["set-keys"](lazygit_launcher)
+  else
+  end
+  if util["executable?"]("opencode") then
+    util["set-keys"](opencode_launcher)
   else
   end
   if vim.env.JOURNAL then
