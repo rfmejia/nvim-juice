@@ -23,12 +23,15 @@ local function set_mappings(bufnr)
   local function _6_()
     return vim.diagnostic.setqflist({severity = vim.diagnostic.severity.ERROR})
   end
-  diagnostic_maps = {{"n", "K", _3_, {desc = "show type", buffer = bufnr}}, {"n", "[d", _4_, {desc = "goto next diagnostic", buffer = bufnr}}, {"n", "]d", _5_, {desc = "goto previous diagnostic", buffer = bufnr}}, {"n", "gre", _6_, {desc = "show diagnostic errors of the workspace in quickfix list", buffer = bufnr}}, {"n", "grw", vim.diagnostic.setqflist, {desc = "show diagnostics of the workspace in quickfix list", buffer = bufnr}}, {"n", "grb", vim.diagnostic.setloclist, {desc = "show diagnostics of the buffer in local list", buffer = bufnr}}}
-  local code_action_maps
   local function _7_()
+    return vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+  end
+  diagnostic_maps = {{"n", "K", _3_, {desc = "show type", buffer = bufnr}}, {"n", "[d", _4_, {desc = "goto next diagnostic", buffer = bufnr}}, {"n", "]d", _5_, {desc = "goto previous diagnostic", buffer = bufnr}}, {"n", "gre", _6_, {desc = "show diagnostic errors of the workspace in quickfix list", buffer = bufnr}}, {"n", "grw", vim.diagnostic.setqflist, {desc = "show diagnostics of the workspace in quickfix list", buffer = bufnr}}, {"n", "grb", vim.diagnostic.setloclist, {desc = "show diagnostics of the buffer in local list", buffer = bufnr}}, {"n", "gh", _7_, {desc = "toggle inlay hints", buffer = bufnr}}}
+  local code_action_maps
+  local function _8_()
     return vim.lsp.buf.format({async = true})
   end
-  code_action_maps = {{"n", "grf", _7_, {desc = "code format", buffer = bufnr}}}
+  code_action_maps = {{"n", "grf", _8_, {desc = "code format", buffer = bufnr}}}
   local mappings = core.concat(omnifunc_map, goto_maps, diagnostic_maps, code_action_maps)
   return util["set-keys"](mappings)
 end
@@ -37,11 +40,11 @@ local function configure_diagnostics()
 end
 local function configure_completion(client, bufnr)
   if (nil == bufnr) then
-    _G.error("Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/init.fnl:62", 2)
+    _G.error("Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/init.fnl:66", 2)
   else
   end
   if (nil == client) then
-    _G.error("Missing argument client on /home/rfmejia/.config/nvim/fnl/juice/lsp/init.fnl:62", 2)
+    _G.error("Missing argument client on /home/rfmejia/.config/nvim/fnl/juice/lsp/init.fnl:66", 2)
   else
   end
   if client:supports_method("textDocument/completion") then
@@ -52,10 +55,10 @@ local function configure_completion(client, bufnr)
 end
 local function setup()
   util["call-setup"]("juice.lsp.config")
-  local function _11_(event)
-    local case_12_ = vim.lsp.get_client_by_id(event.data.client_id)
-    if (nil ~= case_12_) then
-      local client = case_12_
+  local function _12_(event)
+    local case_13_ = vim.lsp.get_client_by_id(event.data.client_id)
+    if (nil ~= case_13_) then
+      local client = case_13_
       set_mappings(event.buf)
       configure_completion(client, event.buf)
       return configure_diagnostics()
@@ -63,6 +66,6 @@ local function setup()
       return nil
     end
   end
-  return vim.api.nvim_create_autocmd("LspAttach", {callback = _11_})
+  return vim.api.nvim_create_autocmd("LspAttach", {callback = _12_})
 end
 return {setup = setup}

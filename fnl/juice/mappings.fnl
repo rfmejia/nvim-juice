@@ -46,7 +46,8 @@
 (local jumps [[:n :<C-d> :<C-d>zz]
               [:n :<C-u> :<C-u>zz]
               [:n :<C-o> :<C-o>zz]
-              [:n :<C-i> :<C-i>zz]])
+              [:n :<C-i> :<C-i>zz]
+              [:n "'." "'.zz"]])
 
 ; Add undo step when typing sentences
 (local undo-steps [[:i "\"" "\"<C-g>u" {:silent true}]

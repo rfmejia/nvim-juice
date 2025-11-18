@@ -42,7 +42,11 @@
                           :grb
                           vim.diagnostic.setloclist
                           {:desc "show diagnostics of the buffer in local list"
-                           :buffer bufnr}]]
+                           :buffer bufnr}]
+                         [:n
+                          :gh
+                          #(vim.lsp.inlay_hint.enable (not (vim.lsp.inlay_hint.is_enabled)))
+                          {:desc "toggle inlay hints" :buffer bufnr}]]
         code-action-maps [[:n
                            :grf
                            #(vim.lsp.buf.format {:async true})

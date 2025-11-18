@@ -22,7 +22,8 @@
         :DiagnosticVirtualTextHint {:fg :DarkBlue :italic is-gui}
         :DiagnosticVirtualTextInfo {:fg :DarkCyan :italic is-gui}
         :DiagnosticVirtualTextOk {:fg :DarkGreen :italic is-gui}
-        :DiagnosticVirtualTextWarn {:fg :DarkYellow :italic is-gui}})
+        :DiagnosticVirtualTextWarn {:fg :DarkYellow :italic is-gui}
+        :LspInlayHint {:fg :Gray :italic is-gui}})
 
 (local statusline {:StatusLine {:fg :Gray :bg :NONE}
                    :StatusLineError {:fg :DarkRed}
