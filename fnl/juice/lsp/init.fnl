@@ -68,7 +68,7 @@
     (vim.lsp.completion.enable true (. client :id) bufnr {:autotrigger false})))
 
 (fn setup []
-  (util.call-setup :juice.lsp.config)
+  (vim.lsp.config :* {:root_markers [:.git]})
   (vim.api.nvim_create_autocmd :LspAttach
                                {:callback (fn [event]
                                             (case (vim.lsp.get_client_by_id event.data.client_id)

@@ -54,7 +54,7 @@ local function configure_completion(client, bufnr)
   end
 end
 local function setup()
-  util["call-setup"]("juice.lsp.config")
+  vim.lsp.config("*", {root_markers = {".git"}})
   local function _12_(event)
     local case_13_ = vim.lsp.get_client_by_id(event.data.client_id)
     if (nil ~= case_13_) then
