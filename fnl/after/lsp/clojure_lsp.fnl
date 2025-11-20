@@ -1,1 +1,9 @@
-{:cmd [:clojure-lsp] :filetypes [:clojure :edn] :single_file_support true}
+{:cmd [:clojure-lsp]
+ :filetypes [:clojure :edn]
+ :root_markers [:project.clj
+                :deps.edn
+                :build.boot
+                :shadow-cljs.edn
+                :.git
+                :bb.edn]
+ :single_file_support true}
