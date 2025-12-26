@@ -14,26 +14,11 @@ local function read_path_list()
     return nil
   end
 end
-local function read_copilot_workspaces()
-  if vim.env.NVIM_COPILOT_WORKSPACES then
-    return string.split(vim.env.NVIM_COPILOT_WORKSPACES, ":")
-  else
-    return nil
-  end
-end
 local function load_env()
   core["merge!"](vim.opt, read_env_pairs())
-  do
-    local tmp_6_ = read_path_list()
-    if (tmp_6_ ~= nil) then
-      vim.opt.path = tmp_6_
-    else
-    end
-  end
-  local case_5_ = read_copilot_workspaces()
-  if (nil ~= case_5_) then
-    local workspaces = case_5_
-    vim.g.copilot_workspace_folders = core.distinct(core.concat(vim.g.copilot_workspace_folders, workspaces))
+  local tmp_6_ = read_path_list()
+  if (tmp_6_ ~= nil) then
+    vim.opt.path = tmp_6_
     return nil
   else
     return nil

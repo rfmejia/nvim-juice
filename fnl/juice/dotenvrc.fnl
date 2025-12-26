@@ -17,18 +17,9 @@
   (when vim.env.NVIM_PATH_LIST
     (core.concat ["." ""] (string.split vim.env.NVIM_PATH_LIST ":"))))
 
-(fn read-copilot-workspaces []
-  "Returns a list of Copilot workspaces from the NVIM_COPILOT_WORKSPACES env variable iff the env variable is not null"
-  (when vim.env.NVIM_COPILOT_WORKSPACES
-    (string.split vim.env.NVIM_COPILOT_WORKSPACES ":")))
-
 (fn load-env []
   (core.merge! vim.opt (read-env-pairs))
   (-?>> (read-path-list)
-        (set vim.opt.path))
-  (case (read-copilot-workspaces)
-    workspaces (set vim.g.copilot_workspace_folders
-                    (core.distinct (core.concat vim.g.copilot_workspace_folders
-                                                workspaces)))))
+        (set vim.opt.path)))
 
 {:setup load-env : read-path-list : load-env}

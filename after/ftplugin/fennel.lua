@@ -4,13 +4,13 @@ local autoload = _local_1_.autoload
 local notify = autoload("nfnl.notify")
 local core = autoload("nfnl.core")
 local util = autoload("juice.util")
-core["merge!"](vim.opt_local, {shiftwidth = 4, tabstop = 2, expandtab = true, textwidth = 100, commentstring = ";; %s"})
+core["merge!"](vim.opt_local, {shiftwidth = 4, tabstop = 2, expandtab = true, textwidth = 80, commentstring = ";; %s"})
 local function buffer_is_modified(buf_num)
   if (nil == buf_num) then
     _G.error("Missing argument buf-num on /home/rfmejia/.config/nvim/fnl/after/ftplugin/fennel.fnl:12", 2)
   else
   end
-  return vim.api.nvim_buf_get_option(buf_num, "modified")
+  return vim.api.nvim_get_option_value("modified", {buf = buf_num})
 end
 local function format_fennel(path)
   if (nil == path) then

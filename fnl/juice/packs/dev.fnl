@@ -27,6 +27,7 @@
                      {:desc "[dadbod] run buffer as sql statements"
                       :noremap true
                       :buffer true}]])
+
 (local gitsigns-maps
        (let [nav [[:n
                    "]g"

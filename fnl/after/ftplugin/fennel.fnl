@@ -6,11 +6,11 @@
 (core.merge! vim.opt_local {:shiftwidth 4
                             :tabstop 2
                             :expandtab true
-                            :textwidth 100
+                            :textwidth 80
                             :commentstring ";; %s"})
 
 (lambda buffer-is-modified [buf-num]
-  (vim.api.nvim_buf_get_option buf-num :modified))
+  (vim.api.nvim_get_option_value :modified {:buf buf-num}))
 
 (lambda format-fennel [path]
   (if (buffer-is-modified (vim.api.nvim_get_current_buf))

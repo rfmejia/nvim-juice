@@ -1,6 +1,5 @@
 (local {: autoload} (require :nfnl.module))
 (local notify (autoload :nfnl.notify))
-(local scalametals (autoload :juice.lsp.scalametals))
 (local str (autoload :nfnl.string))
 (local core (autoload :nfnl.core))
 (local util (autoload :juice.util))
@@ -39,8 +38,6 @@
                   {:desc "[scala] open scala-cli in a tmux split"
                    :buffer true
                    :silent true}))
-
-(scalametals.initialize-metals)
 
 (fn metals-lsp-started? []
   (accumulate [has-metals? false _ client (ipairs (vim.lsp.get_clients))]

@@ -2,7 +2,6 @@
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_.autoload
 local notify = autoload("nfnl.notify")
-local scalametals = autoload("juice.lsp.scalametals")
 local str = autoload("nfnl.string")
 local core = autoload("nfnl.core")
 local util = autoload("juice.util")
@@ -27,7 +26,6 @@ if util["executable?"]("scala-cli") then
   vim.keymap.set("n", "<leader>oc", ":!tmux split-window -v -l 30\\% scala-cli console %<cr><cr>", {desc = "[scala] open scala-cli in a tmux split", buffer = true, silent = true})
 else
 end
-scalametals["initialize-metals"]()
 local function metals_lsp_started_3f()
   local has_metals_3f = false
   for _, client in ipairs(vim.lsp.get_clients()) do
