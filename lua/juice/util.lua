@@ -33,22 +33,32 @@ local function set_keys(mappings)
   end
   return nil
 end
-local function call(plugin, func, ...)
+local function call(module, func, ...)
   if (nil == func) then
     _G.error("Missing argument func on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:18", 2)
   else
   end
-  if (nil == plugin) then
-    _G.error("Missing argument plugin on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:18", 2)
+  if (nil == module) then
+    _G.error("Missing argument module on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:18", 2)
   else
   end
-  return autoload(plugin)[func](...)
+  return autoload(module)[func](...)
 end
-local function call_setup(...)
-  for _, module in ipairs({...}) do
-    call(module, "setup")
+local function call_setup(modules)
+  if (nil == modules) then
+    _G.error("Missing argument modules on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:22", 2)
+  else
   end
-  return nil
+  if core["string?"](modules) then
+    return call(modules, "setup")
+  elseif core["sequential?"](modules) then
+    for _, module in ipairs(modules) do
+      call(module, "setup")
+    end
+    return nil
+  else
+    return nil
+  end
 end
 local function insert_lines(...)
   local buf = vim.api.nvim_get_current_buf()

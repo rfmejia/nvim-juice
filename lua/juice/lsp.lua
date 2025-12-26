@@ -1,11 +1,11 @@
--- [nfnl] fnl/juice/lsp/init.fnl
+-- [nfnl] fnl/juice/lsp.fnl
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_.autoload
 local core = autoload("nfnl.core")
 local util = autoload("juice.util")
 local function set_mappings(bufnr)
   if (nil == bufnr) then
-    _G.error("Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/init.fnl:5", 2)
+    _G.error("Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp.fnl:5", 2)
   else
   end
   local omnifunc_map = {{"i", "<C-space>", "<C-x><C-o>", {buffer = bufnr}}}
@@ -40,11 +40,11 @@ local function configure_diagnostics()
 end
 local function configure_completion(client, bufnr)
   if (nil == bufnr) then
-    _G.error("Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/init.fnl:66", 2)
+    _G.error("Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp.fnl:66", 2)
   else
   end
   if (nil == client) then
-    _G.error("Missing argument client on /home/rfmejia/.config/nvim/fnl/juice/lsp/init.fnl:66", 2)
+    _G.error("Missing argument client on /home/rfmejia/.config/nvim/fnl/juice/lsp.fnl:66", 2)
   else
   end
   if client:supports_method("textDocument/completion") then

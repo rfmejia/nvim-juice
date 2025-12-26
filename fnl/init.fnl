@@ -17,12 +17,23 @@
 (local {: autoload} (require :nfnl.module))
 (local util (autoload :juice.util))
 
-(util.call-setup :juice.options :juice.colorscheme :juice.plugins
-                 :juice.mappings :juice.commands :juice.lsp :juice.dotenvrc
-                 :journal-tools :git-info :tmux-nav :trim-whitespace
-                 :wildgitignore)
+(util.call-setup [:juice.options
+                  :juice.commands
+                  :juice.mappings
+                  :juice.colorscheme
+                  :juice.lsp
+                  :juice.packs.core
+                  :juice.packs.editing
+                  :juice.packs.dev
+                  :juice.packs.lisp
+                  :juice.packs.scalametals
+                  :juice.dotenvrc
+                  :journal-tools
+                  :git-info
+                  :tmux-nav
+                  :trim-whitespace
+                  :wildgitignore])
 
-;; TODO use vim-native plug management and implement a custom lazy loading solution (:h packadd)
 ;; TODO Create your own auto-pairs plugins
 ;; TODO Create your own surround plugins
 ;; TODO Finish marksman module

@@ -1,6 +1,7 @@
 (local {: autoload} (require :nfnl.module))
-(local statusline (autoload :juice.statusline))
 (local core (autoload :nfnl.core))
+(local pack (autoload :pack))
+(local statusline (autoload :juice.statusline))
 (local util (autoload :juice.util))
 
 (fn initialize-metals []
@@ -61,4 +62,11 @@
     (set vim.g.metals_status "Initializing Metals...")
     (metals.initialize_or_attach config)))
 
-{: initialize-metals}
+{:setup (fn []
+          (pack.add [{:src "https://github.com/scalameta/nvim-metals"}])
+          (pack.load-on-event :nvim-metals :FileType
+                              {:pattern :scala
+                               :callback (fn []
+                                           (local scalametals
+                                                  (autoload :juice.lsp.scalametals))
+                                           (initialize-metals))}))}

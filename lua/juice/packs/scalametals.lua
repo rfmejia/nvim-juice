@@ -1,8 +1,9 @@
--- [nfnl] fnl/juice/lsp/scalametals.fnl
+-- [nfnl] fnl/juice/packs/scalametals.fnl
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_.autoload
-local statusline = autoload("juice.statusline")
 local core = autoload("nfnl.core")
+local pack = autoload("pack")
+local statusline = autoload("juice.statusline")
 local util = autoload("juice.util")
 local function initialize_metals()
   local metals = autoload("metals")
@@ -13,7 +14,7 @@ local function initialize_metals()
   local metals_maps
   local function _2_(bufnr)
     if (nil == bufnr) then
-      _G.error("Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:23", 2)
+      _G.error("Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/packs/scalametals.fnl:24", 2)
     else
     end
     local function _4_()
@@ -28,11 +29,11 @@ local function initialize_metals()
   config.tvp = {panel_alignment = "right", toggle_node_mapping = "<CR>", node_command_mapping = "r"}
   local function _5_(client, bufnr)
     if (nil == bufnr) then
-      _G.error("Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:51", 2)
+      _G.error("Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/packs/scalametals.fnl:52", 2)
     else
     end
     if (nil == client) then
-      _G.error("Missing argument client on /home/rfmejia/.config/nvim/fnl/juice/lsp/scalametals.fnl:51", 2)
+      _G.error("Missing argument client on /home/rfmejia/.config/nvim/fnl/juice/packs/scalametals.fnl:52", 2)
     else
     end
     util["set-keys"](metals_maps(bufnr))
@@ -48,4 +49,12 @@ local function initialize_metals()
   vim.g.metals_status = "Initializing Metals..."
   return metals.initialize_or_attach(config)
 end
-return {["initialize-metals"] = initialize_metals}
+local function _9_()
+  pack.add({{src = "https://github.com/scalameta/nvim-metals"}})
+  local function _10_()
+    local scalametals = autoload("juice.lsp.scalametals")
+    return initialize_metals()
+  end
+  return pack["load-on-event"]("nvim-metals", "FileType", {pattern = "scala", callback = _10_})
+end
+return {setup = _9_}

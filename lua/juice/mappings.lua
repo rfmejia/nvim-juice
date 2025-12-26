@@ -15,7 +15,7 @@ local function _3_()
   --[[ -?>> (util.call "juice.dotenvrc" "read-path-list") (set vim.opt_local.path) ]]
   return nil
 end
-general = {{"n", "Y", "y$", {desc = "yank until the end of the line"}}, {"n", "<leader>w", vim.cmd.w, {desc = "write buffer", silent = true}}, {"n", "<leader>r", vim.cmd.registers, {desc = "list registers"}}, {"n", "<F5>", vim.cmd.make, {desc = "trigger `make` in shell"}}, {"n", "<leader>n", _2_, {desc = "toggle number and relativenumber options"}}, {"n", "<leader>ol", ":Lazy<cr>", {desc = "open lazy.nvim", silent = true}}, {"n", "<leader>on", _3_, {desc = "open nvim config in a new tab", silent = true}}}
+general = {{"n", "Y", "y$", {desc = "yank until the end of the line"}}, {"n", "<leader>w", vim.cmd.w, {desc = "write buffer", silent = true}}, {"n", "<leader>r", vim.cmd.registers, {desc = "list registers"}}, {"n", "<F5>", vim.cmd.make, {desc = "trigger `make` in shell"}}, {"n", "<leader>n", _2_, {desc = "toggle number and relativenumber options"}}, {"n", "<leader>on", _3_, {desc = "open nvim config in a new tab", silent = true}}}
 local filters
 do
   local _repeat
@@ -62,7 +62,7 @@ do
   end
   marks = core.concat({{"n", "''", _8_, {desc = "list quick marks (ARST and zxcd)"}}}, core.map(_9_, marks0), core.map(_10_, marks0))
 end
-local buffers = {{"n", "<leader>b", ":buffers<cr>:buffer<Space>"}, {"n", "<leader>x", ":bp|bdelete #<cr>", {desc = "[buffer] close buffer"}}}
+local buffers = {{"n", "<leader>b", ":buffers<cr>:b<Space>"}, {"n", "<leader>x", ":bp|bdelete #<cr>", {desc = "[buffer] close buffer"}}}
 local tabs = {{"n", "<leader>ts", ":tab split<cr>", {silent = true}}, {"n", "[t", vim.cmd.tabprevious}, {"n", "]t", vim.cmd.tabnext}, {"n", "[T", vim.cmd.tabfirst}, {"n", "]T", vim.cmd.tablast}}
 local quickfix = {{"n", "<leader>co", vim.cmd.copen, {desc = "open quickfix list"}}, {"n", "<leader>cc", vim.cmd.cclose, {desc = "close quickfix list"}}, {"n", "[q", vim.cmd.cprevious, {desc = "jump to the previous entry in the current quickfix list"}}, {"n", "]q", vim.cmd.cnext, {desc = "jump to the next entry in the current quickfix list"}}, {"n", "<leader>C", vim.cmd.chistory, {desc = "list quickfix history"}}, {"n", "[C", vim.cmd.colder, {desc = "jump to the previous quickfix list"}}, {"n", "]C", vim.cmd.cnewer, {desc = "jump to the newer quickfix list"}}}
 local loclist = {{"n", "<leader>lo", vim.cmd.lopen, {desc = "open loclist list"}}, {"n", "<leader>lc", vim.cmd.lclose, {desc = "close loclist list"}}, {"n", "[l", vim.cmd.lprevious, {desc = "jump to previous entry in the current loclist"}}, {"n", "]l", vim.cmd.lnext, {desc = "jump to next entry in the current loclist"}}, {"n", "<leader>L", vim.cmd.lhistory, {desc = "list loclist history"}}, {"n", "[L", vim.cmd.lolder, {desc = "jump to the previous loclist"}}, {"n", "]L", vim.cmd.lnewer, {desc = "jump to the newer loclist"}}}
@@ -84,127 +84,55 @@ local function _14_()
 end
 terminal_maps = {{"t", "<C-o><C-o>", "<C-\\><C-n>"}, {"n", "<leader>otc", _11_}, {"n", "<leader>ots", _12_}, {"n", "<leader>otv", _13_}, {"n", "<leader>ott", ":tabnew term://"}, {"n", "<leader>otd", _14_}}
 --[[ "-- PLUGIN-SPECIFIC MAPPINGS --" ]]
-local oil_maps
-local function _15_()
-  return util.call("oil", "open")
-end
-oil_maps = {{"n", "<leader>e", _15_, {desc = "[oil] explore files in current file's path", silent = true}}}
-local gitsigns_maps
-do
-  local nav
-  local function _16_()
-    return util.call("gitsigns", "nav_hunk", "next", {preview = true, wrap = false})
-  end
-  local function _17_()
-    return util.call("gitsigns", "nav_hunk", "prev", {preview = true, wrap = false})
-  end
-  nav = {{"n", "]g", _16_, {desc = "[gitsigns] jump to next git hunk"}}, {"n", "[g", _17_, {desc = "[gitsigns] jump to previous git hunk"}}}
-  local staging
-  local function _18_()
-    return util.call("gitsigns", "stage_hunk")
-  end
-  local function _19_()
-    return util.call("gitsigns", "reset_hunk")
-  end
-  local function _20_()
-    return util.call("gitsigns", "stage_buffer")
-  end
-  local function _21_()
-    return util.call("gitsigns", "reset_buffer")
-  end
-  local function _22_()
-    local function _23_()
-      return util.call("gitsigns", "stage_hunk", {[vim.fn.line(".")] = vim.fn.line("v")})
-    end
-    return _23_()
-  end
-  local function _24_()
-    return util.call("gitsigns", "reset_hunk", {[vim.fn.line(".")] = vim.fn.line("v")})
-  end
-  staging = {{"n", "<localleader>gs", _18_, {desc = "[gitsigns] (g)it (s)tage hunk"}}, {"n", "<localleader>gr", _19_, {desc = "(g)it (r)eset hunk"}}, {"n", "<localleader>gS", _20_, {desc = "[gitsigns] (g)it (S)tage buffer"}}, {"n", "<localleader>gR", _21_, {desc = "[gitsigns] (g)it (R)eset buffer"}}, {"v", "<localleader>gs", _22_, {desc = "[gitsigns] (g)it (s)tage hunk"}}, {"v", "<localleader>gr", _24_, {desc = "[gitsigns] (g)it (r)eset hunk"}}}
-  local blame
-  local function _25_()
-    return util.call("gitsigns", "blame_line", {full = true})
-  end
-  local function _26_()
-    return util.call("gitsigns", "toggle_current_line_blame")
-  end
-  blame = {{"n", "<localleader>gb", _25_, {desc = "[gitsigns] (g)it show line (b)lame"}}, {"n", "<localleader>gB", _26_, {desc = "[gitsigns] (g)it toggle current line (B)lame"}}}
-  local view
-  local function _27_()
-    return util.call("gitsigns", "toggle_signs")
-  end
-  local function _28_()
-    return util.call("gitsigns", "preview_hunk")
-  end
-  local function _29_()
-    return util.call("gitsigns", "preview_hunk_inline")
-  end
-  local function _30_()
-    return util.call("gitsigns", "diffthis")
-  end
-  view = {{"n", "<localleader>gt", _27_, {desc = "[gitsigns] toggle sign visibility"}}, {"n", "<localleader>gp", _28_, {desc = "[gitsigns] (g)it (p)review hunk"}}, {"n", "<localleader>gi", _29_, {desc = "[gitsigns] (g)it toggle (D)eleted hunks"}}, {"n", "<localleader>gd", _30_, {desc = "[gitsigns] (g)it show (d)iff"}}}
-  local list
-  local function _31_()
-    return util.call("gitsigns", "setloclist")
-  end
-  local function _32_()
-    return util.call("gitsigns", "setqflist", "all")
-  end
-  list = {{"n", "<localleader>gl", _31_, {desc = "[gitsigns] show buffer (g)it hunks in (l)oclist"}}, {"n", "<localleader>gc", _32_, {desc = "[gitsigns] show all (g)it hunks in qui(c)kfix list"}}}
-  gitsigns_maps = core.concat(nav, staging, blame, view, list)
-end
-local copilot_maps = {{"i", "<C-j>", "<Plug>(copilot-next)", {desc = "[copilot] next suggestion"}}, {"i", "<C-k>", "<Plug>(copilot-previous)", {desc = "[copilot] previous suggestion"}}, {"i", "<C-l>", "<Plug>(copilot-accept-word)", {desc = "[copilot] accept word suggestion"}}, {"i", "<C-h>", "<Plug>(copilot-dismiss)", {desc = "[copilot] dismiss suggestion"}}}
-local dadbod_maps = {{"n", "<localleader>d;", ":DB g:db ", {desc = "[dadbod] run an sql statement in command mode", noremap = true, buffer = true}}, {"n", "<localleader>dd", ":.DB g:db<cr>", {desc = "[dadbod] run line as an sql statement", noremap = true, buffer = true}}, {"n", "<localleader>dp", "vip:DB g:db<cr>", {desc = "[dadbod] run paragraph as an sql statement", noremap = true, buffer = true}}, {"n", "<localleader>db", ":%DB g:db<cr>", {desc = "[dadbod] run buffer as sql statements", noremap = true, buffer = true}}}
 local journal_maps
-local function _33_()
+local function _15_()
   return util.call("journal-tools", "insert-week")
 end
-local function _34_()
+local function _16_()
   return util.call("journal-tools", "insert-day")
 end
-local function _35_()
+local function _17_()
   return util.call("journal-tools", "insert-time")
 end
-local function _36_()
+local function _18_()
   return util.call("journal-tools", "insert-task")
 end
-journal_maps = {{"n", "<localleader>w", _33_, {desc = "[journal] insert current week as an h2 header", buffer = true, silent = true}}, {"n", "<localleader>d", _34_, {desc = "[journal] insert current date as an h3 header", buffer = true, silent = true}}, {"n", "<localleader>t", _35_, {desc = "[journal] insert current time as an h4 header", buffer = true, silent = true}}, {"n", "<localleader>x", _36_, {desc = "[journal] insert current time as an h4 header", buffer = true, silent = true}}}
+journal_maps = {{"n", "<localleader>w", _15_, {desc = "[journal] insert current week as an h2 header", buffer = true, silent = true}}, {"n", "<localleader>d", _16_, {desc = "[journal] insert current date as an h3 header", buffer = true, silent = true}}, {"n", "<localleader>t", _17_, {desc = "[journal] insert current time as an h4 header", buffer = true, silent = true}}, {"n", "<localleader>x", _18_, {desc = "[journal] insert current time as an h4 header", buffer = true, silent = true}}}
 --[[ "-- OPEN OTHER FILES AND PROGRAMS  --" ]]
 local journal_launchers
-local function _37_()
+local function _19_()
   util.call("journal-tools", "setup")
   return vim.cmd((":$tabnew" .. "$JOURNAL/journal.md"))
 end
-local function _38_()
+local function _20_()
   autoload("journal-tools")["load-journal-tools"]()
   return vim.cmd((":$tabnew" .. "$JOURNAL/linux/vim.adoc"))
 end
-journal_launchers = {{"n", "<leader>oj", _37_, {desc = "open journal in a new tab", silent = true}}, {"n", "<leader>ov", _38_, {desc = "open vim notes in a new tab", silent = true}}}
+journal_launchers = {{"n", "<leader>oj", _19_, {desc = "open journal in a new tab", silent = true}}, {"n", "<leader>ov", _20_, {desc = "open vim notes in a new tab", silent = true}}}
 local lazygit_launcher
-local _39_
+local _21_
 if vim.env.TMUX then
-  _39_ = ":!tmux neww lazygit<cr><cr>"
+  _21_ = ":!tmux neww lazygit<cr><cr>"
 else
-  local function _40_()
+  local function _22_()
     vim.cmd.tabnew("term://lazygit")
     return vim.cmd.startinsert()
   end
-  _39_ = _40_
+  _21_ = _22_
 end
-lazygit_launcher = {{"n", "<leader>og", _39_, {desc = "open lazygit in a new tab or tmux window", silent = true}}}
+lazygit_launcher = {{"n", "<leader>og", _21_, {desc = "open lazygit in a new tab or tmux window", silent = true}}}
 local opencode_launcher
-local _42_
+local _24_
 if vim.env.TMUX then
-  _42_ = ":!tmux split-window -l 40\\% opencode<cr><cr>"
+  _24_ = ":!tmux split-window -l 40\\% opencode<cr><cr>"
 else
-  local function _43_()
+  local function _25_()
     vim.cmd.vsplit("term://opencode")
     return vim.cmd.startinsert()
   end
-  _42_ = _43_
+  _24_ = _25_
 end
-opencode_launcher = {{"n", "<leader>oo", _42_, {desc = "open opencode in a new tab or tmux window", silent = true}}}
+opencode_launcher = {{"n", "<leader>oo", _24_, {desc = "open opencode in a new tab or tmux window", silent = true}}}
 local tmux_apps = {lazydocker = {{"n", "<leader>od", ":!tmux neww lazydocker<cr><cr>", {desc = "open lazydocker in a new tmux window", silent = true}}}}
 local function setup()
   local mappings = core.concat(general, filters, jumps, undo_steps, dates, marks, buffers, tabs, quickfix, loclist, search_replace, visual_indent, terminal_maps)
@@ -235,4 +163,4 @@ local function setup()
     return nil
   end
 end
-return {setup = setup, ["oil-maps"] = oil_maps, ["gitsigns-maps"] = gitsigns_maps, ["copilot-maps"] = copilot_maps, ["dadbod-maps"] = dadbod_maps, ["journal-maps"] = journal_maps}
+return {setup = setup, ["journal-maps"] = journal_maps}

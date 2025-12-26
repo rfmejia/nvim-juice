@@ -15,13 +15,14 @@
   (each [_ mapping (ipairs mappings)]
     (vim.keymap.set (unpack mapping))))
 
-(lambda call [plugin func ...]
-  "Autoload and call a plugin function with optional args"
-  ((. (autoload plugin) func) ...))
+(lambda call [module func ...]
+  "Autoload and call a module function with optional args"
+  ((. (autoload module) func) ...))
 
-(lambda call-setup [...]
-  (each [_ module (ipairs [...])]
-    (call module :setup)))
+(lambda call-setup [modules]
+  (if (core.string? modules) (call modules :setup)
+      (core.sequential? modules) (each [_ module (ipairs modules)]
+                                   (call module :setup))))
 
 (lambda insert-lines [...]
   "Insert text at the current cursor position"

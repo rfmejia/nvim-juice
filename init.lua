@@ -35,5 +35,7 @@ do
   else
   end
 end
+local _local_7_ = require("nfnl.module")
+local autoload = _local_7_.autoload
 local util = autoload("juice.util")
-return util["call-setup"]("juice.options", "juice.colorscheme", "juice.plugins", "juice.mappings", "juice.commands", "juice.lsp", "juice.dotenvrc", "journal-tools", "git-info", "tmux-nav", "trim-whitespace", "wildgitignore")
+return util["call-setup"]({"juice.options", "juice.commands", "juice.mappings", "juice.colorscheme", "juice.lsp", "juice.packs.core", "juice.packs.editing", "juice.packs.dev", "juice.packs.lisp", "juice.packs.scalametals", "juice.dotenvrc", "journal-tools", "git-info", "tmux-nav", "trim-whitespace", "wildgitignore"})

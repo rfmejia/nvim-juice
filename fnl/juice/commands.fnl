@@ -4,9 +4,9 @@
 (local commands
        {:ClipFilename ["let @+ = getreg('%')"
                        {:desc "copy current file path to clipboard"}]
-        :LoadEnv [#(do
-                     (util.call :juice.dotenvrc :load-env)
-                     (vim.notify "Loaded environment variables"))
+        :LoadEnv [(fn []
+                    (util.call :juice.dotenvrc :load-env)
+                    (vim.notify "Loaded environment variables"))
                   {:desc "(Re)load environment variables"}]})
 
 {:setup #(each [cmd-name args (pairs commands)]
