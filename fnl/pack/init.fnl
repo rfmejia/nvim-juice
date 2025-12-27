@@ -4,12 +4,20 @@
 (local str (autoload :nfnl.string))
 (local util (autoload :juice.util))
 
-(lambda reify-spec [spec]
+(lambda reify-spec [user-spec]
   "Validates and computes metadata for package specs"
-  (if (= nil (. spec :src)) [:error "Missing `src`"]
-      (let [name (or (?. spec :name) (core.last (str.split (. spec :src) "/")))
-            full-spec (core.assoc spec :name name)]
-        [:ok full-spec])))
+  (if (and (core.table? user-spec) (str.blank? (. user-spec :src)))
+      [:error "Missing `src`"]
+      (not (or (core.table? user-spec) (core.string? user-spec)))
+      [:error "Spec is not a table or string"]
+      :else
+      (let [spec (if (core.string? user-spec)
+                     {:src user-spec}
+                     user-spec)]
+        (let [name (or (?. spec :name)
+                       (core.last (str.split (. spec :src) "/")))
+              full-spec (core.assoc spec :name name)]
+          [:ok full-spec]))))
 
 (lambda pack-cloned? [{: name} pack-path]
   "Checks if a package has already been cloned to pack-path"
@@ -36,12 +44,13 @@
   "Add one or more package specifications
 
 Parameters:
-* `specs` (seq) A list of specs, where each spec is a dictionary containing:
-               * `src`: Git repository URL
-               * `name` (string) optional: Name of the package, otherwise use
-                 the repository name
-               * `version` (string) optional: Git branch to clone, otherwise
-                 use the repository default"
+* `specs` (string|seq) A list of specs, where each spec is a git repository URL 
+          to a pack or a dictionary containing:
+          * `src`: git repository URL
+          * `name` (string) optional: Name of the package, otherwise use
+          the repository name
+          * `version` (string) optional: Git branch to clone, otherwise
+          use the repository default"
   (let [pack-path (.. (vim.fn.stdpath :data) :/site/pack/juice/opt)]
     (each [_ spec (ipairs specs)]
       (case (reify-spec spec)
