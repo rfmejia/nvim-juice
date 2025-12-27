@@ -5,61 +5,72 @@ local core = autoload("nfnl.core")
 local fs = autoload("nfnl.fs")
 local str = autoload("nfnl.string")
 local util = autoload("juice.util")
+local function sanitize_url(url)
+  if (nil == url) then
+    _G.error("Missing argument url on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:7", 2)
+  else
+  end
+  local trimmed = str.trim(url)
+  if str["ends-with?"](trimmed, "/") then
+    return string.sub(trimmed, 1, core.dec(string.len(url)))
+  else
+    return trimmed
+  end
+end
 local function reify_spec(user_spec)
   if (nil == user_spec) then
-    _G.error("Missing argument user-spec on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:7", 2)
+    _G.error("Missing argument user-spec on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:13", 2)
   else
   end
-  if (core["table?"]() and (nil == user_spec.src)) then
-    do local _ = {"error", "Missing `src`"} end
-  else
-    do local _ = not core["string?"]() end
-  end
-  local spec
-  if core["string?"](user_spec) then
-    spec = {src = user_spec}
-  else
-    spec = user_spec
-  end
-  if (nil == spec.src) then
+  if (core["table?"](user_spec) and str["blank?"](user_spec.src)) then
     return {"error", "Missing `src`"}
-  else
+  elseif not (core["table?"](user_spec) or core["string?"](user_spec)) then
+    return {"error", "Spec is not a table or string"}
+  elseif "else" then
+    local spec
+    if core["string?"](user_spec) then
+      spec = {src = sanitize_url(user_spec)}
+    else
+      spec = core.update(user_spec, "src", sanitize_url)
+    end
     local name
-    local _6_
+    local _7_
     do
-      local t_5_ = spec
-      if (nil ~= t_5_) then
-        t_5_ = t_5_.name
+      local t_6_ = spec
+      if (nil ~= t_6_) then
+        t_6_ = t_6_.name
       else
       end
-      _6_ = t_5_
+      _7_ = t_6_
     end
-    name = (_6_ or core.last(str.split(spec.src, "/")))
+    name = (_7_ or core.last(str.split(spec.src, "/")))
     local full_spec = core.assoc(spec, "name", name)
     return {"ok", full_spec}
+  else
+    return nil
   end
 end
-local function pack_cloned_3f(_9_, pack_path)
-  local name = _9_.name
-  if (nil == pack_path) then
-    _G.error("Missing argument pack-path on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:22", 2)
-  else
-  end
-  if (nil == name) then
-    _G.error("Missing argument name on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:22", 2)
-  else
-  end
-  return fs["exists?"]((pack_path .. "/" .. name))
-end
-local function spec__3eclone_cmd(_12_, pack_path)
-  local src = _12_.src
-  local _3fversion = _12_.version
+local function pack_cloned_3f(_10_, pack_path)
+  local name = _10_.name
   if (nil == pack_path) then
     _G.error("Missing argument pack-path on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:26", 2)
   else
   end
+  if (nil == name) then
+    _G.error("Missing argument name on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:26", 2)
+  else
+  end
+  return fs["exists?"]((pack_path .. "/" .. name))
+end
+local function spec__3eclone_cmd(_13_, pack_path)
+  local src = _13_.src
+  local _3fversion = _13_.version
+  if (nil == pack_path) then
+    _G.error("Missing argument pack-path on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:30", 2)
+  else
+  end
   if (nil == src) then
-    _G.error("Missing argument src on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:26", 2)
+    _G.error("Missing argument src on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:30", 2)
   else
   end
   if _3fversion then
@@ -70,17 +81,17 @@ local function spec__3eclone_cmd(_12_, pack_path)
 end
 local function clone_src(spec, pack_path)
   if (nil == pack_path) then
-    _G.error("Missing argument pack-path on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:32", 2)
+    _G.error("Missing argument pack-path on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:36", 2)
   else
   end
   if (nil == spec) then
-    _G.error("Missing argument spec on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:32", 2)
+    _G.error("Missing argument spec on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:36", 2)
   else
   end
   vim.notify(string.format("[pack] Cloning %s to %s...", spec.name, pack_path))
-  local function _18_(...)
+  local function _19_(...)
     if ((_G.type(...) == "table") and ((...).code == 0)) then
-      local function _19_(...)
+      local function _20_(...)
         if ((_G.type(...) == "table") and ((...).code == 0)) then
           return vim.notify(string.format("[pack] Cloned %s", spec.name))
         elseif ((_G.type(...) == "table") and (nil ~= (...).stderr)) then
@@ -90,7 +101,7 @@ local function clone_src(spec, pack_path)
           return nil
         end
       end
-      return _19_(vim.system(spec__3eclone_cmd(spec, pack_path)):wait())
+      return _20_(vim.system(spec__3eclone_cmd(spec, pack_path)):wait())
     elseif ((_G.type(...) == "table") and (nil ~= (...).stderr)) then
       local stderr = (...).stderr
       return vim.notify(string.format("[pack] Could not clone %s: %s", spec.name, stderr), vim.log.levels.WARN)
@@ -98,22 +109,21 @@ local function clone_src(spec, pack_path)
       return nil
     end
   end
-  return _18_(vim.system({"mkdir", "-p", pack_path}):wait())
+  return _19_(vim.system({"mkdir", "-p", pack_path}):wait())
 end
-reify_spec("https://github.com/tpope/vim-vividchalk")
 local function add(specs)
   if (nil == specs) then
-    _G.error("Missing argument specs on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:45", 2)
+    _G.error("Missing argument specs on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:47", 2)
   else
   end
   local pack_path = (vim.fn.stdpath("data") .. "/site/pack/juice/opt")
   for _, spec in ipairs(specs) do
-    local case_23_ = reify_spec(spec)
-    if ((_G.type(case_23_) == "table") and (case_23_[1] == "error") and (nil ~= case_23_[2])) then
-      local reason = case_23_[2]
+    local case_24_ = reify_spec(spec)
+    if ((_G.type(case_24_) == "table") and (case_24_[1] == "error") and (nil ~= case_24_[2])) then
+      local reason = case_24_[2]
       vim.notify(string.format("[pack] Invalid spec: %s", reason), vim.log.levels.WARN)
-    elseif ((_G.type(case_23_) == "table") and (case_23_[1] == "ok") and (nil ~= case_23_[2])) then
-      local full_spec = case_23_[2]
+    elseif ((_G.type(case_24_) == "table") and (case_24_[1] == "ok") and (nil ~= case_24_[2])) then
+      local full_spec = case_24_[2]
       if not pack_cloned_3f(full_spec, pack_path) then
         clone_src(full_spec, pack_path)
       else
@@ -125,7 +135,7 @@ local function add(specs)
 end
 local function load_now(packs)
   if (nil == packs) then
-    _G.error("Missing argument packs on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:65", 2)
+    _G.error("Missing argument packs on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:67", 2)
   else
   end
   if core["sequential?"](packs) then
@@ -141,21 +151,21 @@ local function load_now(packs)
 end
 local function load_on_event(packs, events, opts)
   if (nil == opts) then
-    _G.error("Missing argument opts on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:76", 2)
+    _G.error("Missing argument opts on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:78", 2)
   else
   end
   if (nil == events) then
-    _G.error("Missing argument events on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:76", 2)
+    _G.error("Missing argument events on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:78", 2)
   else
   end
   if (nil == packs) then
-    _G.error("Missing argument packs on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:76", 2)
+    _G.error("Missing argument packs on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:78", 2)
   else
   end
   vim.api.nvim_create_augroup("pack", {clear = false})
   local user_callback = core.get(opts, "callback")
-  local function _31_(user_callback0)
-    local function _32_()
+  local function _32_(user_callback0)
+    local function _33_()
       load_now(packs)
       if core["function?"](user_callback0) then
         return user_callback0()
@@ -165,28 +175,28 @@ local function load_on_event(packs, events, opts)
         return nil
       end
     end
-    return _32_
+    return _33_
   end
-  core.update(opts, "callback", _31_)
+  core.update(opts, "callback", _32_)
   core.assoc(opts, "group", "pack", "once", true)
   return vim.api.nvim_create_autocmd(events, opts)
 end
 local function load_on_keymap(packs, keys, callback, _3ftrigger_after)
   if (nil == callback) then
-    _G.error("Missing argument callback on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:94", 2)
+    _G.error("Missing argument callback on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:96", 2)
   else
   end
   if (nil == keys) then
-    _G.error("Missing argument keys on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:94", 2)
+    _G.error("Missing argument keys on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:96", 2)
   else
   end
   if (nil == packs) then
-    _G.error("Missing argument packs on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:94", 2)
+    _G.error("Missing argument packs on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:96", 2)
   else
   end
   local mode = "n"
   local clear_triggers
-  local function _37_()
+  local function _38_()
     if core["sequential?"](keys) then
       for _, lhs in ipairs(keys) do
         vim.keymap.del(mode, lhs)
@@ -198,9 +208,9 @@ local function load_on_keymap(packs, keys, callback, _3ftrigger_after)
       return nil
     end
   end
-  clear_triggers = _37_
+  clear_triggers = _38_
   local start
-  local function _39_(mode0, lhs, user_opts)
+  local function _40_(mode0, lhs, user_opts)
     load_now(packs)
     clear_triggers()
     if core["function?"](callback) then
@@ -209,15 +219,15 @@ local function load_on_keymap(packs, keys, callback, _3ftrigger_after)
     end
     return (_3ftrigger_after or (nil == _3ftrigger_after) or vim.api.nvim_input(lhs))
   end
-  start = _39_
+  start = _40_
   local set_trigger
-  local function _41_(mode0, lhs)
-    local function _42_()
+  local function _42_(mode0, lhs)
+    local function _43_()
       return start(mode0, lhs)
     end
-    return vim.keymap.set(mode0, lhs, _42_)
+    return vim.keymap.set(mode0, lhs, _43_)
   end
-  set_trigger = _41_
+  set_trigger = _42_
   if core["sequential?"](keys) then
     for _, key in ipairs(keys) do
       set_trigger("n", key)

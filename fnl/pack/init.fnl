@@ -4,6 +4,12 @@
 (local str (autoload :nfnl.string))
 (local util (autoload :juice.util))
 
+(lambda sanitize-url [url]
+  (let [trimmed (str.trim url)]
+    (if (str.ends-with? trimmed "/")
+        (string.sub trimmed 1 (core.dec (string.len url)))
+        trimmed)))
+
 (lambda reify-spec [user-spec]
   "Validates and computes metadata for package specs"
   (if (and (core.table? user-spec) (str.blank? (. user-spec :src)))
@@ -11,13 +17,11 @@
       (not (or (core.table? user-spec) (core.string? user-spec)))
       [:error "Spec is not a table or string"]
       :else
-      (let [spec (if (core.string? user-spec)
-                     {:src user-spec}
-                     user-spec)]
-        (let [name (or (?. spec :name)
-                       (core.last (str.split (. spec :src) "/")))
-              full-spec (core.assoc spec :name name)]
-          [:ok full-spec]))))
+      (let [spec (if (core.string? user-spec) {:src (sanitize-url user-spec)}
+                     (core.update user-spec :src sanitize-url))
+            name (or (?. spec :name) (core.last (str.split (. spec :src) "/")))
+            full-spec (core.assoc spec :name name)]
+        [:ok full-spec])))
 
 (lambda pack-cloned? [{: name} pack-path]
   "Checks if a package has already been cloned to pack-path"
