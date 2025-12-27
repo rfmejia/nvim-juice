@@ -9,7 +9,7 @@
 {:setup (fn []
           (pack.add [{:src "https://github.com/nvim-treesitter/nvim-treesitter"
                       :version :master}
-                     {:src "https://github.com/stevearc/oil.nvim"}])
+                     "https://github.com/stevearc/oil.nvim"])
           (pack.load-now [:nvim-treesitter :oil.nvim])
           (util.call :nvim-treesitter.configs :setup
                      {:highlight {:enable true} :indent {:enable true}})

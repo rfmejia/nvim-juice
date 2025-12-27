@@ -111,31 +111,52 @@ local function clone_src(spec, pack_path)
   end
   return _19_(vim.system({"mkdir", "-p", pack_path}):wait())
 end
+local function add_spec(spec, pack_path)
+  if (nil == pack_path) then
+    _G.error("Missing argument pack-path on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:47", 2)
+  else
+  end
+  if (nil == spec) then
+    _G.error("Missing argument spec on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:47", 2)
+  else
+  end
+  local case_25_ = reify_spec(spec)
+  if ((_G.type(case_25_) == "table") and (case_25_[1] == "error") and (nil ~= case_25_[2])) then
+    local reason = case_25_[2]
+    return vim.notify(string.format("[pack] Invalid spec: %s", reason), vim.log.levels.WARN)
+  elseif ((_G.type(case_25_) == "table") and (case_25_[1] == "ok") and (nil ~= case_25_[2])) then
+    local full_spec = case_25_[2]
+    if not pack_cloned_3f(full_spec, pack_path) then
+      return clone_src(full_spec, pack_path)
+    else
+      return nil
+    end
+  else
+    return nil
+  end
+end
 local function add(specs)
   if (nil == specs) then
-    _G.error("Missing argument specs on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:47", 2)
+    _G.error("Missing argument specs on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:54", 2)
   else
   end
   local pack_path = (vim.fn.stdpath("data") .. "/site/pack/juice/opt")
-  for _, spec in ipairs(specs) do
-    local case_24_ = reify_spec(spec)
-    if ((_G.type(case_24_) == "table") and (case_24_[1] == "error") and (nil ~= case_24_[2])) then
-      local reason = case_24_[2]
-      vim.notify(string.format("[pack] Invalid spec: %s", reason), vim.log.levels.WARN)
-    elseif ((_G.type(case_24_) == "table") and (case_24_[1] == "ok") and (nil ~= case_24_[2])) then
-      local full_spec = case_24_[2]
-      if not pack_cloned_3f(full_spec, pack_path) then
-        clone_src(full_spec, pack_path)
-      else
-      end
-    else
+  if core["sequential?"](specs) then
+    for _, spec in ipairs(specs) do
+      add_spec(spec, pack_path)
     end
+    return nil
+  elseif core["string?"](specs) then
+    return add_spec(specs, pack_path)
+  elseif "else" then
+    return vim.notify("[pack] Invalid spec: must be a list or string", vim.log.levels.WARN)
+  else
+    return nil
   end
-  return nil
 end
 local function load_now(packs)
   if (nil == packs) then
-    _G.error("Missing argument packs on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:67", 2)
+    _G.error("Missing argument packs on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:75", 2)
   else
   end
   if core["sequential?"](packs) then
@@ -151,21 +172,21 @@ local function load_now(packs)
 end
 local function load_on_event(packs, events, opts)
   if (nil == opts) then
-    _G.error("Missing argument opts on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:78", 2)
+    _G.error("Missing argument opts on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:86", 2)
   else
   end
   if (nil == events) then
-    _G.error("Missing argument events on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:78", 2)
+    _G.error("Missing argument events on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:86", 2)
   else
   end
   if (nil == packs) then
-    _G.error("Missing argument packs on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:78", 2)
+    _G.error("Missing argument packs on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:86", 2)
   else
   end
   vim.api.nvim_create_augroup("pack", {clear = false})
   local user_callback = core.get(opts, "callback")
-  local function _32_(user_callback0)
-    local function _33_()
+  local function _35_(user_callback0)
+    local function _36_()
       load_now(packs)
       if core["function?"](user_callback0) then
         return user_callback0()
@@ -175,28 +196,28 @@ local function load_on_event(packs, events, opts)
         return nil
       end
     end
-    return _33_
+    return _36_
   end
-  core.update(opts, "callback", _32_)
+  core.update(opts, "callback", _35_)
   core.assoc(opts, "group", "pack", "once", true)
   return vim.api.nvim_create_autocmd(events, opts)
 end
 local function load_on_keymap(packs, keys, callback, _3ftrigger_after)
   if (nil == callback) then
-    _G.error("Missing argument callback on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:96", 2)
+    _G.error("Missing argument callback on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:104", 2)
   else
   end
   if (nil == keys) then
-    _G.error("Missing argument keys on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:96", 2)
+    _G.error("Missing argument keys on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:104", 2)
   else
   end
   if (nil == packs) then
-    _G.error("Missing argument packs on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:96", 2)
+    _G.error("Missing argument packs on /home/rfmejia/.config/nvim/fnl/pack/init.fnl:104", 2)
   else
   end
   local mode = "n"
   local clear_triggers
-  local function _38_()
+  local function _41_()
     if core["sequential?"](keys) then
       for _, lhs in ipairs(keys) do
         vim.keymap.del(mode, lhs)
@@ -208,9 +229,9 @@ local function load_on_keymap(packs, keys, callback, _3ftrigger_after)
       return nil
     end
   end
-  clear_triggers = _38_
+  clear_triggers = _41_
   local start
-  local function _40_(mode0, lhs, user_opts)
+  local function _43_(mode0, lhs, user_opts)
     load_now(packs)
     clear_triggers()
     if core["function?"](callback) then
@@ -219,15 +240,15 @@ local function load_on_keymap(packs, keys, callback, _3ftrigger_after)
     end
     return (_3ftrigger_after or (nil == _3ftrigger_after) or vim.api.nvim_input(lhs))
   end
-  start = _40_
+  start = _43_
   local set_trigger
-  local function _42_(mode0, lhs)
-    local function _43_()
+  local function _45_(mode0, lhs)
+    local function _46_()
       return start(mode0, lhs)
     end
-    return vim.keymap.set(mode0, lhs, _43_)
+    return vim.keymap.set(mode0, lhs, _46_)
   end
-  set_trigger = _42_
+  set_trigger = _45_
   if core["sequential?"](keys) then
     for _, key in ipairs(keys) do
       set_trigger("n", key)

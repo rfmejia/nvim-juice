@@ -44,6 +44,13 @@
                                                  (. spec :name) stderr)
                                   vim.log.levels.WARN))))
 
+(lambda add-spec [spec pack-path]
+  (case (reify-spec spec)
+    [:error reason] (vim.notify (string.format "[pack] Invalid spec: %s" reason)
+                                vim.log.levels.WARN)
+    [:ok full-spec] (when (not (pack-cloned? full-spec pack-path))
+                      (clone-src full-spec pack-path))))
+
 (lambda add [specs]
   "Add one or more package specifications
 
@@ -56,13 +63,14 @@ Parameters:
           * `version` (string) optional: Git branch to clone, otherwise
           use the repository default"
   (let [pack-path (.. (vim.fn.stdpath :data) :/site/pack/juice/opt)]
-    (each [_ spec (ipairs specs)]
-      (case (reify-spec spec)
-        [:error reason] (vim.notify (string.format "[pack] Invalid spec: %s"
-                                                   reason)
-                                    vim.log.levels.WARN)
-        [:ok full-spec] (when (not (pack-cloned? full-spec pack-path))
-                          (clone-src full-spec pack-path))))))
+    (if (core.sequential? specs)
+        (each [_ spec (ipairs specs)]
+          (add-spec spec pack-path))
+        (core.string? specs)
+        (add-spec specs pack-path)
+        :else
+        (vim.notify "[pack] Invalid spec: must be a list or string"
+                    vim.log.levels.WARN))))
 
 (lambda load-now [packs]
   "Load packs

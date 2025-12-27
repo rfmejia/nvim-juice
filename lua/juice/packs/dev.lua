@@ -71,7 +71,7 @@ do
   gitsigns_maps = core.concat(nav, staging, blame, view, list)
 end
 local function _19_()
-  pack.add({{src = "https://github.com/tpope/vim-dadbod"}, {src = "https://github.com/kristijanhusak/vim-dadbod-completion"}, {src = "https://github.com/lewis6991/gitsigns.nvim"}})
+  pack.add({"https://github.com/tpope/vim-dadbod", "https://github.com/kristijanhusak/vim-dadbod-completion", "https://github.com/lewis6991/gitsigns.nvim"})
   local function _20_()
     return util["set-keys"](dadbod_maps)
   end

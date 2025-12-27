@@ -50,7 +50,7 @@ local function initialize_metals()
   return metals.initialize_or_attach(config)
 end
 local function _9_()
-  pack.add({{src = "https://github.com/scalameta/nvim-metals"}})
+  pack.add("https://github.com/scalameta/nvim-metals")
   local function _10_()
     local scalametals = autoload("juice.lsp.scalametals")
     return initialize_metals()

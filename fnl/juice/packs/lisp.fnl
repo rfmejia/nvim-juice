@@ -4,8 +4,8 @@
 (local util (autoload :juice.util))
 
 {:setup (fn []
-          (pack.add [{:src "https://github.com/Olical/conjure"}
-                     {:src "https://github.com/julienvincent/nvim-paredit"}])
+          (pack.add ["https://github.com/Olical/conjure"
+                     "https://github.com/julienvincent/nvim-paredit"])
           (pack.load-on-event [:conjure :nvim-paredit] :FileType
                               {:pattern [:clojure :fennel]
                                :callback (fn []

@@ -63,7 +63,7 @@
     (metals.initialize_or_attach config)))
 
 {:setup (fn []
-          (pack.add [{:src "https://github.com/scalameta/nvim-metals"}])
+          (pack.add "https://github.com/scalameta/nvim-metals")
           (pack.load-on-event :nvim-metals :FileType
                               {:pattern :scala
                                :callback (fn []

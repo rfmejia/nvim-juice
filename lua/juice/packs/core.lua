@@ -7,7 +7,7 @@ local util = autoload("juice.util")
            backward-incompatible rewrite, set branch to `master` until rewrite
            is complete" ]]
 local function _2_()
-  pack.add({{src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "master"}, {src = "https://github.com/stevearc/oil.nvim"}})
+  pack.add({{src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "master"}, "https://github.com/stevearc/oil.nvim"})
   pack["load-now"]({"nvim-treesitter", "oil.nvim"})
   util.call("nvim-treesitter.configs", "setup", {highlight = {enable = true}, indent = {enable = true}})
   util.call("oil", "setup", {default_file_explorer = true, delete_to_trash = true, skip_confirm_for_simple_edits = true, view_options = {show_hidden = true}})

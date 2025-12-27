@@ -100,9 +100,9 @@
          (core.concat nav staging blame view list)))
 
 {:setup (fn []
-          (pack.add [{:src "https://github.com/tpope/vim-dadbod"}
-                     {:src "https://github.com/kristijanhusak/vim-dadbod-completion"}
-                     {:src "https://github.com/lewis6991/gitsigns.nvim"}])
+          (pack.add ["https://github.com/tpope/vim-dadbod"
+                     "https://github.com/kristijanhusak/vim-dadbod-completion"
+                     "https://github.com/lewis6991/gitsigns.nvim"])
           (pack.load-on-event [:vim-dadbod :vim-dadbod-completion] :FileType
                               {:pattern [:sql :mysql :pgsql]
                                :callback #(util.set-keys dadbod-maps)})

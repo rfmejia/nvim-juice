@@ -3,8 +3,8 @@
 (local util (autoload :juice.util))
 
 {:setup (fn []
-          (pack.add [{:src "https://github.com/windwp/nvim-autopairs"}
-                     {:src "https://github.com/kylechui/nvim-surround"}])
+          (pack.add ["https://github.com/windwp/nvim-autopairs"
+                     "https://github.com/kylechui/nvim-surround"])
           (pack.load-on-keymap :nvim-surround [:cs :ds :ys]
                                #(util.call-setup :nvim-surround))
           (pack.load-on-event :nvim-autopairs :InsertEnter

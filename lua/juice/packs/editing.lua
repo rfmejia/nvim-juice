@@ -4,7 +4,7 @@ local autoload = _local_1_.autoload
 local pack = autoload("pack")
 local util = autoload("juice.util")
 local function _2_()
-  pack.add({{src = "https://github.com/windwp/nvim-autopairs"}, {src = "https://github.com/kylechui/nvim-surround"}})
+  pack.add({"https://github.com/windwp/nvim-autopairs", "https://github.com/kylechui/nvim-surround"})
   local function _3_()
     return util["call-setup"]("nvim-surround")
   end
