@@ -79,7 +79,13 @@ local function _19_()
   local function _21_()
     util["call-setup"]("gitsigns")
     util["set-keys"](gitsigns_maps)
-    return util.call("gitsigns", "toggle_signs")
+    --[[ "if not signcolumn set signcolumn" ]]
+    if ("no" == vim.o.signcolumn) then
+      vim.opt.signcolumn = "yes"
+      return nil
+    else
+      return nil
+    end
   end
   return pack["load-on-keymap"]("gitsigns.nvim", "<localleader>gt", _21_)
 end

@@ -33,8 +33,8 @@
                :number false
                ; show numbers relative to current line
                :relativenumber false
-               ; display line column
-               :signcolumn "yes:1"
+               ; hide line column
+               :signcolumn :no
                ; highlight cursor position row
                :cursorline true
                ; prefer adding horizontal split below

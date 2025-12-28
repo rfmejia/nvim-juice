@@ -40,7 +40,6 @@
 
 (fn setup []
   (vim.cmd.colorscheme :default)
-  ;; (vim.cmd "set notermguicolors") FIXME termguicolors is not detected properly
   (core.map set-hl [general diagnostic-virtual-text statusline]))
 
 {: setup}

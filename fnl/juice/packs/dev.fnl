@@ -110,4 +110,5 @@
                                (fn []
                                  (util.call-setup :gitsigns)
                                  (util.set-keys gitsigns-maps)
-                                 (util.call :gitsigns :toggle_signs))))}
+                                 (when (= :no vim.o.signcolumn)
+                                   (set vim.opt.signcolumn :yes)))))}
