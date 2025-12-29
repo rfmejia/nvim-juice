@@ -29,9 +29,10 @@
 
 (fn insert-yaml-metadata []
   (let [filename (vim.fn.expand "%:t:r")
-        now (vim.fn.strftime "%FT%T%z" (vim.fn.localtime))]
-    (util.insert-lines "---" (.. "title: " filename) (.. "created: " now)
-                       "tags: []" "---" "")))
+        now (vim.fn.strftime "%FT%T%z" (vim.fn.localtime))
+        text (.. "---" "\n" "title: " filename "created: " now "tags: []" "---"
+                 "\n")]
+    (vim.api.nvim_paste text false -1)))
 
 (util.set-keys [[:n
                  :<localleader>m

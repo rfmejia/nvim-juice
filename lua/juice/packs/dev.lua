@@ -79,7 +79,6 @@ local function _19_()
   local function _21_()
     util["call-setup"]("gitsigns")
     util["set-keys"](gitsigns_maps)
-    --[[ "if not signcolumn set signcolumn" ]]
     if ("no" == vim.o.signcolumn) then
       vim.opt.signcolumn = "yes"
       return nil

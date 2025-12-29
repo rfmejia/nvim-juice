@@ -60,10 +60,4 @@ local function call_setup(modules)
     return nil
   end
 end
-local function insert_lines(...)
-  local buf = vim.api.nvim_get_current_buf()
-  local row, col = unpack(vim.api.nvim_win_get_cursor(0))
-  local _row = (row - 1)
-  return vim.api.nvim_buf_set_lines(buf, _row, (_row + 1), false, {...})
-end
-return {["lua-cmd"] = lua_cmd, ["executable?"] = executable_3f, ["has?"] = has_3f, ["set-keys"] = set_keys, call = call, ["call-setup"] = call_setup, ["insert-lines"] = insert_lines}
+return {["lua-cmd"] = lua_cmd, ["executable?"] = executable_3f, ["has?"] = has_3f, ["set-keys"] = set_keys, call = call, ["call-setup"] = call_setup}

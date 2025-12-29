@@ -14,6 +14,7 @@ end
 local function insert_yaml_metadata()
   local filename = vim.fn.expand("%:t:r")
   local now = vim.fn.strftime("%FT%T%z", vim.fn.localtime())
-  return util["insert-lines"]("---", ("title: " .. filename), ("created: " .. now), "tags: []", "---", "")
+  local text = ("---" .. "\n" .. "title: " .. filename .. "created: " .. now .. "tags: []" .. "---" .. "\n")
+  return vim.api.nvim_paste(text, false, -1)
 end
 return util["set-keys"]({{"n", "<localleader>m", insert_yaml_metadata, {desc = "[markdown] insert metadata as a YAML header", buffer = true, silent = true}}, {"n", "<localleader>v", render_markdown_to_html, {desc = "[markdown] convert to HTML and show preview in browser", buffer = true, silent = true}}})

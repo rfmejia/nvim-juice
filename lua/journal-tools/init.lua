@@ -36,26 +36,25 @@ local function insert_week()
   local week_num = vim.fn.strftime("%U")
   local week_start = find_day("back", "Mon", vim.fn.localtime())
   local week_end = find_day("fwd", "Sun", vim.fn.localtime())
-  local text = ("## Week " .. week_num .. " (" .. week_start .. " to " .. week_end .. ")")
-  util["insert-lines"]("----", "", text, "", "", "")
-  return vim.cmd.normal("4j")
+  local text = ("----" .. "\n\n" .. "## Week " .. week_num .. " (" .. week_start .. " to " .. week_end .. ")" .. "\n\n")
+  return vim.api.nvim_paste(text, false, -1)
 end
 local function insert_day()
   local day_format = vim.g.journal_tools["day-format"]
   local curr_day = vim.fn.strftime(day_format)
-  local text = ("### " .. curr_day)
-  util["insert-lines"](text, "", "")
-  return vim.cmd.normal("2j")
+  local text = ("### " .. curr_day .. "\n\n")
+  return vim.api.nvim_paste(text, false, -1)
 end
 local function insert_time()
   local time_format = vim.g.journal_tools["time-format"]
   local curr_time = vim.fn.strftime(time_format)
   local text = ("#### " .. curr_time .. " ")
-  util["insert-lines"](text)
+  vim.api.nvim_paste(text, false, -1)
   return vim.cmd("startinsert!")
 end
+--[[ (insert-week) (vim.print (. vim.g.journal_tools "task-format")) (vim.api.nvim_paste (.. (. vim.g.journal_tools "task-format") "\n" 1) true -1) ]]
 local function insert_task()
-  util["insert-lines"](vim.g.journal_tools["task-format"])
+  vim.api.nvim_paste(vim.g.journal_tools["task-format"], false, -1)
   return vim.cmd("startinsert!")
 end
 local function register_tools(user_opts)

@@ -18,27 +18,29 @@
   (let [week-num (vim.fn.strftime "%U")
         week-start (find-day :back :Mon (vim.fn.localtime))
         week-end (find-day :fwd :Sun (vim.fn.localtime))
-        text (.. "## Week " week-num " (" week-start " to " week-end ")")]
-    (util.insert-lines "----" "" text "" "" "")
-    (vim.cmd.normal :4j)))
+        text (.. "----" "\n\n" "## Week " week-num " (" week-start " to "
+                 week-end ")" "\n\n")]
+    (vim.api.nvim_paste text false -1)))
 
 (fn insert-day []
   (let [day-format (. vim.g.journal_tools :day-format)
         curr-day (vim.fn.strftime day-format)
-        text (.. "### " curr-day)]
-    (util.insert-lines text "" "")
-    (vim.cmd.normal :2j)))
+        text (.. "### " curr-day "\n\n")]
+    (vim.api.nvim_paste text false -1)))
 
 (fn insert-time []
   (let [time-format (. vim.g.journal_tools :time-format)
         curr-time (vim.fn.strftime time-format)
         text (.. "#### " curr-time " ")]
-    (util.insert-lines text)
+    (vim.api.nvim_paste text false -1)
     (vim.cmd :startinsert!)))
 
+(comment (insert-week)
+  (vim.print (. vim.g.journal_tools :task-format))
+  (vim.api.nvim_paste (.. (. vim.g.journal_tools :task-format) "\n" 1) true -1))
+
 (fn insert-task []
-  (->> (. vim.g.journal_tools :task-format)
-       (util.insert-lines))
+  (vim.api.nvim_paste (. vim.g.journal_tools :task-format) false -1)
   (vim.cmd :startinsert!))
 
 (fn register-tools [user-opts]

@@ -24,11 +24,4 @@
       (core.sequential? modules) (each [_ module (ipairs modules)]
                                    (call module :setup))))
 
-(lambda insert-lines [...]
-  "Insert text at the current cursor position"
-  (let [buf (vim.api.nvim_get_current_buf)
-        (row col) (unpack (vim.api.nvim_win_get_cursor 0))
-        _row (- row 1)]
-    (vim.api.nvim_buf_set_lines buf _row (+ _row 1) false [...])))
-
-{: lua-cmd : executable? : has? : set-keys : call : call-setup : insert-lines}
+{: lua-cmd : executable? : has? : set-keys : call : call-setup}
