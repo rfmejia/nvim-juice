@@ -13,5 +13,3 @@
                               :desc "[clojure] call vim.lsp.buf.format on save"
                               :group (vim.api.nvim_create_augroup :format_group
                                                                   {:clear true})})
-
-(vim.lsp.enable :clojure_lsp)

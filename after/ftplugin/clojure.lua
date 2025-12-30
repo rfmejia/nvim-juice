@@ -3,5 +3,4 @@ local _local_1_ = require("nfnl.module")
 local autoload = _local_1_.autoload
 local core = autoload("nfnl.core")
 core["merge!"](vim.opt_local, {shiftwidth = 2, tabstop = 2, expandtab = true, textwidth = 80, commentstring = ";; %s"})
-vim.api.nvim_create_autocmd("BufWritePre", {pattern = {"*.clj", "*.cljs", "*.edn"}, callback = vim.lsp.buf.format, desc = "[clojure] call vim.lsp.buf.format on save", group = vim.api.nvim_create_augroup("format_group", {clear = true})})
-return vim.lsp.enable("clojure_lsp")
+return vim.api.nvim_create_autocmd("BufWritePre", {pattern = {"*.clj", "*.cljs", "*.edn"}, callback = vim.lsp.buf.format, desc = "[clojure] call vim.lsp.buf.format on save", group = vim.api.nvim_create_augroup("format_group", {clear = true})})

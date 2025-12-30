@@ -33,4 +33,3 @@
                               :group (vim.api.nvim_create_augroup :format_group
                                                                   {:clear true})})
 
-(vim.lsp.enable :fennel_ls)

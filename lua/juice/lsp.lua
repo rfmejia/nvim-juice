@@ -54,7 +54,9 @@ local function configure_completion(client, bufnr)
   end
 end
 local function setup()
-  vim.lsp.config("*", {root_markers = {".git"}})
+  local config = {root_markers = {".git"}}
+  local lsp_configs = {"fennel_ls", "clojure_lsp", "gopls", "jdtls"}
+  local on_attach
   local function _12_(event)
     local case_13_ = vim.lsp.get_client_by_id(event.data.client_id)
     if (nil ~= case_13_) then
@@ -66,6 +68,11 @@ local function setup()
       return nil
     end
   end
-  return vim.api.nvim_create_autocmd("LspAttach", {callback = _12_})
+  on_attach = _12_
+  vim.lsp.config("*", config)
+  for _, lsp_config in ipairs(lsp_configs) do
+    vim.lsp.enable(lsp_config)
+  end
+  return vim.api.nvim_create_autocmd("LspAttach", {callback = on_attach})
 end
 return {setup = setup}

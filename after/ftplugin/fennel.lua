@@ -43,5 +43,4 @@ vim.api.nvim_buf_create_user_command(0, "FnlFmt", _9_, {bang = true})
 local function _10_()
   return format_fennel(vim.fn.expand("%:p"))
 end
-vim.api.nvim_create_autocmd("BufWritePost", {callback = _10_, buffer = vim.api.nvim_get_current_buf(), desc = "format on buffer write", group = vim.api.nvim_create_augroup("format_group", {clear = true})})
-return vim.lsp.enable("fennel_ls")
+return vim.api.nvim_create_autocmd("BufWritePost", {callback = _10_, buffer = vim.api.nvim_get_current_buf(), desc = "format on buffer write", group = vim.api.nvim_create_augroup("format_group", {clear = true})})

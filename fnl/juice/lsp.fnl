@@ -68,14 +68,17 @@
     (vim.lsp.completion.enable true (. client :id) bufnr {:autotrigger false})))
 
 (fn setup []
-  (vim.lsp.config :* {:root_markers [:.git]})
-  (vim.api.nvim_create_autocmd :LspAttach
-                               {:callback (fn [event]
-                                            (case (vim.lsp.get_client_by_id event.data.client_id)
-                                              client (do
-                                                       (set-mappings event.buf)
-                                                       (configure-completion client
-                                                                             event.buf)
-                                                       (configure-diagnostics))))}))
+  (let [config {:root_markers [:.git]}
+        lsp-configs [:fennel_ls :clojure_lsp :gopls :jdtls]
+        on-attach (fn [event]
+                    (case (vim.lsp.get_client_by_id event.data.client_id)
+                      client (do
+                               (set-mappings event.buf)
+                               (configure-completion client event.buf)
+                               (configure-diagnostics))))]
+    (vim.lsp.config "*" config)
+    (each [_ lsp-config (ipairs lsp-configs)]
+      (vim.lsp.enable lsp-config))
+    (vim.api.nvim_create_autocmd :LspAttach {:callback on-attach})))
 
 {: setup}
