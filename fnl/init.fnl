@@ -16,7 +16,6 @@
 
 (local {: autoload} (require :nfnl.module))
 (local util (autoload :juice.util))
-
 (util.call-setup [:juice.options
                   :juice.filetypes
                   :juice.commands
@@ -24,17 +23,7 @@
                   :juice.mappings
                   :juice.colorscheme
                   :juice.lsp
-                  :juice.dotenvrc
-                  :juice.packs.core
-                  :juice.packs.editing
-                  :juice.packs.dev
-                  :juice.packs.lisp
-                  :juice.packs.scalametals
-                  :journal-tools
-                  :git-info
-                  :tmux-nav
-                  :trim-whitespace
-                  :wildgitignore])
+                  :juice.dotenvrc])
 
 ;; TODO Create your own auto-pairs plugins
 ;; TODO Create your own surround plugins

@@ -12,23 +12,28 @@
 (lambda count-warnings []
   (case (count-diagnostic 0 vim.diagnostic.severity.WARN)
     0 ""
-    count (..  "W:" count " ")))
+    count (.. "W:" count " ")))
 
 (lambda count-errors []
   (let [severity vim.diagnostic.severity.ERROR
         ws-err (count-diagnostic nil severity)
         buf-err (count-diagnostic 0 severity)]
-   (case ws-err
-     0 ""
-     _ (.. "E:" buf-err "/" ws-err " "))))
+    (case ws-err
+      0 ""
+      _ (.. "E:" buf-err "/" ws-err " "))))
+
+(lambda get-global-var [name]
+  (case (pcall vim.api.nvim_get_var name)
+    (true value) value
+    (false _) nil))
 
 (fn build [widgets]
   "Creates a vim statusline string, inserting optional widgets defined as a list of strings"
   (let [filename "%f"
         buffer-modified-flags "%m"
         buffer-type-flags "%q%h%r"
-        git-status " %{g:git_file_status}"
-        git-branch " %{g:git_branch}"
+        git-status (wrap-luaeval "require('juice.statusline')['get-global-var']('git_file_status')")
+        git-branch (wrap-luaeval "require('juice.statusline')['get-global-var']('git_branch')")
         align-right "%="
         buf-warnings (wrap-luaeval "require('juice.statusline')['count-warnings'](vim.api.nvim_get_current_buf())")
         ws-errors (wrap-luaeval "require('juice.statusline')['count-errors']()")
@@ -58,4 +63,4 @@
                   ruler]]
     (str.join template)))
 
-{: build : count-warnings : count-errors}
+{: build : count-warnings : count-errors : get-global-var}

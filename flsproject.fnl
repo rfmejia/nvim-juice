@@ -1,4 +1,4 @@
-{:fennel-path "./fnl/?.fnl;./fnl/?/init.fnl;./fnl/juice/?.fnl;./fnl/after/ftplugin/?.fnl;./fnl/lsp/?.fnl"
+{:fennel-path "./fnl/?.fnl;./fnl/?/init.fnl;./fnl/juice/?.fnl;./fnl/after/ftplugin/?.fnl;./fnl/lsp/?.fnl;./fnl/plugin/?.fnl"
  :lua-version :lua5.4
  :libraries {:nvim true}
  :extra-globals :unpack

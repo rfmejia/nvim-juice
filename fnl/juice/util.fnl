@@ -15,23 +15,6 @@
   (each [_ mapping (ipairs mappings)]
     (vim.keymap.set (unpack mapping))))
 
-(lambda apply [f params]
-  "Applies function `f` to params, where params can be"
-  (if (and (core.sequential? params) (core.sequential? (core.first params)))
-      (each [_ subparams (ipairs params)]
-        (core.pr {: subparams})
-        (if (not (core.nil? subparams))
-            (f (unpack subparams))))
-      (core.sequential? params)
-      (f (unpack params))
-      :else
-      (f params)))
-
-(comment (apply vim.print :single)
-  (apply vim.print [:a :b])
-  (apply core.println [[1 2] [3 4]])
-  (apply core.println [[1 2] nil [3 4]]))
-
 (lambda call [module func ...]
   "Autoload and call a module function with optional args"
   ((. (autoload module) func) ...))

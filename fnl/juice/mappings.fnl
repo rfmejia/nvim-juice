@@ -161,33 +161,6 @@
                          (vim.cmd.tabnew "term://w3m duckduckgo.com")
                          (vim.cmd.startinsert))]])
 
-(comment "-- PLUGIN-SPECIFIC MAPPINGS --")
-
-(local journal-maps [[:n
-                      :<localleader>w
-                      #(util.call :journal-tools :insert-week)
-                      {:desc "[journal] insert current week as an h2 header"
-                       :buffer true
-                       :silent true}]
-                     [:n
-                      :<localleader>d
-                      #(util.call :journal-tools :insert-day)
-                      {:desc "[journal] insert current date as an h3 header"
-                       :buffer true
-                       :silent true}]
-                     [:n
-                      :<localleader>t
-                      #(util.call :journal-tools :insert-time)
-                      {:desc "[journal] insert current time as an h4 header"
-                       :buffer true
-                       :silent true}]
-                     [:n
-                      :<localleader>x
-                      #(util.call :journal-tools :insert-task)
-                      {:desc "[journal] insert current time as an h4 header"
-                       :buffer true
-                       :silent true}]])
-
 (comment "-- OPEN OTHER FILES AND PROGRAMS  --")
 
 (local journal-launchers
@@ -245,5 +218,4 @@
         (when (util.executable? app)
           (util.set-keys maps))))))
 
-{: setup
- : journal-maps}
+{: setup }

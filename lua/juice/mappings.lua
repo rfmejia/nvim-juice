@@ -83,56 +83,41 @@ local function _14_()
   return vim.cmd.startinsert()
 end
 terminal_maps = {{"t", "<C-o><C-o>", "<C-\\><C-n>"}, {"n", "<leader>otc", _11_}, {"n", "<leader>ots", _12_}, {"n", "<leader>otv", _13_}, {"n", "<leader>ott", ":tabnew term://"}, {"n", "<leader>otd", _14_}}
---[[ "-- PLUGIN-SPECIFIC MAPPINGS --" ]]
-local journal_maps
-local function _15_()
-  return util.call("journal-tools", "insert-week")
-end
-local function _16_()
-  return util.call("journal-tools", "insert-day")
-end
-local function _17_()
-  return util.call("journal-tools", "insert-time")
-end
-local function _18_()
-  return util.call("journal-tools", "insert-task")
-end
-journal_maps = {{"n", "<localleader>w", _15_, {desc = "[journal] insert current week as an h2 header", buffer = true, silent = true}}, {"n", "<localleader>d", _16_, {desc = "[journal] insert current date as an h3 header", buffer = true, silent = true}}, {"n", "<localleader>t", _17_, {desc = "[journal] insert current time as an h4 header", buffer = true, silent = true}}, {"n", "<localleader>x", _18_, {desc = "[journal] insert current time as an h4 header", buffer = true, silent = true}}}
 --[[ "-- OPEN OTHER FILES AND PROGRAMS  --" ]]
 local journal_launchers
-local function _19_()
+local function _15_()
   util.call("journal-tools", "setup")
   return vim.cmd((":$tabnew" .. "$JOURNAL/journal.md"))
 end
-local function _20_()
+local function _16_()
   autoload("journal-tools")["load-journal-tools"]()
   return vim.cmd((":$tabnew" .. "$JOURNAL/linux/vim.adoc"))
 end
-journal_launchers = {{"n", "<leader>oj", _19_, {desc = "open journal in a new tab", silent = true}}, {"n", "<leader>ov", _20_, {desc = "open vim notes in a new tab", silent = true}}}
+journal_launchers = {{"n", "<leader>oj", _15_, {desc = "open journal in a new tab", silent = true}}, {"n", "<leader>ov", _16_, {desc = "open vim notes in a new tab", silent = true}}}
 local lazygit_launcher
-local _21_
+local _17_
 if vim.env.TMUX then
-  _21_ = ":!tmux neww lazygit<cr><cr>"
+  _17_ = ":!tmux neww lazygit<cr><cr>"
 else
-  local function _22_()
+  local function _18_()
     vim.cmd.tabnew("term://lazygit")
     return vim.cmd.startinsert()
   end
-  _21_ = _22_
+  _17_ = _18_
 end
-lazygit_launcher = {{"n", "<leader>og", _21_, {desc = "open lazygit in a new tab or tmux window", silent = true}}}
+lazygit_launcher = {{"n", "<leader>og", _17_, {desc = "open lazygit in a new tab or tmux window", silent = true}}}
 local opencode_launcher
-local _24_
+local _20_
 if vim.env.TMUX then
-  _24_ = ":!tmux split-window -l 40\\% opencode<cr><cr>"
+  _20_ = ":!tmux split-window -l 40\\% opencode<cr><cr>"
 else
-  local function _25_()
+  local function _21_()
     vim.cmd.vsplit("term://opencode")
     return vim.cmd.startinsert()
   end
-  _24_ = _25_
+  _20_ = _21_
 end
-opencode_launcher = {{"n", "<leader>oo", _24_, {desc = "open opencode in a new tab or tmux window", silent = true}}}
+opencode_launcher = {{"n", "<leader>oo", _20_, {desc = "open opencode in a new tab or tmux window", silent = true}}}
 local tmux_apps = {lazydocker = {{"n", "<leader>od", ":!tmux neww lazydocker<cr><cr>", {desc = "open lazydocker in a new tmux window", silent = true}}}}
 local function setup()
   local mappings = core.concat(general, filters, jumps, undo_steps, dates, marks, buffers, tabs, quickfix, loclist, search_replace, visual_indent, terminal_maps)
@@ -163,4 +148,4 @@ local function setup()
     return nil
   end
 end
-return {setup = setup, ["journal-maps"] = journal_maps}
+return {setup = setup}

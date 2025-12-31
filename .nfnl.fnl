@@ -6,10 +6,10 @@
         rel-fnl-path (vim.fn.fnamemodify fnl-path ":.")]
     (if (= rel-fnl-path :fnl/init.fnl)
         (default.fnl-path->lua-path :init.lua)
-        (= rel-fnl-path :fnl/bootstrap.fnl)
-        (default.fnl-path->lua-path :bootstrap.lua)
         (or (string.match rel-fnl-path :fnl/after)
-            (string.match rel-fnl-path :fnl/lsp))
+            (string.match rel-fnl-path :fnl/lsp)
+            (string.match rel-fnl-path :fnl/pack)
+            (string.match rel-fnl-path :fnl/plugin))
         (let [segments (str.split rel-fnl-path "/")
               path (core.butlast (core.rest segments))
               file (string.gsub (core.last segments) :.fnl :.lua)
