@@ -33,20 +33,47 @@ local function set_keys(mappings)
   end
   return nil
 end
+local function apply(f, params)
+  if (nil == params) then
+    _G.error("Missing argument params on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:18", 2)
+  else
+  end
+  if (nil == f) then
+    _G.error("Missing argument f on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:18", 2)
+  else
+  end
+  if (core["sequential?"](params) and core["sequential?"](core.first(params))) then
+    for _, subparams in ipairs(params) do
+      core.pr({subparams = subparams})
+      if not core["nil?"](subparams) then
+        f(unpack(subparams))
+      else
+      end
+    end
+    return nil
+  elseif core["sequential?"](params) then
+    return f(unpack(params))
+  elseif "else" then
+    return f(params)
+  else
+    return nil
+  end
+end
+--[[ (apply vim.print "single") (apply vim.print ["a" "b"]) (apply core.println [[1 2] [3 4]\]) (apply core.println [[1 2] nil [3 4]\]) ]]
 local function call(module, func, ...)
   if (nil == func) then
-    _G.error("Missing argument func on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:18", 2)
+    _G.error("Missing argument func on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:35", 2)
   else
   end
   if (nil == module) then
-    _G.error("Missing argument module on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:18", 2)
+    _G.error("Missing argument module on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:35", 2)
   else
   end
   return autoload(module)[func](...)
 end
 local function call_setup(modules)
   if (nil == modules) then
-    _G.error("Missing argument modules on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:22", 2)
+    _G.error("Missing argument modules on /home/rfmejia/.config/nvim/fnl/juice/util.fnl:39", 2)
   else
   end
   if core["string?"](modules) then

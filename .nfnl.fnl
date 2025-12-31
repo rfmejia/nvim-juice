@@ -8,12 +8,14 @@
         (default.fnl-path->lua-path :init.lua)
         (= rel-fnl-path :fnl/bootstrap.fnl)
         (default.fnl-path->lua-path :bootstrap.lua)
-        (string.match rel-fnl-path :fnl/after)
+        (or (string.match rel-fnl-path :fnl/after)
+            (string.match rel-fnl-path :fnl/lsp))
         (let [segments (str.split rel-fnl-path "/")
               path (core.butlast (core.rest segments))
               file (string.gsub (core.last segments) :.fnl :.lua)
               out (str.join "/" (core.concat path [file]))]
           (default.fnl-path->lua-path out))
-        (default.fnl-path->lua-path (.. rel-fnl-path)))))
+        :else
+        (default.fnl-path->lua-path rel-fnl-path))))
 
 {:fnl-path->lua-path map-path}
