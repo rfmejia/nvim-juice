@@ -24,8 +24,8 @@ local function set_hl(hi_options)
   end
   return nil
 end
-local function setup()
+local function _4_()
   vim.cmd.colorscheme("default")
   return core.map(set_hl, {general, diagnostic_virtual_text, statusline})
 end
-return {setup = setup}
+return {setup = _4_}

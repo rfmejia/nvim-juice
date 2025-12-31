@@ -31,6 +31,7 @@
                    :StatusLineWarn {:fg :DarkYellow}})
 
 (lambda set-hl [hi-options]
+  "Helper function to set multiple highlight groups using a table"
   (each [hi-group opts (pairs hi-options)]
     (if (core.sequential? hi-group)
         (each [_ sub-group (ipairs hi-group)]
@@ -38,8 +39,6 @@
         (core.string? hi-group)
         (vim.api.nvim_set_hl 0 hi-group opts))))
 
-(fn setup []
-  (vim.cmd.colorscheme :default)
-  (core.map set-hl [general diagnostic-virtual-text statusline]))
-
-{: setup}
+{:setup (fn []
+          (vim.cmd.colorscheme :default)
+          (core.map set-hl [general diagnostic-virtual-text statusline]))}

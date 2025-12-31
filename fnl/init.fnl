@@ -18,16 +18,18 @@
 (local util (autoload :juice.util))
 
 (util.call-setup [:juice.options
+                  :juice.filetypes
                   :juice.commands
+                  :juice.autocmds
                   :juice.mappings
                   :juice.colorscheme
                   :juice.lsp
+                  :juice.dotenvrc
                   :juice.packs.core
                   :juice.packs.editing
                   :juice.packs.dev
                   :juice.packs.lisp
                   :juice.packs.scalametals
-                  :juice.dotenvrc
                   :journal-tools
                   :git-info
                   :tmux-nav

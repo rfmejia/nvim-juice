@@ -19,28 +19,8 @@ if util["executable?"]("rg") then
 else
   grep_options = nil
 end
---[[ "---- FILETYPES ----" ]]
-local filetypes = {extension = {avsc = "json", edn = "clojure", mill = "scala", mysql = "sql", pgsql = "sql", sbt = "scala", sc = "scala", service = "systemd", tofu = "hcl", txt = "text"}, filename = {[".envrc"] = "bash", Jenkinsfile = "groovy", ["tmux.conf"] = "tmux"}, pattern = {["openapi.*%.yaml"] = "yaml.openapi", ["openapi.*%.json"] = "json.openapi"}}
---[[ "---- AUTOCMDS ----" ]]
-local function set_autocmds()
-  --[[ "Remember the cursor position of the last editing" ]]
-  vim.api.nvim_create_autocmd("BufReadPost", {pattern = "*", command = "if line(\"'\\\"\") | exe \"'\\\"\" | endif"})
-  vim.api.nvim_create_augroup("highlight-group", {})
-  --[[ "highlight yanked text" ]]
-  local function _3_()
-    return vim.highlight.on_yank({timeout = 200, on_visual = false})
-  end
-  vim.api.nvim_create_autocmd("TextYankPost", {group = "highlight-group", pattern = "*", callback = _3_})
-  --[[ "highlight TODO, FIXME and Note: keywords" ]]
-  vim.api.nvim_create_autocmd({"WinEnter", "VimEnter"}, {group = "highlight-group", pattern = "*", command = ":silent! call matchadd('Todo','TODO\\|FIXME\\|Note:', -1)"})
-  vim.api.nvim_create_augroup("terminal-group", {})
-  --[[ "remove signcolumn in terminal mode" ]]
-  return vim.api.nvim_create_autocmd("TermOpen", {group = "terminal-group", pattern = "*", command = "set signcolumn=no"})
-end
-local function setup()
+local function _3_()
   core["merge!"](vim.g, map_leaders)
-  core["merge!"](vim.opt, behavior, visual, search, completion, grep_options)
-  vim.filetype.add(filetypes)
-  return set_autocmds()
+  return core["merge!"](vim.opt, behavior, visual, search, completion, grep_options)
 end
-return {setup = setup}
+return {setup = _3_}

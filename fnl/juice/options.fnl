@@ -80,52 +80,6 @@
            {:grepprg "rg --smart-case --hidden --follow --no-heading --vimgrep"
             :grepformat "%f:%l:%c:%m,%f:%l:%m"}))
 
-(comment "---- FILETYPES ----")
-(local filetypes {:extension {:avsc :json
-                              :edn :clojure
-                              :mill :scala
-                              :mysql :sql
-                              :pgsql :sql
-                              :sbt :scala
-                              :sc :scala
-                              :service :systemd
-                              :tofu :hcl
-                              :txt :text}
-                  :filename {:.envrc :bash
-                             :Jenkinsfile :groovy
-                             :tmux.conf :tmux}
-                  :pattern {"openapi.*%.yaml" :yaml.openapi
-                            "openapi.*%.json" :json.openapi}})
-
-(comment "---- AUTOCMDS ----")
-(fn set-autocmds []
-  (comment "Remember the cursor position of the last editing")
-  (vim.api.nvim_create_autocmd :BufReadPost
-                               {:pattern "*"
-                                :command "if line(\"'\\\"\") | exe \"'\\\"\" | endif"})
-  (vim.api.nvim_create_augroup :highlight-group [])
-  (comment "highlight yanked text")
-  (vim.api.nvim_create_autocmd :TextYankPost
-                               {:group :highlight-group
-                                :pattern "*"
-                                :callback #(vim.highlight.on_yank {:timeout 200
-                                                                   :on_visual false})})
-  (comment "highlight TODO, FIXME and Note: keywords")
-  (vim.api.nvim_create_autocmd [:WinEnter :VimEnter]
-                               {:group :highlight-group
-                                :pattern "*"
-                                :command ":silent! call matchadd('Todo','TODO\\|FIXME\\|Note:', -1)"})
-  (vim.api.nvim_create_augroup :terminal-group [])
-  (comment "remove signcolumn in terminal mode")
-  (vim.api.nvim_create_autocmd :TermOpen
-                               {:group :terminal-group
-                                :pattern "*"
-                                :command "set signcolumn=no"}))
-
-(fn setup []
-  (core.merge! vim.g map-leaders)
-  (core.merge! vim.opt behavior visual search completion grep-options)
-  (vim.filetype.add filetypes)
-  (set-autocmds))
-
-{: setup}
+{:setup (fn []
+          (core.merge! vim.g map-leaders)
+          (core.merge! vim.opt behavior visual search completion grep-options))}
