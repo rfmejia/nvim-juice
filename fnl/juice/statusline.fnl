@@ -46,6 +46,7 @@
         template [filename
                   buffer-modified-flags
                   info-color
+                  " "
                   git-status
                   default-color
                   buffer-type-flags
