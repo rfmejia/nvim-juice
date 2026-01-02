@@ -32,13 +32,11 @@
 
 (lambda set-hl [hi-options]
   "Helper function to set multiple highlight groups using a table"
-  (each [hi-group opts (pairs hi-options)]
-    (if (core.sequential? hi-group)
-        (each [_ sub-group (ipairs hi-group)]
-          (vim.api.nvim_set_hl 0 sub-group opts))
-        (core.string? hi-group)
-        (vim.api.nvim_set_hl 0 hi-group opts))))
+  (each [group settings (pairs hi-options)]
+    (if (core.sequential? group)
+        (each [_ sub-group (ipairs group)]
+          (vim.api.nvim_set_hl 0 sub-group settings))
+        (core.string? group)
+        (vim.api.nvim_set_hl 0 group settings))))
 
-{:setup (fn []
-          (vim.cmd.colorscheme :default)
-          (core.map set-hl [general diagnostic-virtual-text statusline]))}
+(core.map set-hl [general diagnostic-virtual-text statusline])

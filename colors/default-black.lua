@@ -1,4 +1,4 @@
--- [nfnl] fnl/juice/colorscheme.fnl
+-- [nfnl] fnl/colors/default-black.fnl
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_.autoload
 local core = autoload("nfnl.core")
@@ -9,23 +9,19 @@ local diagnostic_virtual_text = {DiagnosticVirtualTextError = {fg = "DarkRed", i
 local statusline = {StatusLine = {fg = "Gray", bg = "NONE"}, StatusLineError = {fg = "DarkRed"}, StatusLineInfo = {fg = "DarkCyan"}, StatusLineWarn = {fg = "DarkYellow"}}
 local function set_hl(hi_options)
   if (nil == hi_options) then
-    _G.error("Missing argument hi-options on /home/rfmejia/.config/nvim/fnl/juice/colorscheme.fnl:33", 2)
+    _G.error("Missing argument hi-options on /home/rfmejia/.config/nvim/fnl/colors/default-black.fnl:33", 2)
   else
   end
-  for hi_group, opts in pairs(hi_options) do
-    if core["sequential?"](hi_group) then
-      for _, sub_group in ipairs(hi_group) do
-        vim.api.nvim_set_hl(0, sub_group, opts)
+  for group, settings in pairs(hi_options) do
+    if core["sequential?"](group) then
+      for _, sub_group in ipairs(group) do
+        vim.api.nvim_set_hl(0, sub_group, settings)
       end
-    elseif core["string?"](hi_group) then
-      vim.api.nvim_set_hl(0, hi_group, opts)
+    elseif core["string?"](group) then
+      vim.api.nvim_set_hl(0, group, settings)
     else
     end
   end
   return nil
 end
-local function _4_()
-  vim.cmd.colorscheme("default")
-  return core.map(set_hl, {general, diagnostic_virtual_text, statusline})
-end
-return {setup = _4_}
+return core.map(set_hl, {general, diagnostic_virtual_text, statusline})

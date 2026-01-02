@@ -8,6 +8,7 @@
         (default.fnl-path->lua-path :init.lua)
         (or (string.match rel-fnl-path :fnl/after)
             (string.match rel-fnl-path :fnl/lsp)
+            (string.match rel-fnl-path :fnl/colors)
             (string.match rel-fnl-path :fnl/pack)
             (string.match rel-fnl-path :fnl/plugin))
         (let [segments (str.split rel-fnl-path "/")

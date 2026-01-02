@@ -38,4 +38,5 @@ end
 local _local_7_ = require("nfnl.module")
 local autoload = _local_7_.autoload
 local util = autoload("juice.util")
-return util["call-setup"]({"juice.options", "juice.filetypes", "juice.commands", "juice.autocmds", "juice.mappings", "juice.colorscheme", "juice.lsp", "juice.dotenvrc"})
+util["call-setup"]({"juice.options", "juice.filetypes", "juice.commands", "juice.autocmds", "juice.mappings", "juice.lsp", "juice.dotenvrc"})
+return vim.cmd.colorscheme("default-black")

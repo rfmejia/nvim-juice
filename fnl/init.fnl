@@ -21,9 +21,10 @@
                   :juice.commands
                   :juice.autocmds
                   :juice.mappings
-                  :juice.colorscheme
                   :juice.lsp
                   :juice.dotenvrc])
+
+(vim.cmd.colorscheme :default-black)
 
 ;; TODO Create your own auto-pairs plugins
 ;; TODO Create your own surround plugins
