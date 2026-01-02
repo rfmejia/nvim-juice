@@ -69,7 +69,7 @@
 
 (fn setup []
   (let [config {:root_markers [:.git]}
-        lsp-configs [:fennel_ls :clojure_lsp :gopls :jdtls]
+        lsp-configs [:clangd :fennel_ls :clojure_lsp :gopls :jdtls]
         on-attach (fn [event]
                     (case (vim.lsp.get_client_by_id event.data.client_id)
                       client (do
