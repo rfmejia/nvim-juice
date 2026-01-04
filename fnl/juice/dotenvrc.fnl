@@ -10,7 +10,11 @@
   {:makeprg vim.env.NVIM_MAKEPRG
    :errorformat vim.env.NVIM_ERRORFORMAT
    :keywordprg vim.env.NVIM_KEYWORDPRG
-   :formatprg vim.env.NVIM_FORMATPRG})
+   :formatprg vim.env.NVIM_FORMATPRG
+   :wrap (= :true vim.env.NVIM_WRAP)
+   :tabstop (tonumber  vim.env.NVIM_TEXTWIDTH)
+   :textwidth (tonumber  vim.env.NVIM_TEXTWIDTH)
+   :shiftwidth (tonumber vim.env.NVIM_SHIFTWIDTH)})
 
 (fn read-path-list []
   "Returns a list of paths from the NVIM_PATH_LIST env variable iff the env variable is not null"
@@ -18,8 +22,9 @@
     (core.concat ["." ""] (string.split vim.env.NVIM_PATH_LIST ":"))))
 
 (fn load-env []
-  (core.merge! vim.opt (read-env-pairs))
-  (-?>> (read-path-list)
-        (set vim.opt.path)))
+  (each [name setting (pairs (read-env-pairs))]
+    (set (. vim.opt name) setting))
+  (case (read-path-list)
+    path-list (set vim.opt.path path-list)))
 
 {:setup load-env : read-path-list : load-env}
