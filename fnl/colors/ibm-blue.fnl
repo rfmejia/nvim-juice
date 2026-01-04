@@ -1,0 +1,121 @@
+;; borland-pallete 
+;; {
+;;  :Color0 "#4F4F4F" - dark gray
+;;  :Color1 "#FF6C60" - red/orange
+;;  :Color2 "#A8FF60" - green?
+;;  :Color3 "#FFFFB6" - light yellow
+;;  :Color4 "#96CBFE" - light blue
+;;  :Color5 "#FF73FD" - light magenta
+;;  :Color6 "#C6C5FE" - light blue
+;;  :Color7 "#EEEEEE" - light gray
+;;  :Color8 "#7C7C7C" - gray
+;;  :Color9 "#FFB6B0" - light red
+;;  :Color10 "#CEFFAC" - light green
+;;  :Color11 "#FFFFCC" - light yellow?
+;;  :Color12 "#B5DCFF" - light blue
+;;  :Color13 "#FF9CFE" - magenta
+;;  :Color14 "#DFDFFE" - light blue?
+;;  :Color15 "#FFFFFF" - white
+;; }
+
+(local in-gui? (not= vim.env.WAYLAND_DISPLAY nil))
+
+(local pallete {:Background (if in-gui? :NONE "#0000A4")
+                :Foreground "#FFFF4E"
+                :Black "#040404"
+                :DarkBlue "#0000A4"
+                :DarkGreen "#A8FF60"
+                :DarkCyan "#FFFFB6"
+                :DarkRed "#96CBFE"
+                :DarkMagenta "#FF73FD"
+                :DarkYellow "#C6C5FE"
+                :Gray "#AAAAAA"
+                :DarkGray "#6C6CAC"
+                :Blue "#6666FF"
+                :Green "#CEFFAC"
+                :Cyan "#99CCFF"
+                :Red "#FF6C60"
+                :Magenta "#FF9CFE"
+                :Yellow "#FFFF4E"
+                :White "#CCCCCC"})
+
+(local groups {:Normal {:ctermfg :Gray
+                        :ctermbg :DarkBlue
+                        :fg pallete.Foreground
+                        :bg pallete.Background}
+               :NonText {:ctermfg :DarkBlue :fg pallete.Background}
+               :String {:fg pallete.Gray}
+               [:Statement :Special] {:ctermfg :White
+                                      :ctermbg :DarkBlue
+                                      :fg pallete.DarkGray
+                                      :bg pallete.Background}
+               :Comment {:ctermfg :Blue
+                         :ctermbg :DarkBlue
+                         :italic in-gui?
+                         :fg pallete.Blue
+                         :bg pallete.Background}
+               [:Constant :Type :Preproc] {:ctermfg :Cyan :fg pallete.Cyan}
+               :Identifier {:ctermfg :Grey
+                            :ctermbg :DarkBlue
+                            :fg pallete.DarkGray}
+               :StatusLine {:ctermfg :Black
+                            :ctermbg :White
+                            :fg pallete.Black
+                            :bg pallete.White}
+               :WinSeparator {:ctermfg :White :fg pallete.White}
+               :Visual {:ctermfg :Black
+                        :ctermbg :DarkCyan
+                        :fg pallete.Black
+                        :bg pallete.Gray}
+               :Search {:reverse true}
+               :VertSplit {:ctermfg :Black
+                           :ctermbg :White
+                           :fg pallete.Black
+                           :bg pallete.White}
+               :Directory {:ctermfg :Green
+                           :ctermbg :DarkBlue
+                           :fg :Green
+                           :bg pallete.Background}
+               :WarningMsg {:ctermfg :Red
+                            :ctermbg :DarkBlue
+                            :standout true
+                            :fg pallete.Red
+                            :bg pallete.Background}
+               :Error {:ctermfg :White
+                       :ctermbg :Red
+                       :fg pallete.White
+                       :bg pallete.Red}
+               :Cursor {:ctermfg :Black
+                        :ctermbg :Yellow
+                        :fg pallete.Black
+                        :bg pallete.Yellow}
+               :NormalFloat {:ctermbg :DarkBlue :bg pallete.Background}
+               [:LineNrAbove :LineNrBelow] {:fg pallete.Blue}
+               [:Delimiter :Operator :Special :Statement] {:fg pallete.DarkGray}
+               :CursorLine {:bg :NONE}
+               :Title {:fg :DarkCyan :underline true}
+               :Todo {:ctermfg :Yellow :fg pallete.Yellow :bold true}
+               :SpellBad {:fg pallete.Red :undercurl true}})
+
+(local diagnostic-virtual-text
+       {:DiagnosticVirtualTextError {:fg pallete.Red :italic in-gui?}
+        :DiagnosticVirtualTextHint {:fg :DarkBlue :italic in-gui?}
+        :DiagnosticVirtualTextInfo {:fg :DarkCyan :italic in-gui?}
+        :DiagnosticVirtualTextOk {:fg :DarkGreen :italic in-gui?}
+        :DiagnosticVirtualTextWarn {:fg :DarkYellow :italic in-gui?}
+        :LspInlayHint {:fg :Gray :italic in-gui?}})
+
+(lambda set-hl [hi-options]
+  "Helper function to set multiple highlight groups using a table"
+  (let [{: autoload} (require :nfnl.module)
+        core (autoload :nfnl.core)]
+    (each [group settings (pairs hi-options)]
+      (if (core.sequential? group)
+          (each [_ sub-group (ipairs group)]
+            (vim.api.nvim_set_hl 0 sub-group settings))
+          (core.string? group)
+          (vim.api.nvim_set_hl 0 group settings)))))
+
+(set-hl groups)
+(set-hl diagnostic-virtual-text)
+(set vim.g.colors_name :ibm-blue)
