@@ -24,4 +24,6 @@ local function set_hl(hi_options)
   end
   return nil
 end
-return core.map(set_hl, {general, diagnostic_virtual_text, statusline})
+core.map(set_hl, {general, diagnostic_virtual_text, statusline})
+vim.g.colors_name = "default-black"
+return nil

@@ -40,3 +40,4 @@
         (vim.api.nvim_set_hl 0 group settings))))
 
 (core.map set-hl [general diagnostic-virtual-text statusline])
+(set vim.g.colors_name :default-black)
