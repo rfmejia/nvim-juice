@@ -71,22 +71,23 @@
 
 ;; TODO make this into the `marksman` plugin
 ;; TODO Replace these with putting signs on the sign column
-;; TODO Or maintain a data structure and jump to the buffer (not mark)
 (local quickmarks
-       (let [marks [:A :S :D :F :z :x :c :v]
-             create-mark #[:n
-                           (.. :m (string.lower $1))
-                           (fn []
-                             "Set the keymap for the lowercase key, but mark for the upper/lowercase key"
-                             (vim.cmd.mark $1)
-                             (vim.notify (string.format "Marked %s" $1)))
-                           {:desc (string.format "[quickmark] set mark for %s"
-                                                 $1)}]
-             jump-to-mark #[:n
-                            (.. "'" (string.lower $1))
-                            (.. "`" $1)
-                            {:desc (string.format "[quickmark] jump to %s mark"
-                                                  $1)}]]
+       (let [marks [:A :S :D :F]
+             create-mark (fn [key]
+                           [:n
+                            (.. :m (string.lower key))
+                            (fn []
+                              (vim.cmd.mark key)
+                              (vim.notify (string.format "Marked %s" key)))
+                            {:desc (string.format "[quickmark] set mark for %s"
+                                                  key)}])
+             jump-to-mark (fn [key]
+                            [:n
+                             (.. "'" (string.lower key))
+                             #(case (vim.api.nvim_get_mark key {})
+                                [_ _ _ filename] (vim.cmd.edit filename))
+                             {:desc (string.format "[quickmark] jump to %s mark"
+                                                   key)}])]
          (core.concat [[:n
                         "''"
                         #(vim.cmd.marks (table.concat marks))

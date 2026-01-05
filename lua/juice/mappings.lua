@@ -42,29 +42,41 @@ local quickmarks
 do
   local marks = {"A", "S", "D", "F", "z", "x", "c", "v"}
   local create_mark
-  local function _6_(_241)
+  local function _6_(key)
     local function _7_()
-      vim.cmd.mark(_241)
-      return vim.notify(string.format("Marked %s", _241))
+      vim.cmd.mark(key)
+      return vim.notify(string.format("Marked %s", key))
     end
-    return {"n", ("m" .. string.lower(_241)), _7_, {desc = string.format("[quickmark] set mark for %s", _241)}}
+    return {"n", ("m" .. string.lower(key)), _7_, {desc = string.format("[quickmark] set mark for %s", key)}}
   end
   create_mark = _6_
   local jump_to_mark
-  local function _8_(_241)
-    return {"n", ("'" .. string.lower(_241)), ("`" .. _241), {desc = string.format("[quickmark] jump to %s mark", _241)}}
+  local function _8_(key)
+    local function _9_()
+      local case_10_ = vim.api.nvim_get_mark(key, {})
+      if ((_G.type(case_10_) == "table") and true and true and true and (nil ~= case_10_[4])) then
+        local _ = case_10_[1]
+        local _0 = case_10_[2]
+        local _1 = case_10_[3]
+        local filename = case_10_[4]
+        return vim.cmd.edit(filename)
+      else
+        return nil
+      end
+    end
+    return {"n", ("'" .. string.lower(key)), _9_, {desc = string.format("[quickmark] jump to %s mark", key)}}
   end
   jump_to_mark = _8_
-  local function _9_()
+  local function _12_()
     return vim.cmd.marks(table.concat(marks))
   end
-  local function _10_(_241)
+  local function _13_(_241)
     return create_mark(_241)
   end
-  local function _11_(_241)
+  local function _14_(_241)
     return jump_to_mark(_241)
   end
-  quickmarks = core.concat({{"n", "''", _9_, {desc = string.format("[quickmark] list quickmarks {%s}", table.concat(marks))}}}, core.map(_10_, marks), core.map(_11_, marks))
+  quickmarks = core.concat({{"n", "''", _12_, {desc = string.format("[quickmark] list quickmarks {%s}", table.concat(marks))}}}, core.map(_13_, marks), core.map(_14_, marks))
 end
 local buffers = {{"n", "<leader>b", ":buffers<cr>:b<Space>"}, {"n", "<leader>x", ":bp|bdelete #<cr>", {desc = "[buffer] close buffer"}}}
 local tabs = {{"n", "<leader>ts", ":tab split<cr>", {silent = true}}, {"n", "[t", vim.cmd.tabprevious}, {"n", "]t", vim.cmd.tabnext}, {"n", "[T", vim.cmd.tabfirst}, {"n", "]T", vim.cmd.tablast}}
@@ -73,55 +85,55 @@ local loclist = {{"n", "<leader>lo", vim.cmd.lopen, {desc = "open loclist list"}
 local search_replace = {{"n", "<leader>/s", ":s//g<left><left>", {desc = "prompt for line search"}}, {"n", "<leader>/S", ":%s//g<left><left>", {desc = "prompt for buffer search"}}, {"n", "<leader>/w", ":s/\\<<c-r><c-w>\\>//g<left><left>", {desc = "prompt for line search and replace"}}, {"n", "<leader>/W", ":%s/\\<<c-r><c-w>\\>//g<left><left>", {desc = "prompt for buffer search and replace"}}}
 local visual_indent = {{"v", "<", "<gv", {}}, {"v", ">", ">gv", {}}}
 local terminal_maps
-local function _12_()
+local function _15_()
   return vim.cmd.tabnew("term://bash")
 end
-local function _13_()
+local function _16_()
   return vim.cmd.split("term://bash")
 end
-local function _14_()
+local function _17_()
   return vim.cmd.vsplit("term://bash")
 end
-local function _15_()
+local function _18_()
   vim.cmd.tabnew("term://w3m duckduckgo.com")
   return vim.cmd.startinsert()
 end
-terminal_maps = {{"t", "<C-o><C-o>", "<C-\\><C-n>"}, {"n", "<leader>otc", _12_}, {"n", "<leader>ots", _13_}, {"n", "<leader>otv", _14_}, {"n", "<leader>ott", ":tabnew term://"}, {"n", "<leader>otd", _15_}}
+terminal_maps = {{"t", "<C-o><C-o>", "<C-\\><C-n>"}, {"n", "<leader>otc", _15_}, {"n", "<leader>ots", _16_}, {"n", "<leader>otv", _17_}, {"n", "<leader>ott", ":tabnew term://"}, {"n", "<leader>otd", _18_}}
 --[[ "-- OPEN OTHER FILES AND PROGRAMS  --" ]]
 local journal_launchers
-local function _16_()
+local function _19_()
   util.call("journal-tools", "setup")
   return vim.cmd((":$tabnew" .. "$JOURNAL/journal.md"))
 end
-local function _17_()
+local function _20_()
   autoload("journal-tools")["load-journal-tools"]()
   return vim.cmd((":$tabnew" .. "$JOURNAL/linux/vim.adoc"))
 end
-journal_launchers = {{"n", "<leader>oj", _16_, {desc = "open journal in a new tab", silent = true}}, {"n", "<leader>ov", _17_, {desc = "open vim notes in a new tab", silent = true}}}
+journal_launchers = {{"n", "<leader>oj", _19_, {desc = "open journal in a new tab", silent = true}}, {"n", "<leader>ov", _20_, {desc = "open vim notes in a new tab", silent = true}}}
 local lazygit_launcher
-local _18_
-if vim.env.TMUX then
-  _18_ = ":!tmux neww lazygit<cr><cr>"
-else
-  local function _19_()
-    vim.cmd.tabnew("term://lazygit")
-    return vim.cmd.startinsert()
-  end
-  _18_ = _19_
-end
-lazygit_launcher = {{"n", "<leader>og", _18_, {desc = "open lazygit in a new tab or tmux window", silent = true}}}
-local opencode_launcher
 local _21_
 if vim.env.TMUX then
-  _21_ = ":!tmux split-window -l 40\\% opencode<cr><cr>"
+  _21_ = ":!tmux neww lazygit<cr><cr>"
 else
   local function _22_()
-    vim.cmd.vsplit("term://opencode")
+    vim.cmd.tabnew("term://lazygit")
     return vim.cmd.startinsert()
   end
   _21_ = _22_
 end
-opencode_launcher = {{"n", "<leader>oo", _21_, {desc = "open opencode in a new tab or tmux window", silent = true}}}
+lazygit_launcher = {{"n", "<leader>og", _21_, {desc = "open lazygit in a new tab or tmux window", silent = true}}}
+local opencode_launcher
+local _24_
+if vim.env.TMUX then
+  _24_ = ":!tmux split-window -l 40\\% opencode<cr><cr>"
+else
+  local function _25_()
+    vim.cmd.vsplit("term://opencode")
+    return vim.cmd.startinsert()
+  end
+  _24_ = _25_
+end
+opencode_launcher = {{"n", "<leader>oo", _24_, {desc = "open opencode in a new tab or tmux window", silent = true}}}
 local tmux_apps = {lazydocker = {{"n", "<leader>od", ":!tmux neww lazydocker<cr><cr>", {desc = "open lazydocker in a new tmux window", silent = true}}}}
 local function setup()
   local mappings = core.concat(general, filters, jumps, undo_steps, dates, quickmarks, buffers, tabs, quickfix, loclist, search_replace, visual_indent, terminal_maps)
