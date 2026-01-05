@@ -71,17 +71,29 @@
 
 ;; TODO make this into the `marksman` plugin
 ;; TODO Replace these with putting signs on the sign column
-(local marks (let [marks [:A :R :S :T :z :x :c :d]
-                   create-mark #[:n
-                                 (.. :m (string.lower $1))
-                                 (.. :m $1 ":echo 'Marked " $1 "'<cr>")]
-                   jump-to-mark #[:n (.. "'" (string.lower $1)) (.. "`" $1)]]
-               (core.concat [[:n
-                              "''"
-                              #(vim.cmd.marks (table.concat marks))
-                              {:desc "list quick marks (ARST and zxcd)"}]]
-                            (core.map #(create-mark $1) marks)
-                            (core.map #(jump-to-mark $1) marks))))
+;; TODO Or maintain a data structure and jump to the buffer (not mark)
+(local quickmarks
+       (let [marks [:A :S :D :F :z :x :c :v]
+             create-mark #[:n
+                           (.. :m (string.lower $1))
+                           (fn []
+                             "Set the keymap for the lowercase key, but mark for the upper/lowercase key"
+                             (vim.cmd.mark $1)
+                             (vim.notify (string.format "Marked %s" $1)))
+                           {:desc (string.format "[quickmark] set mark for %s"
+                                                 $1)}]
+             jump-to-mark #[:n
+                            (.. "'" (string.lower $1))
+                            (.. "`" $1)
+                            {:desc (string.format "[quickmark] jump to %s mark"
+                                                  $1)}]]
+         (core.concat [[:n
+                        "''"
+                        #(vim.cmd.marks (table.concat marks))
+                        {:desc (string.format "[quickmark] list quickmarks {%s}"
+                                              (table.concat marks))}]]
+                      (core.map #(create-mark $1) marks)
+                      (core.map #(jump-to-mark $1) marks))))
 
 (local buffers [[:n :<leader>b ":buffers<cr>:b<Space>"]
                 [:n
@@ -204,7 +216,7 @@
                                  :silent true}]]})
 
 (fn setup []
-  (let [mappings (core.concat general filters jumps undo-steps dates marks
+  (let [mappings (core.concat general filters jumps undo-steps dates quickmarks
                               buffers tabs quickfix loclist search-replace
                               visual-indent terminal-maps)]
     (util.set-keys mappings)
@@ -218,4 +230,4 @@
         (when (util.executable? app)
           (util.set-keys maps))))))
 
-{: setup }
+{: setup}

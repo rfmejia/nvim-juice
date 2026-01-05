@@ -38,29 +38,33 @@ end
 local jumps = {{"n", "<C-d>", "<C-d>zz"}, {"n", "<C-u>", "<C-u>zz"}, {"n", "<C-o>", "<C-o>zz"}, {"n", "<C-i>", "<C-i>zz"}, {"n", "'.", "'.zz"}}
 local undo_steps = {{"i", "\"", "\"<C-g>u", {silent = true}}, {"i", ".", ".<C-g>u", {silent = true}}, {"i", "!", "!<C-g>u", {silent = true}}, {"i", "?", "?<C-g>u", {silent = true}}, {"i", "(", "(<C-g>u", {silent = true}}, {"i", ")", ")<C-g>u", {silent = true}}, {"i", "{", "{<C-g>u", {silent = true}}, {"i", "}", "}<C-g>u", {silent = true}}, {"i", "[", "[<C-g>u", {silent = true}}, {"i", "]", "]<C-g>u", {silent = true}}}
 local dates = {{"n", "<leader>dt", ":.!date '+\\%a, \\%d \\%b \\%Y'<cr>", {desc = "insert current date"}}, {"n", "<leader>dT", ":.!date '+\\%a, \\%d \\%b \\%Y' --date=''<left>", {desc = "prompt for date query"}}}
-local marks
+local quickmarks
 do
-  local marks0 = {"A", "R", "S", "T", "z", "x", "c", "d"}
+  local marks = {"A", "S", "D", "F", "z", "x", "c", "v"}
   local create_mark
   local function _6_(_241)
-    return {"n", ("m" .. string.lower(_241)), ("m" .. _241 .. ":echo 'Marked " .. _241 .. "'<cr>")}
+    local function _7_()
+      vim.cmd.mark(_241)
+      return vim.notify(string.format("Marked %s", _241))
+    end
+    return {"n", ("m" .. string.lower(_241)), _7_, {desc = string.format("[quickmark] set mark for %s", _241)}}
   end
   create_mark = _6_
   local jump_to_mark
-  local function _7_(_241)
-    return {"n", ("'" .. string.lower(_241)), ("`" .. _241)}
+  local function _8_(_241)
+    return {"n", ("'" .. string.lower(_241)), ("`" .. _241), {desc = string.format("[quickmark] jump to %s mark", _241)}}
   end
-  jump_to_mark = _7_
-  local function _8_()
-    return vim.cmd.marks(table.concat(marks0))
-  end
-  local function _9_(_241)
-    return create_mark(_241)
+  jump_to_mark = _8_
+  local function _9_()
+    return vim.cmd.marks(table.concat(marks))
   end
   local function _10_(_241)
+    return create_mark(_241)
+  end
+  local function _11_(_241)
     return jump_to_mark(_241)
   end
-  marks = core.concat({{"n", "''", _8_, {desc = "list quick marks (ARST and zxcd)"}}}, core.map(_9_, marks0), core.map(_10_, marks0))
+  quickmarks = core.concat({{"n", "''", _9_, {desc = string.format("[quickmark] list quickmarks {%s}", table.concat(marks))}}}, core.map(_10_, marks), core.map(_11_, marks))
 end
 local buffers = {{"n", "<leader>b", ":buffers<cr>:b<Space>"}, {"n", "<leader>x", ":bp|bdelete #<cr>", {desc = "[buffer] close buffer"}}}
 local tabs = {{"n", "<leader>ts", ":tab split<cr>", {silent = true}}, {"n", "[t", vim.cmd.tabprevious}, {"n", "]t", vim.cmd.tabnext}, {"n", "[T", vim.cmd.tabfirst}, {"n", "]T", vim.cmd.tablast}}
@@ -69,58 +73,58 @@ local loclist = {{"n", "<leader>lo", vim.cmd.lopen, {desc = "open loclist list"}
 local search_replace = {{"n", "<leader>/s", ":s//g<left><left>", {desc = "prompt for line search"}}, {"n", "<leader>/S", ":%s//g<left><left>", {desc = "prompt for buffer search"}}, {"n", "<leader>/w", ":s/\\<<c-r><c-w>\\>//g<left><left>", {desc = "prompt for line search and replace"}}, {"n", "<leader>/W", ":%s/\\<<c-r><c-w>\\>//g<left><left>", {desc = "prompt for buffer search and replace"}}}
 local visual_indent = {{"v", "<", "<gv", {}}, {"v", ">", ">gv", {}}}
 local terminal_maps
-local function _11_()
+local function _12_()
   return vim.cmd.tabnew("term://bash")
 end
-local function _12_()
+local function _13_()
   return vim.cmd.split("term://bash")
 end
-local function _13_()
+local function _14_()
   return vim.cmd.vsplit("term://bash")
 end
-local function _14_()
+local function _15_()
   vim.cmd.tabnew("term://w3m duckduckgo.com")
   return vim.cmd.startinsert()
 end
-terminal_maps = {{"t", "<C-o><C-o>", "<C-\\><C-n>"}, {"n", "<leader>otc", _11_}, {"n", "<leader>ots", _12_}, {"n", "<leader>otv", _13_}, {"n", "<leader>ott", ":tabnew term://"}, {"n", "<leader>otd", _14_}}
+terminal_maps = {{"t", "<C-o><C-o>", "<C-\\><C-n>"}, {"n", "<leader>otc", _12_}, {"n", "<leader>ots", _13_}, {"n", "<leader>otv", _14_}, {"n", "<leader>ott", ":tabnew term://"}, {"n", "<leader>otd", _15_}}
 --[[ "-- OPEN OTHER FILES AND PROGRAMS  --" ]]
 local journal_launchers
-local function _15_()
+local function _16_()
   util.call("journal-tools", "setup")
   return vim.cmd((":$tabnew" .. "$JOURNAL/journal.md"))
 end
-local function _16_()
+local function _17_()
   autoload("journal-tools")["load-journal-tools"]()
   return vim.cmd((":$tabnew" .. "$JOURNAL/linux/vim.adoc"))
 end
-journal_launchers = {{"n", "<leader>oj", _15_, {desc = "open journal in a new tab", silent = true}}, {"n", "<leader>ov", _16_, {desc = "open vim notes in a new tab", silent = true}}}
+journal_launchers = {{"n", "<leader>oj", _16_, {desc = "open journal in a new tab", silent = true}}, {"n", "<leader>ov", _17_, {desc = "open vim notes in a new tab", silent = true}}}
 local lazygit_launcher
-local _17_
+local _18_
 if vim.env.TMUX then
-  _17_ = ":!tmux neww lazygit<cr><cr>"
+  _18_ = ":!tmux neww lazygit<cr><cr>"
 else
-  local function _18_()
+  local function _19_()
     vim.cmd.tabnew("term://lazygit")
     return vim.cmd.startinsert()
   end
-  _17_ = _18_
+  _18_ = _19_
 end
-lazygit_launcher = {{"n", "<leader>og", _17_, {desc = "open lazygit in a new tab or tmux window", silent = true}}}
+lazygit_launcher = {{"n", "<leader>og", _18_, {desc = "open lazygit in a new tab or tmux window", silent = true}}}
 local opencode_launcher
-local _20_
+local _21_
 if vim.env.TMUX then
-  _20_ = ":!tmux split-window -l 40\\% opencode<cr><cr>"
+  _21_ = ":!tmux split-window -l 40\\% opencode<cr><cr>"
 else
-  local function _21_()
+  local function _22_()
     vim.cmd.vsplit("term://opencode")
     return vim.cmd.startinsert()
   end
-  _20_ = _21_
+  _21_ = _22_
 end
-opencode_launcher = {{"n", "<leader>oo", _20_, {desc = "open opencode in a new tab or tmux window", silent = true}}}
+opencode_launcher = {{"n", "<leader>oo", _21_, {desc = "open opencode in a new tab or tmux window", silent = true}}}
 local tmux_apps = {lazydocker = {{"n", "<leader>od", ":!tmux neww lazydocker<cr><cr>", {desc = "open lazydocker in a new tmux window", silent = true}}}}
 local function setup()
-  local mappings = core.concat(general, filters, jumps, undo_steps, dates, marks, buffers, tabs, quickfix, loclist, search_replace, visual_indent, terminal_maps)
+  local mappings = core.concat(general, filters, jumps, undo_steps, dates, quickmarks, buffers, tabs, quickfix, loclist, search_replace, visual_indent, terminal_maps)
   util["set-keys"](mappings)
   --[[ "select completion binding item" ]]
   vim.cmd("inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")
