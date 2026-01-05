@@ -6,7 +6,7 @@ local util = autoload("juice.util")
 local core = autoload("nfnl.core")
 --[[ "---- GENERAL OPTIONS ----" ]]
 local map_leaders = {mapleader = " ", maplocalleader = ","}
-local behavior = {clipboard = "unnamedplus", smartindent = true, shiftwidth = 2, tabstop = 2, softtabstop = 2, expandtab = true, mouse = "", shortmess = "filnxtToOF", undolevels = 5000, undofile = true, foldenable = false}
+local behavior = {clipboard = "unnamedplus", smartindent = true, shiftwidth = 2, tabstop = 2, softtabstop = 2, expandtab = true, mouse = "", shortmess = "filnxtToOF", undolevels = 5000, undofile = true, virtualedit = "block", foldenable = false}
 local visual = {signcolumn = "no", cursorline = true, splitbelow = true, splitright = true, linebreak = true, laststatus = 3, statusline = statusline.build({}), number = false, relativenumber = false, wrap = false}
 --[[ "---- SEARCH OPTIONS ----" ]]
 local search = {hlsearch = true, incsearch = true, ignorecase = true, smartcase = true, wrapscan = false}

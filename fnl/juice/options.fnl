@@ -27,7 +27,8 @@
                  ; increase the number of undos
                  :undolevels 5000
                  ; persist undo logs per file inside `undodir`
-                 :undofile true})
+                 :undofile true
+                 :virtualedit :block})
 
 (local visual {; show line numbers
                :number false
