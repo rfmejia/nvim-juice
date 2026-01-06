@@ -55,7 +55,7 @@ local function configure_completion(client, bufnr)
 end
 local function setup()
   local config = {root_markers = {".git"}}
-  local lsp_configs = {"clangd", "fennel_ls", "clojure_lsp", "gopls", "jdtls"}
+  local lsp_configs = {"clangd", "clojure_lsp", "fennel_ls", "gopls", "jdtls", "sqlls"}
   local on_attach
   local function _12_(event)
     local case_13_ = vim.lsp.get_client_by_id(event.data.client_id)

@@ -67,9 +67,10 @@
   (when (client:supports_method :textDocument/completion)
     (vim.lsp.completion.enable true (. client :id) bufnr {:autotrigger false})))
 
+;; TODO Why not just discover the configs in root/lsp?
 (fn setup []
   (let [config {:root_markers [:.git]}
-        lsp-configs [:clangd :fennel_ls :clojure_lsp :gopls :jdtls]
+        lsp-configs [:clangd :clojure_lsp :fennel_ls :gopls :jdtls :sqlls]
         on-attach (fn [event]
                     (case (vim.lsp.get_client_by_id event.data.client_id)
                       client (do
