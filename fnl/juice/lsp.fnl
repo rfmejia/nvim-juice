@@ -44,7 +44,7 @@
                           {:desc "show diagnostics of the buffer in local list"
                            :buffer bufnr}]
                          [:n
-                          :gh
+                          :grh
                           #(vim.lsp.inlay_hint.enable (not (vim.lsp.inlay_hint.is_enabled)))
                           {:desc "toggle inlay hints" :buffer bufnr}]]
         code-action-maps [[:n

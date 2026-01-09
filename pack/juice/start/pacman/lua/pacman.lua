@@ -238,17 +238,21 @@ local function load_on_keymap(packs, keys, callback, _3ftrigger_after)
       callback()
     else
     end
-    return (_3ftrigger_after or (nil == _3ftrigger_after) or vim.api.nvim_input(lhs))
+    if (_3ftrigger_after or (nil == _3ftrigger_after)) then
+      return vim.api.nvim_input(lhs)
+    else
+      return nil
+    end
   end
   start = _43_
   local set_trigger
-  local function _45_(mode0, lhs)
-    local function _46_()
+  local function _46_(mode0, lhs)
+    local function _47_()
       return start(mode0, lhs)
     end
-    return vim.keymap.set(mode0, lhs, _46_)
+    return vim.keymap.set(mode0, lhs, _47_)
   end
-  set_trigger = _45_
+  set_trigger = _46_
   if core["sequential?"](keys) then
     for _, key in ipairs(keys) do
       set_trigger("n", key)

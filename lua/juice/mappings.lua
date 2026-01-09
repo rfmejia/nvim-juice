@@ -40,7 +40,7 @@ local undo_steps = {{"i", "\"", "\"<C-g>u", {silent = true}}, {"i", ".", ".<C-g>
 local dates = {{"n", "<leader>dt", ":.!date '+\\%a, \\%d \\%b \\%Y'<cr>", {desc = "insert current date"}}, {"n", "<leader>dT", ":.!date '+\\%a, \\%d \\%b \\%Y' --date=''<left>", {desc = "prompt for date query"}}}
 local quickmarks
 do
-  local marks = {"A", "S", "D", "F", "z", "x", "c", "v"}
+  local marks = {"A", "S", "D", "F"}
   local create_mark
   local function _6_(key)
     local function _7_()
@@ -78,7 +78,7 @@ do
   end
   quickmarks = core.concat({{"n", "''", _12_, {desc = string.format("[quickmark] list quickmarks {%s}", table.concat(marks))}}}, core.map(_13_, marks), core.map(_14_, marks))
 end
-local buffers = {{"n", "<leader>b", ":buffers<cr>:b<Space>"}, {"n", "<leader>x", ":bp|bdelete #<cr>", {desc = "[buffer] close buffer"}}}
+local buffers = {{"n", "<leader>b", ":buffers<cr>:b<Space>"}, {"n", "<leader>x", ":bp|bdelete #<cr>", {silent = true, desc = "[buffer] close buffer"}}}
 local tabs = {{"n", "<leader>ts", ":tab split<cr>", {silent = true}}, {"n", "[t", vim.cmd.tabprevious}, {"n", "]t", vim.cmd.tabnext}, {"n", "[T", vim.cmd.tabfirst}, {"n", "]T", vim.cmd.tablast}}
 local quickfix = {{"n", "<leader>co", vim.cmd.copen, {desc = "open quickfix list"}}, {"n", "<leader>cc", vim.cmd.cclose, {desc = "close quickfix list"}}, {"n", "[q", vim.cmd.cprevious, {desc = "jump to the previous entry in the current quickfix list"}}, {"n", "]q", vim.cmd.cnext, {desc = "jump to the next entry in the current quickfix list"}}, {"n", "<leader>C", vim.cmd.chistory, {desc = "list quickfix history"}}, {"n", "[C", vim.cmd.colder, {desc = "jump to the previous quickfix list"}}, {"n", "]C", vim.cmd.cnewer, {desc = "jump to the newer quickfix list"}}}
 local loclist = {{"n", "<leader>lo", vim.cmd.lopen, {desc = "open loclist list"}}, {"n", "<leader>lc", vim.cmd.lclose, {desc = "close loclist list"}}, {"n", "[l", vim.cmd.lprevious, {desc = "jump to previous entry in the current loclist"}}, {"n", "]l", vim.cmd.lnext, {desc = "jump to next entry in the current loclist"}}, {"n", "<leader>L", vim.cmd.lhistory, {desc = "list loclist history"}}, {"n", "[L", vim.cmd.lolder, {desc = "jump to the previous loclist"}}, {"n", "]L", vim.cmd.lnewer, {desc = "jump to the newer loclist"}}}

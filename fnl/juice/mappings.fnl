@@ -100,7 +100,7 @@
                 [:n
                  :<leader>x
                  ":bp|bdelete #<cr>"
-                 {:desc "[buffer] close buffer"}]])
+                 {:silent true :desc "[buffer] close buffer"}]])
 
 (local tabs [[:n :<leader>ts ":tab split<cr>" {:silent true}]
              [:n "[t" vim.cmd.tabprevious]

@@ -26,7 +26,7 @@ local function set_mappings(bufnr)
   local function _7_()
     return vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
   end
-  diagnostic_maps = {{"n", "K", _3_, {desc = "show type", buffer = bufnr}}, {"n", "[d", _4_, {desc = "goto next diagnostic", buffer = bufnr}}, {"n", "]d", _5_, {desc = "goto previous diagnostic", buffer = bufnr}}, {"n", "gre", _6_, {desc = "show diagnostic errors of the workspace in quickfix list", buffer = bufnr}}, {"n", "grw", vim.diagnostic.setqflist, {desc = "show diagnostics of the workspace in quickfix list", buffer = bufnr}}, {"n", "grb", vim.diagnostic.setloclist, {desc = "show diagnostics of the buffer in local list", buffer = bufnr}}, {"n", "gh", _7_, {desc = "toggle inlay hints", buffer = bufnr}}}
+  diagnostic_maps = {{"n", "K", _3_, {desc = "show type", buffer = bufnr}}, {"n", "[d", _4_, {desc = "goto next diagnostic", buffer = bufnr}}, {"n", "]d", _5_, {desc = "goto previous diagnostic", buffer = bufnr}}, {"n", "gre", _6_, {desc = "show diagnostic errors of the workspace in quickfix list", buffer = bufnr}}, {"n", "grw", vim.diagnostic.setqflist, {desc = "show diagnostics of the workspace in quickfix list", buffer = bufnr}}, {"n", "grb", vim.diagnostic.setloclist, {desc = "show diagnostics of the buffer in local list", buffer = bufnr}}, {"n", "grh", _7_, {desc = "toggle inlay hints", buffer = bufnr}}}
   local code_action_maps
   local function _8_()
     return vim.lsp.buf.format({async = true})

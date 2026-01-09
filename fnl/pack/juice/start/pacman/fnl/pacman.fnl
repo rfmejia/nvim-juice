@@ -123,8 +123,8 @@ Parameters:
                 (clear-triggers)
                 (when (core.function? callback)
                   (callback))
-                (or ?trigger-after (= nil ?trigger-after)
-                    (vim.api.nvim_input lhs)))
+                (when (or ?trigger-after (= nil ?trigger-after))
+                  (vim.api.nvim_input lhs)))
         set-trigger (fn [mode lhs]
                       (vim.keymap.set mode lhs #(start mode lhs)))]
     (if (core.sequential? keys)
