@@ -103,7 +103,7 @@
         :DiagnosticVirtualTextInfo {:fg :DarkCyan :italic in-gui?}
         :DiagnosticVirtualTextOk {:fg :DarkGreen :italic in-gui?}
         :DiagnosticVirtualTextWarn {:fg :DarkYellow :italic in-gui?}
-        :LspInlayHint {:fg :Gray :italic in-gui?}})
+        :LspInlayHint {:fg pallete.DarkGray :italic in-gui?}})
 
 (lambda set-hl [hi-options]
   "Helper function to set multiple highlight groups using a table"
