@@ -1,5 +1,5 @@
 -- [nfnl] fnl/plugin/trim-whitespace.fnl
-local hi_cmd = "hi ExtraWhitespace cterm=undercurl ctermfg=red"
+local hi_cmd = "hi link ExtraWhitespace Error"
 local match_all_cmd = "match ExtraWhitespace /\\s\\+$/"
 local match_partial_cmd = "match ExtraWhitespace /\\s\\+\\%#\\@<!$/"
 local clear_matches_cmd = "call clearmatches()"

@@ -1,4 +1,4 @@
-(let [hi-cmd "hi ExtraWhitespace cterm=undercurl ctermfg=red"
+(let [hi-cmd "hi link ExtraWhitespace Error"
       match-all-cmd "match ExtraWhitespace /\\s\\+$/"
       match-partial-cmd "match ExtraWhitespace /\\s\\+\\%#\\@<!$/"
       clear-matches-cmd "call clearmatches()"]
