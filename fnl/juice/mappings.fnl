@@ -200,7 +200,7 @@
                            :silent true}]])
 
 (local opencode-launcher [[:n
-                           :<leader>oo
+                           :<leader>oc
                            (if vim.env.TMUX
                                ":!tmux split-window -l 40\\% opencode<cr><cr>"
                                (fn []

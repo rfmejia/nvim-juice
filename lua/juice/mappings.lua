@@ -133,7 +133,7 @@ else
   end
   _24_ = _25_
 end
-opencode_launcher = {{"n", "<leader>oo", _24_, {desc = "open opencode in a new tab or tmux window", silent = true}}}
+opencode_launcher = {{"n", "<leader>oc", _24_, {desc = "open opencode in a new tab or tmux window", silent = true}}}
 local tmux_apps = {lazydocker = {{"n", "<leader>od", ":!tmux neww lazydocker<cr><cr>", {desc = "open lazydocker in a new tmux window", silent = true}}}}
 local function setup()
   local mappings = core.concat(general, filters, jumps, undo_steps, dates, quickmarks, buffers, tabs, quickfix, loclist, search_replace, visual_indent, terminal_maps)
