@@ -74,7 +74,11 @@ local function init_plugin()
   return vim.notify("[journal-tools] Loaded tools")
 end
 local function _12_()
-  vim.api.nvim_del_user_command("JournalInit")
-  return init_plugin()
+  init_plugin()
+  local function _13_()
+    --[[ "no-op" ]]
+    return nil
+  end
+  return vim.api.nvim_create_user_command("JournalInit", _13_, {})
 end
 return vim.api.nvim_create_user_command("JournalInit", _12_, {desc = "Load default mappings for journal tools"})

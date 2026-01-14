@@ -180,15 +180,22 @@
        [[:n
          :<leader>oj
          (fn []
-           (util.call :journal-tools :setup)
+           (vim.cmd.JournalInit)
            (vim.cmd (.. ":$tabnew" :$JOURNAL/journal.md)))
          {:desc "open journal in a new tab" :silent true}]
         [:n
          :<leader>ov
          (fn []
-           ((. (autoload :journal-tools) :load-journal-tools))
+           (vim.cmd.JournalInit)
            (vim.cmd (.. ":$tabnew" :$JOURNAL/linux/vim.adoc)))
          {:desc "open vim notes in a new tab" :silent true}]])
+
+(local mail-draft-launcher
+       [[:n
+         :<leader>om
+         #(let [tmp-file (vim.fn.system [:mktemp :--suffix=.mail])]
+           (vim.cmd (.. ":$tabnew" tmp-file)))
+         {:desc "open a new mail draft in new tab"}]])
 
 (local lazygit-launcher [[:n
                           :<leader>og
@@ -219,7 +226,7 @@
 (fn setup []
   (let [mappings (core.concat general filters jumps undo-steps dates quickmarks
                               buffers tabs quickfix loclist search-replace
-                              visual-indent terminal-maps)]
+                              visual-indent terminal-maps mail-draft-launcher)]
     (util.set-keys mappings)
     (comment "select completion binding item")
     (vim.cmd "inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")

@@ -102,41 +102,47 @@ terminal_maps = {{"t", "<C-o><C-o>", "<C-\\><C-n>"}, {"n", "<leader>otc", _15_},
 --[[ "-- OPEN OTHER FILES AND PROGRAMS  --" ]]
 local journal_launchers
 local function _19_()
-  util.call("journal-tools", "setup")
+  vim.cmd.JournalInit()
   return vim.cmd((":$tabnew" .. "$JOURNAL/journal.md"))
 end
 local function _20_()
-  autoload("journal-tools")["load-journal-tools"]()
+  vim.cmd.JournalInit()
   return vim.cmd((":$tabnew" .. "$JOURNAL/linux/vim.adoc"))
 end
 journal_launchers = {{"n", "<leader>oj", _19_, {desc = "open journal in a new tab", silent = true}}, {"n", "<leader>ov", _20_, {desc = "open vim notes in a new tab", silent = true}}}
+local mail_draft_launcher
+local function _21_()
+  local tmp_file = vim.fn.system({"mktemp", "--suffix=.mail"})
+  return vim.cmd((":$tabnew" .. tmp_file))
+end
+mail_draft_launcher = {{"n", "<leader>om", _21_, {desc = "open a new mail draft in new tab"}}}
 local lazygit_launcher
-local _21_
+local _22_
 if vim.env.TMUX then
-  _21_ = ":!tmux neww lazygit<cr><cr>"
+  _22_ = ":!tmux neww lazygit<cr><cr>"
 else
-  local function _22_()
+  local function _23_()
     vim.cmd.tabnew("term://lazygit")
     return vim.cmd.startinsert()
   end
-  _21_ = _22_
+  _22_ = _23_
 end
-lazygit_launcher = {{"n", "<leader>og", _21_, {desc = "open lazygit in a new tab or tmux window", silent = true}}}
+lazygit_launcher = {{"n", "<leader>og", _22_, {desc = "open lazygit in a new tab or tmux window", silent = true}}}
 local opencode_launcher
-local _24_
+local _25_
 if vim.env.TMUX then
-  _24_ = ":!tmux split-window -l 40\\% opencode<cr><cr>"
+  _25_ = ":!tmux split-window -l 40\\% opencode<cr><cr>"
 else
-  local function _25_()
+  local function _26_()
     vim.cmd.vsplit("term://opencode")
     return vim.cmd.startinsert()
   end
-  _24_ = _25_
+  _25_ = _26_
 end
-opencode_launcher = {{"n", "<leader>oc", _24_, {desc = "open opencode in a new tab or tmux window", silent = true}}}
+opencode_launcher = {{"n", "<leader>oc", _25_, {desc = "open opencode in a new tab or tmux window", silent = true}}}
 local tmux_apps = {lazydocker = {{"n", "<leader>od", ":!tmux neww lazydocker<cr><cr>", {desc = "open lazydocker in a new tmux window", silent = true}}}}
 local function setup()
-  local mappings = core.concat(general, filters, jumps, undo_steps, dates, quickmarks, buffers, tabs, quickfix, loclist, search_replace, visual_indent, terminal_maps)
+  local mappings = core.concat(general, filters, jumps, undo_steps, dates, quickmarks, buffers, tabs, quickfix, loclist, search_replace, visual_indent, terminal_maps, mail_draft_launcher)
   util["set-keys"](mappings)
   --[[ "select completion binding item" ]]
   vim.cmd("inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")

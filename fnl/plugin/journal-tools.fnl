@@ -71,6 +71,8 @@
 
 (vim.api.nvim_create_user_command :JournalInit
                                   (fn []
-                                    (vim.api.nvim_del_user_command :JournalInit)
-                                    (init-plugin))
+                                    (init-plugin)
+                                    (vim.api.nvim_create_user_command :JournalInit
+                                                                      #(comment :no-op)
+                                                                      {}))
                                   {:desc "Load default mappings for journal tools"})
