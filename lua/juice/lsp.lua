@@ -48,7 +48,7 @@ local function configure_completion(client, bufnr)
   else
   end
   if client:supports_method("textDocument/completion") then
-    return vim.lsp.completion.enable(true, client.id, bufnr, {autotrigger = false})
+    return vim.lsp.completion.enable(true, client.id, bufnr, {autotrigger = true})
   else
     return nil
   end

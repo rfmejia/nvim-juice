@@ -65,7 +65,7 @@
 
 (lambda configure-completion [client bufnr]
   (when (client:supports_method :textDocument/completion)
-    (vim.lsp.completion.enable true (. client :id) bufnr {:autotrigger false})))
+    (vim.lsp.completion.enable true client.id bufnr {:autotrigger true})))
 
 ;; TODO Why not just discover the configs in root/lsp?
 (fn setup []
