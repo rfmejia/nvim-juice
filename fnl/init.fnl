@@ -24,8 +24,8 @@
                   :juice.lsp
                   :juice.dotenvrc])
 
-;; (vim.cmd.colorscheme :default-black)
-(vim.cmd.colorscheme :ibm-blue)
+(vim.cmd.colorscheme :default-black)
+;; (vim.cmd.colorscheme :ibm-blue)
 
 ;; TODO Create your own auto-pairs plugins
 ;; TODO Create your own surround plugins
