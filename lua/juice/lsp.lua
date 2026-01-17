@@ -8,7 +8,6 @@ local function set_mappings(bufnr)
     _G.error("Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp.fnl:5", 2)
   else
   end
-  local omnifunc_map = {{"i", "<C-space>", "<C-x><C-o>", {buffer = bufnr}}}
   local goto_maps = {{"n", "gd", vim.lsp.buf.definition, {desc = "goto definition", nowait = true, buffer = bufnr}}, {"n", "gt", vim.lsp.buf.type_definition, {desc = "goto type definition", nowait = true, buffer = bufnr}}, {"n", "gW", vim.lsp.buf.workspace_symbol, {desc = "goto Workspace symbol", buffer = bufnr}}}
   local diagnostic_maps
   local function _3_()
@@ -32,7 +31,7 @@ local function set_mappings(bufnr)
     return vim.lsp.buf.format({async = true})
   end
   code_action_maps = {{"n", "grf", _8_, {desc = "code format", buffer = bufnr}}}
-  local mappings = core.concat(omnifunc_map, goto_maps, diagnostic_maps, code_action_maps)
+  local mappings = core.concat(diagnostic_maps, code_action_maps)
   return util["set-keys"](mappings)
 end
 local function configure_diagnostics()
@@ -40,11 +39,11 @@ local function configure_diagnostics()
 end
 local function configure_completion(client, bufnr)
   if (nil == bufnr) then
-    _G.error("Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp.fnl:66", 2)
+    _G.error("Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp.fnl:64", 2)
   else
   end
   if (nil == client) then
-    _G.error("Missing argument client on /home/rfmejia/.config/nvim/fnl/juice/lsp.fnl:66", 2)
+    _G.error("Missing argument client on /home/rfmejia/.config/nvim/fnl/juice/lsp.fnl:64", 2)
   else
   end
   if client:supports_method("textDocument/completion") then

@@ -1,4 +1,4 @@
--- [nfnl] fnl/plugin/sql.fnl
+-- [nfnl] fnl/plugin/dbmode.fnl
 local _let_1_ = require("nfnl.module")
 local autoload = _let_1_.autoload
 local pacman = autoload("pacman")
@@ -7,6 +7,14 @@ local dadbod_maps = {{"n", "<localleader>d;", ":DB g:db ", {desc = "[dadbod] run
 pacman.add(packs)
 local function _2_()
   local util = autoload("juice.util")
-  return util["set-keys"](dadbod_maps)
+  local default_db = vim.env.DADBOD_DEFAULT_DB
+  util["set-keys"](dadbod_maps)
+  vim.opt_local.omnifunc = "vim_dadbod_completion#omni"
+  if default_db then
+    vim.cmd.DB(("g:db = " .. default_db))
+    return vim.notify("[dadbod] Default DB set in g:db")
+  else
+    return nil
+  end
 end
 return pacman["load-on-event"]({"vim-dadbod", "vim-dadbod-completion"}, "FileType", {pattern = {"sql", "mysql", "pgsql"}, callback = _2_})

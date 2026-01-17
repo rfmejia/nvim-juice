@@ -6,6 +6,7 @@
        [[:n :Y :y$ {:desc "yank until the end of the line"}]
         [:n :<leader>w vim.cmd.w {:desc "write buffer" :silent true}]
         [:n :<leader>r vim.cmd.registers {:desc "list registers"}]
+        [:i :<C-space> :<C-x><C-o> {:desc "call omnifunc"}]
         [:n :<F5> vim.cmd.make {:desc "trigger `make` in shell"}]
         [:n
          :<leader>n
@@ -194,7 +195,7 @@
        [[:n
          :<leader>om
          #(let [tmp-file (vim.fn.system [:mktemp :--suffix=.mail])]
-           (vim.cmd (.. ":$tabnew" tmp-file)))
+            (vim.cmd (.. ":$tabnew" tmp-file)))
          {:desc "open a new mail draft in new tab"}]])
 
 (local lazygit-launcher [[:n

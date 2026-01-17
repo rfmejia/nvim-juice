@@ -29,5 +29,11 @@
   (pacman.add packs)
   (pacman.load-on-event [:vim-dadbod :vim-dadbod-completion] :FileType
                         {:pattern [:sql :mysql :pgsql]
-                         :callback #(let [util (autoload :juice.util)]
-                                      (util.set-keys dadbod-maps))}))
+                         :callback #(let [util (autoload :juice.util)
+                                          default-db vim.env.DADBOD_DEFAULT_DB]
+                                      (util.set-keys dadbod-maps)
+                                      (set vim.opt_local.omnifunc
+                                           "vim_dadbod_completion#omni")
+                                      (when default-db
+                                        (vim.cmd.DB (.. "g:db = " default-db))
+                                        (vim.notify (.. "[dadbod] Default DB set in g:db"))))}))

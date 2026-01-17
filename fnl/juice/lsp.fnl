@@ -3,8 +3,7 @@
 (local util (autoload :juice.util))
 
 (lambda set-mappings [bufnr]
-  (let [omnifunc-map [[:i :<C-space> :<C-x><C-o> {:buffer bufnr}]]
-        goto-maps [[:n
+  (let [goto-maps [[:n
                     :gd
                     vim.lsp.buf.definition
                     {:desc "goto definition" :nowait true :buffer bufnr}]
@@ -51,8 +50,7 @@
                            :grf
                            #(vim.lsp.buf.format {:async true})
                            {:desc "code format" :buffer bufnr}]]
-        mappings (core.concat omnifunc-map goto-maps diagnostic-maps
-                              code-action-maps)]
+        mappings (core.concat diagnostic-maps code-action-maps)]
     (util.set-keys mappings)))
 
 (fn configure-diagnostics []
