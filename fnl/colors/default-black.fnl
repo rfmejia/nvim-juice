@@ -10,7 +10,9 @@
                 [:Delimiter :Operator :Special :Statement] {:fg :Gray}
                 [:LineNrAbove :LineNrBelow] {:fg :Gray}
                 :NonText {:fg :Black}
-                :Normal {:bg :NONE}
+                :Normal {:link :Normal}
+                :NormalFloat {:link :Normal}
+                :FloatBorder {:fg :DarkYellow}
                 :SpellBad {:fg :NvimLightRed :undercurl true}
                 :Title {:fg :DarkCyan :bold true}
                 :Todo {:fg :Yellow :bold true}

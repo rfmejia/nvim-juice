@@ -36,4 +36,4 @@
                                            "vim_dadbod_completion#omni")
                                       (when default-db
                                         (vim.cmd.DB (.. "g:db = " default-db))
-                                        (vim.notify (.. "[dadbod] Default DB set in g:db"))))}))
+                                        (vim.notify "[dadbod] Default DB set in g:db")))}))
