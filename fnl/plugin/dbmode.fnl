@@ -1,3 +1,11 @@
+(fn setup [keymaps default-db]
+  (let [{: autoload} (require :nfnl.module)
+        util (autoload :juice.util)]
+    (util.set-keys keymaps)
+    (set vim.opt_local.omnifunc "vim_dadbod_completion#omni")
+    (when default-db
+      (vim.cmd.DB (.. "g:db = " default-db)))))
+
 (let [{: autoload} (require :nfnl.module)
       pacman (autoload :pacman)
       packs ["https://github.com/tpope/vim-dadbod"
@@ -29,11 +37,12 @@
   (pacman.add packs)
   (pacman.load-on-event [:vim-dadbod :vim-dadbod-completion] :FileType
                         {:pattern [:sql :mysql :pgsql]
-                         :callback #(let [util (autoload :juice.util)
-                                          default-db vim.env.DADBOD_DEFAULT_DB]
-                                      (util.set-keys dadbod-maps)
-                                      (set vim.opt_local.omnifunc
-                                           "vim_dadbod_completion#omni")
-                                      (when default-db
-                                        (vim.cmd.DB (.. "g:db = " default-db))
-                                        (vim.notify "[dadbod] Default DB set in g:db")))}))
+                         :callback (fn []
+                                     (setup dadbod-maps
+                                            vim.env.DADBOD_DEFAULT_DB)
+                                     (vim.api.nvim_create_autocmd :FileType
+                                                                  {:pattern [:sql
+                                                                             :mysql
+                                                                             :pgsql]
+                                                                   :callback #(setup dadbod-maps
+                                                                                     vim.env.DADBOD_DEFAULT_DB)}))}))
