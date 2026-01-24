@@ -18,6 +18,8 @@
                                       :implicitConversions {:enable true}
                                       :inferredTypes {:enable true}
                                       :typeParameters {:enable true}}
+                         :serverVersion :1.6.5
+                         :serverProperties [:-Xmx4g]
                          :startMcpServer true}
         metals-maps (lambda [bufnr]
                       [[:v

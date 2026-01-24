@@ -9,11 +9,11 @@ local function init_plugin()
   local config = metals.bare_config()
   local tvp = autoload("metals.tvp")
   local options = {signcolumn = "yes:1", shortmess = (vim.go.shortmess .. "c"), statusline = statusline.build({"%{g:metals_status}", " \226\151\143"})}
-  local metals_settings = {disabledMode = true, defaultBspToBuildTool = true, enableSemanticHighlighting = true, inlayHints = {byNameParameters = {enable = true}, hintsInPatternMatch = {enable = true}, implicitArguments = {enable = true}, implicitConversions = {enable = true}, inferredTypes = {enable = true}, typeParameters = {enable = true}}, startMcpServer = true}
+  local metals_settings = {disabledMode = true, defaultBspToBuildTool = true, enableSemanticHighlighting = true, inlayHints = {byNameParameters = {enable = true}, hintsInPatternMatch = {enable = true}, implicitArguments = {enable = true}, implicitConversions = {enable = true}, inferredTypes = {enable = true}, typeParameters = {enable = true}}, serverVersion = "1.6.5", serverProperties = {"-Xmx4g"}, startMcpServer = true}
   local metals_maps
   local function _2_(bufnr)
     if (nil == bufnr) then
-      _G.error("Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/plugin/scalametals.fnl:22", 2)
+      _G.error("Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/plugin/scalametals.fnl:24", 2)
     else
     end
     local function _4_()
@@ -28,11 +28,11 @@ local function init_plugin()
   config.tvp = {panel_alignment = "right", toggle_node_mapping = "<CR>", node_command_mapping = "r"}
   local function _5_(client, bufnr)
     if (nil == bufnr) then
-      _G.error("Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/plugin/scalametals.fnl:50", 2)
+      _G.error("Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/plugin/scalametals.fnl:52", 2)
     else
     end
     if (nil == client) then
-      _G.error("Missing argument client on /home/rfmejia/.config/nvim/fnl/plugin/scalametals.fnl:50", 2)
+      _G.error("Missing argument client on /home/rfmejia/.config/nvim/fnl/plugin/scalametals.fnl:52", 2)
     else
     end
     util["set-keys"](metals_maps(bufnr))
