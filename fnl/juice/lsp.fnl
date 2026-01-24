@@ -50,7 +50,7 @@
                            :grf
                            #(vim.lsp.buf.format {:async true})
                            {:desc "code format" :buffer bufnr}]]
-        mappings (core.concat diagnostic-maps code-action-maps)]
+        mappings (core.concat goto-maps diagnostic-maps code-action-maps)]
     (util.set-keys mappings)))
 
 (fn configure-diagnostics []

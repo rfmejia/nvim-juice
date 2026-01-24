@@ -31,7 +31,7 @@ local function set_mappings(bufnr)
     return vim.lsp.buf.format({async = true})
   end
   code_action_maps = {{"n", "grf", _8_, {desc = "code format", buffer = bufnr}}}
-  local mappings = core.concat(diagnostic_maps, code_action_maps)
+  local mappings = core.concat(goto_maps, diagnostic_maps, code_action_maps)
   return util["set-keys"](mappings)
 end
 local function configure_diagnostics()
