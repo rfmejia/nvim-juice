@@ -13,11 +13,10 @@
                                         :headline :myshake}
                                     :2 {:description "< 20 min task"
                                         :template "* TODO  %?\n  %u"
-                                        :headline :quick}}}
-      keymaps [[:n :goa ":Org agenda<CR>" {:desc "[orgmode] start agenda"}]
-               [:n :goc ":Org capture<CR>" {:desc "[orgmode] start capture"}]]]
+                                        :headline :quick}}
+            :mappings {:global {:org_agenda :goa :org_capture :goc}}}]
   (pacman.add pack)
   (pacman.load-on-keymap :orgmode [:goa :goc]
                          (fn []
                            (util.call :orgmode :setup opts)
-                           (util.set-keys keymaps))))
+                           (vim.lsp.enable :org))))
