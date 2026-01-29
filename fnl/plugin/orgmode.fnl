@@ -4,19 +4,25 @@
       util (autoload :juice.util)
       org-home (or vim.env.JOURNAL "~/journal")
       opts {:org_agenda_files (.. org-home "/**/*")
-            :org_default_notes_file (.. org-home :/_main.org)
-            :org_capture_templates {:c {:description "Clip register"
-                                        :template "-  %?\n%x\n"
-                                        :target (.. org-home :/_clips.org)}
-                                    :m {:description "Add myshake task"
-                                        :template "* TODO  %?\n  %u\n"
+            :org_default_notes_file (.. org-home :/journal.org)
+            :org_capture_templates {:b {:description :Bookmark
+                                        :template "- %? [%a]\n"
+                                        :target (.. org-home :/bookmarks.org)}
+                                    :c {:description "Clip register"
+                                        :template "- %? \n%x\n"
+                                        :target (.. org-home :/clips.org)}
+                                    :t {:description "Add task"
+                                        :template "* TODO  %?\n  %U\n"
+                                        :headline :unfiled}
+                                    :m {:description "Add task - myshake"
+                                        :template "* TODO  %?\n  %U\n"
                                         :headline :myshake}
-                                    :2 {:description "< 20 min task"
-                                        :template "* TODO  %?\n  %u"
+                                    :2 {:description "Add task - quick (< 20 min)"
+                                        :template "* TODO  %?\n  %U\n"
                                         :headline :quick}}
-            :mappings {:global {:org_agenda :goa :org_capture :goc}}}]
+            :mappings {:global {}}}]
   (pacman.add pack)
-  (pacman.load-on-keymap :orgmode [:goa :goc]
+  (pacman.load-on-keymap :orgmode :<leader>o
                          (fn []
                            (util.call :orgmode :setup opts)
                            (vim.lsp.enable :org))))

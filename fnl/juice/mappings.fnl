@@ -15,15 +15,7 @@
             (core.merge! vim.opt
                          {:number (not is-enabled)
                           :relativenumber (not is-enabled)}))
-         {:desc "toggle number and relativenumber options"}]
-        [:n
-         :<leader>on
-         #(let [config-path (.. vim.env.XDG_CONFIG_HOME :/nvim)]
-            (vim.cmd (.. ":$tabnew" config-path))
-            (vim.cmd.tcd config-path)
-            (comment -?>> (util.call :juice.dotenvrc :read-path-list)
-              (set vim.opt_local.path)))
-         {:desc "open nvim config in a new tab" :silent true}]])
+         {:desc "toggle number and relativenumber options"}]])
 
 (local filters
        (let [repeat (fn [times value]
@@ -164,28 +156,29 @@
 
 (local visual-indent [[:v "<" :<gv {}] [:v ">" :>gv {}]])
 
-(local terminal-maps [[:t :<C-o><C-o> "<C-\\><C-n>"]
-                      [:n :<leader>otc #(vim.cmd.tabnew "term://bash")]
-                      [:n :<leader>ots #(vim.cmd.split "term://bash")]
-                      [:n :<leader>otv #(vim.cmd.vsplit "term://bash")]
-                      [:n :<leader>ott ":tabnew term://"]
-                      [:n
-                       :<leader>otd
-                       (fn []
-                         (vim.cmd.tabnew "term://w3m duckduckgo.com")
-                         (vim.cmd.startinsert))]])
-
 (comment "-- OPEN OTHER FILES AND PROGRAMS  --")
+
+(local nvim-config-launcher [[:n
+                              :gon
+                              #(let [config-path (.. vim.env.XDG_CONFIG_HOME
+                                                     :/nvim)]
+                                 (vim.cmd (.. ":$tabnew" config-path))
+                                 (vim.cmd.tcd config-path)
+                                 (comment -?>>
+                                   (util.call :juice.dotenvrc :read-path-list)
+                                   (set vim.opt_local.path)))
+                              {:desc "open nvim config in a new tab"
+                               :silent true}]])
 
 (local journal-launchers
        [[:n
-         :<leader>oj
+         :goj
          (fn []
            (vim.cmd.JournalInit)
            (vim.cmd (.. ":$tabnew" :$JOURNAL/journal.md)))
          {:desc "open journal in a new tab" :silent true}]
         [:n
-         :<leader>ov
+         :gov
          (fn []
            (vim.cmd.JournalInit)
            (vim.cmd (.. ":$tabnew" :$JOURNAL/linux/vim.adoc)))
@@ -193,13 +186,13 @@
 
 (local mail-draft-launcher
        [[:n
-         :<leader>om
+         :gom
          #(let [tmp-file (vim.fn.system [:mktemp :--suffix=.mail])]
             (vim.cmd (.. ":$tabnew" tmp-file)))
          {:desc "open a new mail draft in new tab"}]])
 
 (local lazygit-launcher [[:n
-                          :<leader>og
+                          :gog
                           (if vim.env.TMUX ":!tmux neww lazygit<cr><cr>"
                               (fn []
                                 (vim.cmd.tabnew "term://lazygit")
@@ -208,7 +201,7 @@
                            :silent true}]])
 
 (local opencode-launcher [[:n
-                           :<leader>oc
+                           :goc
                            (if vim.env.TMUX
                                ":!tmux split-window -l 40\\% opencode<cr><cr>"
                                (fn []
@@ -219,7 +212,7 @@
 
 (local tmux-apps {;; Add editor context-specific apps here, lazydocker is not a good example
                   :lazydocker [[:n
-                                :<leader>od
+                                :god
                                 ":!tmux neww lazydocker<cr><cr>"
                                 {:desc "open lazydocker in a new tmux window"
                                  :silent true}]]})
@@ -227,7 +220,8 @@
 (fn setup []
   (let [mappings (core.concat general filters jumps undo-steps dates quickmarks
                               buffers tabs quickfix loclist search-replace
-                              visual-indent terminal-maps mail-draft-launcher)]
+                              visual-indent nvim-config-launcher
+                              mail-draft-launcher)]
     (util.set-keys mappings)
     (comment "select completion binding item")
     (vim.cmd "inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")
