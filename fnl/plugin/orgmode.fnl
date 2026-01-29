@@ -2,7 +2,7 @@
       pacman (autoload :pacman)
       pack "https://github.com/nvim-orgmode/orgmode"
       util (autoload :juice.util)
-      org-home (or vim.env.ORG_HOME "~/orgfiles")
+      org-home (or vim.env.JOURNAL "~/journal")
       opts {:org_agenda_files (.. org-home "/**/*")
             :org_default_notes_file (.. org-home :/_main.org)
             :org_capture_templates {:c {:description "Clip register"
