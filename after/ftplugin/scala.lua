@@ -18,12 +18,12 @@ if util["executable?"]("sbtn") then
     vim.api.nvim_create_autocmd({"BufWinEnter", "WinEnter"}, {buffer = vim.api.nvim_get_current_buf(), callback = _3_})
     return vim.cmd.startinsert()
   end
-  vim.keymap.set("n", "<leader>os", _2_)
-  vim.keymap.set("n", "<leader>oa", ":!tmux split-window -v -l 30\\% sbtn<cr><cr>", {desc = "[scala] open sbtn in a tmux split", buffer = true, silent = true})
+  vim.keymap.set("n", "<localleader>os", _2_)
+  vim.keymap.set("n", "<localleader>oa", ":!tmux split-window -v -l 30\\% sbtn<cr><cr>", {desc = "[scala] open sbtn in a tmux split", buffer = true, silent = true})
 else
 end
 if util["executable?"]("scala-cli") then
-  vim.keymap.set("n", "<leader>oc", ":!tmux split-window -v -l 30\\% scala-cli console %<cr><cr>", {desc = "[scala] open scala-cli in a tmux split", buffer = true, silent = true})
+  vim.keymap.set("n", "<localleader>oc", ":!tmux split-window -v -l 30\\% scala-cli console %<cr><cr>", {desc = "[scala] open scala-cli in a tmux split", buffer = true, silent = true})
 else
 end
 local function metals_lsp_started_3f()

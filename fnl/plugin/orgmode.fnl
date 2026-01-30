@@ -6,16 +6,16 @@
       opts {:org_agenda_files (.. org-home "/**/*")
             :org_default_notes_file (.. org-home :/journal.org)
             :org_capture_templates {:b {:description :Bookmark
-                                        :template "- %? [%a]\n"
+                                        :template "* %? [%a]\n"
                                         :target (.. org-home :/bookmarks.org)}
                                     :c {:description "Clip register"
-                                        :template "- %? \n%x\n"
+                                        :template "* %? \n%x\n"
                                         :target (.. org-home :/clips.org)}
                                     :t {:description "Add task - unfiled"
                                         :template "* TODO  %?\n  %U\n"
                                         :headline :unfiled}
                                     :m {:description "Add task - myshake"
-                                        :template "* TODO  %?\n  %U\n"
+                                        :template "* TODO  %?\n  %U %a\n"
                                         :headline :myshake}
                                     :2 {:description "Add task - < 20 min"
                                         :template "* TODO  %?\n  %U\n"

@@ -19,7 +19,7 @@
                  :silent true})
 
 (when (util.executable? :sbtn)
-  (vim.keymap.set :n :<leader>os
+  (vim.keymap.set :n :<localleader>os
                   (fn []
                     (vim.cmd.split "term://sbtn")
                     (vim.api.nvim_win_set_height 0 15)
@@ -27,13 +27,14 @@
                                                  {:buffer (vim.api.nvim_get_current_buf)
                                                   :callback #(vim.cmd.startinsert)})
                     (vim.cmd.startinsert)))
-  (vim.keymap.set :n :<leader>oa ":!tmux split-window -v -l 30\\% sbtn<cr><cr>"
+  (vim.keymap.set :n :<localleader>oa
+                  ":!tmux split-window -v -l 30\\% sbtn<cr><cr>"
                   {:desc "[scala] open sbtn in a tmux split"
                    :buffer true
                    :silent true}))
 
 (when (util.executable? :scala-cli)
-  (vim.keymap.set :n :<leader>oc
+  (vim.keymap.set :n :<localleader>oc
                   ":!tmux split-window -v -l 30\\% scala-cli console %<cr><cr>"
                   {:desc "[scala] open scala-cli in a tmux split"
                    :buffer true
