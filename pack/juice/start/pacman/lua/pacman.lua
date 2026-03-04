@@ -202,11 +202,7 @@ local function load_on_event(packs, events, opts)
   core.assoc(opts, "group", "pack", "once", true)
   return vim.api.nvim_create_autocmd(events, opts)
 end
-local function load_on_keymap(packs, keys, callback, _3ftrigger_after)
-  if (nil == callback) then
-    _G.error("Missing argument callback on /home/rfmejia/.config/nvim/fnl/pack/juice/start/pacman/fnl/pacman.fnl:104", 2)
-  else
-  end
+local function load_on_keymap(packs, keys, _3fcallback, _3ftrigger_after)
   if (nil == keys) then
     _G.error("Missing argument keys on /home/rfmejia/.config/nvim/fnl/pack/juice/start/pacman/fnl/pacman.fnl:104", 2)
   else
@@ -215,27 +211,27 @@ local function load_on_keymap(packs, keys, callback, _3ftrigger_after)
     _G.error("Missing argument packs on /home/rfmejia/.config/nvim/fnl/pack/juice/start/pacman/fnl/pacman.fnl:104", 2)
   else
   end
-  local mode = "n"
+  local default_mode = "n"
   local clear_triggers
-  local function _41_()
+  local function _40_()
     if core["sequential?"](keys) then
       for _, lhs in ipairs(keys) do
-        vim.keymap.del(mode, lhs)
+        vim.keymap.del(default_mode, lhs)
       end
       return nil
     elseif core["string?"](keys) then
-      return vim.keymap.del(mode, keys)
+      return vim.keymap.del(default_mode, keys)
     else
       return nil
     end
   end
-  clear_triggers = _41_
+  clear_triggers = _40_
   local start
-  local function _43_(mode0, lhs, user_opts)
-    load_now(packs)
+  local function _42_(mode, lhs, user_opts)
     clear_triggers()
-    if core["function?"](callback) then
-      callback()
+    load_now(packs)
+    if core["function?"](_3fcallback) then
+      _3fcallback()
     else
     end
     if (_3ftrigger_after or (nil == _3ftrigger_after)) then
@@ -244,22 +240,22 @@ local function load_on_keymap(packs, keys, callback, _3ftrigger_after)
       return nil
     end
   end
-  start = _43_
+  start = _42_
   local set_trigger
-  local function _46_(mode0, lhs)
-    local function _47_()
-      return start(mode0, lhs)
+  local function _45_(mode, lhs)
+    local function _46_()
+      return start(mode, lhs)
     end
-    return vim.keymap.set(mode0, lhs, _47_)
+    return vim.keymap.set(mode, lhs, _46_, {desc = ("Load pack(s): " .. packs)})
   end
-  set_trigger = _46_
+  set_trigger = _45_
   if core["sequential?"](keys) then
     for _, key in ipairs(keys) do
-      set_trigger("n", key)
+      set_trigger(default_mode, key)
     end
     return nil
   elseif core["string?"](keys) then
-    return set_trigger("n", keys)
+    return set_trigger(default_mode, keys)
   else
     return nil
   end

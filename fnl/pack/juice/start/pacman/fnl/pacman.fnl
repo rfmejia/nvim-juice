@@ -101,36 +101,39 @@ Parameters:
     (core.assoc opts :group :pack :once true)
     (vim.api.nvim_create_autocmd events opts)))
 
-(lambda load-on-keymap [packs keys callback ?trigger-after]
+(lambda load-on-keymap [packs keys ?callback ?trigger-after]
   "Load packs upon pressing keymap(s)
 
 When triggered, the package(s) are loaded and all keymaps are unassigned before
 calling the (optional) callback.
+
+Currently only works with normal mode mappings
 
 Parameters:
 * `packs`          (string|seq) Package name(s) to load
 * `keys`           (string|seq) Vim event(s) that will trigger loading
 * `callback`       (function) Optional initialization function
 * `?trigger-after` (boolean) Trigger the keymap after loading (default `true`)"
-  (let [mode :n
+  (let [default-mode :n
         clear-triggers #(if (core.sequential? keys)
                             (each [_ lhs (ipairs keys)]
-                              (vim.keymap.del mode lhs))
+                              (vim.keymap.del default-mode lhs))
                             (core.string? keys)
-                            (vim.keymap.del mode keys))
+                            (vim.keymap.del default-mode keys))
         start (fn [mode lhs user-opts]
-                (load-now packs)
                 (clear-triggers)
-                (when (core.function? callback)
-                  (callback))
+                (load-now packs)
+                (when (core.function? ?callback)
+                  (?callback))
                 (when (or ?trigger-after (= nil ?trigger-after))
                   (vim.api.nvim_input lhs)))
         set-trigger (fn [mode lhs]
-                      (vim.keymap.set mode lhs #(start mode lhs)))]
+                      (vim.keymap.set mode lhs #(start mode lhs)
+                                      {:desc (.. "Load pack(s): " packs)}))]
     (if (core.sequential? keys)
         (each [_ key (ipairs keys)]
-          (set-trigger :n key))
+          (set-trigger default-mode key))
         (core.string? keys)
-        (set-trigger :n keys))))
+        (set-trigger default-mode keys))))
 
 {: add : load-now : load-on-event : load-on-keymap}
