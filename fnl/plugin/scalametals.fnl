@@ -11,16 +11,22 @@
                  :statusline (statusline.build ["%{g:metals_status}" " ●"])}
         metals-settings {:disabledMode true
                          :defaultBspToBuildTool true
+                         :enableBestEffort true
                          :enableSemanticHighlighting true
+                         :enableStripMarginOnTypeFormatting true
                          :inlayHints {:byNameParameters {:enable true}
                                       :hintsInPatternMatch {:enable true}
                                       :implicitArguments {:enable true}
                                       :implicitConversions {:enable true}
                                       :inferredTypes {:enable true}
                                       :typeParameters {:enable true}}
-                         :serverVersion :1.6.5
                          :serverProperties [:-Xmx4g]
-                         :startMcpServer true}
+                         :serverVersion :1.6.5
+                         :showImplicitArguments true
+                         :showImplicitConversionsAndClasses true
+                         :showInferredType true
+                         :shutdownBloopOnEditorClose true
+                         :startMcpServer false}
         metals-maps (lambda [bufnr]
                       [[:v
                         :K
