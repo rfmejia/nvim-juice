@@ -73,7 +73,8 @@
                    ; ignore case when filtering results
                    :wildignorecase true
                    ; use popup to show results
-                   :wildoptions [:fuzzy :pum]})
+                   :wildoptions [:fuzzy :pum]
+                   :pumborder :rounded})
 
 (comment "use ripgrep as grepprg if available")
 (local grep-options

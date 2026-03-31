@@ -4,13 +4,9 @@
 
 (lambda set-mappings [bufnr]
   (let [goto-maps [[:n
-                    :gd
+                    :grd
                     vim.lsp.buf.definition
                     {:desc "goto definition" :nowait true :buffer bufnr}]
-                   [:n
-                    :gt
-                    vim.lsp.buf.type_definition
-                    {:desc "goto type definition" :nowait true :buffer bufnr}]
                    [:n
                     :gW
                     vim.lsp.buf.workspace_symbol
