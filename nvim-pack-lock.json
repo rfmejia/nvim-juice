@@ -1,0 +1,49 @@
+{
+  "plugins": {
+    "conjure": {
+      "rev": "ecf783607efaf33c69c6f80a737a93d572cfc688",
+      "src": "https://github.com/Olical/conjure"
+    },
+    "gitsigns.nvim": {
+      "rev": "0f00d07c2c3106ba6abd594ac1c17f211141b7b5",
+      "src": "https://github.com/lewis6991/gitsigns.nvim"
+    },
+    "nvim-autopairs": {
+      "rev": "59bce2eef357189c3305e25bc6dd2d138c1683f5",
+      "src": "https://github.com/windwp/nvim-autopairs"
+    },
+    "nvim-metals": {
+      "rev": "48b9d29a4e1370495db4d4b5ccbc17b285bc98eb",
+      "src": "https://github.com/scalameta/nvim-metals"
+    },
+    "nvim-paredit": {
+      "rev": "b6ba636874a3115d944e35746444724240568aca",
+      "src": "https://github.com/julienvincent/nvim-paredit"
+    },
+    "nvim-surround": {
+      "rev": "19e39478ccf5fa2eefdb3595af2f2927d0ff2416",
+      "src": "https://github.com/kylechui/nvim-surround"
+    },
+    "nvim-treesitter": {
+      "rev": "cf12346a3414fa1b06af75c79faebe7f76df080a",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter",
+      "version": "'master'"
+    },
+    "oil.nvim": {
+      "rev": "0fcc83805ad11cf714a949c98c605ed717e0b83e",
+      "src": "https://github.com/stevearc/oil.nvim"
+    },
+    "orgmode": {
+      "rev": "1ab7b456020de8bdaed7d8135b5376a0b4419b11",
+      "src": "https://github.com/nvim-orgmode/orgmode"
+    },
+    "vim-dadbod": {
+      "rev": "6d1d41da4873a445c5605f2005ad2c68c99d8770",
+      "src": "https://github.com/tpope/vim-dadbod"
+    },
+    "vim-dadbod-completion": {
+      "rev": "a8dac0b3cf6132c80dc9b18bef36d4cf7a9e1fe6",
+      "src": "https://github.com/kristijanhusak/vim-dadbod-completion"
+    }
+  }
+}

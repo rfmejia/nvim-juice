@@ -12,10 +12,6 @@
                     vim.lsp.buf.workspace_symbol
                     {:desc "goto Workspace symbol" :buffer bufnr}]]
         diagnostic-maps [[:n
-                          :K
-                          #(vim.lsp.buf.hover {:border :rounded})
-                          {:desc "show type" :buffer bufnr}]
-                         [:n
                           "[d"
                           #(vim.diagnostic.goto_prev {:wrap false})
                           {:desc "goto next diagnostic" :buffer bufnr}]

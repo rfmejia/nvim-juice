@@ -48,8 +48,5 @@ local function init_plugin()
   end
   return vim.api.nvim_create_autocmd("FileType", {pattern = {"scala", "java"}, callback = _8_, group = vim.api.nvim_create_augroup("metals-group", {clear = true})})
 end
-local _let_9_ = require("nfnl.module")
-local autoload = _let_9_.autoload
-local pacman = autoload("pacman")
-pacman.add("https://github.com/scalameta/nvim-metals")
-return pacman["load-on-event"]("nvim-metals", "FileType", {pattern = "scala", callback = init_plugin})
+vim.pack.add({"https://github.com/scalameta/nvim-metals"})
+return init_plugin()

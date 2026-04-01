@@ -1,5 +1,4 @@
 (let [{: autoload} (require :nfnl.module)
-      pacman (autoload :pacman)
       packs [{:src "https://github.com/nvim-treesitter/nvim-treesitter"
               :version :master}
              "https://github.com/stevearc/oil.nvim"]
@@ -12,8 +11,7 @@
   (comment "NOTE For nvim-treesitter, the `main` branch is an in-progress
            backward-incompatible rewrite, set branch to `master` until rewrite
            is complete")
-  (pacman.add packs)
-  (pacman.load-now [:nvim-treesitter :oil.nvim])
+  (vim.pack.add packs)
   (util.call :nvim-treesitter.configs :setup treesitter-opts)
   (util.call :oil :setup oil-opts)
   (vim.keymap.set :n :<leader>e #(util.call :oil :open)

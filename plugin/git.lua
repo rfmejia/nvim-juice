@@ -62,9 +62,9 @@ local function bind_gitsigns_maps(core, gitsigns)
 end
 local _let_13_ = require("nfnl.module")
 local autoload = _let_13_.autoload
-local pacman = autoload("pacman")
-pacman.add("https://github.com/lewis6991/gitsigns.nvim")
-local function _14_()
+local packs = {"https://github.com/lewis6991/gitsigns.nvim"}
+vim.pack.add(packs)
+do
   local core = autoload("nfnl.core")
   local gitsigns = autoload("gitsigns")
   local util = autoload("juice.util")
@@ -73,14 +73,11 @@ local function _14_()
   util["set-keys"](keymaps)
   if ("no" == vim.o.signcolumn) then
     vim.opt.signcolumn = "yes"
-    return nil
   else
-    return nil
   end
 end
-pacman["load-on-keymap"]("gitsigns.nvim", "<localleader>gt", _14_)
-local function _16_()
+local function _15_()
   set_file_status_global_var()
   return set_branch_global_var()
 end
-return vim.api.nvim_create_autocmd({"BufEnter", "BufWritePost"}, {pattern = "*", callback = _16_})
+return vim.api.nvim_create_autocmd({"BufEnter", "BufWritePost"}, {pattern = "*", callback = _15_})

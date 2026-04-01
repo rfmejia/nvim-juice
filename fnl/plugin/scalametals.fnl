@@ -68,8 +68,5 @@
                                   :group (vim.api.nvim_create_augroup :metals-group
                                                                       {:clear true})})))
 
-(let [{: autoload} (require :nfnl.module)
-      pacman (autoload :pacman)]
-  (pacman.add "https://github.com/scalameta/nvim-metals")
-  (pacman.load-on-event :nvim-metals :FileType
-                        {:pattern :scala :callback init-plugin}))
+(vim.pack.add ["https://github.com/scalameta/nvim-metals"])
+(init-plugin)

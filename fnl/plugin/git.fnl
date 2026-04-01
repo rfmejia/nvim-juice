@@ -88,17 +88,16 @@
     (core.concat nav staging blame view list)))
 
 (let [{: autoload} (require :nfnl.module)
-      pacman (autoload :pacman)]
-  (pacman.add "https://github.com/lewis6991/gitsigns.nvim")
-  (pacman.load-on-keymap :gitsigns.nvim :<localleader>gt
-                         #(let [core (autoload :nfnl.core)
-                                gitsigns (autoload :gitsigns)
-                                util (autoload :juice.util)
-                                keymaps (bind-gitsigns-maps core gitsigns)]
-                            (gitsigns.setup)
-                            (util.set-keys keymaps)
-                            (when (= :no vim.o.signcolumn)
-                              (set vim.opt.signcolumn :yes))))
+      packs ["https://github.com/lewis6991/gitsigns.nvim"]]
+  (vim.pack.add packs)
+  (let [core (autoload :nfnl.core)
+        gitsigns (autoload :gitsigns)
+        util (autoload :juice.util)
+        keymaps (bind-gitsigns-maps core gitsigns)]
+    (gitsigns.setup)
+    (util.set-keys keymaps)
+    (when (= :no vim.o.signcolumn)
+      (set vim.opt.signcolumn :yes)))
   (vim.api.nvim_create_autocmd [:BufEnter :BufWritePost]
                                {:pattern "*"
                                 :callback (fn []
