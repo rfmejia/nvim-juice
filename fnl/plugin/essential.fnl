@@ -1,7 +1,8 @@
+(vim.pack.add [{:src "https://github.com/nvim-treesitter/nvim-treesitter"
+                :version :master}
+               "https://github.com/stevearc/oil.nvim"])
+
 (let [{: autoload} (require :nfnl.module)
-      packs [{:src "https://github.com/nvim-treesitter/nvim-treesitter"
-              :version :master}
-             "https://github.com/stevearc/oil.nvim"]
       util (autoload :juice.util)
       treesitter-opts {:highlight {:enable true} :indent {:enable true}}
       oil-opts {:default_file_explorer true
@@ -11,7 +12,6 @@
   (comment "NOTE For nvim-treesitter, the `main` branch is an in-progress
            backward-incompatible rewrite, set branch to `master` until rewrite
            is complete")
-  (vim.pack.add packs)
   (util.call :nvim-treesitter.configs :setup treesitter-opts)
   (util.call :oil :setup oil-opts)
   (vim.keymap.set :n :<leader>e #(util.call :oil :open)
