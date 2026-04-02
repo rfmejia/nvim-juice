@@ -13,6 +13,7 @@
                 :Normal {:link :Normal}
                 :NormalFloat {:link :Normal}
                 :FloatBorder {:fg :DarkYellow}
+                :Pmenu {:bg :NONE}
                 :SpellBad {:fg :NvimLightRed :undercurl true}
                 :Title {:fg :DarkCyan :bold true}
                 :Todo {:fg :Yellow :bold true}
