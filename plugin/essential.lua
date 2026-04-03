@@ -1,16 +1,17 @@
 -- [nfnl] fnl/plugin/essential.fnl
-vim.pack.add({{src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "master"}, "https://github.com/stevearc/oil.nvim"})
+vim.pack.add({"https://github.com/nvim-treesitter/nvim-treesitter", "https://github.com/stevearc/oil.nvim"})
 local _let_1_ = require("nfnl.module")
 local autoload = _let_1_.autoload
 local util = autoload("juice.util")
-local treesitter_opts = {highlight = {enable = true}, indent = {enable = true}}
 local oil_opts = {default_file_explorer = true, delete_to_trash = true, skip_confirm_for_simple_edits = true, view_options = {show_hidden = true}}
---[[ "NOTE For nvim-treesitter, the `main` branch is an in-progress
-           backward-incompatible rewrite, set branch to `master` until rewrite
-           is complete" ]]
-util.call("nvim-treesitter.configs", "setup", treesitter_opts)
 util.call("oil", "setup", oil_opts)
 local function _2_()
   return util.call("oil", "open")
 end
-return vim.keymap.set("n", "<leader>e", _2_, {desc = "[oil] explore files in current file's path", silent = true})
+vim.keymap.set("n", "<leader>e", _2_, {desc = "[oil] explore files in current file's path", silent = true})
+local function _3_()
+  vim.treesitter.start()
+  vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+  return nil
+end
+return vim.api.nvim_create_autocmd("FileType", {pattern = {"clojure", "fennel", "java", "lua", "markdown", "scala"}, callback = _3_})
