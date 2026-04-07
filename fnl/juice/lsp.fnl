@@ -59,17 +59,14 @@
 
 ;; TODO Why not just discover the configs in root/lsp?
 (fn setup []
-  (let [config {:root_markers [:.git]}
-        lsp-configs [:clangd :clojure_lsp :fennel_ls :gopls :jdtls :sqlls]
+  (let [lsp-configs [:clangd :clojure_lsp :fennel_ls :gopls :jdtls :sqlls]
         on-attach (fn [event]
                     (case (vim.lsp.get_client_by_id event.data.client_id)
                       client (do
                                (set-mappings event.buf)
                                (configure-completion client event.buf)
                                (configure-diagnostics))))]
-    (vim.lsp.config "*" config)
-    (each [_ lsp-config (ipairs lsp-configs)]
-      (vim.lsp.enable lsp-config))
+    (vim.lsp.enable lsp-configs)
     (vim.api.nvim_create_autocmd :LspAttach {:callback on-attach})))
 
 {: setup}

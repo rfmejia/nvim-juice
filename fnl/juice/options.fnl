@@ -63,8 +63,9 @@
                :smartcase true})
 
 (comment "---- COMPLETION ----")
-(local completion {; remove imports, add spellchecker to completion sources
-                   :complete ["." :w :b :u :t :kspell]
+(local completion {:autocomplete true
+                   ; remove imports, add spellchecker to completion sources
+                   :complete ["." :o :w :b :u :t :kspell]
                    :completeopt [:menuone :popup :fuzzy :noselect :preview]
                    ; search in current file's directory or pwd (do not use ** edit: experimenting)
                    :path ["." "" "**"]
@@ -74,6 +75,7 @@
                    :wildignorecase true
                    ; use popup to show results
                    :wildoptions [:fuzzy :pum]
+                   :winborder :rounded
                    :pumborder :rounded})
 
 (comment "use ripgrep as grepprg if available")

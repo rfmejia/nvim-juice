@@ -50,7 +50,6 @@ local function configure_completion(client, bufnr)
   end
 end
 local function setup()
-  local config = {root_markers = {".git"}}
   local lsp_configs = {"clangd", "clojure_lsp", "fennel_ls", "gopls", "jdtls", "sqlls"}
   local on_attach
   local function _11_(event)
@@ -65,10 +64,7 @@ local function setup()
     end
   end
   on_attach = _11_
-  vim.lsp.config("*", config)
-  for _, lsp_config in ipairs(lsp_configs) do
-    vim.lsp.enable(lsp_config)
-  end
+  vim.lsp.enable(lsp_configs)
   return vim.api.nvim_create_autocmd("LspAttach", {callback = on_attach})
 end
 return {setup = setup}

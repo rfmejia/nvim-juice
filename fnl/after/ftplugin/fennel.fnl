@@ -32,4 +32,3 @@
                               :desc "format on buffer write"
                               :group (vim.api.nvim_create_augroup :format_group
                                                                   {:clear true})})
-
