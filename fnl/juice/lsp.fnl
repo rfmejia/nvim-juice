@@ -13,12 +13,12 @@
                     {:desc "goto Workspace symbol" :buffer bufnr}]]
         diagnostic-maps [[:n
                           "[d"
-                          #(vim.diagnostic.goto_prev {:wrap false})
-                          {:desc "goto next diagnostic" :buffer bufnr}]
+                          #(vim.diagnostic.jump {:count -1 :wrap false})
+                          {:desc "jump to previous diagnostic" :buffer bufnr}]
                          [:n
                           "]d"
-                          #(vim.diagnostic.goto_next {:wrap false})
-                          {:desc "goto previous diagnostic" :buffer bufnr}]
+                          #(vim.diagnostic.jump {:count 1 :wrap false})
+                          {:desc "jump to next diagnostic" :buffer bufnr}]
                          [:n
                           :gre
                           #(vim.diagnostic.setqflist {:severity vim.diagnostic.severity.ERROR})

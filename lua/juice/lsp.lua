@@ -11,10 +11,10 @@ local function set_mappings(bufnr)
   local goto_maps = {{"n", "grd", vim.lsp.buf.definition, {desc = "goto definition", nowait = true, buffer = bufnr}}, {"n", "gW", vim.lsp.buf.workspace_symbol, {desc = "goto Workspace symbol", buffer = bufnr}}}
   local diagnostic_maps
   local function _3_()
-    return vim.diagnostic.goto_prev({wrap = false})
+    return vim.diagnostic.jump({count = -1, wrap = false})
   end
   local function _4_()
-    return vim.diagnostic.goto_next({wrap = false})
+    return vim.diagnostic.jump({count = 1, wrap = false})
   end
   local function _5_()
     return vim.diagnostic.setqflist({severity = vim.diagnostic.severity.ERROR})
@@ -22,7 +22,7 @@ local function set_mappings(bufnr)
   local function _6_()
     return vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
   end
-  diagnostic_maps = {{"n", "[d", _3_, {desc = "goto next diagnostic", buffer = bufnr}}, {"n", "]d", _4_, {desc = "goto previous diagnostic", buffer = bufnr}}, {"n", "gre", _5_, {desc = "show diagnostic errors of the workspace in quickfix list", buffer = bufnr}}, {"n", "grw", vim.diagnostic.setqflist, {desc = "show diagnostics of the workspace in quickfix list", buffer = bufnr}}, {"n", "grb", vim.diagnostic.setloclist, {desc = "show diagnostics of the buffer in local list", buffer = bufnr}}, {"n", "grh", _6_, {desc = "toggle inlay hints", buffer = bufnr}}}
+  diagnostic_maps = {{"n", "[d", _3_, {desc = "jump to previous diagnostic", buffer = bufnr}}, {"n", "]d", _4_, {desc = "jump to next diagnostic", buffer = bufnr}}, {"n", "gre", _5_, {desc = "show diagnostic errors of the workspace in quickfix list", buffer = bufnr}}, {"n", "grw", vim.diagnostic.setqflist, {desc = "show diagnostics of the workspace in quickfix list", buffer = bufnr}}, {"n", "grb", vim.diagnostic.setloclist, {desc = "show diagnostics of the buffer in local list", buffer = bufnr}}, {"n", "grh", _6_, {desc = "toggle inlay hints", buffer = bufnr}}}
   local code_action_maps
   local function _7_()
     return vim.lsp.buf.format({async = true})
