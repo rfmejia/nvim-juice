@@ -3,13 +3,10 @@
 
 (let [{: autoload} (require :nfnl.module)
       util (autoload :juice.util)
-      builtin [:nvim.undotree :nvim.tohtml :nvim.difftool]
       oil-opts {:default_file_explorer true
                 :delete_to_trash true
                 :skip_confirm_for_simple_edits true
                 :view_options {:show_hidden true}}]
-  (each [_ plugin (ipairs builtin)]
-    (vim.cmd.packadd plugin))
   (util.call :oil :setup oil-opts)
   (vim.keymap.set :n :<leader>e #(util.call :oil :open)
                   {:desc "[oil] explore files in current file's path"

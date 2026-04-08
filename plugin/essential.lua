@@ -3,11 +3,7 @@ vim.pack.add({"https://github.com/nvim-treesitter/nvim-treesitter", "https://git
 local _let_1_ = require("nfnl.module")
 local autoload = _let_1_.autoload
 local util = autoload("juice.util")
-local builtin = {"nvim.undotree", "nvim.tohtml", "nvim.difftool"}
 local oil_opts = {default_file_explorer = true, delete_to_trash = true, skip_confirm_for_simple_edits = true, view_options = {show_hidden = true}}
-for _, plugin in ipairs(builtin) do
-  vim.cmd.packadd(plugin)
-end
 util.call("oil", "setup", oil_opts)
 local function _2_()
   return util.call("oil", "open")
