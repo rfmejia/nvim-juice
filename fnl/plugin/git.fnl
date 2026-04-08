@@ -27,11 +27,11 @@
       util (autoload :juice.util)
       nav-maps [[:n
                  "]g"
-                 #(gitsigns.nav_hunk :next {:wrap false :preview true})
+                 #(gitsigns.nav_hunk :next {:wrap false :preview true :target :all})
                  {:desc "[gitsigns] jump to next git hunk"}]
                 [:n
                  "[g"
-                 #(gitsigns.nav_hunk :prev {:wrap false :preview true})
+                 #(gitsigns.nav_hunk :prev {:wrap false :preview true :target :all})
                  {:desc "[gitsigns] jump to previous git hunk"}]]
       staging-maps [[:n
                      :<localleader>gs
@@ -91,7 +91,7 @@
                   {:desc "[gitsigns] show all (g)it hunks in qui(c)kfix list"}]]
       keymaps (core.concat nav-maps staging-maps blame-maps view-maps list-maps)]
   (util.set-keys keymaps)
-  (gitsigns.toggle_signs)
+  (gitsigns.toggle_signs false)
   (when (= :no vim.o.signcolumn)
     (set vim.opt.signcolumn :yes))
   (vim.api.nvim_create_autocmd [:BufEnter :BufWritePost]

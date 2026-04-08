@@ -37,10 +37,10 @@ local gitsigns = autoload("gitsigns")
 local util = autoload("juice.util")
 local nav_maps
 local function _8_()
-  return gitsigns.nav_hunk("next", {preview = true, wrap = false})
+  return gitsigns.nav_hunk("next", {preview = true, target = "all", wrap = false})
 end
 local function _9_()
-  return gitsigns.nav_hunk("prev", {preview = true, wrap = false})
+  return gitsigns.nav_hunk("prev", {preview = true, target = "all", wrap = false})
 end
 nav_maps = {{"n", "]g", _8_, {desc = "[gitsigns] jump to next git hunk"}}, {"n", "[g", _9_, {desc = "[gitsigns] jump to previous git hunk"}}}
 local staging_maps
@@ -64,7 +64,7 @@ end
 list_maps = {{"n", "<localleader>gl", gitsigns.setloclist, {desc = "[gitsigns] show buffer (g)it hunks in (l)oclist"}}, {"n", "<localleader>gc", _13_, {desc = "[gitsigns] show all (g)it hunks in qui(c)kfix list"}}}
 local keymaps = core.concat(nav_maps, staging_maps, blame_maps, view_maps, list_maps)
 util["set-keys"](keymaps)
-gitsigns.toggle_signs()
+gitsigns.toggle_signs(false)
 if ("no" == vim.o.signcolumn) then
   vim.opt.signcolumn = "yes"
 else
