@@ -20,6 +20,7 @@ else
   grep_options = nil
 end
 local function _3_()
+  autoload("vim._core.ui2").enable()
   core["merge!"](vim.g, map_leaders)
   return core["merge!"](vim.opt, behavior, visual, search, completion, grep_options)
 end

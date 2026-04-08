@@ -85,5 +85,6 @@
             :grepformat "%f:%l:%c:%m,%f:%l:%m"}))
 
 {:setup (fn []
+          ((. (autoload :vim._core.ui2) :enable))
           (core.merge! vim.g map-leaders)
           (core.merge! vim.opt behavior visual search completion grep-options))}
