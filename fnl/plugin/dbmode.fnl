@@ -27,12 +27,19 @@
                     {:desc "[dadbod] run buffer as sql statements"
                      :noremap true
                      :buffer true}]]
-      configure (fn []
-                  (util.set-keys dadbod-maps)
-                  (set vim.opt_local.omnifunc "vim_dadbod_completion#omni")
-                  (when vim.env.DADBOD_DEFAULT_DB
-                    (vim.cmd.DB (.. "g:db = " vim.env.DADBOD_DEFAULT_DB))))]
-  (configure)
+      autocmd-ft-opts (fn [filetypes env-var group-name]
+                        "Create FileType autocmd options to load if an environment variable is defined"
+                        {:pattern filetypes
+                         :callback #(when env-var
+                                      (util.set-keys dadbod-maps)
+                                      (pcall vim.cmd.DB (.. "g:db = " env-var))
+                                      (set vim.opt_local.omnifunc
+                                           "vim_dadbod_completion#omni")
+                                      (vim.print (.. "[dadbod] Connected to database")))
+                         :group :dbmode})]
+  (vim.api.nvim_create_augroup :dbmode {:clear true})
   (vim.api.nvim_create_autocmd :FileType
-                               {:pattern [:sql :mysql :pgsql]
-                                :callback configure}))
+                               (autocmd-ft-opts [:sql :mysql :pgsql]
+                                                vim.env.DADBOD_MYSQL_DB))
+  (vim.api.nvim_create_autocmd :FileType
+                               (autocmd-ft-opts :redis vim.env.DADBOD_REDIS_DB)))
