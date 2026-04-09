@@ -1,5 +1,9 @@
 {
   "plugins": {
+    "auto-session": {
+      "rev": "62437532b38495551410b3f377bcf4aaac574ebe",
+      "src": "https://github.com/rmagatti/auto-session"
+    },
     "conjure": {
       "rev": "7ba01d793543c52ce7180eabaeb08b6ad9130ad6",
       "src": "https://github.com/Olical/conjure"
@@ -7,6 +11,10 @@
     "gitsigns.nvim": {
       "rev": "8d82c240f190fc33723d48c308ccc1ed8baad69d",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
+    },
+    "leap.nvim": {
+      "rev": "b960d5038c5c505c52e56a54490f9bbb1f0e6ef6",
+      "src": "https://codeberg.org/andyg/leap.nvim"
     },
     "nfnl": {
       "rev": "fecf731e02bc51d88372c4f992fe1ef0c19c02ae",
