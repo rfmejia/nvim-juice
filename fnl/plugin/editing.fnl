@@ -2,6 +2,6 @@
                "https://github.com/kylechui/nvim-surround"])
 
 (let [{: autoload} (require :nfnl.module)
-      util (autoload :juice.util)
-      autopairs-opts {:enable_check_bracket_line false}]
-  (util.call :nvim-autopairs :setup autopairs-opts))
+      autopairs (autoload :nvim-autopairs)
+      opts {:enable_check_bracket_line false}]
+  (autopairs.setup opts))
