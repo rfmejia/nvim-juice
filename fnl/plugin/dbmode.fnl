@@ -27,7 +27,7 @@
                     {:desc "[dadbod] run buffer as sql statements"
                      :noremap true
                      :buffer true}]]
-      autocmd-ft-opts (fn [filetypes env-var group-name]
+      ft-autocmd-opts (fn [filetypes env-var group-name]
                         "Create FileType autocmd options to load if an environment variable is defined"
                         {:pattern filetypes
                          :callback #(when env-var
@@ -39,7 +39,7 @@
                          :group :dbmode})]
   (vim.api.nvim_create_augroup :dbmode {:clear true})
   (vim.api.nvim_create_autocmd :FileType
-                               (autocmd-ft-opts [:sql :mysql :pgsql]
+                               (ft-autocmd-opts [:sql :mysql :pgsql]
                                                 vim.env.DADBOD_MYSQL_DB))
   (vim.api.nvim_create_autocmd :FileType
-                               (autocmd-ft-opts :redis vim.env.DADBOD_REDIS_DB)))
+                               (ft-autocmd-opts :redis vim.env.DADBOD_REDIS_DB)))
