@@ -1,7 +1,7 @@
 {
   "plugins": {
     "conjure": {
-      "rev": "ecf783607efaf33c69c6f80a737a93d572cfc688",
+      "rev": "7ba01d793543c52ce7180eabaeb08b6ad9130ad6",
       "src": "https://github.com/Olical/conjure"
     },
     "gitsigns.nvim": {
