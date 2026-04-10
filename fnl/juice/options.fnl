@@ -64,6 +64,7 @@
 
 (comment "---- COMPLETION ----")
 (local completion {:autocomplete true
+                   :autocompletedelay 500
                    ; remove imports, add spellchecker to completion sources
                    :complete ["." :o :w :b :u :t :kspell]
                    :completeopt [:menuone :popup :fuzzy :noselect :preview]

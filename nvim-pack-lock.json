@@ -5,7 +5,7 @@
       "src": "https://github.com/rmagatti/auto-session"
     },
     "conjure": {
-      "rev": "7ba01d793543c52ce7180eabaeb08b6ad9130ad6",
+      "rev": "f66b3e7f45d325bd556cd785502761e583971920",
       "src": "https://github.com/Olical/conjure"
     },
     "gitsigns.nvim": {
@@ -25,7 +25,7 @@
       "src": "https://github.com/windwp/nvim-autopairs"
     },
     "nvim-metals": {
-      "rev": "48b9d29a4e1370495db4d4b5ccbc17b285bc98eb",
+      "rev": "6970d6036218db6545f3c295d0106cc8de6d7161",
       "src": "https://github.com/scalameta/nvim-metals"
     },
     "nvim-paredit": {

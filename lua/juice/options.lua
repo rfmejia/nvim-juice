@@ -11,7 +11,7 @@ local visual = {signcolumn = "no", cursorline = true, splitbelow = true, splitri
 --[[ "---- SEARCH OPTIONS ----" ]]
 local search = {hlsearch = true, incsearch = true, ignorecase = true, smartcase = true, wrapscan = false}
 --[[ "---- COMPLETION ----" ]]
-local completion = {autocomplete = true, complete = {".", "o", "w", "b", "u", "t", "kspell"}, completeopt = {"menuone", "popup", "fuzzy", "noselect", "preview"}, path = {".", "", "**"}, wildmode = {"lastused", "full"}, wildignorecase = true, wildoptions = {"fuzzy", "pum"}, winborder = "rounded", pumborder = "rounded"}
+local completion = {autocomplete = true, autocompletedelay = 500, complete = {".", "o", "w", "b", "u", "t", "kspell"}, completeopt = {"menuone", "popup", "fuzzy", "noselect", "preview"}, path = {".", "", "**"}, wildmode = {"lastused", "full"}, wildignorecase = true, wildoptions = {"fuzzy", "pum"}, winborder = "rounded", pumborder = "rounded"}
 --[[ "use ripgrep as grepprg if available" ]]
 local grep_options
 if util["executable?"]("rg") then
