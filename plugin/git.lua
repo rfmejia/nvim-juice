@@ -43,34 +43,40 @@ local function _9_()
   return gitsigns.nav_hunk("prev", {preview = true, target = "all", wrap = false})
 end
 nav_maps = {{"n", "]g", _8_, {desc = "[gitsigns] jump to next git hunk"}}, {"n", "[g", _9_, {desc = "[gitsigns] jump to previous git hunk"}}}
+local toggle_signs
+local function _10_(_241)
+  if (gitsigns.toggle_signs(_241) and ("no" == vim.o.signcolumn)) then
+    vim.opt.signcolumn = "yes"
+    return nil
+  else
+    return nil
+  end
+end
+toggle_signs = _10_
 local staging_maps
-local function _10_()
+local function _12_()
   return gitsigns.stage_hunk({[vim.fn.line(".")] = vim.fn.line("v")})
 end
-local function _11_()
+local function _13_()
   return gitsigns.reset_hunk({[vim.fn.line(".")] = vim.fn.line("v")})
 end
-staging_maps = {{"n", "<localleader>gs", gitsigns.stage_hunk, {desc = "[gitsigns] (g)it (s)tage hunk"}}, {"n", "<localleader>gr", gitsigns.reset_hunk, {desc = "(g)it (r)eset hunk"}}, {"n", "<localleader>gS", gitsigns.stage_buffer, {desc = "[gitsigns] (g)it (S)tage buffer"}}, {"n", "<localleader>gR", gitsigns.reset_buffer, {desc = "[gitsigns] (g)it (R)eset buffer"}}, {"v", "<localleader>gs", _10_, {desc = "[gitsigns] (g)it (s)tage hunk"}}, {"v", "<localleader>gr", _11_, {desc = "[gitsigns] (g)it (r)eset hunk"}}}
+staging_maps = {{"n", "<localleader>gs", gitsigns.stage_hunk, {desc = "[gitsigns] (g)it (s)tage hunk"}}, {"n", "<localleader>gr", gitsigns.reset_hunk, {desc = "(g)it (r)eset hunk"}}, {"n", "<localleader>gS", gitsigns.stage_buffer, {desc = "[gitsigns] (g)it (S)tage buffer"}}, {"n", "<localleader>gR", gitsigns.reset_buffer, {desc = "[gitsigns] (g)it (R)eset buffer"}}, {"v", "<localleader>gs", _12_, {desc = "[gitsigns] (g)it (s)tage hunk"}}, {"v", "<localleader>gr", _13_, {desc = "[gitsigns] (g)it (r)eset hunk"}}}
 local blame_maps
-local function _12_()
+local function _14_()
   return gitsigns.blame_line({full = true})
 end
-blame_maps = {{"n", "<localleader>gb", _12_, {desc = "[gitsigns] (g)it show line (b)lame"}}, {"n", "<localleader>gB", gitsigns.toggle_current_line_blame, {desc = "[gitsigns] (g)it toggle current line (B)lame"}}}
-local view_maps = {{"n", "<localleader>gt", gitsigns.toggle_signs, {desc = "[gitsigns] toggle sign visibility"}}, {"n", "<localleader>gp", gitsigns.preview_hunk, {desc = "[gitsigns] (g)it (p)review hunk"}}, {"n", "<localleader>gi", gitsigns.preview_hunk_inline, {desc = "[gitsigns] (g)it toggle (D)eleted hunks"}}, {"n", "<localleader>gd", gitsigns.diffthis, {desc = "[gitsigns] (g)it show (d)iff"}}}
+blame_maps = {{"n", "<localleader>gb", _14_, {desc = "[gitsigns] (g)it show line (b)lame"}}, {"n", "<localleader>gB", gitsigns.toggle_current_line_blame, {desc = "[gitsigns] (g)it toggle current line (B)lame"}}}
+local view_maps = {{"n", "<localleader>gt", toggle_signs, {desc = "[gitsigns] toggle sign visibility"}}, {"n", "<localleader>gp", gitsigns.preview_hunk, {desc = "[gitsigns] (g)it (p)review hunk"}}, {"n", "<localleader>gi", gitsigns.preview_hunk_inline, {desc = "[gitsigns] (g)it toggle (D)eleted hunks"}}, {"n", "<localleader>gd", gitsigns.diffthis, {desc = "[gitsigns] (g)it show (d)iff"}}}
 local list_maps
-local function _13_()
+local function _15_()
   return gitsigns.setqflist("all")
 end
-list_maps = {{"n", "<localleader>gl", gitsigns.setloclist, {desc = "[gitsigns] show buffer (g)it hunks in (l)oclist"}}, {"n", "<localleader>gc", _13_, {desc = "[gitsigns] show all (g)it hunks in qui(c)kfix list"}}}
+list_maps = {{"n", "<localleader>gl", gitsigns.setloclist, {desc = "[gitsigns] show buffer (g)it hunks in (l)oclist"}}, {"n", "<localleader>gc", _15_, {desc = "[gitsigns] show all (g)it hunks in qui(c)kfix list"}}}
 local keymaps = core.concat(nav_maps, staging_maps, blame_maps, view_maps, list_maps)
 util["set-keys"](keymaps)
-gitsigns.toggle_signs(false)
-if ("no" == vim.o.signcolumn) then
-  vim.opt.signcolumn = "yes"
-else
-end
-local function _15_()
+toggle_signs(false)
+local function _16_()
   set_file_status_global_var()
   return set_branch_global_var()
 end
-return vim.api.nvim_create_autocmd({"BufEnter", "BufWritePost"}, {pattern = "*", callback = _15_})
+return vim.api.nvim_create_autocmd({"BufEnter", "BufWritePost"}, {pattern = "*", callback = _16_})

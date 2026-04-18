@@ -27,12 +27,17 @@
       util (autoload :juice.util)
       nav-maps [[:n
                  "]g"
-                 #(gitsigns.nav_hunk :next {:wrap false :preview true :target :all})
+                 #(gitsigns.nav_hunk :next
+                                     {:wrap false :preview true :target :all})
                  {:desc "[gitsigns] jump to next git hunk"}]
                 [:n
                  "[g"
-                 #(gitsigns.nav_hunk :prev {:wrap false :preview true :target :all})
+                 #(gitsigns.nav_hunk :prev
+                                     {:wrap false :preview true :target :all})
                  {:desc "[gitsigns] jump to previous git hunk"}]]
+      toggle-signs #(when (and (gitsigns.toggle_signs $1)
+                               (= :no vim.o.signcolumn))
+                      (set vim.opt.signcolumn :yes))
       staging-maps [[:n
                      :<localleader>gs
                      gitsigns.stage_hunk
@@ -67,7 +72,7 @@
                    {:desc "[gitsigns] (g)it toggle current line (B)lame"}]]
       view-maps [[:n
                   :<localleader>gt
-                  gitsigns.toggle_signs
+                  toggle-signs
                   {:desc "[gitsigns] toggle sign visibility"}]
                  [:n
                   :<localleader>gp
@@ -91,9 +96,7 @@
                   {:desc "[gitsigns] show all (g)it hunks in qui(c)kfix list"}]]
       keymaps (core.concat nav-maps staging-maps blame-maps view-maps list-maps)]
   (util.set-keys keymaps)
-  (gitsigns.toggle_signs false)
-  (when (= :no vim.o.signcolumn)
-    (set vim.opt.signcolumn :yes))
+  (toggle-signs false)
   (vim.api.nvim_create_autocmd [:BufEnter :BufWritePost]
                                {:pattern "*"
                                 :callback (fn []
