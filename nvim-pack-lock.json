@@ -45,7 +45,7 @@
       "src": "https://github.com/stevearc/oil.nvim"
     },
     "orgmode": {
-      "rev": "1ab7b456020de8bdaed7d8135b5376a0b4419b11",
+      "rev": "a214db3c8ed7eb68cb74924575b91ffc658e7d82",
       "src": "https://github.com/nvim-orgmode/orgmode"
     },
     "vim-dadbod": {

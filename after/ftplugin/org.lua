@@ -1,2 +1,4 @@
 -- [nfnl] fnl/after/ftplugin/org.fnl
-return vim.lsp.enable("org")
+vim.lsp.enable("org")
+vim.opt.spell = true
+return nil
