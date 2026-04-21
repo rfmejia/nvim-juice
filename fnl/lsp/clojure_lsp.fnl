@@ -1,5 +1,5 @@
 {:cmd [:clojure-lsp]
- :filetypes [:clojure :edn]
+ :filetypes [:clojure]
  :root_markers [:project.clj
                 :deps.edn
                 :build.boot
