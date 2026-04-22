@@ -25,7 +25,7 @@
       "src": "https://github.com/windwp/nvim-autopairs"
     },
     "nvim-metals": {
-      "rev": "6970d6036218db6545f3c295d0106cc8de6d7161",
+      "rev": "3c6ef5114fd46127c517e58d7e8e4dfc1f78dac3",
       "src": "https://github.com/scalameta/nvim-metals"
     },
     "nvim-paredit": {
