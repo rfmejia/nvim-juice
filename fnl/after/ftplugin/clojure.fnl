@@ -8,8 +8,7 @@
                             :commentstring ";; %s"})
 
 (vim.api.nvim_create_autocmd :BufWritePre
-                             {:pattern [:*.clj :*.cljs]
-                              :callback vim.lsp.buf.format
+                             {:callback vim.lsp.buf.format
                               :desc "[clojure] call vim.lsp.buf.format on save"
                               :group (vim.api.nvim_create_augroup :format_group
                                                                   {:clear true})})

@@ -1,3 +1,4 @@
 -- [nfnl] fnl/plugin/builtin.fnl
 vim.cmd.packadd("nvim.undotree")
-return vim.cmd.packadd("nvim.difftool")
+vim.cmd.packadd("nvim.difftool")
+return vim.keymap.set("n", "<leader>u", ":Undotree<cr>", {desc = "Toggle undotree view"})
