@@ -4,25 +4,25 @@
 (let [{: autoload} (require :nfnl.module)
       util (autoload :juice.util)
       dadbod-maps [[:n
-                    "<localleader>d;"
+                    "<localleader>e;"
                     ":DB g:db "
                     {:desc "[dadbod] run an sql statement in command mode"
                      :noremap true
                      :buffer true}]
                    [:n
-                    :<localleader>dd
+                    :<localleader>ee
                     ":.DB g:db<cr>"
                     {:desc "[dadbod] run line as an sql statement"
                      :noremap true
                      :buffer true}]
                    [:n
-                    :<localleader>dp
+                    :<localleader>ep
                     "vip:DB g:db<cr>"
                     {:desc "[dadbod] run paragraph as an sql statement"
                      :noremap true
                      :buffer true}]
                    [:n
-                    :<localleader>db
+                    :<localleader>eb
                     ":%DB g:db<cr>"
                     {:desc "[dadbod] run buffer as sql statements"
                      :noremap true
