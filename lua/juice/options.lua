@@ -5,7 +5,6 @@ local statusline = autoload("juice.statusline")
 local util = autoload("juice.util")
 local core = autoload("nfnl.core")
 --[[ "---- GENERAL OPTIONS ----" ]]
-local map_leaders = {mapleader = " ", maplocalleader = ","}
 local behavior = {clipboard = "unnamedplus", smartindent = true, shiftwidth = 2, tabstop = 2, softtabstop = 2, expandtab = true, mouse = "", shortmess = "filnxtToOF", undolevels = 5000, undofile = true, virtualedit = "block", foldenable = false}
 local visual = {signcolumn = "no", cursorline = true, splitbelow = true, splitright = true, linebreak = true, laststatus = 3, statusline = statusline.build({}), number = false, relativenumber = false, wrap = false}
 --[[ "---- SEARCH OPTIONS ----" ]]
@@ -21,7 +20,7 @@ else
 end
 local function _3_()
   autoload("vim._core.ui2").enable()
-  core["merge!"](vim.g, map_leaders)
+  vim.cmd.colorscheme("default-black")
   return core["merge!"](vim.opt, behavior, visual, search, completion, grep_options)
 end
 return {setup = _3_}

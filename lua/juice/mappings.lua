@@ -129,7 +129,9 @@ end
 opencode_launcher = {{"n", "goc", _21_, {desc = "open opencode in a new tab or tmux window", silent = true}}}
 local tmux_apps = {lazydocker = {{"n", "god", ":!tmux neww lazydocker<cr><cr>", {desc = "open lazydocker in a new tmux window", silent = true}}}}
 local function setup()
+  local map_leaders = {mapleader = " ", maplocalleader = ","}
   local mappings = core.concat(general, filters, jumps, undo_steps, dates, quickmarks, buffers, tabs, quickfix, loclist, search_replace, visual_indent, nvim_config_launcher, mail_draft_launcher)
+  core["merge!"](vim.g, map_leaders)
   util["set-keys"](mappings)
   --[[ "select completion binding item" ]]
   vim.cmd("inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")

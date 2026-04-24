@@ -1,7 +1,4 @@
 (local {: autoload} (require :nfnl.module))
-(local core (autoload :nfnl.core))
-(local notify (autoload :nfnl.notify))
-(local util (autoload :juice.util))
 
 (local directions {:up [:k :-U] :down [:j :-D] :left [:h :-L] :right [:l :-R]})
 (lambda vim-direction [direction] (?. directions direction 1))
@@ -17,7 +14,8 @@
        (?. 1)))
 
 (lambda tmux-navigate [direction]
-  (let [socket (get-tmux-socket)
+  (let [notify (autoload :nfnl.notify)
+        socket (get-tmux-socket)
         pane (tmux-direction direction)
         tmux-cmd [:tmux :-S socket :select-pane pane]]
     (case (vim.fn.system tmux-cmd)
@@ -32,7 +30,9 @@
 
 (fn setup-default-mapping [in-tmux?]
   ;; TODO Pass these as config options with sensible defaults
-  (let [nav-keys {:left :<M-h> :right :<M-l> :up :<M-k> :down :<M-j>}
+  (let [core (autoload :nfnl.core)
+        util (autoload :juice.util)
+        nav-keys {:left :<M-h> :right :<M-l> :up :<M-k> :down :<M-j>}
         options {:left {:desc "jump to the left window"
                         :noremap true
                         :silent true}

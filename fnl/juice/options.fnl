@@ -4,8 +4,6 @@
 (local core (autoload :nfnl.core))
 
 (comment "---- GENERAL OPTIONS ----")
-(local map-leaders {:mapleader " " :maplocalleader ","})
-
 (local behavior {; use linux system clipboard
                  :clipboard :unnamedplus
                  ; indent new line in special cases
@@ -87,5 +85,5 @@
 
 {:setup (fn []
           ((. (autoload :vim._core.ui2) :enable))
-          (core.merge! vim.g map-leaders)
+          (vim.cmd.colorscheme :default-black)
           (core.merge! vim.opt behavior visual search completion grep-options))}

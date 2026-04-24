@@ -1,13 +1,10 @@
 -- [nfnl] fnl/plugin/tmux-nav.fnl
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_.autoload
-local core = autoload("nfnl.core")
-local notify = autoload("nfnl.notify")
-local util = autoload("juice.util")
 local directions = {up = {"k", "-U"}, down = {"j", "-D"}, left = {"h", "-L"}, right = {"l", "-R"}}
 local function vim_direction(direction)
   if (nil == direction) then
-    _G.error("Missing argument direction on /home/rfmejia/.config/nvim/fnl/plugin/tmux-nav.fnl:7", 2)
+    _G.error("Missing argument direction on /home/rfmejia/.config/nvim/fnl/plugin/tmux-nav.fnl:4", 2)
   else
   end
   local t_3_ = directions
@@ -23,7 +20,7 @@ local function vim_direction(direction)
 end
 local function tmux_direction(direction)
   if (nil == direction) then
-    _G.error("Missing argument direction on /home/rfmejia/.config/nvim/fnl/plugin/tmux-nav.fnl:8", 2)
+    _G.error("Missing argument direction on /home/rfmejia/.config/nvim/fnl/plugin/tmux-nav.fnl:5", 2)
   else
   end
   local t_7_ = directions
@@ -39,7 +36,7 @@ local function tmux_direction(direction)
 end
 local function vim_navigate(direction)
   if (nil == direction) then
-    _G.error("Missing argument direction on /home/rfmejia/.config/nvim/fnl/plugin/tmux-nav.fnl:10", 2)
+    _G.error("Missing argument direction on /home/rfmejia/.config/nvim/fnl/plugin/tmux-nav.fnl:7", 2)
   else
   end
   return vim.cmd(("wincmd" .. " " .. vim_direction(direction)))
@@ -64,9 +61,10 @@ local function get_tmux_socket()
 end
 local function tmux_navigate(direction)
   if (nil == direction) then
-    _G.error("Missing argument direction on /home/rfmejia/.config/nvim/fnl/plugin/tmux-nav.fnl:19", 2)
+    _G.error("Missing argument direction on /home/rfmejia/.config/nvim/fnl/plugin/tmux-nav.fnl:16", 2)
   else
   end
+  local notify = autoload("nfnl.notify")
   local socket = get_tmux_socket()
   local pane = tmux_direction(direction)
   local tmux_cmd = {"tmux", "-S", socket, "select-pane", pane}
@@ -83,7 +81,7 @@ local function tmux_navigate(direction)
 end
 local function navigate(direction)
   if (nil == direction) then
-    _G.error("Missing argument direction on /home/rfmejia/.config/nvim/fnl/plugin/tmux-nav.fnl:27", 2)
+    _G.error("Missing argument direction on /home/rfmejia/.config/nvim/fnl/plugin/tmux-nav.fnl:25", 2)
   else
   end
   local current_vim_win = vim.fn.winnr()
@@ -95,6 +93,8 @@ local function navigate(direction)
   end
 end
 local function setup_default_mapping(in_tmux_3f)
+  local core = autoload("nfnl.core")
+  local util = autoload("juice.util")
   local nav_keys = {left = "<M-h>", right = "<M-l>", up = "<M-k>", down = "<M-j>"}
   local options = {left = {desc = "jump to the left window", noremap = true, silent = true}, right = {desc = "jump to the right window", noremap = true, silent = true}, up = {desc = "jump to the window above", noremap = true, silent = true}, down = {desc = "jump to the window below", noremap = true, silent = true}}
   local vim_keys = {left = "<C-w>h", right = "<C-w>l", up = "<C-w>k", down = "<C-w>l"}

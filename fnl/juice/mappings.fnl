@@ -218,10 +218,12 @@
                                  :silent true}]]})
 
 (fn setup []
-  (let [mappings (core.concat general filters jumps undo-steps dates quickmarks
+  (let [map-leaders {:mapleader " " :maplocalleader ","}
+        mappings (core.concat general filters jumps undo-steps dates quickmarks
                               buffers tabs quickfix loclist search-replace
                               visual-indent nvim-config-launcher
                               mail-draft-launcher)]
+    (core.merge! vim.g map-leaders)
     (util.set-keys mappings)
     (comment "select completion binding item")
     (vim.cmd "inoremap <expr> <esc> pumvisible() ? '<C-y><esc>' : '<esc>'")
