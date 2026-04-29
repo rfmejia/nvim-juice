@@ -25,7 +25,7 @@
       "src": "https://github.com/windwp/nvim-autopairs"
     },
     "nvim-metals": {
-      "rev": "b914d3b963582109371d0949424c3cc6758d99b8",
+      "rev": "4cc98f07ec96bb748a8796831767538e0e4f9be4",
       "src": "https://github.com/scalameta/nvim-metals"
     },
     "nvim-paredit": {
@@ -45,7 +45,7 @@
       "src": "https://github.com/stevearc/oil.nvim"
     },
     "orgmode": {
-      "rev": "a214db3c8ed7eb68cb74924575b91ffc658e7d82",
+      "rev": "2ed4742a68555d938919f8b2fe78e905b983a838",
       "src": "https://github.com/nvim-orgmode/orgmode"
     },
     "vim-dadbod": {
