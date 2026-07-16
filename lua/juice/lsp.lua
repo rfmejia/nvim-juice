@@ -8,7 +8,7 @@ local function set_mappings(bufnr)
     _G.error("Missing argument bufnr on fnl/juice/lsp.fnl:5", 2)
   else
   end
-  local goto_maps = {{"n", "grd", vim.lsp.buf.definition, {desc = "goto definition", nowait = true, buffer = bufnr}}, {"n", "gW", vim.lsp.buf.workspace_symbol, {desc = "goto Workspace symbol", buffer = bufnr}}}
+  local goto_maps = {{"n", "gd", vim.lsp.buf.definition, {desc = "goto definition", nowait = true, buffer = bufnr}}, {"n", "gW", vim.lsp.buf.workspace_symbol, {desc = "goto Workspace symbol", buffer = bufnr}}}
   local diagnostic_maps
   local function _3_()
     return vim.diagnostic.jump({count = -1, wrap = false})
@@ -32,7 +32,7 @@ local function set_mappings(bufnr)
   return util["set-keys"](mappings)
 end
 local function configure_diagnostics()
-  return vim.diagnostic.config({virtual_text = {source = "if_many"}, float = {border = "rounded"}, update_in_insert = true, severity_sort = true, signs = false, underline = false})
+  return vim.diagnostic.config({virtual_text = true, float = {border = "rounded"}, update_in_insert = true, severity_sort = true, signs = false, underline = false})
 end
 local function configure_completion(client, bufnr)
   if (nil == bufnr) then

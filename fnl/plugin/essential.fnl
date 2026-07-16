@@ -1,5 +1,4 @@
-(vim.pack.add ["https://github.com/nvim-treesitter/nvim-treesitter"
-               "https://github.com/stevearc/oil.nvim"
+(vim.pack.add ["https://github.com/stevearc/oil.nvim"
                "https://github.com/rmagatti/auto-session"])
 
 (let [{: autoload} (require :nfnl.module)
@@ -28,15 +27,4 @@
                   {:desc "[oil] explore files in current file's path"
                    :silent true})
   (autosession.setup autosession-opts)
-  (set vim.o.sessionoptions (str.join "," autosession-sessionoptions))
-  (vim.api.nvim_create_autocmd :FileType
-                               {:pattern [:clojure
-                                          :fennel
-                                          :java
-                                          :lua
-                                          :markdown
-                                          :scala]
-                                :callback (fn []
-                                            (vim.treesitter.start)
-                                            (set vim.bo.indentexpr
-                                                 "v:lua.require'nvim-treesitter'.indentexpr()"))}))
+  (set vim.o.sessionoptions (str.join "," autosession-sessionoptions)))

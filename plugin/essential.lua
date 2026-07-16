@@ -1,5 +1,5 @@
 -- [nfnl] fnl/plugin/essential.fnl
-vim.pack.add({"https://github.com/nvim-treesitter/nvim-treesitter", "https://github.com/stevearc/oil.nvim", "https://github.com/rmagatti/auto-session"})
+vim.pack.add({"https://github.com/stevearc/oil.nvim", "https://github.com/rmagatti/auto-session"})
 local _let_1_ = require("nfnl.module")
 local autoload = _let_1_.autoload
 local autosession = autoload("auto-session")
@@ -12,9 +12,4 @@ oil.setup(oil_opts)
 vim.keymap.set("n", "<leader>e", oil.open, {desc = "[oil] explore files in current file's path", silent = true})
 autosession.setup(autosession_opts)
 vim.o.sessionoptions = str.join(",", autosession_sessionoptions)
-local function _2_()
-  vim.treesitter.start()
-  vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-  return nil
-end
-return vim.api.nvim_create_autocmd("FileType", {pattern = {"clojure", "fennel", "java", "lua", "markdown", "scala"}, callback = _2_})
+return nil

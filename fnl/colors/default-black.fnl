@@ -4,7 +4,7 @@
 (comment "Set italic in graphical terminals")
 (local in-gui? (not= vim.env.WAYLAND_DISPLAY nil))
 
-(local general {:Comment {:fg :DarkYellow :ctermfg :DarkYellow :italic in-gui?}
+(local general {:Comment {:fg :Gray :ctermfg :DarkYellow :italic in-gui?}
                 :Constant {:fg :Green}
                 :CursorLine {:bg :NONE}
                 [:Delimiter :Operator :Special :Statement] {:fg :Gray}

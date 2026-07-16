@@ -4,7 +4,7 @@
 
 (lambda set-mappings [bufnr]
   (let [goto-maps [[:n
-                    :grd
+                    :gd
                     vim.lsp.buf.definition
                     {:desc "goto definition" :nowait true :buffer bufnr}]
                    [:n
@@ -47,7 +47,7 @@
 
 (fn configure-diagnostics []
   (vim.diagnostic.config {:underline false
-                          :virtual_text {:source :if_many}
+                          :virtual_text true
                           :signs false
                           :float {:border :rounded}
                           :update_in_insert true
