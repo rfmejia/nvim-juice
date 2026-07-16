@@ -1,19 +1,19 @@
 {
   "plugins": {
     "auto-session": {
-      "rev": "62437532b38495551410b3f377bcf4aaac574ebe",
+      "rev": "6cde3874a9283c2db55627acca5f28e4fa402320",
       "src": "https://github.com/rmagatti/auto-session"
     },
     "conjure": {
-      "rev": "2ddd752d43b35d72aa3e339c3ae051b8dbad8549",
+      "rev": "16b436c0124dae26250986fd4e660529d6bb14f0",
       "src": "https://github.com/Olical/conjure"
     },
     "gitsigns.nvim": {
-      "rev": "6d808f99bd63303646794406e270bd553ad7792e",
+      "rev": "31d6fb2d618bca1482b9f274751ead5f03461408",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "leap.nvim": {
-      "rev": "156c71aabb68d520c6269db4103c8e5580e3ea67",
+      "rev": "d7f8ee64155b7790188f17a993390f32577cfb81",
       "src": "https://codeberg.org/andyg/leap.nvim"
     },
     "nfnl": {
@@ -21,11 +21,11 @@
       "src": "https://github.com/rfmejia/nfnl"
     },
     "nvim-autopairs": {
-      "rev": "59bce2eef357189c3305e25bc6dd2d138c1683f5",
+      "rev": "7b9923abad60b903ece7c52940e1321d39eccc79",
       "src": "https://github.com/windwp/nvim-autopairs"
     },
     "nvim-metals": {
-      "rev": "4cc98f07ec96bb748a8796831767538e0e4f9be4",
+      "rev": "a4b20656bf1014404dd63bf9fd5f22fcc50fee52",
       "src": "https://github.com/scalameta/nvim-metals"
     },
     "nvim-paredit": {
@@ -33,7 +33,7 @@
       "src": "https://github.com/julienvincent/nvim-paredit"
     },
     "nvim-surround": {
-      "rev": "9291040de8cd8a4439eb64c441e8d5d2bf884a5a",
+      "rev": "8b47db616ef658b8fc27e61db2896aa2f40134de",
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-treesitter": {
@@ -41,11 +41,11 @@
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "oil.nvim": {
-      "rev": "0fcc83805ad11cf714a949c98c605ed717e0b83e",
+      "rev": "b73018b75affd13fa38e2fc94ef753b465f770d7",
       "src": "https://github.com/stevearc/oil.nvim"
     },
     "orgmode": {
-      "rev": "2ed4742a68555d938919f8b2fe78e905b983a838",
+      "rev": "f32a06d4b5399dad8bf0478c772bf6c513f02dcf",
       "src": "https://github.com/nvim-orgmode/orgmode"
     },
     "vim-dadbod": {

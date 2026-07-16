@@ -7,14 +7,14 @@ local util = autoload("juice.util")
 core["merge!"](vim.opt_local, {shiftwidth = 4, tabstop = 2, expandtab = true, textwidth = 80, commentstring = ";; %s"})
 local function buffer_is_modified(buf_num)
   if (nil == buf_num) then
-    _G.error("Missing argument buf-num on /home/rfmejia/.config/nvim/fnl/after/ftplugin/fennel.fnl:12", 2)
+    _G.error("Missing argument buf-num on fnl/after/ftplugin/fennel.fnl:12", 2)
   else
   end
   return vim.api.nvim_get_option_value("modified", {buf = buf_num})
 end
 local function format_fennel(path)
   if (nil == path) then
-    _G.error("Missing argument path on /home/rfmejia/.config/nvim/fnl/after/ftplugin/fennel.fnl:15", 2)
+    _G.error("Missing argument path on fnl/after/ftplugin/fennel.fnl:15", 2)
   else
   end
   if buffer_is_modified(vim.api.nvim_get_current_buf()) then

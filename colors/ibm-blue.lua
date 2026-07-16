@@ -12,7 +12,7 @@ local groups = {Normal = {ctermfg = "Gray", ctermbg = "DarkBlue", fg = pallete.F
 local diagnostic_virtual_text = {DiagnosticVirtualTextError = {fg = pallete.Red, italic = in_gui_3f}, DiagnosticVirtualTextHint = {fg = "DarkBlue", italic = in_gui_3f}, DiagnosticVirtualTextInfo = {fg = "DarkCyan", italic = in_gui_3f}, DiagnosticVirtualTextOk = {fg = "DarkGreen", italic = in_gui_3f}, DiagnosticVirtualTextWarn = {fg = "DarkYellow", italic = in_gui_3f}, LspInlayHint = {fg = pallete.DarkGray, italic = in_gui_3f}}
 local function set_hl(hi_options)
   if (nil == hi_options) then
-    _G.error("Missing argument hi-options on /home/rfmejia/.config/nvim/fnl/colors/ibm-blue.fnl:108", 2)
+    _G.error("Missing argument hi-options on fnl/colors/ibm-blue.fnl:108", 2)
   else
   end
   local _let_4_ = require("nfnl.module")

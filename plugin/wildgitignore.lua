@@ -4,7 +4,7 @@ local function starts_with_3f(str, prefix)
 end
 local function is_dir_3f(path)
   if (nil == path) then
-    _G.error("Missing argument path on /home/rfmejia/.config/nvim/fnl/plugin/wildgitignore.fnl:4", 2)
+    _G.error("Missing argument path on fnl/plugin/wildgitignore.fnl:4", 2)
   else
   end
   return (nil ~= vim.fs.dir(path)())

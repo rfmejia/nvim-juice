@@ -34,9 +34,12 @@
         buffer-type-flags "%q%h%r"
         git-status (wrap-luaeval "require('juice.statusline')['get-global-var']('git_file_status')")
         git-branch (wrap-luaeval "require('juice.statusline')['get-global-var']('git_branch')")
+        ;; git-branch %{get(b:, 'gitsigns_head', '')}"
         align-right "%="
         buf-warnings (wrap-luaeval "require('juice.statusline')['count-warnings'](vim.api.nvim_get_current_buf())")
         ws-errors (wrap-luaeval "require('juice.statusline')['count-errors']()")
+        ;; diagnostic-status (vim.diagnostic.status)
+        ;; progress (vim.ui.progress_status)
         ruler "%l:%c"
         widget-str (.. " " (str.join widgets) " ")
         default-color "%#StatusLine#"
@@ -57,11 +60,15 @@
                   ws-errors
                   warn-color
                   buf-warnings
+                  ;; diagnostic-status
+                  ;; progress
                   info-color
                   git-branch
                   default-color
                   " "
                   ruler]]
     (str.join template)))
+
+(comment (set vim.o.statusline (build)))
 
 {: build : count-warnings : count-errors : get-global-var}

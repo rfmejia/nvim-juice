@@ -1,4 +1,5 @@
 (local filetypes {:extension {:avsc :json
+                              :bb :clojure
                               :edn :clojure
                               :mill :scala
                               :mysql :sql

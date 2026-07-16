@@ -9,7 +9,7 @@ local diagnostic_virtual_text = {DiagnosticVirtualTextError = {fg = "DarkRed", i
 local statusline = {StatusLine = {fg = "Gray", bg = "NONE"}, StatusLineError = {fg = "DarkRed"}, StatusLineInfo = {fg = "DarkCyan"}, StatusLineWarn = {fg = "DarkYellow"}}
 local function set_hl(hi_options)
   if (nil == hi_options) then
-    _G.error("Missing argument hi-options on /home/rfmejia/.config/nvim/fnl/colors/default-black.fnl:36", 2)
+    _G.error("Missing argument hi-options on fnl/colors/default-black.fnl:36", 2)
   else
   end
   for group, settings in pairs(hi_options) do

@@ -5,7 +5,7 @@ local core = autoload("nfnl.core")
 local util = autoload("juice.util")
 local function set_mappings(bufnr)
   if (nil == bufnr) then
-    _G.error("Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp.fnl:5", 2)
+    _G.error("Missing argument bufnr on fnl/juice/lsp.fnl:5", 2)
   else
   end
   local goto_maps = {{"n", "grd", vim.lsp.buf.definition, {desc = "goto definition", nowait = true, buffer = bufnr}}, {"n", "gW", vim.lsp.buf.workspace_symbol, {desc = "goto Workspace symbol", buffer = bufnr}}}
@@ -36,11 +36,11 @@ local function configure_diagnostics()
 end
 local function configure_completion(client, bufnr)
   if (nil == bufnr) then
-    _G.error("Missing argument bufnr on /home/rfmejia/.config/nvim/fnl/juice/lsp.fnl:56", 2)
+    _G.error("Missing argument bufnr on fnl/juice/lsp.fnl:56", 2)
   else
   end
   if (nil == client) then
-    _G.error("Missing argument client on /home/rfmejia/.config/nvim/fnl/juice/lsp.fnl:56", 2)
+    _G.error("Missing argument client on fnl/juice/lsp.fnl:56", 2)
   else
   end
   if client:supports_method("textDocument/completion") then

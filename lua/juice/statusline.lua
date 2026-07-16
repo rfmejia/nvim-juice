@@ -5,14 +5,14 @@ local core = autoload("nfnl.core")
 local str = autoload("nfnl.string")
 local function wrap_luaeval(command)
   if (nil == command) then
-    _G.error("Missing argument command on /home/rfmejia/.config/nvim/fnl/juice/statusline.fnl:5", 2)
+    _G.error("Missing argument command on fnl/juice/statusline.fnl:5", 2)
   else
   end
   return string.format("%%{luaeval(\"%s\")}", command)
 end
 local function count_diagnostic(_3fbufnr, severity)
   if (nil == severity) then
-    _G.error("Missing argument severity on /home/rfmejia/.config/nvim/fnl/juice/statusline.fnl:9", 2)
+    _G.error("Missing argument severity on fnl/juice/statusline.fnl:9", 2)
   else
   end
   return core.count(vim.diagnostic.get(_3fbufnr, {severity = severity}))
@@ -41,7 +41,7 @@ local function count_errors()
 end
 local function get_global_var(name)
   if (nil == name) then
-    _G.error("Missing argument name on /home/rfmejia/.config/nvim/fnl/juice/statusline.fnl:25", 2)
+    _G.error("Missing argument name on fnl/juice/statusline.fnl:25", 2)
   else
   end
   local case_8_, case_9_ = pcall(vim.api.nvim_get_var, name)
@@ -73,4 +73,5 @@ local function build(widgets)
   local template = {filename, buffer_modified_flags, info_color, " ", git_status, default_color, buffer_type_flags, align_right, info_color, widget_str, error_color, ws_errors, warn_color, buf_warnings, info_color, git_branch, default_color, " ", ruler}
   return str.join(template)
 end
+--[[ (set vim.o.statusline (build)) ]]
 return {build = build, ["count-warnings"] = count_warnings, ["count-errors"] = count_errors, ["get-global-var"] = get_global_var}

@@ -4,7 +4,7 @@ local autoload = _local_1_.autoload
 local directions = {up = {"k", "-U"}, down = {"j", "-D"}, left = {"h", "-L"}, right = {"l", "-R"}}
 local function vim_direction(direction)
   if (nil == direction) then
-    _G.error("Missing argument direction on /home/rfmejia/.config/nvim/fnl/plugin/tmux-nav.fnl:4", 2)
+    _G.error("Missing argument direction on fnl/plugin/tmux-nav.fnl:4", 2)
   else
   end
   local t_3_ = directions
@@ -20,7 +20,7 @@ local function vim_direction(direction)
 end
 local function tmux_direction(direction)
   if (nil == direction) then
-    _G.error("Missing argument direction on /home/rfmejia/.config/nvim/fnl/plugin/tmux-nav.fnl:5", 2)
+    _G.error("Missing argument direction on fnl/plugin/tmux-nav.fnl:5", 2)
   else
   end
   local t_7_ = directions
@@ -36,7 +36,7 @@ local function tmux_direction(direction)
 end
 local function vim_navigate(direction)
   if (nil == direction) then
-    _G.error("Missing argument direction on /home/rfmejia/.config/nvim/fnl/plugin/tmux-nav.fnl:7", 2)
+    _G.error("Missing argument direction on fnl/plugin/tmux-nav.fnl:7", 2)
   else
   end
   return vim.cmd(("wincmd" .. " " .. vim_direction(direction)))
@@ -61,7 +61,7 @@ local function get_tmux_socket()
 end
 local function tmux_navigate(direction)
   if (nil == direction) then
-    _G.error("Missing argument direction on /home/rfmejia/.config/nvim/fnl/plugin/tmux-nav.fnl:16", 2)
+    _G.error("Missing argument direction on fnl/plugin/tmux-nav.fnl:16", 2)
   else
   end
   local notify = autoload("nfnl.notify")
@@ -81,7 +81,7 @@ local function tmux_navigate(direction)
 end
 local function navigate(direction)
   if (nil == direction) then
-    _G.error("Missing argument direction on /home/rfmejia/.config/nvim/fnl/plugin/tmux-nav.fnl:25", 2)
+    _G.error("Missing argument direction on fnl/plugin/tmux-nav.fnl:25", 2)
   else
   end
   local current_vim_win = vim.fn.winnr()
@@ -121,7 +121,7 @@ local function setup_default_mapping(in_tmux_3f)
   local make_mapping
   local function _26_(dir)
     if (nil == dir) then
-      _G.error("Missing argument dir on /home/rfmejia/.config/nvim/fnl/plugin/tmux-nav.fnl:54", 2)
+      _G.error("Missing argument dir on fnl/plugin/tmux-nav.fnl:54", 2)
     else
     end
     local mapping

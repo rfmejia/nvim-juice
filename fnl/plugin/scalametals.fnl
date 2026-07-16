@@ -23,7 +23,6 @@
                                       :inferredTypes {:enable true}
                                       :typeParameters {:enable true}}
                          :serverProperties [:-Xmx4g]
-                         :serverVersion :1.6.5
                          :showImplicitArguments true
                          :showImplicitConversionsAndClasses true
                          :showInferredType true
