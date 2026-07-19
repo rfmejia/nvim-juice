@@ -5,7 +5,7 @@ local core = autoload("nfnl.core")
 local str = autoload("nfnl.string")
 --[[ "TODO" "Load the following special envs" ["split to sbtn or scala-cli" "dadbod"] ]]
 local function read_env_pairs()
-  return {makeprg = vim.env.NVIM_MAKEPRG, errorformat = vim.env.NVIM_ERRORFORMAT, keywordprg = vim.env.NVIM_KEYWORDPRG, formatprg = vim.env.NVIM_FORMATPRG, wrap = ("true" == vim.env.NVIM_WRAP), tabstop = tonumber(vim.env.NVIM_TEXTWIDTH), textwidth = tonumber(vim.env.NVIM_TEXTWIDTH), shiftwidth = tonumber(vim.env.NVIM_SHIFTWIDTH)}
+  return {makeprg = vim.env.NVIM_MAKEPRG, errorformat = vim.env.NVIM_ERRORFORMAT, keywordprg = vim.env.NVIM_KEYWORDPRG, formatprg = vim.env.NVIM_FORMATPRG, wrap = ("true" == vim.env.NVIM_WRAP), tabstop = tonumber(vim.env.NVIM_TABSTOP), textwidth = tonumber(vim.env.NVIM_TEXTWIDTH), shiftwidth = tonumber(vim.env.NVIM_SHIFTWIDTH)}
 end
 local function read_path_list()
   if vim.env.NVIM_PATH_LIST then

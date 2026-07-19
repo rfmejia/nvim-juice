@@ -59,7 +59,7 @@
 
 ;; TODO Why not just discover the configs in root/lsp?
 (fn setup []
-  (let [lsp-configs [:clangd :clojure_lsp :fennel_ls :gopls :jdtls :sqlls]
+  (let [lsp-configs [:clangd :clojure_lsp :fennel_ls :gopls :jdtls]
         on-attach (fn [event]
                     (case (vim.lsp.get_client_by_id event.data.client_id)
                       client (do

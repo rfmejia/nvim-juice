@@ -12,7 +12,7 @@
    :keywordprg vim.env.NVIM_KEYWORDPRG
    :formatprg vim.env.NVIM_FORMATPRG
    :wrap (= :true vim.env.NVIM_WRAP)
-   :tabstop (tonumber vim.env.NVIM_TEXTWIDTH)
+   :tabstop (tonumber vim.env.NVIM_TABSTOP)
    :textwidth (tonumber vim.env.NVIM_TEXTWIDTH)
    :shiftwidth (tonumber vim.env.NVIM_SHIFTWIDTH)})
 

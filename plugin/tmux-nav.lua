@@ -97,7 +97,7 @@ local function setup_default_mapping(in_tmux_3f)
   local util = autoload("juice.util")
   local nav_keys = {left = "<M-h>", right = "<M-l>", up = "<M-k>", down = "<M-j>"}
   local options = {left = {desc = "jump to the left window", noremap = true, silent = true}, right = {desc = "jump to the right window", noremap = true, silent = true}, up = {desc = "jump to the window above", noremap = true, silent = true}, down = {desc = "jump to the window below", noremap = true, silent = true}}
-  local vim_keys = {left = "<C-w>h", right = "<C-w>l", up = "<C-w>k", down = "<C-w>l"}
+  local vim_keys = {left = "<C-w>h", right = "<C-w>l", up = "<C-w>k", down = "<C-w>j"}
   local tmux_keys
   local function _21_()
     return navigate("left")

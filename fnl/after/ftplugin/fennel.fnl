@@ -3,7 +3,7 @@
 (local core (autoload :nfnl.core))
 (local util (autoload :juice.util))
 
-(core.merge! vim.opt_local {:shiftwidth 4
+(core.merge! vim.opt_local {:shiftwidth 2
                             :tabstop 2
                             :expandtab true
                             :textwidth 80

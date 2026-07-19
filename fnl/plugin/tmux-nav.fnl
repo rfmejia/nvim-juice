@@ -45,7 +45,7 @@
                  :down {:desc "jump to the window below"
                         :noremap true
                         :silent true}}
-        vim-keys {:left :<C-w>h :right :<C-w>l :up :<C-w>k :down :<C-w>l}
+        vim-keys {:left :<C-w>h :right :<C-w>l :up :<C-w>k :down :<C-w>j}
         tmux-keys {:left #(navigate :left)
                    :right #(navigate :right)
                    :up #(navigate :up)

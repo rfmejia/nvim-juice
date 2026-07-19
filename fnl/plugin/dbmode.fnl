@@ -35,7 +35,7 @@
                                       (pcall vim.cmd.DB (.. "g:db = " env-var))
                                       (set vim.opt_local.omnifunc
                                            "vim_dadbod_completion#omni")
-                                      (vim.print (.. "[dadbod] Connected to database")))
+                                      (vim.print "[dadbod] Connected to database"))
                          :group :dbmode})]
   (vim.api.nvim_create_augroup :dbmode {:clear true})
   (vim.api.nvim_create_autocmd :FileType

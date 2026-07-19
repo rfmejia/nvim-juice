@@ -50,7 +50,7 @@ local function configure_completion(client, bufnr)
   end
 end
 local function setup()
-  local lsp_configs = {"clangd", "clojure_lsp", "fennel_ls", "gopls", "jdtls", "sqlls"}
+  local lsp_configs = {"clangd", "clojure_lsp", "fennel_ls", "gopls", "jdtls"}
   local on_attach
   local function _11_(event)
     local case_12_ = vim.lsp.get_client_by_id(event.data.client_id)
