@@ -83,50 +83,55 @@ local function _14_()
   local config_path = (vim.env.XDG_CONFIG_HOME .. "/nvim")
   vim.cmd((":$tabnew" .. config_path))
   vim.cmd.tcd(config_path)
-  --[[ -?>> (util.call "juice.dotenvrc" "read-path-list") (set vim.opt_local.path) ]]
-  return nil
+  local tmp_6_ = util.call("juice.dotenvrc", "read-path-list")
+  if (tmp_6_ ~= nil) then
+    vim.opt_local.path = tmp_6_
+    return nil
+  else
+    return nil
+  end
 end
 nvim_config_launcher = {{"n", "gon", _14_, {desc = "open nvim config in a new tab", silent = true}}}
 local journal_launchers
-local function _15_()
+local function _16_()
   vim.cmd.JournalInit()
   return vim.cmd((":$tabnew" .. "$JOURNAL/journal.md"))
 end
-local function _16_()
+local function _17_()
   vim.cmd.JournalInit()
   return vim.cmd((":$tabnew" .. "$JOURNAL/linux/vim.adoc"))
 end
-journal_launchers = {{"n", "goj", _15_, {desc = "open journal in a new tab", silent = true}}, {"n", "gov", _16_, {desc = "open vim notes in a new tab", silent = true}}}
+journal_launchers = {{"n", "goj", _16_, {desc = "open journal in a new tab", silent = true}}, {"n", "gov", _17_, {desc = "open vim notes in a new tab", silent = true}}}
 local mail_draft_launcher
-local function _17_()
+local function _18_()
   local tmp_file = vim.fn.system({"mktemp", "--suffix=.mail"})
   return vim.cmd((":$tabnew" .. tmp_file))
 end
-mail_draft_launcher = {{"n", "gom", _17_, {desc = "open a new mail draft in new tab"}}}
+mail_draft_launcher = {{"n", "gom", _18_, {desc = "open a new mail draft in new tab"}}}
 local lazygit_launcher
-local _18_
+local _19_
 if vim.env.TMUX then
-  _18_ = ":!tmux neww lazygit<cr><cr>"
+  _19_ = ":!tmux neww lazygit<cr><cr>"
 else
-  local function _19_()
+  local function _20_()
     vim.cmd.tabnew("term://lazygit")
     return vim.cmd.startinsert()
   end
-  _18_ = _19_
+  _19_ = _20_
 end
-lazygit_launcher = {{"n", "gog", _18_, {desc = "open lazygit in a new tab or tmux window", silent = true}}}
+lazygit_launcher = {{"n", "gog", _19_, {desc = "open lazygit in a new tab or tmux window", silent = true}}}
 local opencode_launcher
-local _21_
+local _22_
 if vim.env.TMUX then
-  _21_ = ":!tmux split-window -l 40\\% opencode<cr><cr>"
+  _22_ = ":!tmux split-window -l 40\\% opencode<cr><cr>"
 else
-  local function _22_()
+  local function _23_()
     vim.cmd.vsplit("term://opencode")
     return vim.cmd.startinsert()
   end
-  _21_ = _22_
+  _22_ = _23_
 end
-opencode_launcher = {{"n", "goc", _21_, {desc = "open opencode in a new tab or tmux window", silent = true}}}
+opencode_launcher = {{"n", "goc", _22_, {desc = "open opencode in a new tab or tmux window", silent = true}}}
 local tmux_apps = {lazydocker = {{"n", "god", ":!tmux neww lazydocker<cr><cr>", {desc = "open lazydocker in a new tmux window", silent = true}}}}
 local function setup()
   local map_leaders = {mapleader = " ", maplocalleader = ","}

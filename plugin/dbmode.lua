@@ -11,7 +11,7 @@ local function _2_(filetypes, env_var, group_name)
       util["set-keys"](dadbod_maps)
       pcall(vim.cmd.DB, ("g:db = " .. env_var))
       vim.opt_local.omnifunc = "vim_dadbod_completion#omni"
-      return vim.print("[dadbod] Connected to database")
+      return vim.notify("[dadbod] Connected to database")
     else
       return nil
     end

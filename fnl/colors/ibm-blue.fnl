@@ -1,4 +1,4 @@
-;; borland-pallete 
+;; borland-pallete
 ;; {
 ;;  :Color0 "#4F4F4F" - dark gray
 ;;  :Color1 "#FF6C60" - red/orange
@@ -17,6 +17,8 @@
 ;;  :Color14 "#DFDFFE" - light blue?
 ;;  :Color15 "#FFFFFF" - white
 ;; }
+(local {: autoload} (require :nfnl.module))
+(local core (autoload :nfnl.core))
 
 (local in-gui? (not= vim.env.WAYLAND_DISPLAY nil))
 
@@ -107,14 +109,12 @@
 
 (lambda set-hl [hi-options]
   "Helper function to set multiple highlight groups using a table"
-  (let [{: autoload} (require :nfnl.module)
-        core (autoload :nfnl.core)]
-    (each [group settings (pairs hi-options)]
-      (if (core.sequential? group)
-          (each [_ sub-group (ipairs group)]
-            (vim.api.nvim_set_hl 0 sub-group settings))
-          (core.string? group)
-          (vim.api.nvim_set_hl 0 group settings)))))
+  (each [group settings (pairs hi-options)]
+    (if (core.sequential? group)
+        (each [_ sub-group (ipairs group)]
+          (vim.api.nvim_set_hl 0 sub-group settings))
+        (core.string? group)
+        (vim.api.nvim_set_hl 0 group settings))))
 
 (set-hl groups)
 (set-hl diagnostic-virtual-text)

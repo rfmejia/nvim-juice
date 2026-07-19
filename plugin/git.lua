@@ -1,6 +1,6 @@
 -- [nfnl] fnl/plugin/git.fnl
 vim.pack.add({"https://github.com/lewis6991/gitsigns.nvim"})
-local function set_file_status_global_var()
+local function set_file_status_global_var_21()
   local path = vim.fn.expand("%:p")
   local git_cmd = ("git file-status " .. path .. " | tr -d ' \\n'")
   local case_1_, case_2_ = vim.fn.system(git_cmd)
@@ -15,7 +15,7 @@ local function set_file_status_global_var()
     return nil
   end
 end
-local function set_branch_global_var()
+local function set_branch_global_var_21()
   local path = vim.fn.expand("%:h")
   local git_cmd = ("git -C " .. path .. " branch --show-current --no-color 2> /dev/null | tr -d ' \\n'")
   local case_4_, case_5_ = vim.fn.system(git_cmd)
@@ -76,7 +76,7 @@ local keymaps = core.concat(nav_maps, staging_maps, blame_maps, view_maps, list_
 util["set-keys"](keymaps)
 toggle_signs(false)
 local function _16_()
-  set_file_status_global_var()
-  return set_branch_global_var()
+  set_file_status_global_var_21()
+  return set_branch_global_var_21()
 end
 return vim.api.nvim_create_autocmd({"BufEnter", "BufWritePost"}, {pattern = "*", callback = _16_})

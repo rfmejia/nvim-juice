@@ -18,7 +18,7 @@
 
 (fn read-path-list []
   "Returns a list of paths from the NVIM_PATH_LIST env variable iff the env variable is not null"
-  (when vim.env.NVIM_PATH_LIST
+  (if vim.env.NVIM_PATH_LIST
     (core.concat ["." ""] (str.split vim.env.NVIM_PATH_LIST ":"))))
 
 (fn load-env []

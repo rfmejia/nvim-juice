@@ -1,6 +1,6 @@
 (vim.pack.add ["https://github.com/lewis6991/gitsigns.nvim"])
 
-(fn set-file-status-global-var []
+(fn set-file-status-global-var! []
   "Updates the git flag(s) of the current file inside g:gitfile"
   (let [path (vim.fn.expand "%:p")
         git-cmd (.. "git file-status " path " | tr -d ' \\n'")]
@@ -10,7 +10,7 @@
       (vim.notify (.. "[git-info] Could not get `git file-status`: " err-msg)
                   vim.log.levels.ERROR))))
 
-(fn set-branch-global-var []
+(fn set-branch-global-var! []
   "Set vim.g.git_branch of current working directory (if any)"
   (let [path (vim.fn.expand "%:h")
         git-cmd (.. "git -C " path
@@ -100,5 +100,5 @@
   (vim.api.nvim_create_autocmd [:BufEnter :BufWritePost]
                                {:pattern "*"
                                 :callback (fn []
-                                            (set-file-status-global-var)
-                                            (set-branch-global-var))}))
+                                            (set-file-status-global-var!)
+                                            (set-branch-global-var!))}))

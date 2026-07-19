@@ -164,9 +164,9 @@
                                                      :/nvim)]
                                  (vim.cmd (.. ":$tabnew" config-path))
                                  (vim.cmd.tcd config-path)
-                                 (comment -?>>
-                                   (util.call :juice.dotenvrc :read-path-list)
-                                   (set vim.opt_local.path)))
+                                 (-?>> (util.call :juice.dotenvrc
+                                                  :read-path-list)
+                                       (set vim.opt_local.path)))
                               {:desc "open nvim config in a new tab"
                                :silent true}]])
 
