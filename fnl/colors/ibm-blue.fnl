@@ -18,7 +18,7 @@
 ;;  :Color15 "#FFFFFF" - white
 ;; }
 (local {: autoload} (require :nfnl.module))
-(local core (autoload :nfnl.core))
+(local colors (autoload :juice.colors))
 
 (local in-gui? (not= vim.env.WAYLAND_DISPLAY nil))
 
@@ -107,15 +107,6 @@
         :DiagnosticVirtualTextWarn {:fg :DarkYellow :italic in-gui?}
         :LspInlayHint {:fg pallete.DarkGray :italic in-gui?}})
 
-(lambda set-hl [hi-options]
-  "Helper function to set multiple highlight groups using a table"
-  (each [group settings (pairs hi-options)]
-    (if (core.sequential? group)
-        (each [_ sub-group (ipairs group)]
-          (vim.api.nvim_set_hl 0 sub-group settings))
-        (core.string? group)
-        (vim.api.nvim_set_hl 0 group settings))))
-
-(set-hl groups)
-(set-hl diagnostic-virtual-text)
+(colors.set-hl groups)
+(colors.set-hl diagnostic-virtual-text)
 (set vim.g.colors_name :ibm-blue)

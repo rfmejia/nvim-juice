@@ -1,5 +1,6 @@
 (local {: autoload} (require :nfnl.module))
 (local core (autoload :nfnl.core))
+(local colors (autoload :juice.colors))
 
 (comment "Set italic in graphical terminals")
 (local in-gui? (not= vim.env.WAYLAND_DISPLAY nil))
@@ -33,14 +34,5 @@
                    :StatusLineInfo {:fg :DarkCyan}
                    :StatusLineWarn {:fg :DarkYellow}})
 
-(lambda set-hl [hi-options]
-  "Helper function to set multiple highlight groups using a table"
-  (each [group settings (pairs hi-options)]
-    (if (core.sequential? group)
-        (each [_ sub-group (ipairs group)]
-          (vim.api.nvim_set_hl 0 sub-group settings))
-        (core.string? group)
-        (vim.api.nvim_set_hl 0 group settings))))
-
-(core.map set-hl [general diagnostic-virtual-text statusline])
+(core.map colors.set-hl [general diagnostic-virtual-text statusline])
 (set vim.g.colors_name :default-black)
