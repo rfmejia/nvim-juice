@@ -9,6 +9,9 @@
                             :spell true
                             :spelllang :en_us})
 
+(when (util.executable? :align-md-tables.bb)
+  (set vim.opt_local.equalprg :align-md-tables.bb))
+
 (fn render-markdown-to-html []
   (let [current-file (vim.fn.expand "%:p")
         tmp-file (vim.fn.system [:mktemp :--suffix=.html])

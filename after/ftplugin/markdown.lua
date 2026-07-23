@@ -4,6 +4,10 @@ local autoload = _local_1_.autoload
 local core = autoload("nfnl.core")
 local util = autoload("juice.util")
 core["merge!"](vim.opt_local, {shiftwidth = 2, tabstop = 2, textwidth = 100, wrap = true, spell = true, spelllang = "en_us"})
+if util["executable?"]("align-md-tables.bb") then
+  vim.opt_local.equalprg = "align-md-tables.bb"
+else
+end
 local function render_markdown_to_html()
   local current_file = vim.fn.expand("%:p")
   local tmp_file = vim.fn.system({"mktemp", "--suffix=.html"})
