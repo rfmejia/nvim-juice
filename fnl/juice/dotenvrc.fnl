@@ -8,6 +8,7 @@
 (fn read-env-pairs []
   "Returns a table of `vim.opt` key and `vim.env` value iff the env variable is not null"
   {:makeprg vim.env.NVIM_MAKEPRG
+   :equalprg vim.env.NVIM_EQUALPRG
    :errorformat vim.env.NVIM_ERRORFORMAT
    :keywordprg vim.env.NVIM_KEYWORDPRG
    :formatprg vim.env.NVIM_FORMATPRG
@@ -19,7 +20,7 @@
 (fn read-path-list []
   "Returns a list of paths from the NVIM_PATH_LIST env variable iff the env variable is not null"
   (if vim.env.NVIM_PATH_LIST
-    (core.concat ["." ""] (str.split vim.env.NVIM_PATH_LIST ":"))))
+      (core.concat ["." ""] (str.split vim.env.NVIM_PATH_LIST ":"))))
 
 (fn load-env []
   (core.merge! vim.opt (read-env-pairs))
