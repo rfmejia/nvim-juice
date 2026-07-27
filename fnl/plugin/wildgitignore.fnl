@@ -5,11 +5,21 @@
   "Checks if path is a dir (will miss empty or non-existent dirs)"
   (not= nil ((vim.fs.dir path))))
 
+(fn find-gitignore [?nth-parent]
+  (let [nth-parent (or ?nth-parent 2)]
+    (fn search [dir remaining]
+      (let [candidate (.. dir :/.gitignore)]
+        (if (<= remaining 0) nil
+            (= 1 (vim.fn.filereadable candidate)) candidate
+            :else (search (vim.fn.fnamemodify dir ":h") (- remaining 1)))))
+
+    (search (vim.fn.getcwd) nth-parent)))
+
 (fn update-wildignore []
   (let [{: autoload} (require :nfnl.module)
         core (autoload :nfnl.core)
         string (autoload :nfnl.string)]
-    (case (core.slurp :.gitignore)
+    (case (core.slurp (find-gitignore))
       gitignore (let [lines (core.map string.trim (string.split gitignore "\n"))
                       entries (core.filter #(not (or (string.blank? $1)
                                                      (starts-with? $1 "#")

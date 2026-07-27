@@ -5,7 +5,7 @@
       "src": "https://github.com/rmagatti/auto-session"
     },
     "conjure": {
-      "rev": "16b436c0124dae26250986fd4e660529d6bb14f0",
+      "rev": "b7ff6c52b84a555cb57ea0d37b005473d4726a81",
       "src": "https://github.com/Olical/conjure"
     },
     "gitsigns.nvim": {
@@ -37,7 +37,7 @@
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-treesitter": {
-      "rev": "a45a920ec04cda5624f6dea0ff6454c81c3ad2d5",
+      "rev": "61df84986b4b4ec469ee745a182e433d49f8c27e",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "oil.nvim": {
