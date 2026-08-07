@@ -9,7 +9,7 @@ local function configure_metals()
   local metals = autoload("metals")
   local tvp = autoload("metals.tvp")
   local options = {signcolumn = "yes:1", shortmess = (vim.go.shortmess .. "c"), statusline = statusline.build({"%{g:metals_status}", " \226\151\143"})}
-  local metals_settings = {disabledMode = true, defaultBspToBuildTool = true, enableBestEffort = true, enableSemanticHighlighting = true, enableStripMarginOnTypeFormatting = true, inlayHints = {byNameParameters = {enable = true}, hintsInPatternMatch = {enable = true}, implicitArguments = {enable = true}, implicitConversions = {enable = true}, inferredTypes = {enable = true}, typeParameters = {enable = true}}, serverProperties = {"-Xmx4g"}, showImplicitArguments = true, showImplicitConversionsAndClasses = true, showInferredType = true, shutdownBloopOnEditorClose = true, startMcpServer = false}
+  local metals_settings = {disabledMode = true, defaultBspToBuildTool = true, enableBestEffort = true, enableSemanticHighlighting = true, enableStripMarginOnTypeFormatting = true, inlayHints = {byNameParameters = {enable = true}, hintsInPatternMatch = {enable = true}, implicitArguments = {enable = true}, implicitConversions = {enable = true}, inferredTypes = {enable = true}, typeParameters = {enable = true}}, serverProperties = {"-Xmx4g"}, showImplicitArguments = true, showImplicitConversionsAndClasses = true, showInferredType = true, shutdownBloopOnEditorClose = true, startMcpServer = true}
   local metals_buf_maps
   local function _2_(bufnr)
     if (nil == bufnr) then

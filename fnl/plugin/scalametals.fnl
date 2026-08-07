@@ -27,7 +27,7 @@
                          :showImplicitConversionsAndClasses true
                          :showInferredType true
                          :shutdownBloopOnEditorClose true
-                         :startMcpServer false}
+                         :startMcpServer true}
         metals-buf-maps (lambda [bufnr]
                           [[:v
                             :K
