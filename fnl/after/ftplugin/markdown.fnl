@@ -5,7 +5,7 @@
 (core.merge! vim.opt_local {:shiftwidth 2
                             :tabstop 2
                             :textwidth 100
-                            :wrap true
+                            :wrap false
                             :spell true
                             :spelllang :en_us})
 
