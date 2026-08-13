@@ -20,7 +20,6 @@ else
 end
 local function _3_()
   autoload("vim._core.ui2").enable()
-  vim.cmd.colorscheme("default-black")
   return core["merge!"](vim.opt, behavior, visual, search, completion, grep_options)
 end
 return {setup = _3_}

@@ -85,5 +85,4 @@
 
 {:setup (fn []
           ((. (autoload :vim._core.ui2) :enable))
-          (vim.cmd.colorscheme :default-black)
           (core.merge! vim.opt behavior visual search completion grep-options))}
