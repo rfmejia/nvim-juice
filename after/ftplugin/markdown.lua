@@ -3,7 +3,7 @@ local _local_1_ = require("nfnl.module")
 local autoload = _local_1_.autoload
 local core = autoload("nfnl.core")
 local util = autoload("juice.util")
-core["merge!"](vim.opt_local, {shiftwidth = 2, tabstop = 2, textwidth = 100, spell = true, spelllang = "en_us", wrap = false})
+core["merge!"](vim.opt_local, {shiftwidth = 2, tabstop = 2, textwidth = 80, spell = true, spelllang = "en_us", wrap = false})
 if util["executable?"]("align-md-tables.bb") then
   vim.opt_local.equalprg = "align-md-tables.bb"
 else

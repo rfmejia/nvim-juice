@@ -11,7 +11,8 @@
                               :txt :text}
                   :filename {:.envrc :bash
                              :Jenkinsfile :groovy
-                             :tmux.conf :tmux}
+                             :tmux.conf :tmux
+                             :COMMIT_EDITMSG :markdown}
                   :pattern {"openapi.*%.yaml" :yaml.openapi
                             "openapi.*%.json" :json.openapi}})
 

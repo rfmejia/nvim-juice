@@ -2,9 +2,6 @@
 (local core (autoload :nfnl.core))
 (local str (autoload :nfnl.string))
 
-(comment :TODO "Load the following special envs"
-  ["split to sbtn or scala-cli" :dadbod])
-
 (fn read-env-pairs []
   "Returns a table of `vim.opt` key and `vim.env` value iff the env variable is not null"
   {:makeprg vim.env.NVIM_MAKEPRG
