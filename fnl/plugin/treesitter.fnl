@@ -1,7 +1,7 @@
+(vim.pack.add ["https://github.com/nvim-treesitter/nvim-treesitter"])
+
 (local {: autoload} (require :nfnl.module))
 (local nvim-treesitter (autoload :nvim-treesitter))
-
-(vim.pack.add ["https://github.com/nvim-treesitter/nvim-treesitter"])
 
 (local ts-languages [:clojure :fennel :java :json :lua :markdown :scala :yaml])
 

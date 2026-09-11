@@ -1,14 +1,15 @@
 (vim.pack.add ["https://github.com/scalameta/nvim-metals"])
 
+(local {: autoload} (require :nfnl.module))
+(local core (autoload :nfnl.core))
+(local statusline (autoload :juice.statusline))
+(local util (autoload :juice.util))
+(local metals (autoload :metals))
+(local tvp (autoload :metals.tvp))
+
 (fn configure-metals []
   "Configure metals for the first time"
-  (let [{: autoload} (require :nfnl.module)
-        core (autoload :nfnl.core)
-        statusline (autoload :juice.statusline)
-        util (autoload :juice.util)
-        metals (autoload :metals)
-        tvp (autoload :metals.tvp)
-        options {:signcolumn "yes:1"
+  (let [options {:signcolumn "yes:1"
                  :shortmess (.. vim.go.shortmess :c)
                  :statusline (statusline.build ["%{g:metals_status}" " ●"])}
         metals-settings {:disabledMode true

@@ -1,6 +1,7 @@
-(let [{: autoload} (require :nfnl.module)
-      util (autoload :juice.util)
-      opts {:day-format "%a, %d %b %Y"
+(local {: autoload} (require :nfnl.module))
+(local util (autoload :juice.util))
+
+(let [opts {:day-format "%a, %d %b %Y"
             :time-format "%H:%M"
             :task-format "* [ ] "
             :maps nil}

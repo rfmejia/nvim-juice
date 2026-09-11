@@ -1,8 +1,10 @@
+(local {: autoload} (require :nfnl.module))
+(local util (autoload :juice.util))
+
 (local commands
        {:ClipFilename ["let @+ = getreg('%')"
                        {:desc "copy current file path to clipboard"}]
-        :LoadEnv [#(let [{: autoload} (require :nfnl.module)
-                         util (autoload :juice.util)]
+        :LoadEnv [#(do
                      (util.call :juice.dotenvrc :load-env)
                      (vim.notify "Loaded environment variables"))
                   {:desc "(Re)load environment variables"}]

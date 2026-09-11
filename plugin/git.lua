@@ -1,15 +1,20 @@
 -- [nfnl] fnl/plugin/git.fnl
 vim.pack.add({"https://github.com/lewis6991/gitsigns.nvim"})
+local _local_1_ = require("nfnl.module")
+local autoload = _local_1_.autoload
+local core = autoload("nfnl.core")
+local gitsigns = autoload("gitsigns")
+local util = autoload("juice.util")
 local function set_file_status_global_var_21()
   local path = vim.fn.expand("%:p")
   local git_cmd = ("git file-status " .. path .. " | tr -d ' \\n'")
-  local case_1_, case_2_ = vim.fn.system(git_cmd)
-  if (nil ~= case_1_) then
-    local status = case_1_
+  local case_2_, case_3_ = vim.fn.system(git_cmd)
+  if (nil ~= case_2_) then
+    local status = case_2_
     vim.g.git_file_status = status
     return nil
-  elseif ((case_1_ == nil) and (nil ~= case_2_)) then
-    local err_msg = case_2_
+  elseif ((case_2_ == nil) and (nil ~= case_3_)) then
+    local err_msg = case_3_
     return vim.notify(("[git-info] Could not get `git file-status`: " .. err_msg), vim.log.levels.ERROR)
   else
     return nil
@@ -18,23 +23,18 @@ end
 local function set_branch_global_var_21()
   local path = vim.fn.expand("%:h")
   local git_cmd = ("git -C " .. path .. " branch --show-current --no-color 2> /dev/null | tr -d ' \\n'")
-  local case_4_, case_5_ = vim.fn.system(git_cmd)
-  if (nil ~= case_4_) then
-    local branch = case_4_
+  local case_5_, case_6_ = vim.fn.system(git_cmd)
+  if (nil ~= case_5_) then
+    local branch = case_5_
     vim.g.git_branch = branch
     return nil
-  elseif ((case_4_ == nil) and (nil ~= case_5_)) then
-    local err_msg = case_5_
+  elseif ((case_5_ == nil) and (nil ~= case_6_)) then
+    local err_msg = case_6_
     return vim.notify(("[git-info] Could not get `git branch`: " .. err_msg), vim.log.levels.ERROR)
   else
     return nil
   end
 end
-local _let_7_ = require("nfnl.module")
-local autoload = _let_7_.autoload
-local core = autoload("nfnl.core")
-local gitsigns = autoload("gitsigns")
-local util = autoload("juice.util")
 local nav_maps
 local function _8_()
   return gitsigns.nav_hunk("next", {preview = true, target = "all", wrap = false})

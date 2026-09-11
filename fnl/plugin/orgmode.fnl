@@ -1,8 +1,9 @@
 (vim.pack.add ["https://github.com/nvim-orgmode/orgmode"])
 
-(let [{: autoload} (require :nfnl.module)
-      orgmode (autoload :orgmode)
-      org-home (or vim.env.JOURNAL "~/journal")
+(local {: autoload} (require :nfnl.module))
+(local orgmode (autoload :orgmode))
+
+(let [org-home (or vim.env.JOURNAL "~/journal")
       opts {:org_agenda_files (.. org-home "/**/*")
             :org_default_notes_file (.. org-home :/refile.org)
             :org_capture_templates {:b {:description :Bookmark

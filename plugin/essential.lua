@@ -1,7 +1,7 @@
 -- [nfnl] fnl/plugin/essential.fnl
 vim.pack.add({"https://github.com/stevearc/oil.nvim", "https://github.com/rmagatti/auto-session"})
-local _let_1_ = require("nfnl.module")
-local autoload = _let_1_.autoload
+local _local_1_ = require("nfnl.module")
+local autoload = _local_1_.autoload
 local autosession = autoload("auto-session")
 local str = autoload("nfnl.string")
 local oil = autoload("oil")

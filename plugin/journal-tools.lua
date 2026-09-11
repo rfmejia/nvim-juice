@@ -1,21 +1,21 @@
 -- [nfnl] fnl/plugin/journal-tools.fnl
-local _let_1_ = require("nfnl.module")
-local autoload = _let_1_.autoload
+local _local_1_ = require("nfnl.module")
+local autoload = _local_1_.autoload
 local util = autoload("juice.util")
 local opts = {["day-format"] = "%a, %d %b %Y", ["time-format"] = "%H:%M", ["task-format"] = "* [ ] ", maps = nil}
 local insert_week
 local function _2_()
   local function find_day(dir, day, new_time)
     if (nil == new_time) then
-      _G.error("Missing argument new-time on fnl/plugin/journal-tools.fnl:8", 2)
+      _G.error("Missing argument new-time on fnl/plugin/journal-tools.fnl:9", 2)
     else
     end
     if (nil == day) then
-      _G.error("Missing argument day on fnl/plugin/journal-tools.fnl:8", 2)
+      _G.error("Missing argument day on fnl/plugin/journal-tools.fnl:9", 2)
     else
     end
     if (nil == dir) then
-      _G.error("Missing argument dir on fnl/plugin/journal-tools.fnl:8", 2)
+      _G.error("Missing argument dir on fnl/plugin/journal-tools.fnl:9", 2)
     else
     end
     local new_day = vim.fn.strftime("%a", new_time)

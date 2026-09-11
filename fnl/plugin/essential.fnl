@@ -1,11 +1,12 @@
 (vim.pack.add ["https://github.com/stevearc/oil.nvim"
                "https://github.com/rmagatti/auto-session"])
 
-(let [{: autoload} (require :nfnl.module)
-      autosession (autoload :auto-session)
-      str (autoload :nfnl.string)
-      oil (autoload :oil)
-      autosession-opts {:suppressed_dirs ["/" "~/" :/tmp]
+(local {: autoload} (require :nfnl.module))
+(local autosession (autoload :auto-session))
+(local str (autoload :nfnl.string))
+(local oil (autoload :oil))
+
+(let [autosession-opts {:suppressed_dirs ["/" "~/" :/tmp]
                         :git_use_branch_name true
                         :git_auto_restore_on_branch_change true}
       autosession-sessionoptions [:blank

@@ -1,7 +1,7 @@
 -- [nfnl] fnl/plugin/editing.fnl
 vim.pack.add({"https://github.com/windwp/nvim-autopairs", "https://github.com/kylechui/nvim-surround", "https://codeberg.org/andyg/leap.nvim"})
-local _let_1_ = require("nfnl.module")
-local autoload = _let_1_.autoload
+local _local_1_ = require("nfnl.module")
+local autoload = _local_1_.autoload
 local util = autoload("juice.util")
 local autopairs = autoload("nvim-autopairs")
 local autopairs_opts = {enable_check_bracket_line = false}

@@ -1,7 +1,7 @@
 -- [nfnl] fnl/plugin/lisp.fnl
 vim.pack.add({"https://github.com/Olical/conjure", "https://github.com/julienvincent/nvim-paredit"})
-local _let_1_ = require("nfnl.module")
-local autoload = _let_1_.autoload
+local _local_1_ = require("nfnl.module")
+local autoload = _local_1_.autoload
 local core = autoload("nfnl.core")
 local paredit = autoload("nvim-paredit")
 local paredit_opts = {use_default_keys = true, indent = {enabled = true}}

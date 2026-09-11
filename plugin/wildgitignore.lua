@@ -1,10 +1,14 @@
 -- [nfnl] fnl/plugin/wildgitignore.fnl
+local _local_1_ = require("nfnl.module")
+local autoload = _local_1_.autoload
+local core = autoload("nfnl.core")
+local string = autoload("nfnl.string")
 local function starts_with_3f(str, prefix)
   return (prefix == str:sub(1, #prefix))
 end
 local function is_dir_3f(path)
   if (nil == path) then
-    _G.error("Missing argument path on fnl/plugin/wildgitignore.fnl:4", 2)
+    _G.error("Missing argument path on fnl/plugin/wildgitignore.fnl:8", 2)
   else
   end
   return (nil ~= vim.fs.dir(path)())
@@ -26,10 +30,6 @@ local function find_gitignore(_3fnth_parent)
   return search(vim.fn.getcwd(), nth_parent)
 end
 local function update_wildignore()
-  local _let_3_ = require("nfnl.module")
-  local autoload = _let_3_.autoload
-  local core = autoload("nfnl.core")
-  local string = autoload("nfnl.string")
   local case_4_ = core.slurp(find_gitignore())
   if (nil ~= case_4_) then
     local gitignore = case_4_

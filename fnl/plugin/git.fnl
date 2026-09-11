@@ -1,5 +1,10 @@
 (vim.pack.add ["https://github.com/lewis6991/gitsigns.nvim"])
 
+(local {: autoload} (require :nfnl.module))
+(local core (autoload :nfnl.core))
+(local gitsigns (autoload :gitsigns))
+(local util (autoload :juice.util))
+
 (fn set-file-status-global-var! []
   "Updates the git flag(s) of the current file inside g:gitfile"
   (let [path (vim.fn.expand "%:p")
@@ -21,11 +26,7 @@
       (vim.notify (.. "[git-info] Could not get `git branch`: " err-msg)
                   vim.log.levels.ERROR))))
 
-(let [{: autoload} (require :nfnl.module)
-      core (autoload :nfnl.core)
-      gitsigns (autoload :gitsigns)
-      util (autoload :juice.util)
-      nav-maps [[:n
+(let [nav-maps [[:n
                  "]g"
                  #(gitsigns.nav_hunk :next
                                      {:wrap false :preview true :target :all})
