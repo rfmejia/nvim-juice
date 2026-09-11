@@ -15,7 +15,8 @@
    :shiftwidth (tonumber vim.env.NVIM_SHIFTWIDTH)})
 
 (fn read-path-list []
-  "Returns a list of paths from the NVIM_PATH_LIST env variable iff the env variable is not null"
+  "Returns a list of paths from the NVIM_PATH_LIST env variable iff the env
+variable is not null"
   (if vim.env.NVIM_PATH_LIST
       (core.concat ["." ""] (str.split vim.env.NVIM_PATH_LIST ":"))))
 

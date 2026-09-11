@@ -5,8 +5,9 @@ local core = autoload("nfnl.core")
 local util = autoload("juice.util")
 local general
 local function _2_()
-  local is_enabled = (vim.opt.number:get() and vim.opt.relativenumber:get())
-  return core["merge!"](vim.opt, {number = not is_enabled, relativenumber = not is_enabled})
+  local states = {{colorcolumn = {}, number = false, relativenumber = false}, {number = true, relativenumber = true, colorcolumn = {}}, {number = true, relativenumber = true, colorcolumn = "+1"}}
+  local curr_state = {number = vim.opt_local.number:get(), relativenumber = vim.opt_local.relativenumber:get(), colorcolumn = vim.opt_local.colorcolumn:get()}
+  return core["merge!"](vim.opt_local, util["next-state"](states, curr_state))
 end
 general = {{"n", "Y", "y$", {desc = "yank until the end of the line"}}, {"n", "<leader>w", vim.cmd.w, {desc = "write buffer", silent = true}}, {"n", "<leader>r", vim.cmd.registers, {desc = "list registers"}}, {"i", "<C-space>", "<C-x><C-o>", {desc = "call omnifunc"}}, {"n", "<F5>", vim.cmd.make, {desc = "trigger `make` in shell"}}, {"n", "<leader>n", _2_, {desc = "toggle number and relativenumber options"}}}
 local filters

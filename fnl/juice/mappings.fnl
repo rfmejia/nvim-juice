@@ -10,11 +10,13 @@
         [:n :<F5> vim.cmd.make {:desc "trigger `make` in shell"}]
         [:n
          :<leader>n
-         #(let [is-enabled (and (vim.opt.number:get)
-                                (vim.opt.relativenumber:get))]
-            (core.merge! vim.opt
-                         {:number (not is-enabled)
-                          :relativenumber (not is-enabled)}))
+         #(let [states [{:number false :relativenumber false :colorcolumn {}}
+                        {:number true :relativenumber true :colorcolumn {}}
+                        {:number true :relativenumber true :colorcolumn :+1}]
+                curr-state {:number (vim.opt_local.number:get)
+                            :relativenumber (vim.opt_local.relativenumber:get)
+                            :colorcolumn (vim.opt_local.colorcolumn:get)}]
+            (core.merge! vim.opt_local (util.next-state states curr-state)))
          {:desc "toggle number and relativenumber options"}]])
 
 (local filters
