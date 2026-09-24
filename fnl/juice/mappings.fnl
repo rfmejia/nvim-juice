@@ -17,7 +17,12 @@
                             :relativenumber (vim.opt_local.relativenumber:get)
                             :colorcolumn (vim.opt_local.colorcolumn:get)}]
             (core.merge! vim.opt_local (util.next-state states curr-state)))
-         {:desc "toggle number and relativenumber options"}]])
+         {:desc "toggle number and relativenumber options"}]
+        [:n
+         :<leader>gc
+         #(let [states [{:termguicolors true} {:termguicolors false}]
+                curr-state {:termguicolors (vim.opt.termguicolors:get)}]
+            (core.merge! vim.opt (util.next-state states curr-state)))]])
 
 (local filters
        (let [repeat (fn [times value]

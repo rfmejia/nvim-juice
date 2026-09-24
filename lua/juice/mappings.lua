@@ -9,24 +9,29 @@ local function _2_()
   local curr_state = {number = vim.opt_local.number:get(), relativenumber = vim.opt_local.relativenumber:get(), colorcolumn = vim.opt_local.colorcolumn:get()}
   return core["merge!"](vim.opt_local, util["next-state"](states, curr_state))
 end
-general = {{"n", "Y", "y$", {desc = "yank until the end of the line"}}, {"n", "<leader>w", vim.cmd.w, {desc = "write buffer", silent = true}}, {"n", "<leader>r", vim.cmd.registers, {desc = "list registers"}}, {"i", "<C-space>", "<C-x><C-o>", {desc = "call omnifunc"}}, {"n", "<F5>", vim.cmd.make, {desc = "trigger `make` in shell"}}, {"n", "<leader>n", _2_, {desc = "toggle number and relativenumber options"}}}
+local function _3_()
+  local states = {{termguicolors = true}, {termguicolors = false}}
+  local curr_state = {termguicolors = vim.opt.termguicolors:get()}
+  return core["merge!"](vim.opt, util["next-state"](states, curr_state))
+end
+general = {{"n", "Y", "y$", {desc = "yank until the end of the line"}}, {"n", "<leader>w", vim.cmd.w, {desc = "write buffer", silent = true}}, {"n", "<leader>r", vim.cmd.registers, {desc = "list registers"}}, {"i", "<C-space>", "<C-x><C-o>", {desc = "call omnifunc"}}, {"n", "<F5>", vim.cmd.make, {desc = "trigger `make` in shell"}}, {"n", "<leader>n", _2_, {desc = "toggle number and relativenumber options"}}, {"n", "<leader>gc", _3_}}
 local filters
 do
   local _repeat
-  local function _3_(times, value)
+  local function _4_(times, value)
     local acc = ""
     for i = 1, times do
       acc = (acc .. value)
     end
     return acc
   end
-  _repeat = _3_
+  _repeat = _4_
   local vimgrep_cmd = (":vimgrep // **/*" .. _repeat(6, "<left>"))
   local filter_cmd
-  local function _4_(cmd)
+  local function _5_(cmd)
     return (":filter '' " .. cmd .. _repeat((2 + #cmd), "<left>"))
   end
-  filter_cmd = _4_
+  filter_cmd = _5_
   filters = {{"n", "<leader>f", ":find ", {desc = "pre-fill find command"}}, {"n", "<leader>v", vimgrep_cmd, {desc = "pre-fill vimgrep command"}}, {"n", "<leader>p", filter_cmd("browse oldfiles"), {desc = "filter and select from oldfiles"}}, {"n", "<leader>k", filter_cmd("map"), {desc = "filter keymaps"}}}
 end
 local jumps = {{"n", "<C-d>", "<C-d>zz"}, {"n", "<C-u>", "<C-u>zz"}, {"n", "<C-o>", "<C-o>zz"}, {"n", "<C-i>", "<C-i>zz"}, {"n", "'.", "'.zz"}}
@@ -36,41 +41,41 @@ local quickmarks
 do
   local marks = {"A", "S", "D", "F"}
   local create_mark
-  local function _5_(key)
-    local function _6_()
+  local function _6_(key)
+    local function _7_()
       vim.cmd.mark(key)
       return vim.notify(string.format("Marked %s", key))
     end
-    return {"n", ("m" .. string.lower(key)), _6_, {desc = string.format("[quickmark] set mark for %s", key)}}
+    return {"n", ("m" .. string.lower(key)), _7_, {desc = string.format("[quickmark] set mark for %s", key)}}
   end
-  create_mark = _5_
+  create_mark = _6_
   local jump_to_mark
-  local function _7_(key)
-    local function _8_()
-      local case_9_ = vim.api.nvim_get_mark(key, {})
-      if ((_G.type(case_9_) == "table") and true and true and true and (nil ~= case_9_[4])) then
-        local _ = case_9_[1]
-        local _0 = case_9_[2]
-        local _1 = case_9_[3]
-        local filename = case_9_[4]
+  local function _8_(key)
+    local function _9_()
+      local case_10_ = vim.api.nvim_get_mark(key, {})
+      if ((_G.type(case_10_) == "table") and true and true and true and (nil ~= case_10_[4])) then
+        local _ = case_10_[1]
+        local _0 = case_10_[2]
+        local _1 = case_10_[3]
+        local filename = case_10_[4]
         return vim.cmd.edit(filename)
       else
         return nil
       end
     end
-    return {"n", ("'" .. string.lower(key)), _8_, {desc = string.format("[quickmark] jump to %s mark", key)}}
+    return {"n", ("'" .. string.lower(key)), _9_, {desc = string.format("[quickmark] jump to %s mark", key)}}
   end
-  jump_to_mark = _7_
-  local function _11_()
+  jump_to_mark = _8_
+  local function _12_()
     return vim.cmd.marks(table.concat(marks))
   end
-  local function _12_(_241)
+  local function _13_(_241)
     return create_mark(_241)
   end
-  local function _13_(_241)
+  local function _14_(_241)
     return jump_to_mark(_241)
   end
-  quickmarks = core.concat({{"n", "''", _11_, {desc = string.format("[quickmark] list quickmarks {%s}", table.concat(marks))}}}, core.map(_12_, marks), core.map(_13_, marks))
+  quickmarks = core.concat({{"n", "''", _12_, {desc = string.format("[quickmark] list quickmarks {%s}", table.concat(marks))}}}, core.map(_13_, marks), core.map(_14_, marks))
 end
 local buffers = {{"n", "<leader>b", ":buffers<cr>:b<Space>"}, {"n", "<leader>x", ":bp|bdelete #<cr>", {silent = true, desc = "[buffer] close buffer"}}}
 local tabs = {{"n", "<leader>ts", ":tab split<cr>", {silent = true}}, {"n", "[t", vim.cmd.tabprevious}, {"n", "]t", vim.cmd.tabnext}, {"n", "[T", vim.cmd.tabfirst}, {"n", "]T", vim.cmd.tablast}}
@@ -80,7 +85,7 @@ local search_replace = {{"n", "<leader>/s", ":s//g<left><left>", {desc = "prompt
 local visual_indent = {{"v", "<", "<gv", {}}, {"v", ">", ">gv", {}}}
 --[[ "-- OPEN OTHER FILES AND PROGRAMS  --" ]]
 local nvim_config_launcher
-local function _14_()
+local function _15_()
   local config_path = (vim.env.XDG_CONFIG_HOME .. "/nvim")
   vim.cmd((":$tabnew" .. config_path))
   vim.cmd.tcd(config_path)
@@ -92,47 +97,47 @@ local function _14_()
     return nil
   end
 end
-nvim_config_launcher = {{"n", "gon", _14_, {desc = "open nvim config in a new tab", silent = true}}}
+nvim_config_launcher = {{"n", "gon", _15_, {desc = "open nvim config in a new tab", silent = true}}}
 local journal_launchers
-local function _16_()
+local function _17_()
   vim.cmd.JournalInit()
   return vim.cmd((":$tabnew" .. "$JOURNAL/journal.md"))
 end
-local function _17_()
+local function _18_()
   vim.cmd.JournalInit()
   return vim.cmd((":$tabnew" .. "$JOURNAL/linux/vim.adoc"))
 end
-journal_launchers = {{"n", "goj", _16_, {desc = "open journal in a new tab", silent = true}}, {"n", "gov", _17_, {desc = "open vim notes in a new tab", silent = true}}}
+journal_launchers = {{"n", "goj", _17_, {desc = "open journal in a new tab", silent = true}}, {"n", "gov", _18_, {desc = "open vim notes in a new tab", silent = true}}}
 local mail_draft_launcher
-local function _18_()
+local function _19_()
   local tmp_file = vim.fn.system({"mktemp", "--suffix=.mail"})
   return vim.cmd((":$tabnew" .. tmp_file))
 end
-mail_draft_launcher = {{"n", "gom", _18_, {desc = "open a new mail draft in new tab"}}}
+mail_draft_launcher = {{"n", "gom", _19_, {desc = "open a new mail draft in new tab"}}}
 local lazygit_launcher
-local _19_
+local _20_
 if vim.env.TMUX then
-  _19_ = ":!tmux neww lazygit<cr><cr>"
+  _20_ = ":!tmux neww lazygit<cr><cr>"
 else
-  local function _20_()
+  local function _21_()
     vim.cmd.tabnew("term://lazygit")
     return vim.cmd.startinsert()
   end
-  _19_ = _20_
+  _20_ = _21_
 end
-lazygit_launcher = {{"n", "gog", _19_, {desc = "open lazygit in a new tab or tmux window", silent = true}}}
+lazygit_launcher = {{"n", "gog", _20_, {desc = "open lazygit in a new tab or tmux window", silent = true}}}
 local opencode_launcher
-local _22_
+local _23_
 if vim.env.TMUX then
-  _22_ = ":!tmux split-window -l 40\\% opencode<cr><cr>"
+  _23_ = ":!tmux split-window -l 40\\% opencode<cr><cr>"
 else
-  local function _23_()
+  local function _24_()
     vim.cmd.vsplit("term://opencode")
     return vim.cmd.startinsert()
   end
-  _22_ = _23_
+  _23_ = _24_
 end
-opencode_launcher = {{"n", "goc", _22_, {desc = "open opencode in a new tab or tmux window", silent = true}}}
+opencode_launcher = {{"n", "goc", _23_, {desc = "open opencode in a new tab or tmux window", silent = true}}}
 local tmux_apps = {lazydocker = {{"n", "god", ":!tmux neww lazydocker<cr><cr>", {desc = "open lazydocker in a new tmux window", silent = true}}}}
 local function setup()
   local map_leaders = {mapleader = " ", maplocalleader = ","}

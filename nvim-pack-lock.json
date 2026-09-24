@@ -9,11 +9,11 @@
       "src": "https://github.com/Olical/conjure"
     },
     "gitsigns.nvim": {
-      "rev": "f2421c550618d257048afa650413d9e542ddbe67",
+      "rev": "070a5d7b985546cc57e1fc61e5bc507fecac6045",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "leap.nvim": {
-      "rev": "38af0ab56c6eb8757ee6006dd13ab79c2bc11a49",
+      "rev": "32bde2e932417e8a065f039f00f0cebdd0da4710",
       "src": "https://codeberg.org/andyg/leap.nvim"
     },
     "nfnl": {
@@ -37,7 +37,7 @@
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-treesitter": {
-      "rev": "9a168f6357ed21c3a636e1727bc7d382abc451b8",
+      "rev": "f603a2f4da48728f80257fb5fbb90145fd1dc173",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "oil.nvim": {
@@ -45,7 +45,7 @@
       "src": "https://github.com/stevearc/oil.nvim"
     },
     "orgmode": {
-      "rev": "005368b30cea12ececfbe27240b4269939aac6e6",
+      "rev": "d9cd82d732cf4322100cf2c4c57b285c870bd893",
       "src": "https://github.com/nvim-orgmode/orgmode"
     }
   }
