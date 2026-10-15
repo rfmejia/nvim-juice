@@ -2,27 +2,34 @@
 (local core (autoload :nfnl.core))
 (local util (autoload :juice.util))
 
-(local general
-       [[:n :Y :y$ {:desc "yank until the end of the line"}]
-        [:n :<leader>w vim.cmd.w {:desc "write buffer" :silent true}]
-        [:n :<leader>r vim.cmd.registers {:desc "list registers"}]
-        [:i :<C-space> :<C-x><C-o> {:desc "call omnifunc"}]
-        [:n :<F5> vim.cmd.make {:desc "trigger `make` in shell"}]
-        [:n
-         :<leader>n
-         #(let [states [{:number false :relativenumber false :colorcolumn {}}
-                        {:number true :relativenumber true :colorcolumn {}}
-                        {:number true :relativenumber true :colorcolumn :+1}]
-                curr-state {:number (vim.opt_local.number:get)
-                            :relativenumber (vim.opt_local.relativenumber:get)
-                            :colorcolumn (vim.opt_local.colorcolumn:get)}]
-            (core.merge! vim.opt_local (util.next-state states curr-state)))
-         {:desc "toggle number and relativenumber options"}]
-        [:n
-         :<leader>gc
-         #(let [states [{:termguicolors true} {:termguicolors false}]
-                curr-state {:termguicolors (vim.opt.termguicolors:get)}]
-            (core.merge! vim.opt (util.next-state states curr-state)))]])
+(local general [[:n :Y :y$ {:desc "yank until the end of the line"}]
+                [:n :<leader>w vim.cmd.w {:desc "write buffer" :silent true}]
+                [:n :<leader>r vim.cmd.registers {:desc "list registers"}]
+                [:i :<C-space> :<C-x><C-o> {:desc "call omnifunc"}]
+                [:n :<F5> vim.cmd.make {:desc "trigger `make` in shell"}]
+                [:n
+                 :<leader>n
+                 #(let [states [{:number false
+                                 :relativenumber false
+                                 :colorcolumn {}}
+                                {:number true
+                                 :relativenumber true
+                                 :colorcolumn {}}
+                                {:number true
+                                 :relativenumber true
+                                 :colorcolumn :+1}]
+                        curr-state {:number (vim.opt_local.number:get)
+                                    :relativenumber (vim.opt_local.relativenumber:get)
+                                    :colorcolumn (vim.opt_local.colorcolumn:get)}]
+                    (core.merge! vim.opt_local
+                                 (util.next-state states curr-state)))
+                 {:desc "toggle number and relativenumber options"}]
+                [:n
+                 :<leader>tgc
+                 #(let [states [{:termguicolors true} {:termguicolors false}]
+                        curr-state {:termguicolors (vim.opt.termguicolors:get)}]
+                    (core.merge! vim.opt (util.next-state states curr-state)))
+                 {:desc "toggle termguicolors option"}]])
 
 (local filters
        (let [repeat (fn [times value]
