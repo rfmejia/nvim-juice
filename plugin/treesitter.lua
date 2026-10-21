@@ -10,12 +10,12 @@ local function setup()
   vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
   return nil
 end
+vim.api.nvim_create_autocmd("FileType", {pattern = ts_languages, callback = setup})
 local function on_update(ev)
-  if ((ev.data.spec.name == "nvim-treesitter") and (ev.data.spec.kind == "update")) then
+  if (((ev.data.kind == "install") or (ev.data.kind == "update")) and (ev.data.spec.name == "nvim-treesitter")) then
     return vim.cmd("TSUpdate")
   else
     return nil
   end
 end
-vim.api.nvim_create_autocmd("FileType", {pattern = ts_languages, callback = setup})
-return vim.api.nvim_create_autocmd("PackChanged", {callback = on_update})
+return vim.api.nvim_create_autocmd("PackChanged", {desc = "Call TSUpdate upon treesitter update", callback = on_update})

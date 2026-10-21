@@ -12,10 +12,13 @@
   ;; Indentation support (experimental)
   (set vim.bo.indentexpr "v:lua.require'nvim-treesitter'.indentexpr()"))
 
+(vim.api.nvim_create_autocmd :FileType {:pattern ts-languages :callback setup})
+
 (fn on-update [ev]
-  (when (and (= ev.data.spec.name :nvim-treesitter)
-             (= ev.data.spec.kind :update))
+  (when (and (or (= ev.data.kind :install) (= ev.data.kind :update))
+             (= ev.data.spec.name :nvim-treesitter))
     (vim.cmd :TSUpdate)))
 
-(vim.api.nvim_create_autocmd :FileType {:pattern ts-languages :callback setup})
-(vim.api.nvim_create_autocmd :PackChanged {:callback on-update})
+(vim.api.nvim_create_autocmd :PackChanged
+                             {:desc "Call TSUpdate upon treesitter update"
+                              :callback on-update})
