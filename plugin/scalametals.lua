@@ -28,27 +28,32 @@ local function configure_metals()
   config.init_options.statusBarProvider = "on"
   config.capabilities = vim.lsp.protocol.make_client_capabilities()
   config.tvp = tvp_settings
-  local function _5_(client, bufnr)
+  local function _5_(patterns, startpath, nesting)
+    local rootdir = require("metals.rootdir")
+    return (rootdir.find_root_dir({".bsp"}, startpath, 0) or rootdir.find_root_dir(patterns, startpath, nesting))
+  end
+  config.find_root_dir = _5_
+  local function _6_(client, bufnr)
     if (nil == bufnr) then
-      _G.error("Missing argument bufnr on fnl/plugin/scalametals.fnl:62", 2)
+      _G.error("Missing argument bufnr on fnl/plugin/scalametals.fnl:67", 2)
     else
     end
     if (nil == client) then
-      _G.error("Missing argument client on fnl/plugin/scalametals.fnl:62", 2)
+      _G.error("Missing argument client on fnl/plugin/scalametals.fnl:67", 2)
     else
     end
     util["set-keys"](metals_buf_maps(bufnr))
     return core["merge!"](vim.opt_local, options)
   end
-  config.on_attach = _5_
+  config.on_attach = _6_
   --[[ "Initialize Metals for the first time" ]]
   vim.g.metals_status = "Initializing Metals..."
   metals.initialize_or_attach(config)
   --[[ "Automatically attach Metals to all Scala filetypes (only triggered upon BufEnter)" ]]
   vim.api.nvim_del_augroup_by_name("metals-group")
-  local function _8_()
+  local function _9_()
     return metals.initialize_or_attach(config)
   end
-  return vim.api.nvim_create_autocmd("FileType", {pattern = {"scala", "java"}, callback = _8_, group = vim.api.nvim_create_augroup("metals-group", {clear = true})})
+  return vim.api.nvim_create_autocmd("FileType", {pattern = {"scala", "java"}, callback = _9_, group = vim.api.nvim_create_augroup("metals-group", {clear = true})})
 end
 return vim.api.nvim_create_autocmd("FileType", {pattern = {"scala", "java"}, callback = configure_metals, group = vim.api.nvim_create_augroup("metals-group", {clear = true})})

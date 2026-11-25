@@ -58,6 +58,11 @@
     (set config.init_options.statusBarProvider :on)
     (set config.capabilities (vim.lsp.protocol.make_client_capabilities))
     (set config.tvp tvp-settings)
+    (set config.find_root_dir
+         (fn [patterns startpath nesting]
+           (let [rootdir (require :metals.rootdir)]
+             (or (rootdir.find_root_dir [:.bsp] startpath 0)
+                 (rootdir.find_root_dir patterns startpath nesting)))))
     (set config.on_attach
          (lambda [client bufnr]
            (util.set-keys (metals-buf-maps bufnr))

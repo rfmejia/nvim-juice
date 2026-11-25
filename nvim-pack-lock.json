@@ -5,15 +5,15 @@
       "src": "https://github.com/rmagatti/auto-session"
     },
     "conjure": {
-      "rev": "b23c76a8c874fe7ac5ad95255efc66173b049088",
+      "rev": "f01c94468247439b6b1067560a9a3e19e96e06d5",
       "src": "https://github.com/Olical/conjure"
     },
     "gitsigns.nvim": {
-      "rev": "fd780920613e541cbdfac41bf711583ed49f9249",
+      "rev": "ea38d317af34f8ffcfbaf0f0dcc1471736661a4c",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "leap.nvim": {
-      "rev": "277e04fad21e3af05a55cc414757b09a704f2a92",
+      "rev": "5af48b78f6c1310ab1f61131d785387faae4cdd4",
       "src": "https://codeberg.org/andyg/leap.nvim"
     },
     "nfnl": {
@@ -37,7 +37,7 @@
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-treesitter": {
-      "rev": "29212d826054bb2948fa9d3a99eca9bf6a050eb2",
+      "rev": "52773f0d13a0c11d0c3ef33c14ab6ecc1c17148b",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "oil.nvim": {
@@ -45,7 +45,7 @@
       "src": "https://github.com/stevearc/oil.nvim"
     },
     "orgmode": {
-      "rev": "78c9928c151ff6ec07fd72da74bdf50a8034f0a5",
+      "rev": "0a4344a2e9fe8bf39543eecf7e8dfacea9867d9d",
       "src": "https://github.com/nvim-orgmode/orgmode"
     }
   }
